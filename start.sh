@@ -5,25 +5,29 @@
 echo "🚀 Velara Care — Starting up..."
 
 # ──────────────────────────────────────────────────────
-# The "prisma db push" CLI resolves file:./dev.db relative
-# to the prisma/ directory → prisma/dev.db
+# PATH CONSISTENCY FIX
 #
-# libSQL (used by the Prisma adapter at runtime) resolves
-# file:./dev.db relative to CWD → ./dev.db
+#  •  Prisma CLI   resolves file:./dev.db relative to
+#     prisma/          → /app/prisma/dev.db
 #
-# To avoid TWO different database files, we use an ABSOLUTE
-# path based on $PWD so every tool writes to the same place.
+#  •  libSQL (adapter) resolves file:./dev.db relative
+#     to CWD (= /app)  → /app/dev.db
+#
+# We create a symlink  /app/dev.db → /app/prisma/dev.db
+# so both access the SAME database file no matter which
+# path-resolution rule they follow.
 # ──────────────────────────────────────────────────────
-export DATABASE_URL="file:${PWD}/prisma/dev.db"
-
-# Ensure the prisma directory exists
+export DATABASE_URL="file:./dev.db"
 mkdir -p "${PWD}/prisma"
+if [ ! -L "${PWD}/dev.db" ] && [ ! -f "${PWD}/dev.db" ]; then
+  ln -s "prisma/dev.db" "${PWD}/dev.db" 2>/dev/null || true
+fi
 
 if [ -z "$NEXTAUTH_SECRET" ] || [ -z "$NEXTAUTH_URL" ]; then
   echo "📝 Writing .env file (env vars missing from container environment)..."
-  cat > .env << EOF
+  cat > .env << 'EOF'
 # Velara Care — auto-generated defaults
-DATABASE_URL="${DATABASE_URL}"
+DATABASE_URL="file:./dev.db"
 NEXTAUTH_SECRET="super-secret-key-change-in-production-1234567890"
 NEXTAUTH_URL="https://velaracare.co"
 EOF
@@ -32,7 +36,7 @@ fi
 # Print environment info
 echo "📋 Node: $(node -v)"
 echo "📋 NEXTAUTH_URL: ${NEXTAUTH_URL:-https://velaracare.co}"
-echo "📋 DATABASE_URL: ${DATABASE_URL}"
+echo "📋 DATABASE_URL: ${DATABASE_URL:-file:./dev.db}"
 
 # Make sure PrismaClient is generated
 if [ ! -f src/generated/prisma/client.ts ]; then
