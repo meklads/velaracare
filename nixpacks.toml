@@ -2,10 +2,13 @@
 nixPkgs = ["nodejs_22", "git"]
 
 [phases.install]
-cmds = ["npm ci --production=false"]
+cmds = ["npm ci"]
 
 [phases.build]
-cmds = ["npm run build"]
+cmds = ["prisma generate", "npm run build"]
+
+[phases.deploy]
+cmds = ["npx prisma db push --skip-generate || true"]
 
 [start]
 cmd = "npm run start"
