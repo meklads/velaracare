@@ -46,7 +46,15 @@ npx prisma db push --skip-generate 2>&1 || echo "⚠️ db push failed — conti
 
 # Seed demo data (only if no admin user exists yet)
 echo "🌱 Seeding demo data..."
-npx tsx prisma/seed.ts 2>&1 || echo "⚠️ Seed skipped — continuing anyway"
+SEED_OUTPUT=$(npx tsx prisma/seed.ts 2>&1)
+SEED_EXIT=$?
+if [ $SEED_EXIT -eq 0 ]; then
+  echo "$SEED_OUTPUT"
+else
+  echo "⚠️ Seed failed (exit $SEED_EXIT):"
+  echo "$SEED_OUTPUT" | tail -20
+  echo "⚠️ Continuing anyway..."
+fi
 
 # Start Next.js
 echo "🌟 Starting Next.js server..."

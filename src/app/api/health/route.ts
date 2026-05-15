@@ -33,6 +33,16 @@ export async function GET() {
       checks.database_connection = "error";
       checks.database_error = e?.message?.slice(0, 200) || "unknown";
     }
+
+    // Check if users exist in the database
+    try {
+      const { prisma } = await import("@/lib/prisma");
+      const count = await prisma.user.count();
+      checks.user_count = count;
+    } catch (e: any) {
+      checks.user_count = "error";
+      checks.user_error = e?.message?.slice(0, 150) || "unknown";
+    }
   } else {
     checks.database_connection = "skipped (no url)";
   }
