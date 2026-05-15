@@ -7,6 +7,7 @@ cmds = ["npm ci --production=false"]
 [phases.build]
 cmds = [
   "echo 'DATABASE_URL=\"file:./dev.db\"' > .env",
+  "date +%s > /tmp/BUILD_ID && echo \"build: $(cat /tmp/BUILD_ID)\"",
   "prisma generate",
   "npm run build",
 ]

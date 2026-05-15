@@ -1,6 +1,7 @@
 /**
  * Admin dashboard — pure server component.
  * Returns ONLY plain HTML, zero dependencies.
+ * BUILD_ID will change every deployment to bust cache.
  */
 export default function AdminDashboard() {
   return (
@@ -23,6 +24,9 @@ export default function AdminDashboard() {
       </h1>
       <p style={{ color: "#475569", fontSize: "16px" }}>
         الصفحة اشتغلت!
+      </p>
+      <p style={{ color: "#94A3B8", fontSize: "12px", marginTop: "8px" }}>
+        build: 2026-05-15T18
       </p>
     </div>
   );
