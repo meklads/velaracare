@@ -6,10 +6,23 @@ import { cookies } from "next/headers";
  * Includes diagnostics so we can see what the server receives.
  */
 export default async function AdminDashboard() {
-  const jar = await cookies();
-  const allCookies = jar.getAll();
-
-  const nextauthCookie = allCookies.find(c => c.name.includes("next-auth"));
+  let diagnostics: Record<string, unknown> = { error: "unknown" };
+  try {
+    const jar = await cookies();
+    const allCookies = jar.getAll();
+    const nextauthCookie = allCookies.find(c => c.name.includes("authjs") || c.name.includes("next-auth"));
+    diagnostics = {
+      cookies: allCookies.length,
+      cookie_names: allCookies.map(c => c.name),
+      nextauth_cookie: nextauthCookie ? {
+        name: nextauthCookie.name,
+        value: nextauthCookie.value.slice(0, 30) + "...",
+      } : "not found",
+      date: new Date().toISOString(),
+    };
+  } catch (e) {
+    diagnostics = { error: String(e), date: new Date().toISOString() };
+  }
 
   return (
     <div style={{
@@ -36,14 +49,7 @@ export default async function AdminDashboard() {
         textAlign: "left",
         overflowX: "auto",
       }}>
-{JSON.stringify({
-  cookies: allCookies.length,
-  nextauth_cookie: nextauthCookie ? {
-    name: nextauthCookie.name,
-    value: nextauthCookie.value.slice(0, 30) + "...",
-  } : "not found",
-  date: new Date().toISOString(),
-}, null, 2)}
+{JSON.stringify(diagnostics, null, 2)}
       </pre>
       <p style={{ color: "#94A3B8", fontSize: "12px", marginTop: "8px" }}>
         build: 2026-05-15T18

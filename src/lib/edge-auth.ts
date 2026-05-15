@@ -10,9 +10,12 @@ export async function getEdgeSession(request: NextRequest) {
   try {
     const secret = (process.env as any)["NEXTAUTH_SECRET"];
     if (!secret) return null;
+    // Determine if we're using secure cookies based on request URL
+    const isSecure = request.url.startsWith("https://");
     const token = await getToken({
       req: request,
       secret: secret,
+      secureCookie: isSecure,
     });
     if (!token) return null;
     return {
