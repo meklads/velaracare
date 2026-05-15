@@ -2,10 +2,14 @@
 nixPkgs = ["nodejs_22", "git"]
 
 [phases.install]
-cmds = ["npm ci"]
+cmds = ["npm ci --production=false"]
 
 [phases.build]
 cmds = ["prisma generate", "npm run build"]
+
+# Healthcheck to confirm the web server is alive
+[healthcheck]
+uri = "/api/health"
 
 [start]
 cmd = "bash start.sh"

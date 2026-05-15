@@ -1,15 +1,17 @@
-import type { Metadata } from "next";
+"use client";
+
 import Link from "next/link";
+import { useEffect } from "react";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { Users, TrendingDown, Heart, Brain, Apple, Download } from "lucide-react";
 
-export const metadata: Metadata = {
-  title: "لوحة تحكم HR",
-  description: "إدارة صحة موظفيك بذكاء",
-};
-
 export default function AdminDashboard() {
+  // Set document title client-side since we're a client component
+  useEffect(() => {
+    document.title = "لوحة تحكم HR | Velara Care";
+  }, []);
+
   return (
     <>
       <Header />
