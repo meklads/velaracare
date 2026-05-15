@@ -9,6 +9,9 @@ export const metadata = {
   description: "إدارة الوجبات الصحية للشركة",
 };
 
+// ⚡ Don't pre-render at build time — DB is only available at runtime
+export const dynamic = "force-dynamic";
+
 // ── Type ──
 type MealPlanWithOrders = Awaited<ReturnType<typeof getMealsData>>[number];
 
@@ -24,7 +27,12 @@ async function getMealsData() {
 }
 
 export default async function AdminMealsPage() {
-  const plans = await getMealsData();
+  let plans: Awaited<ReturnType<typeof getMealsData>> = [];
+  try {
+    plans = await getMealsData();
+  } catch {
+    // DB not ready yet at build time — handled by force-dynamic above
+  }
   const totalOrders = plans.reduce((s, p) => s + p._count.orders, 0);
   const activePlans = plans.filter((p) => p.isActive).length;
   const totalCalories = plans.reduce((s, p) => s + (p.calories || 0), 0);
