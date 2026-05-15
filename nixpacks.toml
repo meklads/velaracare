@@ -7,8 +7,5 @@ cmds = ["npm ci"]
 [phases.build]
 cmds = ["prisma generate", "npm run build"]
 
-[phases.deploy]
-cmds = ["npx prisma db push --skip-generate || true"]
-
 [start]
-cmd = "npm run start"
+cmd = "bash start.sh"
