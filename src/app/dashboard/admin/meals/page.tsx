@@ -91,7 +91,6 @@ export default async function AdminMealsPage() {
                 إضافة وجبة جديدة
               </button>
             </div>
-            </button>
           </div>
 
           {/* Stats Cards */}

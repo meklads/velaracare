@@ -17,12 +17,17 @@ export async function GET(req: Request) {
 
   try {
     if (type === "orders") {
-      const userId = url.searchParams.get("userId") || user.id;
+      // Restaurant sees ALL orders; others see only their own
+      const isRestaurant = user.role === "RESTAURANT" || user.role === "COMPANY_ADMIN" || user.role === "SUPER_ADMIN";
+      const where = isRestaurant ? {} : { userId: url.searchParams.get("userId") || user.id };
       const orders = await prisma.mealOrder.findMany({
-        where: { userId },
-        include: { mealPlan: true },
+        where,
+        include: {
+          mealPlan: true,
+          user: { select: { firstName: true, lastName: true, department: true } },
+        },
         orderBy: { orderDate: "desc" },
-        take: 50,
+        take: 100,
       });
       return NextResponse.json(orders);
     }
@@ -68,7 +73,7 @@ export async function POST(req: Request) {
       return NextResponse.json(order, { status: 201 });
     }
 
-    // Create meal plan (HR/Restaurant only)
+    // Create meal plan (HR/Restaurant/Admin only)
     if (user.role !== "HR" && user.role !== "COMPANY_ADMIN" && user.role !== "RESTAURANT" && user.role !== "SUPER_ADMIN") {
       return NextResponse.json({ error: "غير مصرح بإنشاء خطط وجبات" }, { status: 403 });
     }
@@ -87,5 +92,44 @@ export async function POST(req: Request) {
   } catch (error) {
     console.error("Meals POST error:", error);
     return NextResponse.json({ error: "خطأ في إنشاء الوجبة" }, { status: 500 });
+  }
+}
+
+// PATCH /api/meals — update order status (Restaurant/Admin)
+export async function PATCH(req: Request) {
+  const session = await auth();
+  if (!session?.user) {
+    return NextResponse.json({ error: "غير مصرح" }, { status: 401 });
+  }
+
+  const user = session.user as any;
+  const canUpdate = ["RESTAURANT", "COMPANY_ADMIN", "SUPER_ADMIN", "HR"].includes(user.role);
+  if (!canUpdate) {
+    return NextResponse.json({ error: "غير مصرح" }, { status: 403 });
+  }
+
+  try {
+    const body = await req.json();
+    const { orderId, status } = body;
+
+    if (!orderId || !status) {
+      return NextResponse.json({ error: "معرف الطلب والحالة مطلوبان" }, { status: 400 });
+    }
+
+    const validStatuses = ["pending", "preparing", "ready", "delivered", "cancelled"];
+    if (!validStatuses.includes(status)) {
+      return NextResponse.json({ error: "حالة غير صالحة" }, { status: 400 });
+    }
+
+    const order = await prisma.mealOrder.update({
+      where: { id: orderId },
+      data: { status },
+      include: { mealPlan: true, user: { select: { firstName: true, lastName: true, department: true } } },
+    });
+
+    return NextResponse.json(order);
+  } catch (error) {
+    console.error("Meals PATCH error:", error);
+    return NextResponse.json({ error: "خطأ في تحديث الطلب" }, { status: 500 });
   }
 }
