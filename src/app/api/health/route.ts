@@ -38,10 +38,10 @@ export async function GET() {
     checks.files["dev.db→target"] = readlinkSync(rootDb);
   }
 
-  // ── Run prisma db push (diagnostic) ──
+  // ── Run prisma db push (diagnostic) → no --skip-generate (removed in Prisma 7) ──
   try {
     const out = execSync(
-      "npx prisma db push --skip-generate --accept-data-loss 2>&1",
+      "npx prisma db push --accept-data-loss 2>&1",
       {
         cwd: CWD,
         timeout: 20_000,
@@ -60,6 +60,9 @@ export async function GET() {
       stderr: e?.stderr?.toString()?.slice(0, 300),
     };
   }
+
+  // Override env so subsequent prisma imports use the same path as the push above
+  (process.env as any)["DATABASE_URL"] = "file:" + CWD + "/prisma/dev.db";
 
   // ── Prisma connection & user check ──
   try {

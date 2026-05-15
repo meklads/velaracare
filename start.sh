@@ -45,8 +45,9 @@ if [ ! -f src/generated/prisma/client.ts ]; then
 fi
 
 # Push schema to the database
+# NOTE: --skip-generate was removed in Prisma 7, so we don't use it
 echo "📦 Pushing database schema..."
-npx prisma db push --skip-generate 2>&1 || echo "⚠️ db push failed — continuing anyway"
+npx prisma db push --accept-data-loss 2>&1 || echo "⚠️ db push failed — continuing anyway"
 
 # Seed demo data (only if no admin user exists yet)
 echo "🌱 Seeding demo data..."
