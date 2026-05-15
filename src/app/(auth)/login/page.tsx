@@ -60,8 +60,9 @@ export default function LoginPage() {
         const session = await res.json();
         const role = session?.user?.role;
         const path = getDashboardPath(role);
-        router.push(path);
-        router.refresh();
+        // Force a full page navigation so the server renders the dashboard
+        // directly — avoids RSC streaming issues that cause blank screens.
+        window.location.href = path;
       }
     } catch {
       setError("حدث خطأ في الاتصال. حاول مرة أخرى.");
