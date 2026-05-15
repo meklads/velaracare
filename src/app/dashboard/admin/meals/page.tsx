@@ -1,79 +1,245 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
-import { Apple, ChevronLeft, Plus, Search } from "lucide-react";
+import { prisma } from "@/lib/prisma";
+import { ChevronLeft, Apple, TrendingUp, Users, UtensilsCrossed, Search, Plus, ArrowUpRight, Clock, Filter } from "lucide-react";
 
-export const metadata: Metadata = {
+export const metadata = {
   title: "إدارة الوجبات",
   description: "إدارة الوجبات الصحية للشركة",
 };
 
-const meals = [
-  { name: "وجبة السكري", type: "diabetic", calories: 1800, orders: 24, status: "نشط" },
-  { name: "وجبة تخفيف الوزن", type: "weight_loss", calories: 1500, orders: 36, status: "نشط" },
-  { name: "وجبة الأداء العالي", type: "high_performance", calories: 2200, orders: 18, status: "نشط" },
-  { name: "وجبة عامة", type: "general", calories: 2000, orders: 45, status: "نشط" },
-  { name: "وجبة نباتية", type: "vegan", calories: 1600, orders: 8, status: "تجريبي" },
-];
+// ── Type ──
+type MealPlanWithOrders = Awaited<ReturnType<typeof getMealsData>>[number];
 
-export default function AdminMealsPage() {
+async function getMealsData() {
+  const [plans, totalOrders] = await Promise.all([
+    prisma.mealPlan.findMany({
+      orderBy: { createdAt: "desc" },
+      include: { _count: { select: { orders: true } } },
+    }),
+    prisma.mealOrder.count(),
+  ]);
+  return plans;
+}
+
+export default async function AdminMealsPage() {
+  const plans = await getMealsData();
+  const totalOrders = plans.reduce((s, p) => s + p._count.orders, 0);
+  const activePlans = plans.filter((p) => p.isActive).length;
+  const totalCalories = plans.reduce((s, p) => s + (p.calories || 0), 0);
+  const avgCalories = plans.length ? Math.round(totalCalories / plans.length) : 0;
+
+  const typeLabels: Record<string, string> = {
+    diabetic: "السكري",
+    weight_loss: "تخفيف الوزن",
+    high_performance: "أداء عالي",
+    general: "عام",
+    vegan: "نباتي",
+  };
+
+  const typeColors: Record<string, string> = {
+    diabetic: "bg-rose-100 text-rose-700",
+    weight_loss: "bg-amber-100 text-amber-700",
+    high_performance: "bg-blue-100 text-blue-700",
+    general: "bg-emerald-100 text-emerald-700",
+    vegan: "bg-purple-100 text-purple-700",
+  };
+
+  const typeIcons: Record<string, string> = { diabetic: "🩺", weight_loss: "⚖️", high_performance: "⚡", general: "🍱", vegan: "🥗" };
+
   return (
     <>
       <Header />
       <main className="min-h-screen bg-surface-mid pt-24">
         <div className="container-shade py-8">
+          {/* Breadcrumb */}
+          <div className="fade-in-up mb-6">
+            <Link href="/dashboard/admin" className="text-sm text-emerald hover:underline inline-flex items-center gap-1">
+              <ChevronLeft className="h-4 w-4" /> العودة للوحة التحكم
+            </Link>
+          </div>
+
+          {/* Header */}
           <div className="fade-in-up mb-8 flex flex-wrap items-center justify-between gap-4">
             <div>
-              <Link href="/dashboard/admin" className="text-sm text-emerald hover:underline inline-flex items-center gap-1 mb-2">
-                <ChevronLeft className="h-4 w-4" /> العودة للوحة التحكم
-              </Link>
-              <h1 className="text-2xl font-bold text-primary">🍎 إدارة الوجبات</h1>
-              <p className="text-secondary">إدارة الوجبات الصحية المقدمة للموظفين</p>
+              <h1 className="text-2xl font-bold text-primary flex items-center gap-2">
+                <Apple className="h-7 w-7 text-emerald" />
+                إدارة الوجبات
+              </h1>
+              <p className="text-secondary mt-1">
+                خطط وجبات صحية مخصصة للموظفين حسب احتياجاتهم
+              </p>
             </div>
-            <button className="btn-primary text-sm py-2 px-5">
+            <button className="btn-primary text-sm py-2.5 px-5">
               <Plus className="ml-2 h-4 w-4" />
               إضافة وجبة جديدة
             </button>
           </div>
 
-          <div className="shade-card p-6">
-            <div className="flex items-center gap-3 mb-6">
-              <div className="relative flex-1 max-w-md">
-                <Search className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-secondary" />
-                <input type="text" placeholder="بحث عن وجبة..." className="w-full rounded-xl border border-[var(--surface-border)] bg-surface-mid pr-10 px-4 py-2.5 text-sm text-primary placeholder:text-secondary focus:outline-none focus:ring-2 focus:ring-emerald-ai/30" />
+          {/* Stats Cards */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+            {[
+              { label: "إجمالي الخطط", value: plans.length, icon: UtensilsCrossed, color: "from-emerald-ai to-emerald-ai-dark" },
+              { label: "الخطط النشطة", value: activePlans, icon: TrendingUp, color: "from-blue-500 to-indigo-600" },
+              { label: "إجمالي الطلبات", value: totalOrders, icon: Users, color: "from-rose-500 to-pink-600" },
+              { label: "متوسط السعرات", value: `${avgCalories}`, suffix: "kcal", icon: Apple, color: "from-amber-500 to-orange-600" },
+            ].map((stat, i) => (
+              <div key={stat.label} className="shade-card p-5 fade-in-up-delay-{i+1}">
+                <div className="flex items-center gap-3 mb-2">
+                  <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${stat.color} flex items-center justify-center`}>
+                    <stat.icon className="h-5 w-5 text-white" />
+                  </div>
+                </div>
+                <p className="stat-number text-primary">{stat.value}</p>
+                <p className="text-xs text-[var(--text-muted)] mt-1">{stat.label}</p>
+              </div>
+            ))}
+          </div>
+
+          {/* Meal Plans Table */}
+          <div className="shade-card p-6 fade-in-up-delay-3">
+            <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
+              <h2 className="font-bold text-primary text-lg">📋 خطط الوجبات</h2>
+              <div className="flex items-center gap-3">
+                <div className="relative">
+                  <Search className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-secondary pointer-events-none" />
+                  <input
+                    type="text"
+                    placeholder="بحث عن وجبة..."
+                    className="w-56 rounded-xl border border-[var(--surface-border)] bg-surface-mid pr-10 px-4 py-2 text-sm text-primary placeholder:text-secondary focus:outline-none focus:ring-2 focus:ring-emerald-ai/30 transition-all"
+                  />
+                </div>
+                <button className="text-sm text-secondary hover:text-primary transition-colors flex items-center gap-1.5 border border-[var(--surface-border)] rounded-xl px-3 py-2">
+                  <Filter className="h-4 w-4" />
+                  تصفية
+                </button>
               </div>
             </div>
 
-            <div className="overflow-x-auto">
-              <table className="w-full text-sm">
-                <thead>
-                  <tr className="border-b border-[var(--surface-border)]">
-                    <th className="text-right py-3 text-secondary font-medium">الاسم</th>
-                    <th className="text-right py-3 text-secondary font-medium">النوع</th>
-                    <th className="text-right py-3 text-secondary font-medium">السعرات</th>
-                    <th className="text-right py-3 text-secondary font-medium">الطلبات</th>
-                    <th className="text-right py-3 text-secondary font-medium">الحالة</th>
-                    <th className="text-right py-3 text-secondary font-medium"></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {meals.map((m) => (
-                    <tr key={m.name} className="border-b border-[var(--surface-border)] last:border-0 hover:bg-[var(--white-warm)]">
-                      <td className="py-3 font-semibold text-primary">{m.name}</td>
-                      <td className="py-3 text-secondary">{m.type}</td>
-                      <td className="py-3 text-secondary">{m.calories} kcal</td>
-                      <td className="py-3 text-secondary">{m.orders}</td>
-                      <td className="py-3">
-                        <span className={`tag text-xs py-0.5 px-3 ${m.status === "نشط" ? "bg-emerald-soft text-emerald-dark" : "bg-amber-50 text-amber-600"}`}>{m.status}</span>
-                      </td>
-                      <td className="py-3">
-                        <button className="text-xs text-emerald hover:underline">تعديل</button>
-                      </td>
+            {plans.length === 0 ? (
+              <div className="text-center py-12 text-secondary">
+                <UtensilsCrossed className="h-12 w-12 mx-auto mb-3 opacity-30" />
+                <p>لا توجد خطط وجبات بعد</p>
+                <p className="text-xs mt-1">أضف أول وجبة الآن</p>
+              </div>
+            ) : (
+              <div className="overflow-x-auto">
+                <table className="w-full text-sm">
+                  <thead>
+                    <tr className="border-b border-[var(--surface-border)]">
+                      <th className="text-right py-3 text-secondary font-medium">الاسم</th>
+                      <th className="text-right py-3 text-secondary font-medium">النوع</th>
+                      <th className="text-right py-3 text-secondary font-medium">السعرات</th>
+                      <th className="text-right py-3 text-secondary font-medium">الطلبات</th>
+                      <th className="text-right py-3 text-secondary font-medium">الحالة</th>
+                      <th className="text-right py-3 text-secondary font-medium">تاريخ الإضافة</th>
+                      <th className="text-right py-3 text-secondary font-medium"></th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody>
+                    {plans.map((plan) => (
+                      <tr key={plan.id} className="border-b border-[var(--surface-border)] last:border-0 hover:bg-[var(--white-warm)] transition-colors">
+                        <td className="py-3.5">
+                          <div className="flex items-center gap-2.5">
+                            <span className="text-xl">{typeIcons[plan.type] || "🍽️"}</span>
+                            <div>
+                              <p className="font-semibold text-primary">{plan.name}</p>
+                              {plan.description && (
+                                <p className="text-xs text-secondary mt-0.5">{plan.description}</p>
+                              )}
+                            </div>
+                          </div>
+                        </td>
+                        <td className="py-3.5">
+                          <span className={`tag text-xs py-0.5 px-2.5 rounded-lg ${typeColors[plan.type] || "bg-gray-100 text-gray-700"}`}>
+                            {typeLabels[plan.type] || plan.type}
+                          </span>
+                        </td>
+                        <td className="py-3.5 text-secondary font-medium">{plan.calories ? `${plan.calories} kcal` : "—"}</td>
+                        <td className="py-3.5">
+                          <span className="font-semibold text-primary">{plan._count.orders}</span>
+                          <span className="text-xs text-secondary mr-1">طلب</span>
+                        </td>
+                        <td className="py-3.5">
+                          <span className={`tag text-xs py-0.5 px-3 ${plan.isActive ? "bg-emerald-soft text-emerald-dark" : "bg-gray-100 text-gray-500"}`}>
+                            {plan.isActive ? "نشط" : "غير نشط"}
+                          </span>
+                        </td>
+                        <td className="py-3.5 text-secondary text-xs">
+                          {new Date(plan.createdAt).toLocaleDateString("ar-SA")}
+                        </td>
+                        <td className="py-3.5">
+                          <div className="flex items-center gap-2">
+                            <button className="text-xs text-emerald hover:underline font-medium">تعديل</button>
+                            <button className="text-xs text-rose-500 hover:underline font-medium">حذف</button>
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </div>
+
+          {/* Bottom Info Cards */}
+          <div className="grid md:grid-cols-3 gap-6 mt-6">
+            <div className="shade-card p-5 fade-in-up-delay-3">
+              <div className="flex items-center gap-3 mb-3">
+                <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-emerald-ai to-emerald-ai-dark flex items-center justify-center">
+                  <Clock className="h-4 w-4 text-white" />
+                </div>
+                <h3 className="font-bold text-primary text-sm">أوقات التقديم</h3>
+              </div>
+              <div className="space-y-2 text-sm text-secondary">
+                <p className="flex justify-between"><span>الفطور</span><span className="font-medium text-primary">٧:٣٠ – ٩:٠٠ ص</span></p>
+                <p className="flex justify-between"><span>الغداء</span><span className="font-medium text-primary">١٢:٠٠ – ٢:٠٠ م</span></p>
+                <p className="flex justify-between"><span>العشاء</span><span className="font-medium text-primary">٦:٠٠ – ٨:٠٠ م</span></p>
+              </div>
+            </div>
+
+            <div className="shade-card p-5 fade-in-up-delay-3">
+              <div className="flex items-center gap-3 mb-3">
+                <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center">
+                  <ArrowUpRight className="h-4 w-4 text-white" />
+                </div>
+                <h3 className="font-bold text-primary text-sm">الأكثر طلباً</h3>
+              </div>
+              {plans.length > 0 ? (
+                <div className="space-y-2">
+                  {[...plans]
+                    .sort((a, b) => b._count.orders - a._count.orders)
+                    .slice(0, 3)
+                    .map((p, i) => (
+                      <div key={p.id} className="flex items-center justify-between text-sm">
+                        <span className="text-secondary flex items-center gap-2">
+                          <span className={`w-5 h-5 rounded-full flex items-center justify-center text-xs font-bold text-white ${
+                            i === 0 ? "bg-amber-500" : i === 1 ? "bg-gray-400" : "bg-amber-700"
+                          }`}>{i + 1}</span>
+                          {p.name}
+                        </span>
+                        <span className="font-medium text-primary">{p._count.orders} طلب</span>
+                      </div>
+                    ))}
+                </div>
+              ) : (
+                <p className="text-sm text-secondary">لا توجد طلبات بعد</p>
+              )}
+            </div>
+
+            <div className="shade-card p-5 fade-in-up-delay-4">
+              <div className="flex items-center gap-3 mb-3">
+                <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-rose-500 to-pink-600 flex items-center justify-center">
+                  <Users className="h-4 w-4 text-white" />
+                </div>
+                <h3 className="font-bold text-primary text-sm">إحصائيات سريعة</h3>
+              </div>
+              <div className="space-y-2 text-sm">
+                <p className="flex justify-between"><span className="text-secondary">إجمالي الموظفين</span><span className="font-medium text-primary">٢٤٠</span></p>
+                <p className="flex justify-between"><span className="text-secondary">معدل الالتزام بالوجبات</span><span className="font-medium text-primary">٦٨٪</span></p>
+                <p className="flex justify-between"><span className="text-secondary">الوجبات المقدمة اليوم</span><span className="font-medium text-primary">١٢٤</span></p>
+              </div>
             </div>
           </div>
         </div>
