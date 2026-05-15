@@ -151,6 +151,30 @@ export default async function AdminDashboard() {
             </div>
           </div>
 
+          {/* Quick Links */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8 fade-in-up-delay-4">
+            <Link href="/dashboard/admin/meals" className="shade-card p-4 text-center hover:shadow-md transition-all hover:-translate-y-0.5">
+              <span className="text-2xl block mb-1">🍽️</span>
+              <p className="text-sm font-semibold text-primary">الوجبات</p>
+              <p className="text-[10px] text-secondary">إدارة خطط الوجبات</p>
+            </Link>
+            <Link href="/dashboard/admin/employees" className="shade-card p-4 text-center hover:shadow-md transition-all hover:-translate-y-0.5">
+              <span className="text-2xl block mb-1">👥</span>
+              <p className="text-sm font-semibold text-primary">الموظفين</p>
+              <p className="text-[10px] text-secondary">إدارة الموظفين</p>
+            </Link>
+            <Link href="/dashboard/employee/meals" className="shade-card p-4 text-center hover:shadow-md transition-all hover:-translate-y-0.5">
+              <span className="text-2xl block mb-1">📋</span>
+              <p className="text-sm font-semibold text-primary">المينيو</p>
+              <p className="text-[10px] text-secondary">معاينة قائمة الوجبات</p>
+            </Link>
+            <Link href="/dashboard/restaurant" className="shade-card p-4 text-center hover:shadow-md transition-all hover:-translate-y-0.5">
+              <span className="text-2xl block mb-1">🧑‍🍳</span>
+              <p className="text-sm font-semibold text-primary">المطعم</p>
+              <p className="text-[10px] text-secondary">عرض الطلبات</p>
+            </Link>
+          </div>
+
           {/* ── Diagnostics Section ─────────────────────────── */}
           <details className="mt-12 shade-card p-4" style={{ opacity: 0.6 }}>
             <summary className="cursor-pointer text-sm font-medium text-secondary select-none">
