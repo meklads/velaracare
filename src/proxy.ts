@@ -34,10 +34,14 @@ export async function proxy(request: NextRequest) {
       // Logged in but wrong role → redirect to their dashboard
       if (!isAuthorizedForRoute(role, pathname)) {
         const correctPath = getDashboardPath(role);
-        return NextResponse.redirect(new URL(correctPath, request.url));
+        const redirect = NextResponse.redirect(new URL(correctPath, request.url));
+        return redirect;
       }
 
-      return NextResponse.next();
+      // Auth passed — add debugging header
+      const response = NextResponse.next();
+      response.headers.set("x-velara-role", role || "none");
+      return response;
     }
 
     return NextResponse.next();
