@@ -1,0 +1,164 @@
+import { NextResponse } from "next/server";
+import { prisma } from "@/lib/prisma";
+import { auth } from "@/lib/auth";
+
+export const runtime = "nodejs";
+
+// POST /api/hra — submit Health Risk Assessment
+export async function POST(req: Request) {
+  const session = await auth();
+  if (!session?.user) {
+    return NextResponse.json({ error: "غير مصرح" }, { status: 401 });
+  }
+
+  const user = session.user as any;
+  const body = await req.json();
+
+  try {
+    const { responses } = body;
+    if (!responses) {
+      return NextResponse.json({ error: "البيانات مطلوبة" }, { status: 400 });
+    }
+
+    // Calculate risk level based on responses
+    const riskScore = calculateRiskScore(responses);
+    const riskLevel = getRiskLevel(riskScore);
+
+    // Generate AI recommendations
+    const recommendations = generateRecommendations(responses, riskLevel);
+
+    const result = await prisma.hRAResult.create({
+      data: {
+        userId: user.id,
+        riskLevel,
+        responses,
+        recommendations,
+      },
+    });
+
+    // Also update wellness score
+    await prisma.wellnessScore.upsert({
+      where: { userId: user.id },
+      update: {
+        score: Math.max(0, 100 - riskScore * 10),
+        riskLevel,
+        updatedAt: new Date(),
+      },
+      create: {
+        userId: user.id,
+        companyId: user.companyId ?? undefined,
+        score: Math.max(0, 100 - riskScore * 10),
+        riskLevel,
+      },
+    });
+
+    return NextResponse.json(result, { status: 201 });
+  } catch (error) {
+    console.error("HRA POST error:", error);
+    return NextResponse.json({ error: "خطأ في حفظ التقييم" }, { status: 500 });
+  }
+}
+
+// GET /api/hra — get HRA results
+export async function GET() {
+  const session = await auth();
+  if (!session?.user) {
+    return NextResponse.json({ error: "غير مصرح" }, { status: 401 });
+  }
+
+  const user = session.user as any;
+
+  try {
+    const results = await prisma.hRAResult.findMany({
+      where: { userId: user.id },
+      orderBy: { completedAt: "desc" },
+      take: 10,
+    });
+
+    return NextResponse.json(results);
+  } catch (error) {
+    console.error("HRA GET error:", error);
+    return NextResponse.json({ error: "خطأ في جلب النتائج" }, { status: 500 });
+  }
+}
+
+function calculateRiskScore(responses: Record<string, any>): number {
+  let score = 0;
+  let count = 0;
+
+  // BMI
+  if (responses.bmi) {
+    const bmi = parseFloat(responses.bmi);
+    if (bmi > 30) score += 3;
+    else if (bmi > 25) score += 2;
+    else if (bmi < 18.5) score += 1;
+    count++;
+  }
+
+  // Smoking
+  if (responses.smoking === "yes") score += 3;
+  else if (responses.smoking === "former") score += 1;
+  count++;
+
+  // Physical activity
+  if (responses.activity === "none") score += 3;
+  else if (responses.activity === "light") score += 1;
+  count++;
+
+  // Sleep
+  if (responses.sleepHours) {
+    const sleep = parseFloat(responses.sleepHours);
+    if (sleep < 5 || sleep > 9) score += 2;
+    else if (sleep < 6) score += 1;
+    count++;
+  }
+
+  // Stress
+  if (responses.stress === "high") score += 3;
+  else if (responses.stress === "medium") score += 1;
+  count++;
+
+  // Family history
+  if (responses.familyHistory === "yes") score += 2;
+  count++;
+
+  // Blood pressure
+  if (responses.bloodPressure === "high") score += 2;
+  count++;
+
+  return count > 0 ? score / count : 0;
+}
+
+function getRiskLevel(score: number): string {
+  if (score >= 2.5) return "critical";
+  if (score >= 2) return "high";
+  if (score >= 1) return "moderate";
+  return "low";
+}
+
+function generateRecommendations(responses: Record<string, any>, riskLevel: string): any {
+  const recs: string[] = [];
+
+  if (responses.smoking === "yes") {
+    recs.push("برنامج الإقلاع عن التدخين — ندعمك برنامج تدريجي متكامل");
+  }
+  if (responses.activity === "none" || responses.activity === "light") {
+    recs.push("ابدأ بالمشي ٣٠ دقيقة يومياً — سنساعدك بخطة تدريجية");
+  }
+  if (responses.stress === "high") {
+    recs.push("جلسات استرخاء وتأمل — احجز استشارة مع مختص الصحة النفسية");
+  }
+  if (parseFloat(responses.bmi || "0") > 25) {
+    recs.push("خطة تغذية مخصصة لتحقيق الوزن الصحي — استشر أخصائي التغذية");
+  }
+  if (riskLevel === "high" || riskLevel === "critical") {
+    recs.push("استشارة عاجلة مع الفريق الطبي — تمت إحالتك تلقائياً");
+  }
+
+  return {
+    riskLevel,
+    score: calculateRiskScore(responses),
+    recommendations: recs,
+    nextSteps: recs.length > 0 ? recs[0] : "استمر في نمط حياتك الصحي ✅",
+  };
+}

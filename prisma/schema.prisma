@@ -1,0 +1,202 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+// ── Company ──
+model Company {
+  id        String   @id @default(cuid())
+  name      String
+  arabicName String  @default("")
+  domain    String?  @unique
+  logo      String?
+  size      Int      @default(0) // number of employees
+  industry  String?
+  plan      String   @default("basic") // basic, standard, professional, enterprise
+  status    String   @default("active") // active, trial, suspended
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  users         User[]
+  mealPlans     MealPlan[]
+  wellnessScores WellnessScore[]
+  consultations Consultation[]
+}
+
+// ── User (Employee, HR, Admin, Nutritionist, Restaurant) ──
+enum Role {
+  SUPER_ADMIN
+  COMPANY_ADMIN
+  HR
+  EMPLOYEE
+  NUTRITIONIST
+  RESTAURANT
+}
+
+model User {
+  id             String   @id @default(cuid())
+  email          String   @unique
+  passwordHash   String?
+  firstName      String
+  lastName       String
+  phone          String?
+  role           Role     @default(EMPLOYEE)
+  avatarUrl      String?
+  department     String?
+  position       String?
+  isActive       Boolean  @default(true)
+  emailVerified  DateTime?
+  companyId      String?
+  company        Company? @relation(fields: [companyId], references: [id])
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  wellnessScore        WellnessScore?
+  hraResults           HRAResult[]
+  mealOrders           MealOrder[]
+  consultations        Consultation[]  @relation("PatientConsultations")
+  consultationNotes    Consultation[]  @relation("ConsultantConsultations")
+  aiPredictions        AIPrediction[]
+  accounts             Account[]
+  sessions             Session[]
+}
+
+// ── Wellness Score ──
+model WellnessScore {
+  id              String   @id @default(cuid())
+  score           Int      @default(0) // 0-100
+  bmiScore        Int      @default(0)
+  sleepScore      Int      @default(0)
+  stressScore     Int      @default(0)
+  activityScore   Int      @default(0)
+  nutritionScore  Int      @default(0)
+  familyHistory   Int      @default(0)
+  bloodPressure   String?
+  riskLevel       String   @default("low") // low, moderate, high, critical
+  trend           String   @default("stable") // improving, stable, declining
+  userId          String   @unique
+  user            User     @relation(fields: [userId], references: [id])
+  companyId       String?
+  company         Company? @relation(fields: [companyId], references: [id])
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+// ── Health Risk Assessment ──
+model HRAResult {
+  id             String   @id @default(cuid())
+  userId         String
+  user           User     @relation(fields: [userId], references: [id])
+  riskLevel      String   // low, moderate, high, critical
+  responses      Json     // JSON of all HRA answers
+  recommendations Json?   // AI-generated recommendations
+  completedAt    DateTime @default(now())
+  createdAt      DateTime @default(now())
+}
+
+// ── AI Prediction ──
+model AIPrediction {
+  id          String   @id @default(cuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
+  type        String   // diabetes, obesity, burnout, heart_disease, productivity
+  probability Float    // 0-1
+  riskLevel   String   // low, moderate, high, critical
+  factors     Json     // contributing factors
+  suggestions Json?    // AI suggestions
+  createdAt   DateTime @default(now())
+  expiresAt   DateTime?
+}
+
+// ── Meal Plan ──
+model MealPlan {
+  id          String   @id @default(cuid())
+  name        String
+  description String?
+  type        String   // diabetic, weight_loss, high_performance, general
+  calories    Int?
+  companyId   String?
+  company     Company? @relation(fields: [companyId], references: [id])
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  orders      MealOrder[]
+}
+
+// ── Meal Order ──
+model MealOrder {
+  id         String   @id @default(cuid())
+  userId     String
+  user       User     @relation(fields: [userId], references: [id])
+  mealPlanId String?
+  mealPlan   MealPlan? @relation(fields: [mealPlanId], references: [id])
+  mealName   String
+  status     String   @default("pending") // pending, preparing, ready, delivered
+  notes      String?
+  orderDate  DateTime @default(now())
+  createdAt  DateTime @default(now())
+}
+
+// ── Consultation ──
+model Consultation {
+  id              String   @id @default(cuid())
+  patientId       String
+  patient         User     @relation("PatientConsultations", fields: [patientId], references: [id])
+  consultantId    String?
+  consultant      User?    @relation("ConsultantConsultations", fields: [consultantId], references: [id])
+  type            String   // nutrition, fitness, general
+  status          String   @default("scheduled") // scheduled, in_progress, completed, cancelled
+  scheduledAt     DateTime
+  completedAt     DateTime?
+  notes           String?
+  companyId       String?
+  company         Company? @relation(fields: [companyId], references: [id])
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+// ── Account (NextAuth) ──
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+// ── Session (NextAuth) ──
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+// ── Verification Token (NextAuth) ──
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
