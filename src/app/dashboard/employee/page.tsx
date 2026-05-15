@@ -200,9 +200,9 @@ export default function EmployeeDashboard() {
                     </div>
                   ))}
                 </div>
-                <button className="w-full mt-4 py-2.5 text-sm font-medium text-emerald-400 bg-emerald-500/5 hover:bg-emerald-500/10 rounded-xl transition-colors">
+                <Link href="/dashboard/employee/meals" className="w-full mt-4 py-2.5 text-sm font-medium text-emerald-400 bg-emerald-500/5 hover:bg-emerald-500/10 rounded-xl transition-colors block text-center">
                   طلب وجبة الآن
-                </button>
+                </Link>
               </div>
 
               {/* ── Consultation ── */}
