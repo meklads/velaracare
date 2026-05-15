@@ -21,6 +21,8 @@ export function isAuthorizedForRoute(role: string | undefined, pathname: string)
       (pathname === "/dashboard/hr" || pathname.startsWith("/dashboard/hr/"))) return true;
   if (role === "COMPANY_ADMIN" &&
       (pathname === "/dashboard/admin" || pathname.startsWith("/dashboard/admin/"))) return true;
+  // Allow admins to preview employee meals page
+  if (role === "COMPANY_ADMIN" && pathname === "/dashboard/employee/meals") return true;
   return false;
 }
 

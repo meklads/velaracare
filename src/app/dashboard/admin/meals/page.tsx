@@ -79,9 +79,18 @@ export default async function AdminMealsPage() {
                 خطط وجبات صحية مخصصة للموظفين حسب احتياجاتهم
               </p>
             </div>
-            <button className="btn-primary text-sm py-2.5 px-5">
-              <Plus className="ml-2 h-4 w-4" />
-              إضافة وجبة جديدة
+            <div className="flex items-center gap-2">
+              <Link
+                href="/dashboard/employee/meals"
+                className="text-sm py-2.5 px-4 rounded-xl border border-[var(--surface-border)] text-secondary hover:text-primary hover:border-emerald/30 transition-all flex items-center gap-1.5"
+              >
+                👁️ معاينة المينيو
+              </Link>
+              <button className="btn-primary text-sm py-2.5 px-5">
+                <Plus className="ml-2 h-4 w-4" />
+                إضافة وجبة جديدة
+              </button>
+            </div>
             </button>
           </div>
 
