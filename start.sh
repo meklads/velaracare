@@ -4,9 +4,25 @@
 
 echo "🚀 Velara Care — Starting up..."
 
+# ──────────────────────────────────────────────
+# Ensure critical env vars are always available.
+# If a var is missing from the system environment
+# we write a default .env file so Next.js can
+# read it at runtime (Next.js auto-loads .env).
+# ──────────────────────────────────────────────
+if [ -z "$DATABASE_URL" ] || [ -z "$NEXTAUTH_SECRET" ] || [ -z "$NEXTAUTH_URL" ]; then
+  echo "📝 Writing .env file (env vars missing from container environment)..."
+  cat > .env << 'EOF'
+# Velara Care — auto-generated defaults
+DATABASE_URL="file:./dev.db"
+NEXTAUTH_SECRET="super-secret-key-change-in-production-1234567890"
+NEXTAUTH_URL="https://velaracare.co"
+EOF
+fi
+
 # Print environment info (without secrets)
 echo "📋 Node: $(node -v)"
-echo "📋 NEXTAUTH_URL: ${NEXTAUTH_URL:-<not set>}"
+echo "📋 NEXTAUTH_URL: ${NEXTAUTH_URL:-https://velaracare.co}"
 echo "📋 DATABASE_URL: ${DATABASE_URL:-file:./dev.db}"
 
 # Generate Prisma client if missing (safety net for build-time generation)
