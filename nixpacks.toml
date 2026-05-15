@@ -5,7 +5,11 @@ nixPkgs = ["nodejs_22", "git"]
 cmds = ["npm ci --production=false"]
 
 [phases.build]
-cmds = ["prisma generate", "npm run build"]
+cmds = [
+  "echo 'DATABASE_URL=\"file:./dev.db\"' > .env",
+  "prisma generate",
+  "npm run build",
+]
 
 # Healthcheck to confirm the web server is alive
 [healthcheck]
