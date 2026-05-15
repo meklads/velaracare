@@ -1,20 +1,18 @@
 import { NextResponse } from "next/server";
-import { env } from "@/lib/env";
 
 /**
  * GET /api/health
  * Lightweight health check — returns runtime status of key services.
  * Does NOT reveal secrets or sensitive data.
  *
- * Uses env() helper to read values at runtime, bypassing Next.js build-time
- * env var inlining.
+ * Reads env vars via bracket notation to prevent build-time inlining.
  */
 export async function GET() {
-  const NEXTAUTH_URL = env("NEXTAUTH_URL");
-  const DATABASE_URL = env("DATABASE_URL");
-  const NEXTAUTH_SECRET = env("NEXTAUTH_SECRET");
+  const NEXTAUTH_URL = (process.env as any)["NEXTAUTH_URL"];
+  const DATABASE_URL = (process.env as any)["DATABASE_URL"];
+  const NEXTAUTH_SECRET = (process.env as any)["NEXTAUTH_SECRET"];
 
-  const checks: Record<string, string | boolean> = {
+  const checks: Record<string, string | boolean | number> = {
     status: "ok",
     timestamp: new Date().toISOString(),
     node: process.version,
