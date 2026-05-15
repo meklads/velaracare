@@ -1,5 +1,6 @@
 import { getToken } from "next-auth/jwt";
 import { NextRequest } from "next/server";
+import { env } from "./env";
 
 /**
  * Lightweight auth check for Edge Runtime (proxy.ts).
@@ -8,9 +9,11 @@ import { NextRequest } from "next/server";
  */
 export async function getEdgeSession(request: NextRequest) {
   try {
+    const secret = env("NEXTAUTH_SECRET");
+    if (!secret) return null;
     const token = await getToken({
       req: request,
-      secret: process.env.NEXTAUTH_SECRET,
+      secret: secret,
     });
     if (!token) return null;
     return {
