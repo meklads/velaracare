@@ -1,22 +1,39 @@
-# Use Node.js 22.12.0+ (Prisma 7.8.0 requires >=22.12)
+# ============================================
+# Velara Care — Dockerfile
+# ============================================
 FROM node:22.12-alpine AS base
 
+# Install dependencies only when needed
+FROM base AS deps
 WORKDIR /app
-
-# Copy package files
-COPY package*.json ./
-
-# Install dependencies
+RUN apk add --no-cache libc6-compat
+COPY package.json package-lock.json ./
 RUN npm ci
 
-# Copy all source files
+# Build the app
+FROM base AS builder
+WORKDIR /app
+COPY --from=deps /app/node_modules ./node_modules
 COPY . .
-
-# Build the Next.js app
+ENV NEXT_TELEMETRY_DISABLED=1
+ENV NODE_ENV=production
 RUN npm run build
 
-# Expose port
-EXPOSE 3000
+# Production runner
+FROM base AS runner
+WORKDIR /app
+ENV NODE_ENV=production
+ENV NEXT_TELEMETRY_DISABLED=1
 
-# Start the app
-CMD ["npm", "run", "start"]
+RUN addgroup --system --gid 1001 nodejs
+RUN adduser --system --uid 1001 nextjs
+
+COPY --from=builder /app/public ./public
+COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
+COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+
+USER nextjs
+EXPOSE 3000
+ENV PORT=3000
+ENV HOSTNAME="0.0.0.0"
+CMD ["node", "server.js"]
