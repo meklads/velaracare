@@ -86,6 +86,12 @@ export default async function AdminMealsPage() {
               >
                 👁️ معاينة المينيو
               </Link>
+              <Link
+                href="/dashboard/restaurant"
+                className="text-sm py-2.5 px-4 rounded-xl border border-[var(--surface-border)] text-secondary hover:text-primary hover:border-emerald/30 transition-all flex items-center gap-1.5"
+              >
+                🧑‍🍳 المطعم
+              </Link>
               <button className="btn-primary text-sm py-2.5 px-5">
                 <Plus className="ml-2 h-4 w-4" />
                 إضافة وجبة جديدة
