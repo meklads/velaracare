@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { auth } from "@/lib/auth";
+import { generatePredictions } from "@/lib/predictions";
 
 export const runtime = "nodejs";
 
@@ -30,11 +31,41 @@ export async function GET(req: Request) {
       return NextResponse.json(predictions);
     }
 
-    const predictions = await prisma.aIPrediction.findMany({
+    // Get existing predictions
+    let predictions = await prisma.aIPrediction.findMany({
       where: { userId: user.id },
       orderBy: { createdAt: "desc" },
       take: 10,
     });
+
+    // If no predictions exist, try to generate from latest HRA
+    if (predictions.length === 0) {
+      const latestHRA = await prisma.hRAResult.findFirst({
+        where: { userId: user.id },
+        orderBy: { completedAt: "desc" },
+      });
+
+      if (latestHRA?.responses) {
+        const responses = latestHRA.responses as any;
+        const computed = generatePredictions(responses);
+
+        // Save generated predictions
+        for (const pred of computed) {
+          const saved = await prisma.aIPrediction.create({
+            data: {
+              userId: user.id,
+              type: pred.type,
+              probability: pred.probability,
+              riskLevel: pred.riskLevel,
+              factors: pred.factors,
+              suggestions: pred.suggestions,
+              expiresAt: new Date(Date.now() + 90 * 24 * 60 * 60 * 1000),
+            },
+          });
+          predictions.push(saved);
+        }
+      }
+    }
 
     return NextResponse.json(predictions);
   } catch (error) {

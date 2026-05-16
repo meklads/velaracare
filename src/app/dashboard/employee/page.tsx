@@ -36,8 +36,10 @@ type WellnessData = {
 type AITip = {
   id: string;
   type: string;
+  probability: number;
   suggestions: string[];
   riskLevel: string;
+  factors?: Record<string, number>;
 };
 
 type MealPlan = {
@@ -244,14 +246,40 @@ export default function EmployeeDashboard() {
                   {tips.length === 0 ? (
                     <p className="text-sm text-secondary text-center py-4">لا توجد توصيات حالياً — أكمل التقييم الصحي أولاً</p>
                   ) : (
-                    tips.slice(0, 4).map((tip, i) => (
-                      <div key={tip.id || i} className="flex items-start gap-3 p-3 rounded-xl bg-white/[0.03] hover:bg-white/[0.05] transition-colors">
-                        <div className="p-1.5 rounded-lg bg-white/[0.05]">
-                          <Brain className={`h-4 w-4 ${tip.riskLevel === "high" ? "text-amber-400" : "text-emerald-400"}`} />
+                    tips.slice(0, 4).map((tip, i) => {
+                      const riskColors: Record<string, string> = {
+                        high: "border-r-2 border-amber-500 bg-amber-500/5",
+                        moderate: "border-r-2 border-orange-500 bg-orange-500/5",
+                        low: "border-r-2 border-emerald-500 bg-emerald-500/5",
+                      };
+                      const probPct = Math.round((tip.probability || 0) * 100);
+                      return (
+                        <div key={tip.id || i} className={`flex items-start gap-3 p-3 rounded-xl ${riskColors[tip.riskLevel] || "bg-white/[0.03]"} transition-colors`}>
+                          <div className="p-1.5 rounded-lg bg-white/[0.05] shrink-0">
+                            <Brain className={`h-4 w-4 ${tip.riskLevel === "high" || tip.riskLevel === "moderate" ? "text-amber-400" : "text-emerald-400"}`} />
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-center gap-2 mb-0.5">
+                              <p className="text-xs font-semibold text-primary">
+                                {tip.type === "diabetes" ? "السكري" :
+                                 tip.type === "heart_disease" ? "القلب" :
+                                 tip.type === "burnout" ? "الاحتراق النفسي" :
+                                 tip.type === "obesity" ? "السمنة" :
+                                 tip.type === "productivity" ? "الإنتاجية" : tip.type}
+                              </p>
+                              <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded ${
+                                tip.riskLevel === "high" ? "bg-amber-500/20 text-amber-400" :
+                                tip.riskLevel === "moderate" ? "bg-orange-500/20 text-orange-400" :
+                                "bg-emerald-500/20 text-emerald-400"
+                              }`}>
+                                {probPct}%
+                              </span>
+                            </div>
+                            <p className="text-sm text-secondary leading-relaxed">{tip.suggestions?.[0] || `توصية: تحسين مستوى ${tip.type}`}</p>
+                          </div>
                         </div>
-                        <p className="text-sm text-secondary leading-relaxed">{tip.suggestions?.[0] || `توصية: تحسين مستوى ${tip.type}`}</p>
-                      </div>
-                    ))
+                      );
+                    })
                   )}
                 </div>
               </div>

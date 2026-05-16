@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { auth } from "@/lib/auth";
+import { generatePredictions } from "@/lib/predictions";
 
 export const runtime = "nodejs";
 
@@ -52,7 +53,23 @@ export async function POST(req: Request) {
       },
     });
 
-    return NextResponse.json(result, { status: 201 });
+    // Auto-generate AI predictions from HRA responses
+    const predictions = generatePredictions(responses);
+    for (const pred of predictions) {
+      await prisma.aIPrediction.create({
+        data: {
+          userId: user.id,
+          type: pred.type,
+          probability: pred.probability,
+          riskLevel: pred.riskLevel,
+          factors: pred.factors,
+          suggestions: pred.suggestions,
+          expiresAt: new Date(Date.now() + 90 * 24 * 60 * 60 * 1000),
+        },
+      });
+    }
+
+    return NextResponse.json({ ...result, predictionsGenerated: predictions.length }, { status: 201 });
   } catch (error) {
     console.error("HRA POST error:", error);
     return NextResponse.json({ error: "خطأ في حفظ التقييم" }, { status: 500 });
