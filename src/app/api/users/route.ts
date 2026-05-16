@@ -46,6 +46,12 @@ export async function GET(req: Request) {
     if (department) whereClause.department = department;
     if (role) whereClause.role = role;
 
+    const skipParam = url.searchParams.get("skip");
+    const takeParam = url.searchParams.get("take");
+    const usePagination = skipParam !== null || takeParam !== null;
+    const skip = parseInt(skipParam || "0");
+    const take = Math.min(parseInt(takeParam || "100"), 200);
+
     const users = await prisma.user.findMany({
       where: whereClause,
       select: {
@@ -62,8 +68,14 @@ export async function GET(req: Request) {
         wellnessScore: { select: { score: true, riskLevel: true } },
       },
       orderBy: { createdAt: "desc" },
-      take: 100,
+      skip: usePagination ? skip : undefined,
+      take: usePagination ? take : 200,
     });
+
+    if (usePagination) {
+      const total = await prisma.user.count({ where: whereClause });
+      return NextResponse.json({ users, total, skip, take });
+    }
 
     return NextResponse.json(users);
   } catch (error) {

@@ -48,12 +48,25 @@ export default function AdminEmployeesPage() {
   const [filterRole, setFilterRole] = useState("all");
   const [showAddModal, setShowAddModal] = useState(false);
   const [togglingId, setTogglingId] = useState<string | null>(null);
+  const [page, setPage] = useState(0);
+  const [totalCount, setTotalCount] = useState(0);
+  const pageSize = 25;
 
   useEffect(() => {
     async function load() {
       try {
-        const res = await fetch("/api/users");
-        if (res.ok) setEmployees(await res.json());
+        const params = new URLSearchParams({ skip: String(page * pageSize), take: String(pageSize) });
+        const res = await fetch(`/api/users?${params}`);
+        if (res.ok) {
+          const data = await res.json();
+          if (data.users) {
+            setEmployees(data.users);
+            setTotalCount(data.total);
+          } else {
+            setEmployees(data);
+            setTotalCount(data.length);
+          }
+        }
       } catch (e) {
         console.error("Failed to load employees", e);
       } finally {
@@ -61,7 +74,7 @@ export default function AdminEmployeesPage() {
       }
     }
     load();
-  }, []);
+  }, [page]);
 
   async function toggleActive(emp: Employee) {
     setTogglingId(emp.id);
@@ -94,7 +107,7 @@ export default function AdminEmployeesPage() {
   });
 
   const stats = {
-    total: employees.length,
+    total: totalCount,
     active: employees.filter((e) => e.isActive).length,
     highRisk: employees.filter((e) => e.wellnessScore?.riskLevel === "high" || e.wellnessScore?.riskLevel === "critical").length,
     avgScore: employees.length
@@ -282,8 +295,41 @@ export default function AdminEmployeesPage() {
             )}
           </div>
 
-          <div className="mt-6 text-center text-xs text-secondary">
-            عرض {filtered.length} من {employees.length} موظف
+          {/* Pagination */}
+          <div className="mt-6 flex flex-wrap items-center justify-between gap-4">
+            <div className="text-xs text-secondary">
+              عرض {Math.min((page + 1) * pageSize, totalCount)} من {totalCount} موظف
+              {filtered.length !== totalCount && ` (${filtered.length} بعد التصفية)`}
+            </div>
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => setPage((p) => Math.max(0, p - 1))}
+                disabled={page === 0}
+                className="text-xs py-1.5 px-3 rounded-lg border border-[var(--surface-border)] text-secondary hover:text-primary transition-all disabled:opacity-30"
+              >
+                السابق
+              </button>
+              {Array.from({ length: Math.min(Math.ceil(totalCount / pageSize), 5) }, (_, i) => (
+                <button
+                  key={i}
+                  onClick={() => setPage(i)}
+                  className={`text-xs py-1.5 px-3 rounded-lg transition-all ${
+                    page === i
+                      ? "bg-emerald text-white"
+                      : "border border-[var(--surface-border)] text-secondary hover:text-primary"
+                  }`}
+                >
+                  {i + 1}
+                </button>
+              ))}
+              <button
+                onClick={() => setPage((p) => Math.min(Math.ceil(totalCount / pageSize) - 1, p + 1))}
+                disabled={page >= Math.ceil(totalCount / pageSize) - 1}
+                className="text-xs py-1.5 px-3 rounded-lg border border-[var(--surface-border)] text-secondary hover:text-primary transition-all disabled:opacity-30"
+              >
+                التالي
+              </button>
+            </div>
           </div>
         </div>
       </main>
