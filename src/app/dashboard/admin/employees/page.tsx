@@ -8,6 +8,7 @@ import {
   Loader2, ChevronLeft, Users, Search, Plus, Filter,
   Mail, Phone, Building, Shield, MoreHorizontal, CheckCircle, XCircle, UserPlus
 } from "lucide-react";
+import { SkeletonKPIGrid, SkeletonTable, SkeletonBlock } from "@/components/ui/skeleton";
 
 type Employee = {
   id: string;
@@ -117,8 +118,15 @@ export default function AdminEmployeesPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-surface-mid">
-        <Loader2 className="h-8 w-8 text-emerald animate-spin" />
+      <div className="min-h-screen bg-surface-mid pt-24">
+        <div className="container-shade py-6">
+          <div className="fade-in-up mb-6">
+            <SkeletonBlock width="200px" height="28px" />
+            <div className="mt-2"><SkeletonBlock width="140px" height="14px" /></div>
+          </div>
+          <SkeletonKPIGrid count={4} />
+          <div className="mt-6"><SkeletonTable rows={8} cols={7} /></div>
+        </div>
       </div>
     );
   }

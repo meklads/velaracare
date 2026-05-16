@@ -4,6 +4,7 @@ import { useEffect, useState, useCallback } from "react";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { Loader2, Users, Clock, CheckCircle, XCircle, Coffee, TrendingUp, RefreshCw, ShoppingBag, Wifi, WifiOff } from "lucide-react";
+import { SkeletonKPIGrid, SkeletonCard, SkeletonBlock } from "@/components/ui/skeleton";
 import { useSSE } from "@/lib/useSSE";
 
 type OrderUser = { firstName: string; lastName: string; department: string | null };
@@ -100,8 +101,12 @@ export default function RestaurantDashboard() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-surface-mid">
-        <Loader2 className="h-8 w-8 text-emerald animate-spin" />
+      <div className="min-h-screen bg-surface-mid pt-24">
+        <div className="container-shade py-6">
+          <div className="mb-6"><SkeletonBlock width="200px" height="28px" /></div>
+          <SkeletonKPIGrid count={3} />
+          <div className="mt-6"><SkeletonCard lines={5} /></div>
+        </div>
       </div>
     );
   }

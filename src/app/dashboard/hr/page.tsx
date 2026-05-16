@@ -5,6 +5,7 @@ import Link from "next/link";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { Loader2, Users, Heart, TrendingDown, Apple, Calendar, AlertTriangle, BarChart3, UserCheck, Activity, Brain } from "lucide-react";
+import { SkeletonDashboard } from "@/components/ui/skeleton";
 
 type User = {
   id: string;
@@ -59,11 +60,7 @@ export default function HRDashboard() {
   })).sort((a, b) => (b.score || 0) - (a.score || 0));
 
   if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-surface-mid">
-        <Loader2 className="h-8 w-8 text-emerald animate-spin" />
-      </div>
-    );
+    return <SkeletonDashboard type="hr" />;
   }
 
   return (

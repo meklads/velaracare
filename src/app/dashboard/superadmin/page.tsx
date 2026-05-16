@@ -5,6 +5,7 @@ import Link from "next/link";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { Loader2, Building2, Users, CreditCard, TrendingUp, Activity, Shield, Globe, CalendarDays, Settings, ArrowUpRight } from "lucide-react";
+import { SkeletonDashboard } from "@/components/ui/skeleton";
 
 type User = { id: string; firstName: string; lastName: string; email: string; role: string; isActive: boolean; createdAt: string; companyId: string | null; };
 type Company = { id: string; name: string; arabicName?: string; size: number; plan: string; status: string; };
@@ -41,11 +42,7 @@ export default function SuperAdminDashboard() {
     proCompanies: companies.filter((c) => c.plan === "professional").length,
   };
 
-  if (loading) return (
-    <div className="min-h-screen flex items-center justify-center bg-surface-mid">
-      <Loader2 className="h-8 w-8 text-emerald animate-spin" />
-    </div>
-  );
+  if (loading) return <SkeletonDashboard type="admin" />;
 
   return (
     <>

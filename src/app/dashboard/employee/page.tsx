@@ -21,6 +21,7 @@ import {
   Zap,
   Loader2,
 } from "lucide-react";
+import { SkeletonDashboard } from "@/components/ui/skeleton";
 
 type WellnessData = {
   score: number;
@@ -133,11 +134,7 @@ export default function EmployeeDashboard() {
   const trendIcon = wellness?.trend === "up" ? "+" : wellness?.trend === "down" ? "-" : "=";
 
   if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-surface-deeper">
-        <Loader2 className="h-8 w-8 text-emerald animate-spin" />
-      </div>
-    );
+    return <SkeletonDashboard type="employee" />;
   }
 
   return (
