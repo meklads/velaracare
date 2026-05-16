@@ -144,7 +144,7 @@ export default function EmployeeDashboard() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 
           {/* ── Welcome Header ── */}
-          <div className="flex items-center justify-between mb-8 fade-in-up">
+          <div className="flex items-center justify-between mb-5 fade-in-up">
             <div>
               <h1 className="text-2xl font-bold text-primary">مرحباً، {userName} 👋</h1>
               <p className="text-secondary text-sm mt-1">هذه حالتك الصحية اليوم</p>
@@ -156,6 +156,40 @@ export default function EmployeeDashboard() {
               </div>
             </div>
           </div>
+
+          {/* ── Smart Next Action ── */}
+          {wellness && (
+            <div className="fade-in-up mb-5">
+              {!wellness?.trendHistory || wellness.trendHistory.length === 0 ? (
+                <div className="glass-card p-4 flex items-center gap-3 border-r-4 border-amber-500">
+                  <span className="text-2xl">📋</span>
+                  <div className="flex-1">
+                    <p className="text-sm font-semibold text-primary">التقييم الصحي</p>
+                    <p className="text-xs text-secondary">لم تقم بإجراء التقييم الصحي بعد — ابدأ الآن للحصول على توصيات مخصصة</p>
+                  </div>
+                  <Link href="/hra" className="btn-primary text-xs py-2 px-5 shrink-0">تقييم الآن</Link>
+                </div>
+              ) : score < 60 ? (
+                <div className="glass-card p-4 flex items-center gap-3 border-r-4 border-red-500">
+                  <span className="text-2xl">🩺</span>
+                  <div className="flex-1">
+                    <p className="text-sm font-semibold text-primary">تحتاج إلى تحسين</p>
+                    <p className="text-xs text-secondary">درجة عافيتك منخفضة — نوصي بحجز استشارة مع أخصائي التغذية</p>
+                  </div>
+                  <Link href="/dashboard/employee/consultations" className="btn-primary text-xs py-2 px-5 shrink-0">حجز استشارة</Link>
+                </div>
+              ) : consultations.length === 0 && mealPlans.length === 0 ? (
+                <div className="glass-card p-4 flex items-center gap-3 border-r-4 border-emerald-500">
+                  <span className="text-2xl">🍽️</span>
+                  <div className="flex-1">
+                    <p className="text-sm font-semibold text-primary">ابدأ يومك بوجبة صحية</p>
+                    <p className="text-xs text-secondary">تصفح قائمة الوجبات الذكية المخصصة حسب حالتك الصحية</p>
+                  </div>
+                  <Link href="/dashboard/employee/meals" className="btn-primary text-xs py-2 px-5 shrink-0">اطلب وجبة</Link>
+                </div>
+              ) : null}
+            </div>
+          )}
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
 
@@ -382,19 +416,61 @@ export default function EmployeeDashboard() {
                   <Award className="h-5 w-5 text-amber-400" />
                   <h3 className="text-base font-bold text-primary">إنجازاتك</h3>
                 </div>
-                <div className="grid grid-cols-3 gap-3 text-center">
-                  {[
-                    { icon: Heart, label: "الالتزام", value: wellness ? `${Math.min(10, Math.round(score / 10))}/١٠` : "٨/١٠", color: "text-rose-400" },
-                    { icon: Zap, label: "التقييم", value: wellness ? "مكتمل" : "غير مكتمل", color: wellness ? "text-emerald-400" : "text-amber-400" },
-                    { icon: Award, label: "النقاط", value: wellness ? `${score * 15}` : "١,٢٤٠", color: "text-amber-400" },
-                  ].map((item) => (
-                    <div key={item.label} className="p-3 rounded-xl bg-white/[0.03]">
-                      <item.icon className={`h-4 w-4 ${item.color} mx-auto mb-1`} />
-                      <p className="text-xs font-semibold text-primary">{item.value}</p>
-                      <p className="text-[9px] text-muted">{item.label}</p>
+                {wellness ? (
+                  <>
+                    <div className="grid grid-cols-3 gap-3 text-center mb-3">
+                      {[
+                        { icon: Heart, label: "الالتزام", value: `${Math.min(10, Math.round(score / 10))}/١٠`, color: "text-rose-400" },
+                        { icon: Zap, label: "التقييم", value: "مكتمل", color: "text-emerald-400" },
+                        { icon: Award, label: "النقاط", value: `${score * 15}`, color: "text-amber-400" },
+                      ].map((item) => (
+                        <div key={item.label} className="p-3 rounded-xl bg-white/[0.03]">
+                          <item.icon className={`h-4 w-4 ${item.color} mx-auto mb-1`} />
+                          <p className="text-xs font-semibold text-primary">{item.value}</p>
+                          <p className="text-[9px] text-muted">{item.label}</p>
+                        </div>
+                      ))}
                     </div>
-                  ))}
-                </div>
+                    {/* Achievement badges */}
+                    <div className="flex flex-wrap gap-1.5 justify-center pt-2 border-t border-white/5">
+                      {score >= 80 && (
+                        <span className="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                          🏆 عافية ممتازة
+                        </span>
+                      )}
+                      {score >= 60 && score < 80 && (
+                        <span className="text-[10px] px-2 py-0.5 rounded-full bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">
+                          💪 في تقدم مستمر
+                        </span>
+                      )}
+                      {wellness?.sleepScore >= 80 && (
+                        <span className="text-[10px] px-2 py-0.5 rounded-full bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">
+                          🌙 نوم مثالي
+                        </span>
+                      )}
+                      {wellness?.activityScore >= 80 && (
+                        <span className="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                          ⚡ نشاط عالي
+                        </span>
+                      )}
+                      {wellness?.stressScore <= 30 && (
+                        <span className="text-[10px] px-2 py-0.5 rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/20">
+                          🧘 هدوء تام
+                        </span>
+                      )}
+                      {wellness?.nutritionScore >= 80 && (
+                        <span className="text-[10px] px-2 py-0.5 rounded-full bg-green-500/10 text-green-400 border border-green-500/20">
+                          🥗 تغذية متوازنة
+                        </span>
+                      )}
+                    </div>
+                  </>
+                ) : (
+                  <div className="text-center py-4 text-secondary">
+                    <Award className="h-8 w-8 mx-auto mb-2 opacity-30" />
+                    <p className="text-xs">أكمل التقييم الصحي لفتح الإنجازات</p>
+                  </div>
+                )}
               </div>
             </div>
           </div>
