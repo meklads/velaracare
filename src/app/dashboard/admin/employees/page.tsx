@@ -6,7 +6,7 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import {
   Loader2, ChevronLeft, Users, Search, Plus, Filter,
-  Mail, Phone, Building, Shield, MoreHorizontal, CheckCircle, XCircle, UserPlus
+  Mail, Phone, Building, Shield, MoreHorizontal, CheckCircle, XCircle, UserPlus, Download
 } from "lucide-react";
 import { SkeletonKPIGrid, SkeletonTable, SkeletonBlock } from "@/components/ui/skeleton";
 
@@ -116,6 +116,23 @@ export default function AdminEmployeesPage() {
       : 0,
   };
 
+  function exportToCSV() {
+    const headers = ["الاسم الأول", "الاسم الأخير", "البريد", "القسم", "المسمى", "الدور", "الحالة", "درجة العافية", "مستوى المخاطر"];
+    const rows = filtered.map((e) => [
+      e.firstName, e.lastName, e.email, e.department || "", e.position || "",
+      e.role, e.isActive ? "نشط" : "غير نشط",
+      e.wellnessScore?.score ?? "", e.wellnessScore?.riskLevel ?? "",
+    ]);
+    const csv = [headers.join(","), ...rows.map((r) => r.map((c) => `"${c}"`).join(","))].join("\n");
+    const blob = new Blob(["﻿" + csv], { type: "text/csv;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `employees-${new Date().toISOString().split("T")[0]}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+
   if (loading) {
     return (
       <div className="min-h-screen bg-surface-mid pt-24">
@@ -152,13 +169,22 @@ export default function AdminEmployeesPage() {
               </h1>
               <p className="text-secondary mt-1">جميع موظفي الشركة — {employees.length} موظف</p>
             </div>
-            <button
-              onClick={() => setShowAddModal(true)}
-              className="btn-primary text-sm py-2.5 px-5"
-            >
-              <UserPlus className="ml-2 h-4 w-4" />
-              إضافة موظف
-            </button>
+            <div className="flex items-center gap-2">
+              <button
+                onClick={exportToCSV}
+                className="text-sm py-2.5 px-4 rounded-xl border border-[var(--surface-border)] text-secondary hover:text-primary hover:border-emerald/30 transition-all flex items-center gap-1.5"
+              >
+                <Download className="h-4 w-4" />
+                تصدير CSV
+              </button>
+              <button
+                onClick={() => setShowAddModal(true)}
+                className="btn-primary text-sm py-2.5 px-5"
+              >
+                <UserPlus className="ml-2 h-4 w-4" />
+                إضافة موظف
+              </button>
+            </div>
           </div>
 
           {/* Stats */}
