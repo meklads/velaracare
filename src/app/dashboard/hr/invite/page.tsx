@@ -1,11 +1,44 @@
 "use client";
 
 import Link from "next/link";
+import { useState } from "react";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
-import { ChevronLeft, Mail } from "lucide-react";
+import { ChevronLeft, Mail, Loader2, CheckCircle } from "lucide-react";
 
 export default function InvitePage() {
+  const [form, setForm] = useState({ firstName: "", lastName: "", email: "", department: "", position: "" });
+  const [loading, setLoading] = useState(false);
+  const [msg, setMsg] = useState("");
+
+  function update(field: string, value: string) {
+    setForm((p) => ({ ...p, [field]: value }));
+  }
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    setLoading(true);
+    setMsg("");
+    try {
+      const res = await fetch("/api/users", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+      if (res.ok) {
+        setMsg("✅ تم إرسال الدعوة بنجاح!");
+        setForm({ firstName: "", lastName: "", email: "", department: "", position: "" });
+      } else {
+        const err = await res.json();
+        setMsg(`❌ ${err.error || "حدث خطأ"}`);
+      }
+    } catch {
+      setMsg("❌ حدث خطأ في الاتصال");
+    } finally {
+      setLoading(false);
+    }
+  }
+
   return (
     <>
       <Header />
@@ -20,39 +53,79 @@ export default function InvitePage() {
           </div>
 
           <div className="max-w-2xl mx-auto">
+            {msg && (
+              <div className={`mb-4 rounded-xl px-5 py-3 text-sm text-center font-medium ${
+                msg.includes("✅") ? "bg-emerald-500/10 text-emerald-600 border border-emerald-500/20" : "bg-red-500/10 text-red-500 border border-red-500/20"
+              }`}>
+                {msg}
+              </div>
+            )}
             <div className="shade-card p-8">
-              <form className="space-y-5" onSubmit={(e) => e.preventDefault()}>
+              <form onSubmit={handleSubmit} className="space-y-5">
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-2">
                     <label className="text-sm font-medium text-primary">الاسم الأول</label>
-                    <input type="text" placeholder="محمد" className="w-full rounded-xl border border-[var(--surface-border)] bg-surface-mid px-4 py-3 text-sm" />
+                    <input
+                      type="text"
+                      value={form.firstName}
+                      onChange={(e) => update("firstName", e.target.value)}
+                      placeholder="محمد"
+                      required
+                      className="w-full rounded-xl border border-[var(--surface-border)] bg-surface-mid px-4 py-3 text-sm text-primary placeholder:text-secondary focus:outline-none focus:ring-2 focus:ring-emerald-ai/30"
+                    />
                   </div>
                   <div className="space-y-2">
                     <label className="text-sm font-medium text-primary">الاسم الأخير</label>
-                    <input type="text" placeholder="العلي" className="w-full rounded-xl border border-[var(--surface-border)] bg-surface-mid px-4 py-3 text-sm" />
+                    <input
+                      type="text"
+                      value={form.lastName}
+                      onChange={(e) => update("lastName", e.target.value)}
+                      placeholder="العلي"
+                      required
+                      className="w-full rounded-xl border border-[var(--surface-border)] bg-surface-mid px-4 py-3 text-sm text-primary placeholder:text-secondary focus:outline-none focus:ring-2 focus:ring-emerald-ai/30"
+                    />
                   </div>
                 </div>
 
                 <div className="space-y-2">
                   <label className="text-sm font-medium text-primary">البريد الإلكتروني للشركة</label>
-                  <input type="email" placeholder="employee@company.com" dir="ltr" className="w-full rounded-xl border border-[var(--surface-border)] bg-surface-mid px-4 py-3 text-sm text-left" />
+                  <input
+                    type="email"
+                    value={form.email}
+                    onChange={(e) => update("email", e.target.value)}
+                    placeholder="employee@company.com"
+                    dir="ltr"
+                    required
+                    className="w-full rounded-xl border border-[var(--surface-border)] bg-surface-mid px-4 py-3 text-sm text-left text-primary placeholder:text-secondary focus:outline-none focus:ring-2 focus:ring-emerald-ai/30"
+                  />
                 </div>
 
-                <div className="space-y-2">
-                  <label className="text-sm font-medium text-primary">القسم</label>
-                  <select className="w-full rounded-xl border border-[var(--surface-border)] bg-surface-mid px-4 py-3 text-sm">
-                    <option>تقنية المعلومات</option>
-                    <option>الموارد البشرية</option>
-                    <option>المبيعات</option>
-                    <option>التسويق</option>
-                    <option>الإنتاج</option>
-                    <option>الإدارة</option>
-                  </select>
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-primary">القسم</label>
+                    <input
+                      type="text"
+                      value={form.department}
+                      onChange={(e) => update("department", e.target.value)}
+                      placeholder="تقنية المعلومات"
+                      className="w-full rounded-xl border border-[var(--surface-border)] bg-surface-mid px-4 py-3 text-sm text-primary placeholder:text-secondary focus:outline-none focus:ring-2 focus:ring-emerald-ai/30"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-primary">المسمى الوظيفي</label>
+                    <input
+                      type="text"
+                      value={form.position}
+                      onChange={(e) => update("position", e.target.value)}
+                      placeholder="مطور برمجيات"
+                      className="w-full rounded-xl border border-[var(--surface-border)] bg-surface-mid px-4 py-3 text-sm text-primary placeholder:text-secondary focus:outline-none focus:ring-2 focus:ring-emerald-ai/30"
+                    />
+                  </div>
                 </div>
 
-                <button type="submit" className="btn-primary w-full justify-center">
-                  <Mail className="ml-2 h-4 w-4" />
-                  إرسال دعوة
+                <button type="submit" disabled={loading} className="btn-primary w-full justify-center text-sm disabled:opacity-60">
+                  {loading ? <Loader2 className="ml-2 h-4 w-4 animate-spin" /> : <Mail className="ml-2 h-4 w-4" />}
+                  {loading ? "جاري الإرسال..." : "إرسال دعوة"}
                 </button>
               </form>
             </div>

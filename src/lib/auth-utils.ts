@@ -27,6 +27,11 @@ export function isAuthorizedForRoute(role: string | undefined, pathname: string)
     pathname === "/dashboard/restaurant" ||
     pathname.startsWith("/dashboard/restaurant/")
   )) return true;
+  // Allow HR to access admin employees page
+  if (role === "HR" && (
+    pathname === "/dashboard/admin/employees" ||
+    pathname.startsWith("/dashboard/admin/employees/")
+  )) return true;
   return false;
 }
 

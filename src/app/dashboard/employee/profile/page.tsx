@@ -50,6 +50,8 @@ export default function ProfilePage() {
 
       if (res.ok) {
         setSaved(true);
+        // Update session with new name
+        updateSession({ name: `${form.firstName} ${form.lastName}` });
         setTimeout(() => setSaved(false), 3000);
       }
     } catch {

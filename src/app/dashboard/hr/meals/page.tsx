@@ -1,15 +1,42 @@
-import type { Metadata } from "next";
+"use client";
+
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
-import { ChevronLeft, Apple, TrendingUp } from "lucide-react";
+import { Loader2, ChevronLeft, Apple, TrendingUp, UtensilsCrossed } from "lucide-react";
 
-export const metadata: Metadata = {
-  title: "الوجبات",
-  description: "إدارة الوجبات الصحية",
-};
+type MealPlan = { id: string; name: string; description: string | null; type: string; calories: number | null; isActive: boolean; _count: { orders: number } };
 
 export default function HRMealsPage() {
+  const [plans, setPlans] = useState<MealPlan[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function load() {
+      try {
+        const res = await fetch("/api/meals");
+        if (res.ok) setPlans(await res.json());
+      } catch (e) {
+        console.error("Failed to load meals", e);
+      } finally {
+        setLoading(false);
+      }
+    }
+    load();
+  }, []);
+
+  const totalOrders = plans.reduce((s, p) => s + p._count.orders, 0);
+  const avgCalories = plans.length ? Math.round(plans.reduce((s, p) => s + (p.calories || 0), 0) / plans.length) : 0;
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-surface-mid">
+        <Loader2 className="h-8 w-8 text-emerald animate-spin" />
+      </div>
+    );
+  }
+
   return (
     <>
       <Header />
@@ -25,9 +52,9 @@ export default function HRMealsPage() {
 
           <div className="grid md:grid-cols-3 gap-4 mb-8">
             {[
-              { label: "طلبات اليوم", value: "142", change: "+12%" },
-              { label: "متوسط السعرات", value: "1,850", change: "kcal" },
-              { label: "رضا الموظفين", value: "94%", change: "+5%" },
+              { label: "إجمالي الطلبات", value: totalOrders, change: `${plans.length} خطة` },
+              { label: "متوسط السعرات", value: avgCalories ? `${avgCalories.toLocaleString()}` : "—", change: "kcal" },
+              { label: "الخطط النشطة", value: plans.filter((p) => p.isActive).length, change: `من أصل ${plans.length}` },
             ].map((s) => (
               <div key={s.label} className="shade-card p-5">
                 <p className="text-sm text-secondary">{s.label}</p>
@@ -39,25 +66,24 @@ export default function HRMealsPage() {
 
           <div className="shade-card p-6">
             <h3 className="font-bold text-primary mb-4">الوجبات المتاحة</h3>
+            {plans.length === 0 ? (
+              <p className="text-sm text-secondary text-center py-6">لا توجد وجبات متاحة بعد</p>
+            ) : (
             <div className="grid md:grid-cols-2 gap-4">
-              {[
-                { name: "وجبة السكري", desc: "وجبة منخفضة السكريات", orders: 24 },
-                { name: "وجبة تخفيف الوزن", desc: "وجبة منخفضة السعرات", orders: 36 },
-                { name: "وجبة الأداء العالي", desc: "غنية بالبروتين", orders: 18 },
-                { name: "وجبة عامة", desc: "وجبة متوازنة", orders: 45 },
-              ].map((m) => (
-                <div key={m.name} className="flex items-center justify-between p-4 rounded-xl bg-[var(--white-warm)]">
+              {plans.map((m) => (
+                <div key={m.id} className="flex items-center justify-between p-4 rounded-xl bg-[var(--white-warm)]">
                   <div className="flex items-center gap-3">
-                    <Apple className="h-6 w-6 text-emerald" />
+                    <UtensilsCrossed className="h-6 w-6 text-emerald" />
                     <div>
                       <p className="font-semibold text-primary">{m.name}</p>
-                      <p className="text-xs text-secondary">{m.desc}</p>
+                      <p className="text-xs text-secondary">{m.description || m.type}</p>
                     </div>
                   </div>
-                  <span className="text-sm font-semibold text-primary">{m.orders} طلب</span>
+                  <span className="text-sm font-semibold text-primary">{m._count.orders} طلب</span>
                 </div>
               ))}
             </div>
+            )}
           </div>
         </div>
       </main>

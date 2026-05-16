@@ -1,11 +1,58 @@
 "use client";
 
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
-import { ChevronLeft, Calendar } from "lucide-react";
+import { ChevronLeft, Calendar, Loader2, CheckCircle } from "lucide-react";
+
+type User = { id: string; firstName: string; lastName: string; email: string; role: string; department: string | null };
+
+const typeOptions = [
+  { value: "nutrition", label: "تغذية علاجية" },
+  { value: "fitness", label: "لياقة بدنية" },
+  { value: "mental", label: "استشارة نفسية" },
+  { value: "general", label: "عام" },
+];
 
 export default function SchedulePage() {
+  const [users, setUsers] = useState<User[]>([]);
+  const [form, setForm] = useState({ patientId: "", type: "nutrition", scheduledAt: "", notes: "" });
+  const [loading, setLoading] = useState(false);
+  const [msg, setMsg] = useState("");
+
+  useEffect(() => {
+    fetch("/api/users")
+      .then((r) => r.ok && r.json())
+      .then((data) => setUsers(data || []))
+      .catch(() => {});
+  }, []);
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    if (!form.patientId || !form.scheduledAt) return;
+    setLoading(true);
+    setMsg("");
+    try {
+      const res = await fetch("/api/consultations", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+      if (res.ok) {
+        setMsg("✅ تم جدولة الاستشارة بنجاح!");
+        setForm({ patientId: "", type: "nutrition", scheduledAt: "", notes: "" });
+      } else {
+        const err = await res.json();
+        setMsg(`❌ ${err.error || "حدث خطأ"}`);
+      }
+    } catch {
+      setMsg("❌ حدث خطأ في الاتصال");
+    } finally {
+      setLoading(false);
+    }
+  }
+
   return (
     <>
       <Header />
@@ -20,43 +67,70 @@ export default function SchedulePage() {
           </div>
 
           <div className="max-w-2xl mx-auto">
+            {msg && (
+              <div className={`mb-4 rounded-xl px-5 py-3 text-sm text-center font-medium ${
+                msg.includes("✅") ? "bg-emerald-500/10 text-emerald-600 border border-emerald-500/20" : "bg-red-500/10 text-red-500 border border-red-500/20"
+              }`}>
+                {msg}
+              </div>
+            )}
             <div className="shade-card p-8">
-              <form className="space-y-5" onSubmit={(e) => e.preventDefault()}>
+              <form onSubmit={handleSubmit} className="space-y-5">
                 <div className="space-y-2">
                   <label className="text-sm font-medium text-primary">الموظف</label>
-                  <select className="w-full rounded-xl border border-[var(--surface-border)] bg-surface-mid px-4 py-3 text-sm">
-                    <option>اختر موظفاً...</option>
-                    <option>محمد الأحمد</option>
-                    <option>سارة العلي</option>
-                    <option>خالد البدر</option>
-                    <option>نورة العنزي</option>
+                  <select
+                    value={form.patientId}
+                    onChange={(e) => setForm((p) => ({ ...p, patientId: e.target.value }))}
+                    required
+                    className="w-full rounded-xl border border-[var(--surface-border)] bg-surface-mid px-4 py-3 text-sm text-primary focus:outline-none focus:ring-2 focus:ring-emerald-ai/30"
+                  >
+                    <option value="">اختر موظفاً...</option>
+                    {users.filter((u) => u.role === "EMPLOYEE").map((u) => (
+                      <option key={u.id} value={u.id}>{u.firstName} {u.lastName} {u.department ? `— ${u.department}` : ""}</option>
+                    ))}
                   </select>
                 </div>
 
                 <div className="space-y-2">
                   <label className="text-sm font-medium text-primary">نوع الاستشارة</label>
-                  <select className="w-full rounded-xl border border-[var(--surface-border)] bg-surface-mid px-4 py-3 text-sm">
-                    <option>تغذية علاجية</option>
-                    <option>لياقة بدنية</option>
-                    <option>استشارة نفسية</option>
-                    <option>تغذية رياضية</option>
+                  <select
+                    value={form.type}
+                    onChange={(e) => setForm((p) => ({ ...p, type: e.target.value }))}
+                    className="w-full rounded-xl border border-[var(--surface-border)] bg-surface-mid px-4 py-3 text-sm text-primary focus:outline-none focus:ring-2 focus:ring-emerald-ai/30"
+                  >
+                    {typeOptions.map((t) => (
+                      <option key={t.value} value={t.value}>{t.label}</option>
+                    ))}
                   </select>
                 </div>
 
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-2">
                     <label className="text-sm font-medium text-primary">التاريخ</label>
-                    <input type="date" className="w-full rounded-xl border border-[var(--surface-border)] bg-surface-mid px-4 py-3 text-sm" />
+                    <input
+                      type="date"
+                      value={form.scheduledAt.split("T")[0] || ""}
+                      onChange={(e) => setForm((p) => ({ ...p, scheduledAt: e.target.value }))}
+                      min={new Date().toISOString().split("T")[0]}
+                      required
+                      className="w-full rounded-xl border border-[var(--surface-border)] bg-surface-mid px-4 py-3 text-sm text-primary focus:outline-none focus:ring-2 focus:ring-emerald-ai/30"
+                    />
                   </div>
                   <div className="space-y-2">
                     <label className="text-sm font-medium text-primary">الوقت</label>
-                    <input type="time" className="w-full rounded-xl border border-[var(--surface-border)] bg-surface-mid px-4 py-3 text-sm" />
+                    <input
+                      type="time"
+                      value={form.scheduledAt.split("T")[1]?.slice(0, 5) || ""}
+                      onChange={(e) => setForm((p) => ({ ...p, scheduledAt: `${new Date().toISOString().split("T")[0]}T${e.target.value}:00` }))}
+                      required
+                      className="w-full rounded-xl border border-[var(--surface-border)] bg-surface-mid px-4 py-3 text-sm text-primary focus:outline-none focus:ring-2 focus:ring-emerald-ai/30"
+                    />
                   </div>
                 </div>
 
-                <button type="submit" className="btn-primary w-full justify-center">
-                  <Calendar className="ml-2 h-4 w-4" />
-                  تأكيد الحجز
+                <button type="submit" disabled={loading} className="btn-primary w-full justify-center text-sm disabled:opacity-60">
+                  {loading ? <Loader2 className="ml-2 h-4 w-4 animate-spin" /> : <Calendar className="ml-2 h-4 w-4" />}
+                  {loading ? "جاري الحجز..." : "تأكيد الحجز"}
                 </button>
               </form>
             </div>

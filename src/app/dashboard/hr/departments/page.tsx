@@ -1,25 +1,55 @@
-import type { Metadata } from "next";
+"use client";
+
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
-import { ChevronLeft, Users, TrendingUp, AlertTriangle } from "lucide-react";
+import { Loader2, ChevronLeft, Users, TrendingUp, AlertTriangle } from "lucide-react";
 
-export const metadata: Metadata = {
-  title: "الأقسام",
-  description: "إدارة أقسام الشركة",
-};
-
-const departments = [
-  { dept: "تقنية المعلومات", score: 81, employees: 45, risk: "منخفض", trend: "تصاعدي" },
-  { dept: "الموارد البشرية", score: 75, employees: 12, risk: "منخفض", trend: "مستقر" },
-  { dept: "المبيعات", score: 62, employees: 68, risk: "متوسط", trend: "مستقر" },
-  { dept: "التسويق", score: 74, employees: 24, risk: "منخفض", trend: "تصاعدي" },
-  { dept: "الإدارة", score: 79, employees: 15, risk: "منخفض", trend: "تصاعدي" },
-  { dept: "الإنتاج", score: 55, employees: 76, risk: "مرتفع", trend: "تنازلي" },
-  { dept: "الشؤون المالية", score: 82, employees: 18, risk: "منخفض", trend: "مستقر" },
-];
+type User = { id: string; firstName: string; lastName: string; department: string | null; wellnessScore?: { score: number; riskLevel: string } | null };
 
 export default function DepartmentsPage() {
+  const [users, setUsers] = useState<User[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function load() {
+      try {
+        const res = await fetch("/api/users");
+        if (res.ok) setUsers(await res.json());
+      } catch (e) {
+        console.error("Failed to load departments data", e);
+      } finally {
+        setLoading(false);
+      }
+    }
+    load();
+  }, []);
+
+  // Group by department
+  const deptMap = new Map<string, { employees: User[]; scores: number[] }>();
+  users.forEach((u) => {
+    const dept = u.department || "بدون قسم";
+    if (!deptMap.has(dept)) deptMap.set(dept, { employees: [], scores: [] });
+    const d = deptMap.get(dept)!;
+    d.employees.push(u);
+    if (u.wellnessScore?.score) d.scores.push(u.wellnessScore.score);
+  });
+
+  const departments = Array.from(deptMap.entries()).map(([dept, data]) => {
+    const avgScore = data.scores.length > 0 ? Math.round(data.scores.reduce((a, b) => a + b, 0) / data.scores.length) : null;
+    const risk = avgScore ? (avgScore >= 75 ? "منخفض" : avgScore >= 60 ? "متوسط" : "مرتفع") : "—";
+    const trend = avgScore ? (avgScore > 70 ? "تصاعدي" : avgScore > 55 ? "مستقر" : "تنازلي") : "—";
+    return { dept, employees: data.employees.length, score: avgScore, risk, trend };
+  }).sort((a, b) => (b.score || 0) - (a.score || 0));
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-surface-mid">
+        <Loader2 className="h-8 w-8 text-emerald animate-spin" />
+      </div>
+    );
+  }
   return (
     <>
       <Header />
@@ -49,7 +79,7 @@ export default function DepartmentsPage() {
                 <div className="flex items-center gap-6">
                   <div className="text-center">
                     <p className="text-sm text-secondary">درجة العافية</p>
-                    <p className="text-xl font-bold text-primary">{d.score}</p>
+                    <p className="text-xl font-bold text-primary">{d.score ?? "—"}</p>
                   </div>
                   <div className="text-center">
                     <p className="text-sm text-secondary">المخاطر</p>

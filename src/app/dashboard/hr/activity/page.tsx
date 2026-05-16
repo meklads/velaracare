@@ -1,26 +1,103 @@
-import type { Metadata } from "next";
+"use client";
+
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
-import { ChevronLeft, Bell, UserCheck, Calendar, Apple, Activity } from "lucide-react";
+import { Loader2, ChevronLeft, Bell, UserCheck, Calendar, Apple, Activity, ShoppingBag } from "lucide-react";
 
-export const metadata: Metadata = {
-  title: "النشاطات",
-  description: "آخر النشاطات في المنصة",
+type Activity = {
+  icon: any;
+  name: string;
+  action: string;
+  dept: string;
+  time: string;
+  risk: string;
 };
 
-const activities = [
-  { icon: UserCheck, name: "أحمد العمر", action: "أكمل التقييم الصحي", dept: "الإنتاج", time: "منذ ١٠ دقائق", risk: "مرتفع" },
-  { icon: Calendar, name: "نورة الحسين", action: "حجزت استشارة تغذية", dept: "المبيعات", time: "منذ ٣٠ دقيقة", risk: "متوسط" },
-  { icon: Apple, name: "فهد المطيري", action: "طلب وجبة الغداء", dept: "تقنية المعلومات", time: "منذ ساعة", risk: "منخفض" },
-  { icon: Activity, name: "سارة العنزي", action: "حدّثت ملفها الصحي", dept: "التسويق", time: "منذ ساعتين", risk: "منخفض" },
-  { icon: UserCheck, name: "خالد الدوسري", action: "أكمل التقييم الصحي", dept: "الإنتاج", time: "منذ ٣ ساعات", risk: "حرج" },
-  { icon: Calendar, name: "محمد الأحمد", action: "حجز استشارة لياقة", dept: "تقنية المعلومات", time: "منذ ٤ ساعات", risk: "منخفض" },
-  { icon: Apple, name: "نورة العنزي", action: "طلبت وجبة الإفطار", dept: "التسويق", time: "منذ ٥ ساعات", risk: "منخفض" },
-  { icon: UserCheck, name: "عبدالله السعد", action: "أنشأ حساب جديد", dept: "المبيعات", time: "منذ ٦ ساعات", risk: "منخفض" },
-];
-
 export default function ActivityPage() {
+  const [activities, setActivities] = useState<Activity[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function load() {
+      try {
+        const [usersRes, ordersRes, consRes] = await Promise.all([
+          fetch("/api/users"),
+          fetch("/api/meals?type=orders"),
+          fetch("/api/consultations?type=all"),
+        ]);
+        const items: Activity[] = [];
+
+        if (usersRes.ok) {
+          const users = await usersRes.json();
+          users.slice(0, 3).forEach((u: any) => {
+            items.push({
+              icon: UserCheck,
+              name: `${u.firstName} ${u.lastName}`,
+              action: u.wellnessScore ? "أكمل التقييم الصحي" : "أنشأ حساب جديد",
+              dept: u.department || "بدون قسم",
+              time: timeAgo(new Date(u.createdAt)),
+              risk: u.wellnessScore?.riskLevel === "high" || u.wellnessScore?.riskLevel === "critical" ? "مرتفع" : "منخفض",
+            });
+          });
+        }
+
+        if (consRes.ok) {
+          const cons = await consRes.json();
+          cons.slice(0, 3).forEach((c: any) => {
+            items.push({
+              icon: Calendar,
+              name: `${c.patient?.firstName || ""} ${c.patient?.lastName || ""}`,
+              action: `حجز استشارة ${c.type}`,
+              dept: c.patient?.department || "بدون قسم",
+              time: timeAgo(new Date(c.scheduledAt)),
+              risk: c.status === "completed" ? "منخفض" : "متوسط",
+            });
+          });
+        }
+
+        if (ordersRes.ok) {
+          const orders = await ordersRes.json();
+          orders.slice(0, 3).forEach((o: any) => {
+            items.push({
+              icon: ShoppingBag,
+              name: `${o.user?.firstName || ""} ${o.user?.lastName || ""}`,
+              action: `طلب ${o.mealName || "وجبة"}`,
+              dept: o.user?.department || "بدون قسم",
+              time: timeAgo(new Date(o.orderDate)),
+              risk: "منخفض",
+            });
+          });
+        }
+
+        setActivities(items.sort(() => Math.random() - 0.5).slice(0, 10));
+      } catch (e) {
+        console.error("Failed to load activities", e);
+      } finally {
+        setLoading(false);
+      }
+    }
+    load();
+  }, []);
+
+  function timeAgo(date: Date): string {
+    const diff = Date.now() - date.getTime();
+    const mins = Math.floor(diff / 60000);
+    if (mins < 1) return "الآن";
+    if (mins < 60) return `منذ ${mins} دقيقة`;
+    const hours = Math.floor(mins / 60);
+    if (hours < 24) return `منذ ${hours} ساعات`;
+    return `منذ ${Math.floor(hours / 24)} أيام`;
+  }
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-surface-mid">
+        <Loader2 className="h-8 w-8 text-emerald animate-spin" />
+      </div>
+    );
+  }
   return (
     <>
       <Header />
@@ -35,6 +112,12 @@ export default function ActivityPage() {
           </div>
 
           <div className="shade-card p-6">
+            {activities.length === 0 ? (
+              <div className="text-center py-8 text-secondary">
+                <Bell className="h-10 w-10 mx-auto mb-2 opacity-30" />
+                <p className="text-sm">لا توجد نشاطات حديثة</p>
+              </div>
+            ) : (
             <div className="space-y-1">
               {activities.map((a, i) => (
                 <div key={i} className="flex items-center justify-between py-3 px-3 rounded-xl hover:bg-[var(--white-warm)] transition-colors">
@@ -55,6 +138,7 @@ export default function ActivityPage() {
                 </div>
               ))}
             </div>
+            )}
           </div>
         </div>
       </main>
