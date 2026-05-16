@@ -5,6 +5,7 @@ import Link from "next/link";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { Loader2, ChevronLeft, Calendar, Clock, CheckCircle, XCircle, Video, Phone, User, Plus, Sparkles } from "lucide-react";
+import { SkeletonCard, SkeletonBlock } from "@/components/ui/skeleton";
 
 type Consultation = {
   id: string;
@@ -94,8 +95,12 @@ export default function EmployeeConsultationsPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-surface-mid">
-        <Loader2 className="h-8 w-8 text-emerald animate-spin" />
+      <div className="min-h-screen bg-surface-mid pt-24">
+        <div className="container-shade py-6">
+          <div className="mb-6"><SkeletonBlock width="200px" height="28px" /></div>
+          <SkeletonCard lines={4} showAvatar />
+          <div className="mt-6"><SkeletonCard lines={3} /></div>
+        </div>
       </div>
     );
   }

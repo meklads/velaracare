@@ -5,6 +5,7 @@ import Link from "next/link";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { Loader2, ChevronLeft, Calendar, Phone, Video, Clock, CheckCircle, XCircle, Filter, Search, User } from "lucide-react";
+import { SkeletonBlock, SkeletonKPIGrid, SkeletonTable } from "@/components/ui/skeleton";
 
 type Consultation = {
   id: string;
@@ -93,8 +94,12 @@ export default function AdminConsultationsPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-surface-mid">
-        <Loader2 className="h-8 w-8 text-emerald animate-spin" />
+      <div className="min-h-screen bg-surface-mid pt-24">
+        <div className="container-shade py-6">
+          <div className="mb-6"><SkeletonBlock width="200px" height="28px" /></div>
+          <SkeletonKPIGrid count={4} />
+          <div className="mt-6"><SkeletonTable rows={6} cols={7} /></div>
+        </div>
       </div>
     );
   }

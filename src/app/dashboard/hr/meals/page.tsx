@@ -5,12 +5,33 @@ import Link from "next/link";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { Loader2, ChevronLeft, Apple, TrendingUp, UtensilsCrossed } from "lucide-react";
+import { SkeletonCard, SkeletonBlock } from "@/components/ui/skeleton";
 
 type MealPlan = { id: string; name: string; description: string | null; type: string; calories: number | null; isActive: boolean; _count: { orders: number } };
 
 export default function HRMealsPage() {
   const [plans, setPlans] = useState<MealPlan[]>([]);
   const [loading, setLoading] = useState(true);
+  const [toggling, setToggling] = useState<string | null>(null);
+
+  async function toggleActive(planId: string, current: boolean) {
+    setToggling(planId);
+    try {
+      const res = await fetch("/api/meals", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ planId, isActive: !current }),
+      });
+      if (res.ok) {
+        const updated = await res.json();
+        setPlans((prev) => prev.map((p) => (p.id === planId ? { ...p, isActive: updated.isActive } : p)));
+      }
+    } catch (e) {
+      console.error("Toggle failed", e);
+    } finally {
+      setToggling(null);
+    }
+  }
 
   useEffect(() => {
     async function load() {
@@ -31,8 +52,11 @@ export default function HRMealsPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-surface-mid">
-        <Loader2 className="h-8 w-8 text-emerald animate-spin" />
+      <div className="min-h-screen bg-surface-mid pt-24">
+        <div className="container-shade py-6">
+          <div className="mb-6"><SkeletonBlock width="200px" height="28px" /></div>
+          <SkeletonCard lines={5} />
+        </div>
       </div>
     );
   }
@@ -73,13 +97,33 @@ export default function HRMealsPage() {
               {plans.map((m) => (
                 <div key={m.id} className="flex items-center justify-between p-4 rounded-xl bg-[var(--white-warm)]">
                   <div className="flex items-center gap-3">
-                    <UtensilsCrossed className="h-6 w-6 text-emerald" />
+                    <UtensilsCrossed className={`h-6 w-6 ${m.isActive ? "text-emerald" : "text-gray-300"}`} />
                     <div>
                       <p className="font-semibold text-primary">{m.name}</p>
-                      <p className="text-xs text-secondary">{m.description || m.type}</p>
+                      <div className="flex items-center gap-2 mt-0.5">
+                        <p className="text-xs text-secondary">{m.description || m.type}</p>
+                        <span className={`text-[10px] px-1.5 py-0.5 rounded-full ${
+                          m.isActive ? "bg-emerald-soft text-emerald-dark" : "bg-gray-100 text-gray-500"
+                        }`}>
+                          {m.isActive ? "نشط" : "غير نشط"}
+                        </span>
+                      </div>
                     </div>
                   </div>
-                  <span className="text-sm font-semibold text-primary">{m._count.orders} طلب</span>
+                  <div className="flex items-center gap-3">
+                    <span className="text-sm font-semibold text-primary">{m._count.orders} طلب</span>
+                    <button
+                      onClick={() => toggleActive(m.id, m.isActive)}
+                      disabled={toggling === m.id}
+                      className={`text-xs px-2.5 py-1 rounded-lg transition-all ${
+                        m.isActive
+                          ? "text-rose-500 hover:bg-rose-50 border border-rose-200"
+                          : "text-emerald hover:bg-emerald-50 border border-emerald-200"
+                      }`}
+                    >
+                      {toggling === m.id ? <Loader2 className="h-3 w-3 animate-spin" /> : m.isActive ? "تعطيل" : "تفعيل"}
+                    </button>
+                  </div>
                 </div>
               ))}
             </div>
