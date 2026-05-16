@@ -41,6 +41,7 @@ export async function sendEmail(to: string, subject: string, html: string) {
 // ── Email Templates ──
 
 export function forgotPasswordEmail(name: string, code: string): string {
+  const baseUrl = process.env.NEXTAUTH_URL || "https://velaracare.co";
   return `
     <div dir="rtl" style="font-family: 'Cairo', Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
       <div style="text-align: center; margin-bottom: 30px;">
@@ -53,7 +54,14 @@ export function forgotPasswordEmail(name: string, code: string): string {
       <div style="text-align: center; margin: 30px 0;">
         <span style="display: inline-block; padding: 15px 40px; background: #f3f4f6; border-radius: 12px; font-size: 32px; font-weight: bold; color: #10B981; letter-spacing: 8px; direction: ltr;">${code}</span>
       </div>
-      <p style="color: #666; line-height: 1.6;">هذا الرمز صالح لمدة ٣٠ دقيقة. إذا لم تطلب استعادة كلمة المرور، يمكنك تجاهل هذه الرسالة.</p>
+      <p style="color: #666; line-height: 1.6;">هذا الرمز صالح لمدة ٣٠ دقيقة. يمكنك استخدامه أدناه:</p>
+      <div style="text-align: center; margin: 30px 0;">
+        <a href="${baseUrl}/reset-password"
+           style="display: inline-block; padding: 14px 40px; background: linear-gradient(135deg, #10B981, #059669); color: white; text-decoration: none; border-radius: 12px; font-weight: bold;">
+          إعادة تعيين كلمة المرور
+        </a>
+      </div>
+      <p style="color: #999; font-size: 12px; text-align: center;">إذا لم تطلب استعادة كلمة المرور، يمكنك تجاهل هذه الرسالة.</p>
       <hr style="border: none; border-top: 1px solid #e5e7eb; margin: 30px 0;" />
       <p style="color: #999; font-size: 12px; text-align: center;">Velara Care — منصة الصحة المؤسسية الذكية<br>المملكة العربية السعودية</p>
     </div>
