@@ -42,6 +42,7 @@ export default function AdminConsultationsPage() {
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState("all");
   const [search, setSearch] = useState("");
+  const [updating, setUpdating] = useState<string | null>(null);
 
   useEffect(() => {
     async function load() {
@@ -56,6 +57,25 @@ export default function AdminConsultationsPage() {
     }
     load();
   }, []);
+
+  async function updateStatus(id: string, status: string) {
+    setUpdating(id);
+    try {
+      const res = await fetch("/api/consultations", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id, status }),
+      });
+      if (res.ok) {
+        const updated = await res.json();
+        setConsultations((prev) => prev.map((c) => (c.id === id ? { ...c, status: updated.status } : c)));
+      }
+    } catch (e) {
+      console.error("Update failed", e);
+    } finally {
+      setUpdating(null);
+    }
+  }
 
   const filtered = consultations.filter((c) => {
     const matchesStatus = filter === "all" || c.status === filter;
@@ -163,6 +183,7 @@ export default function AdminConsultationsPage() {
                       <th className="text-right py-3 px-4 text-secondary font-medium">الموعد</th>
                       <th className="text-right py-3 px-4 text-secondary font-medium">القسم</th>
                       <th className="text-center py-3 px-4 text-secondary font-medium">الحالة</th>
+                      <th className="text-center py-3 px-4 text-secondary font-medium">إجراء</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -193,6 +214,37 @@ export default function AdminConsultationsPage() {
                             <span className={`tag text-xs py-1 px-2.5 ${cfg.color} rounded-lg inline-flex items-center gap-1`}>
                               <StatusIcon className="h-3 w-3" /> {cfg.label}
                             </span>
+                          </td>
+                          <td className="py-3 px-4 text-center">
+                            <div className="flex items-center justify-center gap-1">
+                              {c.status === "scheduled" && (
+                                <button
+                                  onClick={() => updateStatus(c.id, "in_progress")}
+                                  disabled={updating === c.id}
+                                  className="text-[10px] py-1 px-2 rounded-lg bg-amber-100 text-amber-700 hover:bg-amber-200 transition-all disabled:opacity-50 font-medium"
+                                >
+                                  {updating === c.id ? <Loader2 className="h-3 w-3 animate-spin" /> : "بدء"}
+                                </button>
+                              )}
+                              {c.status === "in_progress" && (
+                                <button
+                                  onClick={() => updateStatus(c.id, "completed")}
+                                  disabled={updating === c.id}
+                                  className="text-[10px] py-1 px-2 rounded-lg bg-emerald-100 text-emerald-700 hover:bg-emerald-200 transition-all disabled:opacity-50 font-medium"
+                                >
+                                  {updating === c.id ? <Loader2 className="h-3 w-3 animate-spin" /> : "إكمال"}
+                                </button>
+                              )}
+                              {(c.status === "scheduled" || c.status === "in_progress") && (
+                                <button
+                                  onClick={() => updateStatus(c.id, "cancelled")}
+                                  disabled={updating === c.id}
+                                  className="text-[10px] py-1 px-2 rounded-lg bg-red-100 text-red-600 hover:bg-red-200 transition-all disabled:opacity-50 font-medium"
+                                >
+                                  إلغاء
+                                </button>
+                              )}
+                            </div>
                           </td>
                         </tr>
                       );
