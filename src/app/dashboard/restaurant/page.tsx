@@ -3,7 +3,8 @@
 import { useEffect, useState, useCallback } from "react";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
-import { Loader2, Users, Clock, CheckCircle, XCircle, Coffee, TrendingUp, RefreshCw, ShoppingBag } from "lucide-react";
+import { Loader2, Users, Clock, CheckCircle, XCircle, Coffee, TrendingUp, RefreshCw, ShoppingBag, Wifi, WifiOff } from "lucide-react";
+import { useSSE } from "@/lib/useSSE";
 
 type OrderUser = { firstName: string; lastName: string; department: string | null };
 type MealPlan = { id: string; name: string; type: string; calories: number | null };
@@ -37,7 +38,9 @@ export default function RestaurantDashboard() {
   const [loading, setLoading] = useState(true);
   const [updating, setUpdating] = useState<string | null>(null);
   const [filter, setFilter] = useState("active");
+  const [connected, setConnected] = useState(false);
 
+  // Initial load + fallback polling
   const loadOrders = useCallback(async () => {
     try {
       const res = await fetch("/api/meals?type=orders");
@@ -50,8 +53,17 @@ export default function RestaurantDashboard() {
   }, []);
 
   useEffect(() => { loadOrders(); }, [loadOrders]);
-  // Auto-refresh every 15s
-  useEffect(() => { const i = setInterval(loadOrders, 15000); return () => clearInterval(i); }, [loadOrders]);
+
+  // SSE for real-time updates
+  useSSE("orders", (event: any) => {
+    if (event.type === "connected") {
+      setConnected(true);
+    }
+    if (event.type === "orders_update") {
+      setOrders(event.orders || []);
+      setConnected(true);
+    }
+  });
 
   async function updateStatus(orderId: string, status: string) {
     setUpdating(orderId);
@@ -105,9 +117,17 @@ export default function RestaurantDashboard() {
               <h1 className="text-2xl font-bold text-primary flex items-center gap-2">🍽️ لوحة المطعم</h1>
               <p className="text-secondary mt-1">إدارة وتحضير وتوصيل الوجبات للموظفين</p>
             </div>
-            <button onClick={loadOrders} className="text-sm py-2 px-4 rounded-xl border border-[var(--surface-border)] text-secondary hover:text-primary transition-all flex items-center gap-1.5">
-              <RefreshCw className="h-4 w-4" /> تحديث
-            </button>
+            <div className="flex items-center gap-3">
+              <span className={`flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-full transition-colors ${
+                connected ? "bg-emerald-500/10 text-emerald-400" : "bg-amber-500/10 text-amber-400"
+              }`}>
+                {connected ? <Wifi className="h-3.5 w-3.5" /> : <WifiOff className="h-3.5 w-3.5" />}
+                {connected ? "مباشر" : "غير متصل"}
+              </span>
+              <button onClick={loadOrders} className="text-sm py-2 px-4 rounded-xl border border-[var(--surface-border)] text-secondary hover:text-primary transition-all flex items-center gap-1.5">
+                <RefreshCw className="h-4 w-4" /> تحديث
+              </button>
+            </div>
           </div>
 
           {/* Stats Cards */}

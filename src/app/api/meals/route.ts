@@ -70,6 +70,14 @@ export async function POST(req: Request) {
           status: "pending",
         },
       });
+
+      // Notify SSE clients
+      fetch(`${process.env.NEXTAUTH_URL || ""}/api/events`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ type: "new_order" }),
+      }).catch(() => {});
+
       return NextResponse.json(order, { status: 201 });
     }
 
@@ -126,6 +134,13 @@ export async function PATCH(req: Request) {
       data: { status },
       include: { mealPlan: true, user: { select: { firstName: true, lastName: true, department: true } } },
     });
+
+    // Notify SSE clients immediately
+    fetch(`${process.env.NEXTAUTH_URL || ""}/api/events`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ type: "order_updated" }),
+    }).catch(() => {});
 
     return NextResponse.json(order);
   } catch (error) {

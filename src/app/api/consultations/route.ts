@@ -80,6 +80,13 @@ export async function POST(req: Request) {
       include: { patient: { select: { firstName: true, lastName: true, email: true } } },
     });
 
+    // Notify SSE clients
+    fetch(`${process.env.NEXTAUTH_URL || ""}/api/events`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ type: "new_consultation" }),
+    }).catch(() => {});
+
     // Send booking confirmation email
     const dateStr = new Date(body.scheduledAt).toLocaleDateString("ar-SA");
     const timeStr = new Date(body.scheduledAt).toLocaleTimeString("ar-SA", { hour: "2-digit", minute: "2-digit" });
@@ -125,6 +132,13 @@ export async function PATCH(req: Request) {
         completedAt: body.status === "completed" ? new Date() : undefined,
       },
     });
+
+    // Notify SSE clients
+    fetch(`${process.env.NEXTAUTH_URL || ""}/api/events`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ type: "consultation_updated" }),
+    }).catch(() => {});
 
     return NextResponse.json(consultation);
   } catch (error) {
