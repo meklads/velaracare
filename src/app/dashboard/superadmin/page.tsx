@@ -1,84 +1,127 @@
-import type { Metadata } from "next";
+"use client";
+
+import { useEffect, useState } from "react";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
-import { Building2, Users, CreditCard, TrendingUp, ChevronLeft } from "lucide-react";
+import { Loader2, Building2, Users, CreditCard, TrendingUp, Activity, Shield, Globe, CalendarDays } from "lucide-react";
 
-export const metadata: Metadata = {
-  title: "لوحة الإدارة العليا",
-  description: "إدارة المنصة والشركات",
-};
-
-const companies = [
-  { name: "شركة التطوير التقني", employees: 240, plan: "Professional", status: "نشط", revenue: "26,400" },
-  { name: "مجموعة الخليج المالية", employees: 560, plan: "Enterprise", status: "نشط", revenue: "89,600" },
-  { name: "مؤسسة النور التجارية", employees: 85, plan: "Standard", status: "نشط", revenue: "6,375" },
-  { name: "شركة الاتصالات المتقدمة", employees: 1200, plan: "Enterprise", status: "تجريبي", revenue: "0" },
-  { name: "مكتب المحاماة الدولي", employees: 45, plan: "Basic", status: "متوقف", revenue: "1,575" },
-];
+type User = { id: string; firstName: string; lastName: string; email: string; role: string; isActive: boolean; createdAt: string; companyId: string | null; };
+type Company = { id: string; name: string; size: number; plan: string; status: string; };
 
 export default function SuperAdminDashboard() {
+  const [users, setUsers] = useState<User[]>([]);
+  const [companies, setCompanies] = useState<Company[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function load() {
+      try {
+        const [usersRes, companiesRes] = await Promise.all([
+          fetch("/api/users"),
+          fetch("/api/companies"),
+        ]);
+        if (usersRes.ok) setUsers(await usersRes.json());
+        if (companiesRes.ok) setCompanies(await companiesRes.json());
+      } catch (e) {
+        console.error("Failed to load", e);
+      } finally {
+        setLoading(false);
+      }
+    }
+    load();
+  }, []);
+
+  const stats = {
+    companies: companies.length,
+    users: users.length,
+    activeUsers: users.filter((u) => u.isActive).length,
+    admins: users.filter((u) => u.role === "COMPANY_ADMIN").length,
+    employees: users.filter((u) => u.role === "EMPLOYEE").length,
+    proCompanies: companies.filter((c) => c.plan === "professional").length,
+  };
+
+  if (loading) return (
+    <div className="min-h-screen flex items-center justify-center bg-surface-mid">
+      <Loader2 className="h-8 w-8 text-emerald animate-spin" />
+    </div>
+  );
+
   return (
     <>
       <Header />
-      <main className="min-h-screen bg-surface-mid pt-24">
-        <div className="container-shade py-8">
-          <div className="fade-in-up mb-8">
-            <h1 className="text-2xl font-bold text-primary">⚙️ لوحة الإدارة العليا</h1>
-            <p className="text-secondary">إدارة المنصة وجميع الشركات المسجلة</p>
+      <main className="min-h-screen bg-surface-mid pt-24 pb-12">
+        <div className="container-shade py-6">
+          <div className="fade-in-up mb-6">
+            <h1 className="text-2xl font-bold text-primary flex items-center gap-2">
+              <Shield className="h-7 w-7 text-emerald" />
+              لوحة الإدارة العليا
+            </h1>
+            <p className="text-secondary mt-1">نظرة عامة على المنصة وجميع الشركات</p>
           </div>
 
-          <div className="grid grid-cols-4 gap-4 mb-8">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
             {[
-              { label: "إجمالي الشركات", value: "24", icon: Building2, color: "from-blue-500 to-indigo-600" },
-              { label: "إجمالي الموظفين", value: "8,430", icon: Users, color: "from-emerald-ai to-emerald-ai-dark" },
-              { label: "الإيرادات الشهرية", value: "184ألف", icon: CreditCard, color: "from-emerald-ai to-emerald-ai-dark" },
-              { label: "معدل النمو", value: "+23٪", icon: TrendingUp, color: "from-rose-500 to-pink-600" },
-            ].map((kpi) => (
-              <div key={kpi.label} className="shade-card p-5">
-                <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${kpi.color} flex items-center justify-center mb-3`}>
-                  <kpi.icon className="h-5 w-5 text-white" />
+              { label: "الشركات", value: stats.companies, icon: Building2, color: "from-blue-500 to-indigo-600" },
+              { label: "المستخدمين", value: stats.users, icon: Users, color: "from-emerald-500 to-emerald-600" },
+              { label: "نشط حالياً", value: stats.activeUsers, icon: Activity, color: "from-amber-500 to-orange-600" },
+              { label: "خطط احترافية", value: stats.proCompanies, icon: CreditCard, color: "from-purple-500 to-violet-600" },
+            ].map((s) => (
+              <div key={s.label} className="shade-card p-5 text-center">
+                <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${s.color} flex items-center justify-center mx-auto mb-2`}>
+                  <s.icon className="h-5 w-5 text-white" />
                 </div>
-                <p className="stat-number text-primary">{kpi.value}</p>
-                <p className="text-xs text-[var(--text-muted)]">{kpi.label}</p>
+                <p className="stat-number text-primary">{s.value}</p>
+                <p className="text-xs text-secondary">{s.label}</p>
               </div>
             ))}
           </div>
 
-          <div className="shade-card p-6">
-            <h3 className="font-bold text-primary mb-4">الشركات المسجلة</h3>
-            <div className="overflow-x-auto">
-              <table className="w-full text-sm">
-                <thead>
-                  <tr className="border-b border-[var(--surface-border)]">
-                    <th className="text-right py-3 text-secondary font-medium">الشركة</th>
-                    <th className="text-right py-3 text-secondary font-medium">عدد الموظفين</th>
-                    <th className="text-right py-3 text-secondary font-medium">الباقة</th>
-                    <th className="text-right py-3 text-secondary font-medium">الحالة</th>
-                    <th className="text-right py-3 text-secondary font-medium">الإيرادات</th>
-                  </tr>
-                </thead>
-                <tbody>
+          <div className="grid md:grid-cols-2 gap-6">
+            <div className="shade-card p-6">
+              <h3 className="font-bold text-primary mb-4 flex items-center gap-2">
+                <Building2 className="h-5 w-5 text-emerald" /> الشركات
+              </h3>
+              {companies.length === 0 ? (
+                <p className="text-sm text-secondary">لا توجد شركات</p>
+              ) : (
+                <div className="space-y-3">
                   {companies.map((c) => (
-                    <tr key={c.name} className="border-b border-[var(--surface-border)] last:border-0 hover:bg-[var(--white-warm)]">
-                      <td className="py-3 font-semibold text-primary">{c.name}</td>
-                      <td className="py-3 text-secondary">{c.employees.toLocaleString()}</td>
-                      <td className="py-3">
-                        <span className="tag text-xs py-0.5 px-3">{c.plan}</span>
-                      </td>
-                      <td className="py-3">
-                        <span className={`tag text-xs py-0.5 px-3 ${
-                          c.status === "نشط" ? "bg-emerald-soft text-emerald-dark" :
-                          c.status === "تجريبي" ? "bg-blue-50 text-blue-600" :
-                          "bg-emerald-soft text-rose-600"
-                        }`}>
-                          {c.status}
-                        </span>
-                      </td>
-                      <td className="py-3 font-semibold text-primary">{c.revenue} ريال</td>
-                    </tr>
+                    <div key={c.id} className="flex items-center justify-between p-3 rounded-xl border border-[var(--surface-border)] hover:bg-surface-mid transition-colors">
+                      <div>
+                        <p className="font-semibold text-primary text-sm">{c.name}</p>
+                        <p className="text-xs text-secondary">{c.size} موظف · {c.plan}</p>
+                      </div>
+                      <span className={`tag text-xs py-0.5 px-2.5 ${
+                        c.status === "active" ? "bg-emerald-soft text-emerald-dark" : "bg-gray-100 text-gray-500"
+                      }`}>{c.status === "active" ? "نشط" : c.status}</span>
+                    </div>
                   ))}
-                </tbody>
-              </table>
+                </div>
+              )}
+            </div>
+
+            <div className="shade-card p-6">
+              <h3 className="font-bold text-primary mb-4 flex items-center gap-2">
+                <Users className="h-5 w-5 text-emerald" /> المستخدمين
+              </h3>
+              <div className="space-y-2 text-sm">
+                <div className="flex justify-between p-2 rounded-lg bg-surface-mid">
+                  <span className="text-secondary">إجمالي المستخدمين</span>
+                  <span className="font-bold text-primary">{stats.users}</span>
+                </div>
+                <div className="flex justify-between p-2 rounded-lg bg-surface-mid">
+                  <span className="text-secondary">مديري شركات</span>
+                  <span className="font-bold text-primary">{stats.admins}</span>
+                </div>
+                <div className="flex justify-between p-2 rounded-lg bg-surface-mid">
+                  <span className="text-secondary">موظفين</span>
+                  <span className="font-bold text-primary">{stats.employees}</span>
+                </div>
+                <div className="flex justify-between p-2 rounded-lg bg-surface-mid">
+                  <span className="text-secondary">نشط</span>
+                  <span className="font-bold text-emerald">{stats.activeUsers}</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
