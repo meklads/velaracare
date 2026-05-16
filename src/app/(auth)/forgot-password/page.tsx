@@ -15,11 +15,24 @@ export default function ForgotPasswordPage() {
     setError("");
     setLoading(true);
 
-    // Simulate sending email (no API yet)
-    await new Promise((resolve) => setTimeout(resolve, 1500));
+    try {
+      const res = await fetch("/api/auth/forgot-password", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
 
-    setSent(true);
-    setLoading(false);
+      if (res.ok) {
+        setSent(true);
+      } else {
+        const data = await res.json();
+        setError(data.error || "حدث خطأ");
+      }
+    } catch {
+      setError("حدث خطأ في الاتصال. حاول مرة أخرى.");
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (

@@ -243,7 +243,7 @@ export default function AdminEmployeesPage() {
                           {new Date(emp.createdAt).toLocaleDateString("ar-SA")}
                         </td>
                         <td className="py-3 px-4 text-center">
-                          <button className="text-xs text-emerald hover:underline font-medium">عرض</button>
+                          <Link href={`/dashboard/admin/employees/${emp.id}`} className="text-xs text-emerald hover:underline font-medium">عرض</Link>
                         </td>
                       </tr>
                     ))}

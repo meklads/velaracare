@@ -56,7 +56,7 @@ export default async function AdminDashboard() {
               { label: "المخاطر العالية", value: "18", change: "-3", icon: Brain, color: "from-emerald-ai to-emerald-ai-dark" },
               { label: "توفير التأمين", value: "420ألف", change: "+18%", icon: TrendingDown, color: "from-emerald-ai to-emerald-ai-dark" },
             ].map((kpi, i) => (
-              <div key={kpi.label} className={`shade-card p-5 fade-in-up-delay-${Math.min(i + 1, 4)}`}>
+              <div key={kpi.label} className={`shade-card p-5 ${i === 0 ? "fade-in-up-delay-1" : i === 1 ? "fade-in-up-delay-2" : i === 2 ? "fade-in-up-delay-3" : "fade-in-up-delay-4"}`}>
                 <div className="flex items-center gap-3 mb-2">
                   <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${kpi.color} flex items-center justify-center`}>
                     <kpi.icon className="h-5 w-5 text-white" />
