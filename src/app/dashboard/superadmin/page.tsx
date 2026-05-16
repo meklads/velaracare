@@ -1,12 +1,13 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
-import { Loader2, Building2, Users, CreditCard, TrendingUp, Activity, Shield, Globe, CalendarDays } from "lucide-react";
+import { Loader2, Building2, Users, CreditCard, TrendingUp, Activity, Shield, Globe, CalendarDays, Settings, ArrowUpRight } from "lucide-react";
 
 type User = { id: string; firstName: string; lastName: string; email: string; role: string; isActive: boolean; createdAt: string; companyId: string | null; };
-type Company = { id: string; name: string; size: number; plan: string; status: string; };
+type Company = { id: string; name: string; arabicName?: string; size: number; plan: string; status: string; };
 
 export default function SuperAdminDashboard() {
   const [users, setUsers] = useState<User[]>([]);
@@ -78,17 +79,22 @@ export default function SuperAdminDashboard() {
 
           <div className="grid md:grid-cols-2 gap-6">
             <div className="shade-card p-6">
-              <h3 className="font-bold text-primary mb-4 flex items-center gap-2">
-                <Building2 className="h-5 w-5 text-emerald" /> الشركات
-              </h3>
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="font-bold text-primary flex items-center gap-2">
+                  <Building2 className="h-5 w-5 text-emerald" /> الشركات
+                </h3>
+                <Link href="/dashboard/superadmin/companies" className="text-sm text-emerald hover:underline flex items-center gap-1">
+                  إدارة <ArrowUpRight className="h-3 w-3" />
+                </Link>
+              </div>
               {companies.length === 0 ? (
                 <p className="text-sm text-secondary">لا توجد شركات</p>
               ) : (
                 <div className="space-y-3">
-                  {companies.map((c) => (
+                  {companies.slice(0, 5).map((c) => (
                     <div key={c.id} className="flex items-center justify-between p-3 rounded-xl border border-[var(--surface-border)] hover:bg-surface-mid transition-colors">
                       <div>
-                        <p className="font-semibold text-primary text-sm">{c.name}</p>
+                        <p className="font-semibold text-primary text-sm">{c.arabicName || c.name}</p>
                         <p className="text-xs text-secondary">{c.size} موظف · {c.plan}</p>
                       </div>
                       <span className={`tag text-xs py-0.5 px-2.5 ${
