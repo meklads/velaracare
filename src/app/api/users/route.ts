@@ -2,6 +2,18 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { auth } from "@/lib/auth";
 import { sendEmail, invitationEmail } from "@/lib/email";
+import { randomBytes } from "crypto";
+
+function generatePassword(): string {
+  // Generate a secure 10-char password: mix of letters, numbers, and symbols
+  const chars = "ABCDEFGHJKLMNPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz23456789!@#$";
+  let pw = "";
+  const bytes = randomBytes(10);
+  for (let i = 0; i < 10; i++) {
+    pw += chars[bytes[i] % chars.length];
+  }
+  return pw;
+}
 
 export const runtime = "nodejs";
 
@@ -85,7 +97,7 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "البريد الإلكتروني مستخدم بالفعل" }, { status: 409 });
     }
 
-    const password = body.password || "changeme123";
+    const password = body.password || generatePassword();
     const newUser = await prisma.user.create({
       data: {
         email: body.email,
@@ -123,7 +135,7 @@ export async function POST(req: Request) {
   }
 }
 
-// PATCH /api/users — update own profile
+// PATCH /api/users — update own profile or admin update other users
 export async function PATCH(req: Request) {
   const session = await auth();
   if (!session?.user) {
@@ -133,6 +145,43 @@ export async function PATCH(req: Request) {
   const body = await req.json();
 
   try {
+    const targetId = body.userId || user.id;
+    const isAdmin = user.role === "HR" || user.role === "COMPANY_ADMIN" || user.role === "SUPER_ADMIN";
+    const isOwn = targetId === user.id;
+
+    // Non-admins can only update themselves
+    if (!isAdmin && !isOwn) {
+      return NextResponse.json({ error: "غير مصرح" }, { status: 403 });
+    }
+
+    // Admins can update active status and role for users in their company
+    if (isAdmin && !isOwn) {
+      const target = await prisma.user.findUnique({ where: { id: targetId } });
+      if (!target) {
+        return NextResponse.json({ error: "المستخدم غير موجود" }, { status: 404 });
+      }
+      // Ensure admin can only update users in their own company (unless SUPER_ADMIN)
+      if (user.role !== "SUPER_ADMIN" && target.companyId !== user.companyId) {
+        return NextResponse.json({ error: "غير مصرح" }, { status: 403 });
+      }
+
+      const updated = await prisma.user.update({
+        where: { id: targetId },
+        data: {
+          isActive: body.isActive ?? undefined,
+          role: body.role ?? undefined,
+          department: body.department ?? undefined,
+          position: body.position ?? undefined,
+        },
+        select: {
+          id: true, firstName: true, lastName: true, email: true,
+          role: true, department: true, position: true, isActive: true,
+        },
+      });
+      return NextResponse.json(updated);
+    }
+
+    // Self-update
     const updated = await prisma.user.update({
       where: { id: user.id },
       data: {
@@ -150,6 +199,6 @@ export async function PATCH(req: Request) {
     return NextResponse.json(updated);
   } catch (error) {
     console.error("Users PATCH error:", error);
-    return NextResponse.json({ error: "خطأ في تحديث الملف الشخصي" }, { status: 500 });
+    return NextResponse.json({ error: "خطأ في تحديث المستخدم" }, { status: 500 });
   }
 }

@@ -46,12 +46,29 @@ export default function AdminMealsPage() {
   const [adding, setAdding] = useState(false);
   const [addMsg, setAddMsg] = useState("");
   const [newMeal, setNewMeal] = useState({ name: "", description: "", type: "general", calories: "" });
+  const [totalEmployees, setTotalEmployees] = useState(0);
+  const [todayOrders, setTodayOrders] = useState(0);
+  const [orders, setOrders] = useState<any[]>([]);
 
   useEffect(() => {
     async function load() {
       try {
-        const res = await fetch("/api/meals");
-        if (res.ok) setPlans(await res.json());
+        const [plansRes, usersRes, ordersRes] = await Promise.all([
+          fetch("/api/meals"),
+          fetch("/api/users"),
+          fetch("/api/meals?type=orders"),
+        ]);
+        if (plansRes.ok) setPlans(await plansRes.json());
+        if (usersRes.ok) {
+          const users = await usersRes.json();
+          setTotalEmployees(users.length);
+        }
+        if (ordersRes.ok) {
+          const data = await ordersRes.json();
+          setOrders(data);
+          const today = new Date().toDateString();
+          setTodayOrders(data.filter((o: any) => new Date(o.orderDate).toDateString() === today).length);
+        }
       } catch (e) {
         console.error("Failed to load meals", e);
       } finally {
@@ -316,9 +333,9 @@ export default function AdminMealsPage() {
                 <h3 className="font-bold text-primary text-sm">إحصائيات سريعة</h3>
               </div>
               <div className="space-y-2 text-sm">
-                <p className="flex justify-between"><span className="text-secondary">إجمالي الموظفين</span><span className="font-medium text-primary">٢٤٠</span></p>
-                <p className="flex justify-between"><span className="text-secondary">معدل الالتزام بالوجبات</span><span className="font-medium text-primary">٦٨٪</span></p>
-                <p className="flex justify-between"><span className="text-secondary">الوجبات المقدمة اليوم</span><span className="font-medium text-primary">١٢٤</span></p>
+                <p className="flex justify-between"><span className="text-secondary">إجمالي الموظفين</span><span className="font-medium text-primary">{totalEmployees}</span></p>
+                <p className="flex justify-between"><span className="text-secondary">معدل الطلبات</span><span className="font-medium text-primary">{totalEmployees > 0 ? `${Math.round((orders.length / Math.max(1, totalEmployees)) * 100)}%` : "—"}</span></p>
+                <p className="flex justify-between"><span className="text-secondary">الوجبات المقدمة اليوم</span><span className="font-medium text-primary">{todayOrders}</span></p>
               </div>
             </div>
           </div>

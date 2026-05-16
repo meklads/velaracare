@@ -47,6 +47,7 @@ export default function AdminEmployeesPage() {
   const [filterDept, setFilterDept] = useState("all");
   const [filterRole, setFilterRole] = useState("all");
   const [showAddModal, setShowAddModal] = useState(false);
+  const [togglingId, setTogglingId] = useState<string | null>(null);
 
   useEffect(() => {
     async function load() {
@@ -61,6 +62,25 @@ export default function AdminEmployeesPage() {
     }
     load();
   }, []);
+
+  async function toggleActive(emp: Employee) {
+    setTogglingId(emp.id);
+    try {
+      const res = await fetch("/api/users", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ userId: emp.id, isActive: !emp.isActive }),
+      });
+      if (res.ok) {
+        const updated = await res.json();
+        setEmployees((prev) => prev.map((e) => (e.id === emp.id ? { ...e, isActive: updated.isActive } : e)));
+      }
+    } catch (e) {
+      console.error("Toggle failed", e);
+    } finally {
+      setTogglingId(null);
+    }
+  }
 
   const departments = ["all", ...new Set(employees.map((e) => e.department).filter(Boolean))] as string[];
   const roles = ["all", ...new Set(employees.map((e) => e.role))];
@@ -233,11 +253,20 @@ export default function AdminEmployeesPage() {
                           )}
                         </td>
                         <td className="py-3 px-4 text-center">
-                          {emp.isActive ? (
-                            <CheckCircle className="h-4 w-4 text-emerald mx-auto" />
-                          ) : (
-                            <XCircle className="h-4 w-4 text-gray-300 mx-auto" />
-                          )}
+                          <button
+                            onClick={() => toggleActive(emp)}
+                            disabled={togglingId === emp.id}
+                            className="transition-all"
+                            title={emp.isActive ? "اضغط لتعطيل الحساب" : "اضغط لتفعيل الحساب"}
+                          >
+                            {togglingId === emp.id ? (
+                              <Loader2 className="h-4 w-4 text-emerald mx-auto animate-spin" />
+                            ) : emp.isActive ? (
+                              <CheckCircle className="h-4 w-4 text-emerald mx-auto hover:scale-110 transition-transform" />
+                            ) : (
+                              <XCircle className="h-4 w-4 text-gray-300 mx-auto hover:text-red-400 hover:scale-110 transition-all" />
+                            )}
+                          </button>
                         </td>
                         <td className="py-3 px-4 text-center text-xs text-secondary">
                           {new Date(emp.createdAt).toLocaleDateString("ar-SA")}
