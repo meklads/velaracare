@@ -97,6 +97,7 @@ export default function EmployeeMealsPage() {
   const [orders, setOrders] = useState<MealOrder[]>([]);
   const [loading, setLoading] = useState(true);
   const [ordering, setOrdering] = useState<string | null>(null);
+  const [cancelling, setCancelling] = useState<string | null>(null);
   const [successMsg, setSuccessMsg] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
   const [cartCount, setCartCount] = useState(0);
@@ -146,6 +147,28 @@ export default function EmployeeMealsPage() {
       console.error("Order failed", e);
     } finally {
       setOrdering(null);
+    }
+  }
+
+  async function cancelOrder(orderId: string) {
+    setCancelling(orderId);
+    try {
+      const res = await fetch("/api/meals", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ orderId, status: "cancelled" }),
+      });
+      if (res.ok) {
+        const updated = await res.json();
+        setOrders((prev) => prev.map((o) => (o.id === orderId ? updated : o)));
+        setCartCount((c) => Math.max(0, c - 1));
+        setSuccessMsg(`✅ تم إلغاء الطلب`);
+        setTimeout(() => setSuccessMsg(""), 3000);
+      }
+    } catch (e) {
+      console.error("Cancel failed", e);
+    } finally {
+      setCancelling(null);
     }
   }
 
@@ -382,9 +405,20 @@ export default function EmployeeMealsPage() {
                           <p className="text-xs text-secondary">{new Date(order.orderDate).toLocaleString("ar-SA")}</p>
                         </div>
                       </div>
-                      <span className={`tag text-xs py-1 px-3 ${cfg.color} whitespace-nowrap rounded-lg`}>
-                        {cfg.label}
-                      </span>
+                      <div className="flex items-center gap-2">
+                        {(order.status === "pending" || order.status === "preparing") && (
+                          <button
+                            onClick={() => cancelOrder(order.id)}
+                            disabled={cancelling === order.id}
+                            className="text-xs py-1 px-2.5 rounded-lg bg-red-50 text-red-500 hover:bg-red-100 transition-all disabled:opacity-50 font-medium"
+                          >
+                            {cancelling === order.id ? <Loader2 className="h-3 w-3 animate-spin" /> : "إلغاء"}
+                          </button>
+                        )}
+                        <span className={`tag text-xs py-1 px-3 ${cfg.color} whitespace-nowrap rounded-lg`}>
+                          {cfg.label}
+                        </span>
+                      </div>
                     </div>
                   );
                 })}

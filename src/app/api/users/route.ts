@@ -112,3 +112,34 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "خطأ في إنشاء المستخدم" }, { status: 500 });
   }
 }
+
+// PATCH /api/users — update own profile
+export async function PATCH(req: Request) {
+  const session = await auth();
+  if (!session?.user) {
+    return NextResponse.json({ error: "غير مصرح" }, { status: 401 });
+  }
+  const user = session.user as any;
+  const body = await req.json();
+
+  try {
+    const updated = await prisma.user.update({
+      where: { id: user.id },
+      data: {
+        firstName: body.firstName ?? undefined,
+        lastName: body.lastName ?? undefined,
+        phone: body.phone ?? undefined,
+        department: body.department ?? undefined,
+        position: body.position ?? undefined,
+      },
+      select: {
+        id: true, firstName: true, lastName: true, email: true,
+        phone: true, department: true, position: true, role: true,
+      },
+    });
+    return NextResponse.json(updated);
+  } catch (error) {
+    console.error("Users PATCH error:", error);
+    return NextResponse.json({ error: "خطأ في تحديث الملف الشخصي" }, { status: 500 });
+  }
+}
