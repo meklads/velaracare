@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { auth } from "@/lib/auth";
+import { hashPassword, verifyPassword } from "@/lib/password";
 
 export async function POST(req: Request) {
   const session = await auth();
@@ -25,14 +26,14 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "المستخدم غير موجود" }, { status: 404 });
     }
 
-    // Simple password check (use bcrypt in production)
-    if (dbUser.passwordHash !== currentPassword) {
+    // Verify current password using scrypt
+    if (!dbUser.passwordHash || !verifyPassword(currentPassword, dbUser.passwordHash)) {
       return NextResponse.json({ error: "كلمة المرور الحالية غير صحيحة" }, { status: 403 });
     }
 
     await prisma.user.update({
       where: { id: user.id },
-      data: { passwordHash: newPassword },
+      data: { passwordHash: hashPassword(newPassword) },
     });
 
     return NextResponse.json({ message: "تم تغيير كلمة المرور بنجاح" });

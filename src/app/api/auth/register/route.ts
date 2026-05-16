@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { hashPassword } from "@/lib/password";
 
 export async function POST(req: Request) {
   try {
@@ -45,7 +46,7 @@ export async function POST(req: Request) {
       const user = await tx.user.create({
         data: {
           email,
-          passwordHash: password, // TODO: use bcrypt in production
+          passwordHash: hashPassword(password),
           firstName,
           lastName,
           role: "COMPANY_ADMIN",

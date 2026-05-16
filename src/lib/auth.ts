@@ -2,6 +2,7 @@ import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { prisma } from "./prisma";
+import { verifyPassword } from "./password";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   adapter: PrismaAdapter(prisma),
@@ -23,13 +24,11 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
         if (!email || !password) return null;
 
-        // In production, use bcrypt to verify password
-        // For demo, we accept a test user
         const user = await prisma.user.findUnique({ where: { email } });
         if (!user || !user.passwordHash) return null;
 
-        // Simple password check (use bcrypt in production)
-        if (user.passwordHash !== password) return null;
+        // Verify password using scrypt (built-in Node.js crypto)
+        if (!verifyPassword(password, user.passwordHash)) return null;
 
         return {
           id: user.id,
