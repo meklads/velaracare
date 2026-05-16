@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { auth } from "@/lib/auth";
+import { sendEmail, bookingConfirmationEmail } from "@/lib/email";
 
 export const runtime = "nodejs";
 
@@ -76,7 +77,23 @@ export async function POST(req: Request) {
         notes: body.notes ?? null,
         companyId: user.companyId ?? null,
       },
+      include: { patient: { select: { firstName: true, lastName: true, email: true } } },
     });
+
+    // Send booking confirmation email
+    const dateStr = new Date(body.scheduledAt).toLocaleDateString("ar-SA");
+    const timeStr = new Date(body.scheduledAt).toLocaleTimeString("ar-SA", { hour: "2-digit", minute: "2-digit" });
+    const typeLabels: Record<string, string> = { nutrition: "استشارة تغذية", fitness: "استشارة لياقة", general: "استشارة عامة", mental: "استشارة نفسية" };
+    sendEmail(
+      consultation.patient.email,
+      "✅ تأكيد حجز الاستشارة — Velara Care",
+      bookingConfirmationEmail(
+        `${consultation.patient.firstName} ${consultation.patient.lastName}`,
+        typeLabels[body.type] || body.type,
+        dateStr,
+        timeStr
+      )
+    );
 
     return NextResponse.json(consultation, { status: 201 });
   } catch (error) {

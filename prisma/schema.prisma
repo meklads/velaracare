@@ -52,7 +52,9 @@ model User {
   department     String?
   position       String?
   isActive       Boolean  @default(true)
-  emailVerified  DateTime?
+  resetCode        String?
+  resetCodeExpires DateTime?
+  emailVerified    DateTime?
   companyId      String?
   company        Company? @relation(fields: [companyId], references: [id])
   createdAt      DateTime @default(now())

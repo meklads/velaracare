@@ -9,6 +9,7 @@ export default function ForgotPasswordPage() {
   const [loading, setLoading] = useState(false);
   const [sent, setSent] = useState(false);
   const [error, setError] = useState("");
+  const [devCode, setDevCode] = useState("");
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -23,6 +24,8 @@ export default function ForgotPasswordPage() {
       });
 
       if (res.ok) {
+        const data = await res.json();
+        if (data.dev_code) setDevCode(data.dev_code);
         setSent(true);
       } else {
         const data = await res.json();
@@ -63,9 +66,15 @@ export default function ForgotPasswordPage() {
             <div className="w-16 h-16 rounded-full bg-emerald-soft flex items-center justify-center mx-auto mb-6">
               <CheckCircle2 className="h-8 w-8 text-emerald" />
             </div>
-            <p className="text-sm text-secondary mb-6">
+            <p className="text-sm text-secondary mb-2">
               إذا كان الحساب موجوداً، ستصلك رسالة على <strong className="text-primary">{email}</strong>
             </p>
+            {devCode && (
+              <div className="mb-4 p-3 rounded-xl bg-amber-500/10 border border-amber-500/20 text-center">
+                <p className="text-xs text-amber-400 mb-1">🌐 وضع التطوير — رمز التحقق</p>
+                <p className="text-2xl font-bold text-amber-400 tracking-widest ltr">{devCode}</p>
+              </div>
+            )}
             <Link href="/login" className="btn-primary w-full justify-center text-sm">
               <ArrowRight className="ml-2 h-4 w-4" />
               العودة إلى تسجيل الدخول

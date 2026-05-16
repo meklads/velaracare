@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { auth } from "@/lib/auth";
+import { sendEmail, invitationEmail } from "@/lib/email";
 
 export const runtime = "nodejs";
 
@@ -84,6 +85,7 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "البريد الإلكتروني مستخدم بالفعل" }, { status: 409 });
     }
 
+    const password = body.password || "changeme123";
     const newUser = await prisma.user.create({
       data: {
         email: body.email,
@@ -94,7 +96,7 @@ export async function POST(req: Request) {
         department: body.department ?? null,
         position: body.position ?? null,
         companyId: body.companyId ?? user.companyId ?? null,
-        passwordHash: body.password || "changeme123", // Default password
+        passwordHash: password,
       },
       select: {
         id: true,
@@ -105,6 +107,14 @@ export async function POST(req: Request) {
         department: true,
       },
     });
+
+    // Send invitation email (non-blocking)
+    sendEmail(body.email, "🎉 مرحباً بك في Velara Care", invitationEmail(
+      `${body.firstName} ${body.lastName}`,
+      body.email,
+      password,
+      body.companyName || "الشركة"
+    ));
 
     return NextResponse.json(newUser, { status: 201 });
   } catch (error) {
