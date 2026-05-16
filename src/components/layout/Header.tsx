@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { Menu, X, LogOut, LayoutDashboard, ChevronDown, User } from "lucide-react";
 import { useSession, signOut } from "next-auth/react";
 import ThemeToggle from "@/components/ui/ThemeToggle";
+import NotificationBell from "@/components/notifications/NotificationBell";
 import { getDashboardPath } from "@/lib/auth-utils";
 import {
   NavigationMenu,
@@ -100,6 +101,7 @@ export default function Header() {
 
         {/* Desktop CTA */}
         <div className="hidden md:flex items-center gap-3">
+          {isLoggedIn && <NotificationBell />}
           <ThemeToggle />
           {isLoggedIn ? (
             <div className="relative">
