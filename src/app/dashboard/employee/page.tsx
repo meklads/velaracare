@@ -218,9 +218,9 @@ export default function EmployeeDashboard() {
                   <p className="text-sm font-semibold text-primary">استشارة تغذية</p>
                   <p className="text-xs text-secondary">مع د. سارة — غداً ١٠:٠٠ ص</p>
                 </div>
-                <button className="w-full py-2.5 text-sm font-medium text-cyan-400 bg-cyan-500/5 hover:bg-cyan-500/10 rounded-xl transition-colors">
+                <Link href="/dashboard/employee/consultations" className="w-full py-2.5 text-sm font-medium text-cyan-400 bg-cyan-500/5 hover:bg-cyan-500/10 rounded-xl transition-colors block text-center">
                   حجز استشارة جديدة
-                </button>
+                </Link>
               </div>
 
               {/* ── Weekly Trend ── */}
