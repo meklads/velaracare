@@ -118,8 +118,24 @@ export async function PATCH(req: Request) {
 
   try {
     const body = await req.json();
-    const { orderId, status } = body;
+    const { orderId, status, planId, isActive, name, description, type, calories } = body;
 
+    // ── Meal Plan update ──
+    if (planId) {
+      const plan = await prisma.mealPlan.update({
+        where: { id: planId },
+        data: {
+          isActive: isActive ?? undefined,
+          name: name ?? undefined,
+          description: description ?? undefined,
+          type: type ?? undefined,
+          calories: calories ?? undefined,
+        },
+      });
+      return NextResponse.json(plan);
+    }
+
+    // ── Order status update ──
     if (!orderId || !status) {
       return NextResponse.json({ error: "معرف الطلب والحالة مطلوبان" }, { status: 400 });
     }

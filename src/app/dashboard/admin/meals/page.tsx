@@ -49,6 +49,26 @@ export default function AdminMealsPage() {
   const [totalEmployees, setTotalEmployees] = useState(0);
   const [todayOrders, setTodayOrders] = useState(0);
   const [orders, setOrders] = useState<any[]>([]);
+  const [togglingPlan, setTogglingPlan] = useState<string | null>(null);
+
+  async function togglePlanActive(planId: string, currentActive: boolean) {
+    setTogglingPlan(planId);
+    try {
+      const res = await fetch("/api/meals", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ planId, isActive: !currentActive }),
+      });
+      if (res.ok) {
+        const updated = await res.json();
+        setPlans((prev) => prev.map((p) => (p.id === planId ? { ...p, isActive: updated.isActive } : p)));
+      }
+    } catch (e) {
+      console.error("Toggle failed", e);
+    } finally {
+      setTogglingPlan(null);
+    }
+  }
 
   useEffect(() => {
     async function load() {
@@ -268,8 +288,23 @@ export default function AdminMealsPage() {
                         </td>
                         <td className="py-3.5">
                           <div className="flex items-center gap-2">
-                            <button className="text-xs text-emerald hover:underline font-medium">تعديل</button>
-                            <button className="text-xs text-rose-500 hover:underline font-medium">حذف</button>
+                            <button
+                              onClick={() => togglePlanActive(plan.id, plan.isActive)}
+                              disabled={togglingPlan === plan.id}
+                              className={`text-xs font-medium px-2.5 py-1 rounded-lg transition-all ${
+                                plan.isActive
+                                  ? "text-rose-500 hover:bg-rose-50 border border-rose-200"
+                                  : "text-emerald hover:bg-emerald-50 border border-emerald-200"
+                              }`}
+                            >
+                              {togglingPlan === plan.id ? (
+                                <Loader2 className="h-3 w-3 animate-spin" />
+                              ) : plan.isActive ? (
+                                "تعطيل"
+                              ) : (
+                                "تفعيل"
+                              )}
+                            </button>
                           </div>
                         </td>
                       </tr>
