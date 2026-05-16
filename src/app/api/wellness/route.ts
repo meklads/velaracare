@@ -36,11 +36,31 @@ export async function GET(req: Request) {
       return NextResponse.json(scores);
     }
 
-    // Current user's own score
-    const score = await prisma.wellnessScore.findUnique({
-      where: { userId: user.id },
-    });
-    return NextResponse.json(score);
+    // Current user's own score with trend history from HRA results
+    const [score, hraHistory] = await Promise.all([
+      prisma.wellnessScore.findUnique({
+        where: { userId: user.id },
+      }),
+      prisma.hRAResult.findMany({
+        where: { userId: user.id },
+        orderBy: { completedAt: "asc" },
+        take: 30,
+        select: {
+          completedAt: true,
+          riskLevel: true,
+        },
+      }),
+    ]);
+
+    // Compute trend history: derive score from risk level if no direct score history
+    const riskToScore: Record<string, number> = { low: 85, moderate: 65, high: 40, critical: 20 };
+    const trendHistory = hraHistory.map((h) => ({
+      date: h.completedAt.toISOString(),
+      score: riskToScore[h.riskLevel] || 50,
+      riskLevel: h.riskLevel,
+    }));
+
+    return NextResponse.json({ ...(score || {}), trendHistory });
   } catch (error) {
     console.error("Wellness GET error:", error);
     return NextResponse.json({ error: "خطأ في جلب البيانات" }, { status: 500 });

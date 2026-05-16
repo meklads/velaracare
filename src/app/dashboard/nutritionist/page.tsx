@@ -1,9 +1,10 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
-import { Loader2, CalendarDays, Users, FileText, Clock, CheckCircle, Video, Phone, User } from "lucide-react";
+import { Loader2, CalendarDays, Users, FileText, Clock, CheckCircle, Video, Phone, User, Wifi, WifiOff } from "lucide-react";
+import { useSSE } from "@/lib/useSSE";
 
 type Consultation = {
   id: string;
@@ -28,20 +29,31 @@ const typeIcons: Record<string, string> = {
 export default function NutritionistDashboard() {
   const [consultations, setConsultations] = useState<Consultation[]>([]);
   const [loading, setLoading] = useState(true);
+  const [connected, setConnected] = useState(false);
 
-  useEffect(() => {
-    async function load() {
-      try {
-        const res = await fetch("/api/consultations?type=all");
-        if (res.ok) setConsultations(await res.json());
-      } catch (e) {
-        console.error("Failed to load", e);
-      } finally {
-        setLoading(false);
-      }
+  const loadConsultations = useCallback(async () => {
+    try {
+      const res = await fetch("/api/consultations?type=all");
+      if (res.ok) setConsultations(await res.json());
+    } catch (e) {
+      console.error("Failed to load", e);
+    } finally {
+      setLoading(false);
     }
-    load();
   }, []);
+
+  useEffect(() => { loadConsultations(); }, [loadConsultations]);
+
+  // SSE for real-time updates
+  useSSE("consultations", (event: any) => {
+    if (event.type === "connected") {
+      setConnected(true);
+    }
+    if (event.type === "consultations_update") {
+      setConsultations(event.consultations || []);
+      setConnected(true);
+    }
+  });
 
   const today = new Date().toDateString();
   const todayConsults = consultations.filter((c) => new Date(c.scheduledAt).toDateString() === today);
@@ -59,9 +71,17 @@ export default function NutritionistDashboard() {
       <Header />
       <main className="min-h-screen bg-surface-mid pt-24 pb-12">
         <div className="container-shade py-6">
-          <div className="fade-in-up mb-6">
-            <h1 className="text-2xl font-bold text-primary flex items-center gap-2">🥗 لوحة الاستشاري</h1>
-            <p className="text-secondary mt-1">إدارة الاستشارات الغذائية والصحية</p>
+          <div className="fade-in-up mb-6 flex flex-wrap items-center justify-between gap-4">
+            <div>
+              <h1 className="text-2xl font-bold text-primary flex items-center gap-2">🥗 لوحة الاستشاري</h1>
+              <p className="text-secondary mt-1">إدارة الاستشارات الغذائية والصحية</p>
+            </div>
+            <span className={`flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-full transition-colors ${
+              connected ? "bg-emerald-500/10 text-emerald-400" : "bg-amber-500/10 text-amber-400"
+            }`}>
+              {connected ? <Wifi className="h-3.5 w-3.5" /> : <WifiOff className="h-3.5 w-3.5" />}
+              {connected ? "مباشر" : "غير متصل"}
+            </span>
           </div>
 
           <div className="grid grid-cols-3 gap-4 mb-8">

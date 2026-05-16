@@ -1,4 +1,3 @@
-import { cookies } from "next/headers";
 import Link from "next/link";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
@@ -82,26 +81,6 @@ export default async function AdminDashboard() {
   const highPct = totalRisk > 0 ? Math.round((riskDistribution.high / totalRisk) * 100) : 0;
   const critPct = totalRisk > 0 ? Math.round((riskDistribution.critical / totalRisk) * 100) : 0;
 
-  // ── Diagnostics ──────────────────────────────────────────────
-  let diagnostics: Record<string, unknown> = { error: "unknown" };
-  try {
-    const jar = await cookies();
-    const allCookies = jar.getAll();
-    const sessionCookie = allCookies.find(c => c.name.includes("session-token"));
-    const allAuthCookies = allCookies.filter(c => c.name.includes("authjs") || c.name.includes("next-auth"));
-    diagnostics = {
-      total_cookies: allCookies.length,
-      auth_cookies: allAuthCookies.map(c => c.name),
-      session_cookie: sessionCookie ? {
-        name: sessionCookie.name,
-        value: sessionCookie.value.slice(0, 30) + "...",
-      } : "not found",
-      date: new Date().toISOString(),
-    };
-  } catch (e) {
-    diagnostics = { error: String(e), date: new Date().toISOString() };
-  }
-  // ────────────────────────────────────────────────────────────
 
   return (
     <>
@@ -247,23 +226,6 @@ export default async function AdminDashboard() {
             </Link>
           </div>
 
-          {/* ── Diagnostics Section ─────────────────────────── */}
-          <details className="mt-12 shade-card p-4" style={{ opacity: 0.6 }}>
-            <summary className="cursor-pointer text-sm font-medium text-secondary select-none">
-              🛠 Diagnostics (click to expand)
-            </summary>
-            <pre className="mt-3 text-xs text-left ltr" style={{
-              background: "#f8f9fa",
-              padding: "12px",
-              borderRadius: "6px",
-              overflowX: "auto",
-              unicodeBidi: "embed",
-            }}>
-{JSON.stringify(diagnostics, null, 2)}
-            </pre>
-            <p className="text-xs text-[var(--text-muted)] mt-2">build: 2026-05-15T18</p>
-          </details>
-          {/* ──────────────────────────────────────────────────── */}
         </div>
       </main>
       <Footer />

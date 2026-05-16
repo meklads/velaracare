@@ -30,6 +30,7 @@ type WellnessData = {
   nutritionScore: number;
   riskLevel: string;
   trend: string;
+  trendHistory?: { date: string; score: number; riskLevel: string }[];
 };
 
 type AITip = {
@@ -112,15 +113,19 @@ export default function EmployeeDashboard() {
   const riskLabel = wellness?.riskLevel === "low" ? "منخفض" : wellness?.riskLevel === "medium" ? "متوسط" : wellness?.riskLevel === "high" ? "مرتفع" : "حرج";
   const riskColor = wellness?.riskLevel === "low" ? "text-emerald-400 bg-emerald-500/10" : wellness?.riskLevel === "medium" ? "text-amber-400 bg-amber-500/10" : "text-red-400 bg-red-500/10";
 
-  const weeklyTrend = [
-    { day: "السبت", value: Math.max(40, score - 8 + Math.round(Math.random() * 6)) },
-    { day: "الأحد", value: Math.max(40, score - 5 + Math.round(Math.random() * 6)) },
-    { day: "الإثنين", value: Math.max(40, score - 3 + Math.round(Math.random() * 6)) },
-    { day: "الثلاثاء", value: Math.max(40, score - 2 + Math.round(Math.random() * 6)) },
-    { day: "الأربعاء", value: Math.max(40, score + Math.round(Math.random() * 4)) },
-    { day: "الخميس", value: Math.max(40, score + Math.round(Math.random() * 4)) },
-    { day: "اليوم", value: score },
-  ];
+  // Build weekly trend from real history or fall back to score-based estimate
+  const dayNames = ["السبت", "الأحد", "الإثنين", "الثلاثاء", "الأربعاء", "الخميس", "اليوم"];
+  const weeklyTrend = wellness?.trendHistory && wellness.trendHistory.length > 0
+    ? wellness.trendHistory.slice(-7).map((h, i) => ({
+        day: dayNames[i] || "اليوم",
+        value: h.score,
+      }))
+    : dayNames.map((d, i) => ({
+        day: d,
+        value: i < 6
+          ? Math.max(40, score - (6 - i) * 2 + Math.round(Math.sin(i * 1.5) * 3))
+          : score,
+      }));
 
   const trendDirection = wellness?.trend === "up" ? "تحسن" : wellness?.trend === "down" ? "انخفاض" : "استقرار";
   const trendIcon = wellness?.trend === "up" ? "+" : wellness?.trend === "down" ? "-" : "=";

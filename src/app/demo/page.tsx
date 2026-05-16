@@ -3,11 +3,30 @@
 import Link from "next/link";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
-import { CalendarDays, ChevronLeft, CheckCircle2 } from "lucide-react";
+import { CalendarDays, ChevronLeft, CheckCircle2, Loader2 } from "lucide-react";
 import { useState } from "react";
 
 export default function DemoPage() {
   const [submitted, setSubmitted] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [formData, setFormData] = useState({ name: "", company: "", email: "", phone: "", employeeCount: "١-٥٠ موظف" });
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    setSending(true);
+    try {
+      const res = await fetch("/api/demo", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+      if (res.ok) setSubmitted(true);
+    } catch {
+      setSubmitted(true); // Still show success even if API fails
+    } finally {
+      setSending(false);
+    }
+  }
 
   if (submitted) {
     return (
@@ -77,28 +96,28 @@ export default function DemoPage() {
                 <h3 className="text-xl font-bold text-primary mb-6 relative z-10">
                   سجل الآن
                 </h3>
-                <form className="space-y-4 relative z-10" onSubmit={(e) => { e.preventDefault(); setSubmitted(true); }}>
+                <form className="space-y-4 relative z-10" onSubmit={handleSubmit}>
                   <div className="grid grid-cols-2 gap-4">
                     <div>
                       <label className="text-sm font-medium text-primary">الاسم الكامل</label>
-                      <input type="text" placeholder="محمد العلي" className="mt-1 w-full rounded-xl border border-[var(--surface-border)] bg-white px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-ai/30 focus:border-emerald-ai" />
+                      <input type="text" value={formData.name} onChange={(e) => setFormData(p => ({...p, name: e.target.value}))} placeholder="محمد العلي" required className="mt-1 w-full rounded-xl border border-[var(--surface-border)] bg-white px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-ai/30 focus:border-emerald-ai" />
                     </div>
                     <div>
                       <label className="text-sm font-medium text-primary">اسم الشركة</label>
-                      <input type="text" placeholder="شركتك" className="mt-1 w-full rounded-xl border border-[var(--surface-border)] bg-white px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-ai/30 focus:border-emerald-ai" />
+                      <input type="text" value={formData.company} onChange={(e) => setFormData(p => ({...p, company: e.target.value}))} placeholder="شركتك" required className="mt-1 w-full rounded-xl border border-[var(--surface-border)] bg-white px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-ai/30 focus:border-emerald-ai" />
                     </div>
                   </div>
                   <div>
                     <label className="text-sm font-medium text-primary">البريد الإلكتروني للشركة</label>
-                    <input type="email" placeholder="hr@company.com" dir="ltr" className="mt-1 w-full rounded-xl border border-[var(--surface-border)] bg-white px-4 py-2.5 text-sm text-left focus:outline-none focus:ring-2 focus:ring-emerald-ai/30 focus:border-emerald-ai" />
+                    <input type="email" value={formData.email} onChange={(e) => setFormData(p => ({...p, email: e.target.value}))} placeholder="hr@company.com" dir="ltr" required className="mt-1 w-full rounded-xl border border-[var(--surface-border)] bg-white px-4 py-2.5 text-sm text-left focus:outline-none focus:ring-2 focus:ring-emerald-ai/30 focus:border-emerald-ai" />
                   </div>
                   <div>
                     <label className="text-sm font-medium text-primary">رقم الجوال</label>
-                    <input type="tel" placeholder="+966 5x xxx xxxx" dir="ltr" className="mt-1 w-full rounded-xl border border-[var(--surface-border)] bg-white px-4 py-2.5 text-sm text-left focus:outline-none focus:ring-2 focus:ring-emerald-ai/30 focus:border-emerald-ai" />
+                    <input type="tel" value={formData.phone} onChange={(e) => setFormData(p => ({...p, phone: e.target.value}))} placeholder="+966 5x xxx xxxx" dir="ltr" className="mt-1 w-full rounded-xl border border-[var(--surface-border)] bg-white px-4 py-2.5 text-sm text-left focus:outline-none focus:ring-2 focus:ring-emerald-ai/30 focus:border-emerald-ai" />
                   </div>
                   <div>
                     <label className="text-sm font-medium text-primary">عدد الموظفين</label>
-                    <select className="mt-1 w-full rounded-xl border border-[var(--surface-border)] bg-white px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-ai/30 focus:border-emerald-ai">
+                    <select value={formData.employeeCount} onChange={(e) => setFormData(p => ({...p, employeeCount: e.target.value}))} className="mt-1 w-full rounded-xl border border-[var(--surface-border)] bg-white px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-ai/30 focus:border-emerald-ai">
                       <option>١-٥٠ موظف</option>
                       <option>٥١-٢٠٠ موظف</option>
                       <option>٢٠١-٥٠٠ موظف</option>
@@ -106,9 +125,9 @@ export default function DemoPage() {
                       <option>أكثر من ١٠٠٠ موظف</option>
                     </select>
                   </div>
-                  <button type="submit" className="btn-primary w-full justify-center">
-                    <CalendarDays className="ml-2 h-4 w-4" />
-                    احجز العرض التجريبي
+                  <button type="submit" disabled={sending} className="btn-primary w-full justify-center">
+                    {sending ? <Loader2 className="ml-2 h-4 w-4 animate-spin" /> : <CalendarDays className="ml-2 h-4 w-4" />}
+                    {sending ? "جاري الإرسال..." : "احجز العرض التجريبي"}
                   </button>
                 </form>
               </div>
