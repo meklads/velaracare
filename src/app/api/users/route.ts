@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { auth } from "@/lib/auth";
+import { hashPassword } from "@/lib/password";
 import { sendEmail, invitationEmail } from "@/lib/email";
 import { randomBytes } from "crypto";
 
@@ -36,8 +37,12 @@ export async function GET(req: Request) {
     // Filter by company
     if (user.role === "SUPER_ADMIN") {
       if (companyId) whereClause.companyId = companyId;
-    } else if (user.role === "HR" || user.role === "COMPANY_ADMIN") {
+    } else if (user.role === "HR" || user.role === "COMPANY_ADMIN" || user.role === "NUTRITIONIST") {
       whereClause.companyId = user.companyId;
+      if (user.role === "NUTRITIONIST") {
+        // Nutritionists see employees & their own profile (not other nutritionists)
+        whereClause.role = { in: ["EMPLOYEE"] };
+      }
     } else {
       // Regular users can only see themselves
       whereClause.id = user.id;
@@ -120,7 +125,7 @@ export async function POST(req: Request) {
         department: body.department ?? null,
         position: body.position ?? null,
         companyId: body.companyId ?? user.companyId ?? null,
-        passwordHash: password,
+        passwordHash: hashPassword(password),
       },
       select: {
         id: true,
@@ -184,10 +189,12 @@ export async function PATCH(req: Request) {
           role: body.role ?? undefined,
           department: body.department ?? undefined,
           position: body.position ?? undefined,
+          avatarUrl: body.avatarUrl ?? undefined,
         },
         select: {
           id: true, firstName: true, lastName: true, email: true,
           role: true, department: true, position: true, isActive: true,
+          avatarUrl: true,
         },
       });
       return NextResponse.json(updated);
@@ -202,10 +209,12 @@ export async function PATCH(req: Request) {
         phone: body.phone ?? undefined,
         department: body.department ?? undefined,
         position: body.position ?? undefined,
+        avatarUrl: body.avatarUrl ?? undefined,
       },
       select: {
         id: true, firstName: true, lastName: true, email: true,
         phone: true, department: true, position: true, role: true,
+        avatarUrl: true,
       },
     });
     return NextResponse.json(updated);

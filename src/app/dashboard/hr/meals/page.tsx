@@ -47,7 +47,7 @@ export default function HRMealsPage() {
     load();
   }, []);
 
-  const totalOrders = plans.reduce((s, p) => s + p._count.orders, 0);
+  const totalOrders = plans.reduce((s, p) => s + (p._count?.orders || 0), 0);
   const avgCalories = plans.length ? Math.round(plans.reduce((s, p) => s + (p.calories || 0), 0) / plans.length) : 0;
 
   if (loading) {
@@ -111,7 +111,7 @@ export default function HRMealsPage() {
                     </div>
                   </div>
                   <div className="flex items-center gap-3">
-                    <span className="text-sm font-semibold text-primary">{m._count.orders} طلب</span>
+                    <span className="text-sm font-semibold text-primary">{m._count?.orders ?? 0} طلب</span>
                     <button
                       onClick={() => toggleActive(m.id, m.isActive)}
                       disabled={toggling === m.id}

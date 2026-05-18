@@ -37,7 +37,7 @@ function generateReportHTML(data: ReportData, type: "monthly" | "cost" | "partic
     <html dir="rtl">
     <head><meta charset="utf-8"><title>${titles[type]} — Velara Care</title>
     <style>
-      body { font-family: 'Cairo', Arial, sans-serif; padding: 40px; color: #1a1a2e; max-width: 800px; margin: 0 auto; }
+      body { font-family: 'Avenir Arabic','Tajawal', Arial, sans-serif; padding: 40px; color: #1a1a2e; max-width: 800px; margin: 0 auto; }
       .header { text-align: center; border-bottom: 2px solid #10B981; padding-bottom: 20px; margin-bottom: 30px; }
       .header h1 { color: #10B981; margin: 0; font-size: 24px; }
       .header p { color: #666; margin: 5px 0 0; font-size: 14px; }

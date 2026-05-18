@@ -6,9 +6,6 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { Loader2, ChevronLeft, Apple, TrendingUp, Users, UtensilsCrossed, Search, Plus, ArrowUpRight, Clock, Filter, X } from "lucide-react";
 
-// ⚡ Don't pre-render at build time — DB is only available at runtime
-export const dynamic = "force-dynamic";
-
 type MealPlan = {
   id: string;
   name: string;
@@ -26,6 +23,11 @@ const typeLabels: Record<string, string> = {
   high_performance: "أداء عالي",
   general: "عام",
   vegan: "نباتي",
+  keto: "كيتو",
+  mediterranean: "بحر المتوسط",
+  post_workout: "ما بعد التمرين",
+  breakfast: "إفطار",
+  smoothie: "سموذي",
 };
 
 const typeColors: Record<string, string> = {
@@ -34,9 +36,18 @@ const typeColors: Record<string, string> = {
   high_performance: "bg-blue-100 text-blue-700",
   general: "bg-emerald-100 text-emerald-700",
   vegan: "bg-purple-100 text-purple-700",
+  keto: "bg-violet-100 text-violet-700",
+  mediterranean: "bg-cyan-100 text-cyan-700",
+  post_workout: "bg-orange-100 text-orange-700",
+  breakfast: "bg-yellow-100 text-yellow-700",
+  smoothie: "bg-pink-100 text-pink-700",
 };
 
-const typeIcons: Record<string, string> = { diabetic: "🩺", weight_loss: "⚖️", high_performance: "⚡", general: "🍱", vegan: "🥗" };
+const typeIcons: Record<string, string> = {
+  diabetic: "🩺", weight_loss: "⚖️", high_performance: "⚡",
+  general: "🍱", vegan: "🥗", keto: "🥑",
+  mediterranean: "🫒", post_workout: "💪", breakfast: "🌅", smoothie: "🥤"
+};
 
 export default function AdminMealsPage() {
   const [plans, setPlans] = useState<MealPlan[]>([]);
@@ -98,7 +109,7 @@ export default function AdminMealsPage() {
     load();
   }, []);
 
-  const totalOrders = plans.reduce((s, p) => s + p._count.orders, 0);
+  const totalOrders = plans.reduce((s, p) => s + (p._count?.orders || 0), 0);
   const activePlans = plans.filter((p) => p.isActive).length;
   const totalCalories = plans.reduce((s, p) => s + (p.calories || 0), 0);
   const avgCalories = plans.length ? Math.round(totalCalories / plans.length) : 0;
@@ -195,7 +206,7 @@ export default function AdminMealsPage() {
           {/* Stats Cards */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
             {[
-              { label: "إجمالي الخطط", value: plans.length, icon: UtensilsCrossed, color: "from-emerald-ai to-emerald-ai-dark" },
+              { label: "إجمالي الخطط", value: plans.length, icon: UtensilsCrossed, color: "from-emerald to-emerald-600" },
               { label: "الخطط النشطة", value: activePlans, icon: TrendingUp, color: "from-blue-500 to-indigo-600" },
               { label: "إجمالي الطلبات", value: totalOrders, icon: Users, color: "from-rose-500 to-pink-600" },
               { label: "متوسط السعرات", value: `${avgCalories}`, suffix: "kcal", icon: Apple, color: "from-amber-500 to-orange-600" },
@@ -275,7 +286,7 @@ export default function AdminMealsPage() {
                         </td>
                         <td className="py-3.5 text-secondary font-medium">{plan.calories ? `${plan.calories} kcal` : "—"}</td>
                         <td className="py-3.5">
-                          <span className="font-semibold text-primary">{plan._count.orders}</span>
+                          <span className="font-semibold text-primary">{plan._count?.orders ?? 0}</span>
                           <span className="text-xs text-secondary mr-1">طلب</span>
                         </td>
                         <td className="py-3.5">
@@ -341,7 +352,7 @@ export default function AdminMealsPage() {
               {plans.length > 0 ? (
                 <div className="space-y-2">
                   {[...plans]
-                    .sort((a, b) => b._count.orders - a._count.orders)
+                    .sort((a, b) => (b._count?.orders || 0) - (a._count?.orders || 0))
                     .slice(0, 3)
                     .map((p, i) => (
                       <div key={p.id} className="flex items-center justify-between text-sm">
@@ -351,7 +362,7 @@ export default function AdminMealsPage() {
                           }`}>{i + 1}</span>
                           {p.name}
                         </span>
-                        <span className="font-medium text-primary">{p._count.orders} طلب</span>
+                        <span className="font-medium text-primary">{(p._count?.orders ?? 0)} طلب</span>
                       </div>
                     ))}
                 </div>

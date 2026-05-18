@@ -1,79 +1,88 @@
-import { NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { auth } from "@/lib/auth";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-// ── In-memory store for tracking changes ──
-// In production with multiple instances, replace with Redis Pub/Sub
-const globalState = globalThis as any;
-if (!globalState.__orderTimestamps) {
-  globalState.__orderTimestamps = { lastOrderCount: 0, lastUpdate: Date.now() };
-}
+// ── Last-seen timestamps per event type (per instance, used for polling) ──
+const lastSeen = { orders: 0, consultations: 0 };
 
 /**
- * GET /api/events — Server-Sent Events endpoint
- * Streams real-time updates (new orders, status changes) to connected clients.
+ * GET /api/events — Server-Sent Events endpoint (authenticated)
+ * Streams real-time updates using DB-backed EventLog for multi-instance support.
  */
 export async function GET(req: NextRequest) {
-  const type = req.nextUrl.searchParams.get("type") || "orders";
+  const session = await auth();
+  if (!session?.user) {
+    return new NextResponse(null, { status: 401 });
+  }
+
+  const eventType = req.nextUrl.searchParams.get("type") || "orders";
 
   const stream = new ReadableStream({
     start(controller) {
       // Send initial connection event
       controller.enqueue(`data: ${JSON.stringify({ type: "connected", message: "مرحباً! تم الاتصال بالخادم المباشر" })}\n\n`);
 
-      // Keep connection alive with periodic checks
+      // Poll EventLog table for new events
       const interval = setInterval(async () => {
         try {
-          if (type === "orders") {
-            const count = await prisma.mealOrder.count();
-            const lastCount = globalState.__orderTimestamps.lastOrderCount;
+          const since = new Date(Date.now() - 60000); // last 60 seconds
+          const events = await prisma.eventLog.findMany({
+            where: { createdAt: { gte: since } },
+            orderBy: { createdAt: "asc" },
+            take: 20,
+          });
 
-            if (count !== lastCount) {
-              globalState.__orderTimestamps.lastOrderCount = count;
-              globalState.__orderTimestamps.lastUpdate = Date.now();
+          for (const event of events) {
+            const eventTs = event.createdAt.getTime();
+            const lastKey = eventType === "orders" ? "orders" : "consultations";
 
-              // Fetch latest orders
-              const orders = await prisma.mealOrder.findMany({
-                orderBy: { orderDate: "desc" },
-                take: 5,
-                include: {
-                  mealPlan: true,
-                  user: { select: { firstName: true, lastName: true, department: true } },
-                },
-              });
+            // Only process events matching our subscription type
+            const isOrderEvent = event.type.includes("order") && eventType === "orders";
+            const isConsEvent = event.type.includes("consultation") && eventType === "consultations";
 
-              controller.enqueue(`data: ${JSON.stringify({ type: "orders_update", orders, total: count })}\n\n`);
-            }
-          } else if (type === "consultations") {
-            const count = await prisma.consultation.count();
-            const lastCount = globalState.__consultationTimestamps?.lastCount || 0;
+            if ((isOrderEvent || isConsEvent) && eventTs > lastSeen[lastKey]) {
+              lastSeen[lastKey] = eventTs;
 
-            if (count !== lastCount) {
-              if (!globalState.__consultationTimestamps) globalState.__consultationTimestamps = { lastCount: 0 };
-              globalState.__consultationTimestamps.lastCount = count;
-
-              const consultations = await prisma.consultation.findMany({
-                orderBy: { scheduledAt: "desc" },
-                take: 5,
-                include: {
-                  patient: { select: { firstName: true, lastName: true, department: true } },
-                },
-              });
-
-              controller.enqueue(`data: ${JSON.stringify({ type: "consultations_update", consultations, total: count })}\n\n`);
+              // Fetch fresh data
+              if (isOrderEvent) {
+                const [orders, total] = await Promise.all([
+                  prisma.mealOrder.findMany({
+                    orderBy: { orderDate: "desc" },
+                    take: 5,
+                    include: {
+                      mealPlan: true,
+                      user: { select: { firstName: true, lastName: true, department: true } },
+                    },
+                  }),
+                  prisma.mealOrder.count(),
+                ]);
+                controller.enqueue(`data: ${JSON.stringify({ type: "orders_update", orders, total })}\n\n`);
+              } else if (isConsEvent) {
+                const [consultations, total] = await Promise.all([
+                  prisma.consultation.findMany({
+                    orderBy: { scheduledAt: "desc" },
+                    take: 5,
+                    include: {
+                      patient: { select: { firstName: true, lastName: true, department: true } },
+                    },
+                  }),
+                  prisma.consultation.count(),
+                ]);
+                controller.enqueue(`data: ${JSON.stringify({ type: "consultations_update", consultations, total })}\n\n`);
+              }
             }
           }
 
-          // Heartbeat every 10s to keep connection alive
+          // Heartbeat every 10s
           controller.enqueue(`: heartbeat ${Date.now()}\n\n`);
-        } catch (e) {
+        } catch {
           // Silently handle DB errors in SSE
         }
       }, 3000);
 
-      // Clean up on disconnect
       req.signal.addEventListener("abort", () => {
         clearInterval(interval);
         controller.close();
@@ -92,20 +101,23 @@ export async function GET(req: NextRequest) {
 }
 
 /**
- * POST /api/events — Trigger an event (called by other API routes)
- * Use this to immediately notify SSE clients without waiting for the next poll.
+ * POST /api/events — Log an event (called by other API routes)
+ * Stores event in EventLog table so all SSE instances pick it up.
  */
 export async function POST(req: NextRequest) {
+  const session = await auth();
+  if (!session?.user) {
+    return NextResponse.json({ error: "غير مصرح" }, { status: 401 });
+  }
+
   try {
     const body = await req.json();
-    const { type } = body;
+    const { type, data } = body;
 
-    if (type === "order_updated" || type === "new_order") {
-      globalState.__orderTimestamps.lastOrderCount = await prisma.mealOrder.count();
-      globalState.__orderTimestamps.lastUpdate = Date.now();
-    } else if (type === "consultation_updated" || type === "new_consultation") {
-      if (!globalState.__consultationTimestamps) globalState.__consultationTimestamps = { lastCount: 0 };
-      globalState.__consultationTimestamps.lastCount = await prisma.consultation.count();
+    if (type) {
+      await prisma.eventLog.create({
+        data: { type, data: data ? JSON.stringify(data) : null },
+      });
     }
 
     return Response.json({ success: true });

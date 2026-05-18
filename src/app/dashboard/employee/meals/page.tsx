@@ -1,10 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
-import { Loader2, ChevronLeft, Clock, CheckCircle, XCircle, ShoppingCart, Coffee, Sun, Moon, Sparkles, Flame, Timer, ShoppingBag } from "lucide-react";
+import { Loader2, ChevronLeft, Clock, CheckCircle, XCircle, ShoppingCart, Coffee, Sun, Moon, Sparkles, Flame, Timer, ShoppingBag, TrendingUp, Award, UtensilsCrossed, Info, ChevronDown, Search, Filter } from "lucide-react";
 
 // ── Types ──
 type MealPlan = {
@@ -34,6 +34,7 @@ const typeConfig: Record<string, {
   image: string;
   macros: { protein: number; carbs: number; fat: number };
   tags: string[];
+  planSummary: string;
 }> = {
   diabetic: {
     label: "السكري",
@@ -42,6 +43,7 @@ const typeConfig: Record<string, {
     image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=600&h=400&fit=crop",
     macros: { protein: 28, carbs: 30, fat: 15 },
     tags: ["منخفض السكر", "غني بالألياف"],
+    planSummary: "وجبات متوازنة منخفضة السكر تناسب مرضى السكري",
   },
   weight_loss: {
     label: "تخفيف الوزن",
@@ -50,6 +52,7 @@ const typeConfig: Record<string, {
     image: "https://images.unsplash.com/photo-1467003909585-2f8a72700288?w=600&h=400&fit=crop",
     macros: { protein: 35, carbs: 25, fat: 12 },
     tags: ["قليل السعرات", "عالي البروتين"],
+    planSummary: "سعرات حرارية منخفضة لخسارة الوزن بشكل صحي",
   },
   high_performance: {
     label: "أداء عالي",
@@ -58,6 +61,7 @@ const typeConfig: Record<string, {
     image: "https://images.unsplash.com/photo-1482049016688-2d3e1b311e65?w=600&h=400&fit=crop",
     macros: { protein: 45, carbs: 55, fat: 20 },
     tags: ["طاقة", "بروتين عالي"],
+    planSummary: "بروتين عالي لبناء العضلات وتعزيز الأداء",
   },
   general: {
     label: "عام",
@@ -66,6 +70,7 @@ const typeConfig: Record<string, {
     image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600&h=400&fit=crop",
     macros: { protein: 30, carbs: 45, fat: 18 },
     tags: ["متوازن", "صحي"],
+    planSummary: "وجبات متوازنة تناسب جميع الاحتياجات اليومية",
   },
   vegan: {
     label: "نباتي",
@@ -74,6 +79,52 @@ const typeConfig: Record<string, {
     image: "https://images.unsplash.com/photo-1505252585461-04db1eb84625?w=600&h=400&fit=crop",
     macros: { protein: 22, carbs: 50, fat: 16 },
     tags: ["نباتي", "ألياف"],
+    planSummary: "وجبات نباتية غنية بالألياف والعناصر الغذائية",
+  },
+  keto: {
+    label: "كيتو",
+    emoji: "🥑",
+    gradient: "from-violet-500 to-purple-600",
+    image: "https://images.unsplash.com/photo-1606787366850-de6330128bfc?w=600&h=400&fit=crop",
+    macros: { protein: 30, carbs: 10, fat: 60 },
+    tags: ["قليل الكارب", "دهون صحية"],
+    planSummary: "نظام كيتو عالي الدهون مناسب لحرق الدهون",
+  },
+  mediterranean: {
+    label: "بحر المتوسط",
+    emoji: "🫒",
+    gradient: "from-cyan-500 to-teal-500",
+    image: "https://images.unsplash.com/photo-1511690743698-d9d85f2fbf38?w=600&h=400&fit=crop",
+    macros: { protein: 25, carbs: 40, fat: 35 },
+    tags: ["زيت زيتون", "صحي للقلب"],
+    planSummary: "نظام البحر المتوسط الغني بأوميغا 3 والدهون الصحية",
+  },
+  post_workout: {
+    label: "ما بعد التمرين",
+    emoji: "💪",
+    gradient: "from-orange-500 to-red-500",
+    image: "https://images.unsplash.com/photo-1593095948071-474c5cc2c1cf?w=600&h=400&fit=crop",
+    macros: { protein: 50, carbs: 40, fat: 10 },
+    tags: ["استشفاء", "بروتين عالي"],
+    planSummary: "وجبات غنية بالبروتين لتعافي العضلات بعد التمرين",
+  },
+  breakfast: {
+    label: "إفطار",
+    emoji: "🌅",
+    gradient: "from-yellow-500 to-amber-500",
+    image: "https://images.unsplash.com/photo-1513442542250-854d436a73f2?w=600&h=400&fit=crop",
+    macros: { protein: 20, carbs: 50, fat: 15 },
+    tags: ["خفيف", "طاقة صباحية"],
+    planSummary: "وجبات فطور مغذية لبداية يوم نشطة",
+  },
+  smoothie: {
+    label: "سموذي",
+    emoji: "🥤",
+    gradient: "from-pink-500 to-rose-500",
+    image: "https://images.unsplash.com/photo-1505252585461-04db1eb84625?w=600&h=400&fit=crop",
+    macros: { protein: 15, carbs: 35, fat: 8 },
+    tags: ["منعش", "فيتامينات"],
+    planSummary: "مشروبات طبيعية غنية بالفيتامينات والعناصر الغذائية",
   },
 };
 
@@ -92,6 +143,58 @@ const mealTimes = [
 ];
 
 // ── Component ──
+// ── Macros pie helper ──
+function MacrosPie({ protein, carbs, fat, size = 56 }: { protein: number; carbs: number; fat: number; size?: number }) {
+  const total = protein + carbs + fat;
+  const pPct = Math.round((protein / total) * 100);
+  const cPct = Math.round((carbs / total) * 100);
+  const fPct = Math.round((fat / total) * 100);
+  // SVG polar pie (simpler, no deps)
+  const r = size / 2 - 4;
+  const circ = 2 * Math.PI * r;
+  const pLen = (pPct / 100) * circ;
+  const cLen = (cPct / 100) * circ;
+  const fLen = (fPct / 100) * circ;
+  return (
+    <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} className="shrink-0">
+      <circle cx={size / 2} cy={size / 2} r={r} fill="none" stroke="#e5e7eb" strokeWidth={5} />
+      <circle cx={size / 2} cy={size / 2} r={r} fill="none" stroke="#3B82F6" strokeWidth={5}
+        strokeDasharray={`${pLen} ${circ - pLen}`} transform={`rotate(-90 ${size / 2} ${size / 2})`} strokeLinecap="round" />
+      <circle cx={size / 2} cy={size / 2} r={r} fill="none" stroke="#F59E0B" strokeWidth={5}
+        strokeDasharray={`${cLen} ${circ - cLen}`} transform={`rotate(${pPct * 3.6 - 90} ${size / 2} ${size / 2})`} strokeLinecap="round" />
+      <circle cx={size / 2} cy={size / 2} r={r} fill="none" stroke="#EF4444" strokeWidth={5}
+        strokeDasharray={`${fLen} ${circ - fLen}`} transform={`rotate(${(pPct + cPct) * 3.6 - 90} ${size / 2} ${size / 2})`} strokeLinecap="round" />
+      <text x={size / 2} y={size / 2} textAnchor="middle" dominantBaseline="central" className="text-[10px] font-bold fill-gray-800" fontSize="10">
+        {pPct}%
+      </text>
+    </svg>
+  );
+}
+
+// ── Macro mini bar ──
+function MacroBar({ protein, carbs, fat, compact = false }: { protein: number; carbs: number; fat: number; compact?: boolean }) {
+  const total = protein + carbs + fat;
+  const wP = (protein / total) * 100;
+  const wC = (carbs / total) * 100;
+  const wF = (fat / total) * 100;
+  return (
+    <div className={`flex flex-col gap-1 ${compact ? "" : "bg-surface-mid rounded-xl p-3"}`}>
+      {!compact && (
+        <div className="flex justify-between text-[11px] text-secondary mb-1">
+          <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-blue-500" /> بروتين</span>
+          <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-amber-500" /> كارب</span>
+          <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-rose-500" /> دهون</span>
+        </div>
+      )}
+      <div className={`flex rounded-full overflow-hidden ${compact ? "h-1.5" : "h-2"}`}>
+        <div className="bg-blue-500" style={{ width: `${wP}%` }} />
+        <div className="bg-amber-500" style={{ width: `${wC}%` }} />
+        <div className="bg-rose-500" style={{ width: `${wF}%` }} />
+      </div>
+    </div>
+  );
+}
+
 export default function EmployeeMealsPage() {
   const [plans, setPlans] = useState<MealPlan[]>([]);
   const [orders, setOrders] = useState<MealOrder[]>([]);
@@ -101,6 +204,9 @@ export default function EmployeeMealsPage() {
   const [successMsg, setSuccessMsg] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
   const [cartCount, setCartCount] = useState(0);
+  const [showPlanGuide, setShowPlanGuide] = useState(true);
+  const filterRef = useRef<HTMLDivElement>(null);
+  const [isFilterSticky, setIsFilterSticky] = useState(false);
 
   useEffect(() => {
     async function load() {
@@ -172,6 +278,20 @@ export default function EmployeeMealsPage() {
     }
   }
 
+  // ── Scroll observer for sticky filter ──
+  useEffect(() => {
+    const el = filterRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => setFilterSticky(!entry.isIntersecting),
+      { rootMargin: "-64px 0px 0px 0px", threshold: 0 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [plans]);
+
+  // ── Sticky filter scroll helper ──
+  const setFilterSticky = (sticky: boolean) => setIsFilterSticky(sticky);
   const categories = ["all", ...new Set(plans.map((p) => p.type))];
   const filteredPlans = selectedCategory === "all" ? plans : plans.filter((p) => p.type === selectedCategory);
 
@@ -197,29 +317,52 @@ export default function EmployeeMealsPage() {
             </Link>
           </div>
 
-          {/* Hero Header */}
-          <div className="fade-in-up mb-8 relative">
-            <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
-              <div>
-                <div className="flex items-center gap-2 mb-1">
-                  <span className="text-xs font-medium bg-emerald-soft text-emerald-dark px-3 py-0.5 rounded-full">قائمة طعام اليوم</span>
-                </div>
-                <h1 className="text-3xl font-bold text-primary flex items-center gap-3 mt-2">
-                  <span className="text-3xl">🍽️</span>
-                  اختر وجبتك المفضلة
-                </h1>
-                <p className="text-secondary mt-1">وجبات صحية محضرة بعناية لتناسب احتياجاتك الغذائية</p>
-              </div>
-              <div className="flex items-center gap-3">
-                {cartCount > 0 && (
-                  <div className="flex items-center gap-2 bg-emerald-soft text-emerald-dark px-4 py-2 rounded-xl text-sm font-medium">
-                    <ShoppingBag className="h-4 w-4" />
-                    <span>{cartCount} طلب نشط</span>
+          {/* Hero Header — Calo-inspired */}
+          <div className="fade-in-up mb-8 relative overflow-hidden">
+            {/* Background pattern */}
+            <div className="absolute -top-20 -right-20 w-64 h-64 bg-emerald/5 rounded-full blur-3xl" />
+            <div className="absolute -bottom-10 -left-10 w-48 h-48 bg-amber/5 rounded-full blur-3xl" />
+            <div className="relative">
+              <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
+                <div>
+                  <div className="flex items-center gap-2 mb-2">
+                    <span className="text-xs font-bold bg-gradient-to-r from-emerald to-emerald-600 text-white px-3 py-1 rounded-full shadow-sm">🍽️ قائمة طعام اليوم</span>
                   </div>
-                )}
-                <div className="text-sm text-secondary bg-surface-mid px-4 py-2 rounded-xl border border-[var(--surface-border)] flex items-center gap-2">
-                  <Sparkles className="h-4 w-4 text-amber-500" />
-                  <span>توصيل مجاني للشركة</span>
+                  <h1 className="text-3xl md:text-4xl font-bold text-primary mt-2 leading-tight">
+                    وجبات صحية <br className="hidden md:block" />
+                    <span className="text-transparent bg-clip-text bg-gradient-to-l from-emerald to-emerald-600">
+                      على كيفك
+                    </span>
+                  </h1>
+                  <p className="text-secondary mt-2 max-w-xl">
+                    وجبات مُحضّرة من أمهر الطهاة ومتوازنة بالسعرات ومُعتمدة من أخصائيي التغذية، تُوصّل يومياً إلى مكتبك. فقط سخّن، كل، واستمتع.
+                  </p>
+                  <div className="flex items-center gap-4 mt-3">
+                    <div className="flex items-center gap-1.5">
+                      <TrendingUp className="h-4 w-4 text-emerald" />
+                      <span className="text-xs font-medium text-primary">{plans.length} وجبة متاحة</span>
+                    </div>
+                    <div className="flex items-center gap-1.5">
+                      <Award className="h-4 w-4 text-amber-500" />
+                      <span className="text-xs font-medium text-primary">{plans.filter(p => p.isActive).length} نشطة</span>
+                    </div>
+                    <div className="flex items-center gap-1.5">
+                      <UtensilsCrossed className="h-4 w-4 text-emerald" />
+                      <span className="text-xs font-medium text-primary">{Object.keys(typeConfig).length} خطط غذائية</span>
+                    </div>
+                  </div>
+                </div>
+                <div className="flex items-center gap-3">
+                  {cartCount > 0 && (
+                    <div className="flex items-center gap-2 bg-emerald-soft text-emerald-dark px-4 py-2 rounded-xl text-sm font-medium shadow-sm">
+                      <ShoppingBag className="h-4 w-4" />
+                      <span>{cartCount} طلب نشط</span>
+                    </div>
+                  )}
+                  <div className="text-sm text-secondary bg-white/80 backdrop-blur-sm px-4 py-2 rounded-xl border border-[var(--surface-border)] flex items-center gap-2 shadow-sm">
+                    <Sparkles className="h-4 w-4 text-amber-500" />
+                    <span>توصيل مجاني للشركة</span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -244,24 +387,88 @@ export default function EmployeeMealsPage() {
             ))}
           </div>
 
-          {/* Category Filter - Premium Style */}
-          <div className="fade-in-up-delay-1 mb-7">
-            <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-hide">
-              {categories.map((cat) => (
-                <button
-                  key={cat}
-                  onClick={() => setSelectedCategory(cat)}
-                  className={`text-sm px-4 py-2 rounded-xl whitespace-nowrap transition-all duration-200 font-medium ${
-                    selectedCategory === cat
-                      ? "bg-emerald text-white shadow-lg shadow-emerald/20 scale-105"
-                      : "bg-white text-secondary hover:text-primary border border-[var(--surface-border)] hover:border-emerald/30"
-                  }`}
-                >
-                  {cat === "all" ? "📋 الكل" : `${typeConfig[cat]?.emoji || "🍽️"} ${typeConfig[cat]?.label || cat}`}
+          {/* ── Plan Guide (Calo-inspired) ── */}
+          {showPlanGuide && (
+            <div className="fade-in-up mb-8">
+              <div className="flex items-center justify-between mb-4">
+                <h2 className="text-base font-bold text-primary flex items-center gap-2">
+                  <Award className="h-5 w-5 text-emerald" />
+                  الخطط الغذائية المناسبة لك
+                </h2>
+                <button onClick={() => setShowPlanGuide(false)} className="text-xs text-secondary hover:text-primary transition-colors">
+                  إخفاء
                 </button>
-              ))}
+              </div>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                {Object.entries(typeConfig).slice(0, 8).map(([key, cfg]) => {
+                  const total = cfg.macros.protein + cfg.macros.carbs + cfg.macros.fat;
+                  const pPct = Math.round((cfg.macros.protein / total) * 100);
+                  const cPct = Math.round((cfg.macros.carbs / total) * 100);
+                  const fPct = Math.round((cfg.macros.fat / total) * 100);
+                  const hasMeals = categories.includes(key);
+                  return (
+                    <button
+                      key={key}
+                      onClick={() => { setSelectedCategory(key); setShowPlanGuide(false); }}
+                      className={`shade-card p-4 text-right hover:shadow-lg transition-all duration-200 hover:-translate-y-0.5 text-right ${
+                        !hasMeals ? "opacity-40 pointer-events-none" : ""
+                      } ${selectedCategory === key ? "ring-2 ring-emerald ring-offset-2" : ""}`}
+                    >
+                      <div className="flex items-start gap-2 mb-2">
+                        <span className="text-xl">{cfg.emoji}</span>
+                        <span className="text-xs font-bold text-primary">{cfg.label}</span>
+                      </div>
+                      <div className="flex items-center gap-3 mb-2">
+                        <MacrosPie protein={cfg.macros.protein} carbs={cfg.macros.carbs} fat={cfg.macros.fat} size={44} />
+                        <div className="flex-1 min-w-0">
+                          <MacroBar protein={cfg.macros.protein} carbs={cfg.macros.carbs} fat={cfg.macros.fat} compact />
+                          <div className="flex gap-2 mt-1 text-[10px] text-secondary">
+                            <span>بروتين {pPct}%</span>
+                            <span>كارب {cPct}%</span>
+                            <span>دهون {fPct}%</span>
+                          </div>
+                        </div>
+                      </div>
+                      <p className="text-[10px] text-muted leading-relaxed">{cfg.planSummary}</p>
+                    </button>
+                  );
+                })}
+              </div>
             </div>
-          </div>
+          )}
+          {!showPlanGuide && (
+            <button onClick={() => setShowPlanGuide(true)} className="fade-in-up text-xs text-emerald hover:underline mb-4 flex items-center gap-1">
+              <Info className="h-3 w-3" /> عرض الخطط الغذائية
+            </button>
+          )}
+
+          {/* ── Sticky Category Filter ── */}
+          {plans.length > 0 && (
+            <>
+              <div ref={filterRef} />
+              <div className={`${isFilterSticky ? "fixed top-16 left-0 right-0 z-40 bg-white/95 backdrop-blur-xl border-b border-[var(--surface-border)] shadow-sm transition-all duration-200" : ""} ${isFilterSticky ? "py-3 px-4" : "mb-7"}`}>
+                <div className={`${isFilterSticky ? "max-w-7xl mx-auto" : ""}`}>
+                  <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-hide">
+                    {isFilterSticky && <Filter className="h-4 w-4 text-secondary shrink-0" />}
+                    {categories.map((cat) => (
+                      <button
+                        key={cat}
+                        onClick={() => setSelectedCategory(cat)}
+                        className={`text-sm px-4 py-2 rounded-xl whitespace-nowrap transition-all duration-200 font-medium shrink-0 ${
+                          selectedCategory === cat
+                            ? "bg-emerald text-white shadow-lg shadow-emerald/20 scale-105"
+                            : "bg-white text-secondary hover:text-primary border border-[var(--surface-border)] hover:border-emerald/30"
+                        }`}
+                      >
+                        {cat === "all" ? "📋 الكل" : `${typeConfig[cat]?.emoji || "🍽️"} ${typeConfig[cat]?.label || cat}`}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              </div>
+              <div className={isFilterSticky ? "h-12" : ""} />
+            </>
+          )}
 
           {/* Menu Grid — Premium Cards with Images */}
           {filteredPlans.length === 0 ? (
@@ -326,32 +533,25 @@ export default function EmployeeMealsPage() {
                         </div>
                       </div>
 
-                      {/* Macro Nutrients Bar */}
-                      <div className="bg-surface-mid rounded-xl p-3 mb-4">
-                        <div className="grid grid-cols-3 gap-2 text-center">
-                          <div>
-                            <p className="text-xs text-secondary">بروتين</p>
-                            <p className="text-sm font-bold text-primary">{cfg.macros.protein}g</p>
+                      {/* Macro Nutrients — Calo-inspired pie + bar */}
+                      <div className="flex items-center gap-3 mb-4">
+                        <MacrosPie protein={cfg.macros.protein} carbs={cfg.macros.carbs} fat={cfg.macros.fat} size={56} />
+                        <div className="flex-1 min-w-0">
+                          <div className="grid grid-cols-3 gap-1 text-center mb-1">
+                            <div>
+                              <p className="text-[10px] text-secondary">بروتين</p>
+                              <p className="text-xs font-bold text-primary">{cfg.macros.protein}g</p>
+                            </div>
+                            <div className="border-x border-[var(--surface-border)]">
+                              <p className="text-[10px] text-secondary">كارب</p>
+                              <p className="text-xs font-bold text-primary">{cfg.macros.carbs}g</p>
+                            </div>
+                            <div>
+                              <p className="text-[10px] text-secondary">دهون</p>
+                              <p className="text-xs font-bold text-primary">{cfg.macros.fat}g</p>
+                            </div>
                           </div>
-                          <div className="border-x border-[var(--surface-border)]">
-                            <p className="text-xs text-secondary">كربوهيدرات</p>
-                            <p className="text-sm font-bold text-primary">{cfg.macros.carbs}g</p>
-                          </div>
-                          <div>
-                            <p className="text-xs text-secondary">دهون</p>
-                            <p className="text-sm font-bold text-primary">{cfg.macros.fat}g</p>
-                          </div>
-                        </div>
-                        {/* Macro Bar Visual */}
-                        <div className="flex h-1.5 rounded-full overflow-hidden mt-2 bg-gray-200">
-                          <div className="bg-blue-500 h-full" style={{ width: `${(cfg.macros.protein / (cfg.macros.protein + cfg.macros.carbs + cfg.macros.fat)) * 100}%` }} />
-                          <div className="bg-amber-500 h-full" style={{ width: `${(cfg.macros.carbs / (cfg.macros.protein + cfg.macros.carbs + cfg.macros.fat)) * 100}%` }} />
-                          <div className="bg-rose-500 h-full" style={{ width: `${(cfg.macros.fat / (cfg.macros.protein + cfg.macros.carbs + cfg.macros.fat)) * 100}%` }} />
-                        </div>
-                        <div className="flex justify-between text-[10px] text-secondary mt-1">
-                          <span className="flex items-center gap-1"><span className="w-1.5 h-1.5 rounded-full bg-blue-500" /> بروتين</span>
-                          <span className="flex items-center gap-1"><span className="w-1.5 h-1.5 rounded-full bg-amber-500" /> كارب</span>
-                          <span className="flex items-center gap-1"><span className="w-1.5 h-1.5 rounded-full bg-rose-500" /> دهون</span>
+                          <MacroBar protein={cfg.macros.protein} carbs={cfg.macros.carbs} fat={cfg.macros.fat} compact />
                         </div>
                       </div>
 
@@ -467,6 +667,11 @@ function getUnsplashId(type: string): string {
     weight_loss: "1467003909585-2f8a72700288",
     high_performance: "1482049016688-2d3e1b311e65",
     vegan: "1505252585461-04db1eb84625",
+    keto: "1606787366850-de6330128bfc",
+    mediterranean: "1511690743698-d9d85f2fbf38",
+    post_workout: "1593095948071-474c5cc2c1cf",
+    breakfast: "1513442542250-854d436a73f2",
+    smoothie: "1505252585461-04db1eb84625",
   };
   return map[type] || "1490645935967-10de6ba17061";
 }

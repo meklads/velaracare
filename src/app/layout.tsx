@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import Providers from "@/components/providers/Providers";
+import PWASetup from "@/components/PWASetup";
 
 export const metadata: Metadata = {
   title: {
@@ -17,6 +18,13 @@ export const metadata: Metadata = {
     "Velara Care",
     "corporate health intelligence",
   ],
+  manifest: "/manifest.json",
+  other: {
+    "theme-color": "#0a0a1a",
+    "apple-mobile-web-app-capable": "yes",
+    "apple-mobile-web-app-status-bar-style": "black-translucent",
+    "apple-mobile-web-app-title": "Velara Care",
+  },
 };
 
 export default function RootLayout({
@@ -27,6 +35,11 @@ export default function RootLayout({
   return (
     <html lang="ar" dir="rtl" suppressHydrationWarning>
       <head>
+        <link rel="manifest" href="/manifest.json" />
+        <meta name="theme-color" content="#0a0a1a" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+        <meta name="apple-mobile-web-app-title" content="Velara Care" />
         <script
           dangerouslySetInnerHTML={{
             __html: `
@@ -42,7 +55,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body><Providers>{children}</Providers></body>
+      <body><Providers>{children}</Providers><PWASetup /></body>
     </html>
   );
 }

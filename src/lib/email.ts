@@ -43,7 +43,7 @@ export async function sendEmail(to: string, subject: string, html: string) {
 export function forgotPasswordEmail(name: string, code: string): string {
   const baseUrl = process.env.NEXTAUTH_URL || "https://velaracare.co";
   return `
-    <div dir="rtl" style="font-family: 'Cairo', Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
+    <div dir="rtl" style="font-family: 'Avenir Arabic','Tajawal', Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
       <div style="text-align: center; margin-bottom: 30px;">
         <div style="display: inline-block; width: 50px; height: 50px; border-radius: 12px; background: linear-gradient(135deg, #10B981, #059669); text-align: center; line-height: 50px; color: white; font-size: 28px; font-weight: bold;">V</div>
         <h1 style="color: #1a1a2e; margin-top: 10px;">Velara Care</h1>
@@ -70,7 +70,7 @@ export function forgotPasswordEmail(name: string, code: string): string {
 
 export function invitationEmail(name: string, email: string, password: string, company: string): string {
   return `
-    <div dir="rtl" style="font-family: 'Cairo', Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
+    <div dir="rtl" style="font-family: 'Avenir Arabic','Tajawal', Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
       <div style="text-align: center; margin-bottom: 30px;">
         <div style="display: inline-block; width: 50px; height: 50px; border-radius: 12px; background: linear-gradient(135deg, #10B981, #059669); text-align: center; line-height: 50px; color: white; font-size: 28px; font-weight: bold;">V</div>
         <h1 style="color: #1a1a2e; margin-top: 10px;">Velara Care</h1>
@@ -96,7 +96,7 @@ export function invitationEmail(name: string, email: string, password: string, c
 
 export function bookingConfirmationEmail(name: string, type: string, date: string, time: string): string {
   return `
-    <div dir="rtl" style="font-family: 'Cairo', Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
+    <div dir="rtl" style="font-family: 'Avenir Arabic','Tajawal', Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
       <div style="text-align: center; margin-bottom: 30px;">
         <div style="display: inline-block; width: 50px; height: 50px; border-radius: 12px; background: linear-gradient(135deg, #10B981, #059669); text-align: center; line-height: 50px; color: white; font-size: 28px; font-weight: bold;">V</div>
         <h1 style="color: #1a1a2e; margin-top: 10px;">Velara Care</h1>

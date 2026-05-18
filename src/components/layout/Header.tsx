@@ -51,7 +51,7 @@ export default function Header() {
           <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-emerald-gradient">
             <span className="text-lg font-bold text-white">V</span>
           </div>
-          <span className="text-xl font-bold text-primary" style={{ fontFamily: "'Cairo', sans-serif" }}>
+          <span className="text-xl font-bold text-primary" style={{ fontFamily: "'Avenir Arabic','Tajawal',sans-serif" }}>
             Velara
           </span>
           <span className="hidden text-sm font-medium text-secondary sm:inline-block">

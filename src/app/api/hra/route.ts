@@ -76,18 +76,28 @@ export async function POST(req: Request) {
   }
 }
 
-// GET /api/hra — get HRA results
-export async function GET() {
+// GET /api/hra — get HRA results (own or for a specific userId if authorized)
+export async function GET(req: Request) {
   const session = await auth();
   if (!session?.user) {
     return NextResponse.json({ error: "غير مصرح" }, { status: 401 });
   }
 
   const user = session.user as any;
+  const url = new URL(req.url);
+  const targetUserId = url.searchParams.get("userId") || user.id;
 
   try {
+    // Allow nutritionists & admins to view any patient's HRA; others only their own
+    if (targetUserId !== user.id) {
+      const isPrivileged = ["NUTRITIONIST", "HR", "COMPANY_ADMIN", "SUPER_ADMIN"].includes(user.role);
+      if (!isPrivileged) {
+        return NextResponse.json({ error: "غير مصرح" }, { status: 403 });
+      }
+    }
+
     const results = await prisma.hRAResult.findMany({
-      where: { userId: user.id },
+      where: { userId: targetUserId },
       orderBy: { completedAt: "desc" },
       take: 10,
     });

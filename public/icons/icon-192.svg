@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="192" height="192" viewBox="0 0 192 192">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#059669"/>
+      <stop offset="100%" stop-color="#10b981"/>
+    </linearGradient>
+  </defs>
+  <rect width="192" height="192" rx="40" fill="url(#bg)"/>
+  <g transform="translate(96,96)">
+    <!-- Heart icon -->
+    <path d="M0-20c-12-16-36-12-36 8 0 20 36 44 36 44s36-24 36-44c0-20-24-24-36-8z" fill="white" opacity="0.95"/>
+    <!-- Leaf on heart -->
+    <path d="M4-2c8-12 20-8 20 4 0 10-20 22-20 22s-20-12-20-22c0-12 12-16 20-4z" fill="#34d399" opacity="0.8"/>
+  </g>
+</svg>

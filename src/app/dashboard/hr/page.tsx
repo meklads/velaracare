@@ -5,6 +5,7 @@ import Link from "next/link";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { Loader2, Users, Heart, TrendingDown, Apple, Calendar, AlertTriangle, BarChart3, UserCheck, Activity, Brain } from "lucide-react";
+import { BarChart, Bar, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from "recharts";
 import { SkeletonDashboard } from "@/components/ui/skeleton";
 
 type User = {
@@ -232,6 +233,78 @@ export default function HRDashboard() {
                   عرض جميع الموظفين
                 </Link>
               </div>
+            </div>
+          </div>
+
+          {/* ── Charts Section ── */}
+          <div className="grid md:grid-cols-2 gap-6 mb-6 fade-in-up-delay-3">
+            {/* Department Bar Chart */}
+            <div className="shade-card p-6">
+              <h3 className="font-bold text-primary mb-4 flex items-center gap-2">
+                <BarChart3 className="h-5 w-5 text-emerald" /> مقارنة الأقسام
+              </h3>
+              {departments.length === 0 ? (
+                <p className="text-sm text-secondary text-center py-8">لا توجد بيانات</p>
+              ) : (
+                <ResponsiveContainer width="100%" height={280}>
+                  <BarChart data={departments} margin={{ top: 5, right: 5, left: -20, bottom: 5 }}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.06)" />
+                    <XAxis dataKey="dept" tick={{ fontSize: 10, fill: '#94A3B8' }} axisLine={false} tickLine={false} />
+                    <YAxis domain={[0, 100]} tick={{ fontSize: 11, fill: '#94A3B8' }} axisLine={false} tickLine={false} />
+                    <Tooltip
+                      contentStyle={{ backgroundColor: 'rgba(15,23,42,0.9)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '12px', color: '#fff', fontSize: '12px' }}
+                      formatter={(value: any) => [`${value}%`, 'درجة العافية']}
+                    />
+                    <Bar dataKey="score" radius={[6, 6, 0, 0]} maxBarSize={40}>
+                      {departments.map((entry, idx) => {
+                        const colors = ['#24A170', '#3DBB84', '#8ED2B7', '#1C7E57', '#155F41', '#EAF7F2'];
+                        return <Cell key={idx} fill={colors[idx % colors.length]} />;
+                      })}
+                    </Bar>
+                  </BarChart>
+                </ResponsiveContainer>
+              )}
+            </div>
+
+            {/* Risk Distribution Pie Chart */}
+            <div className="shade-card p-6">
+              <h3 className="font-bold text-primary mb-4 flex items-center gap-2">
+                <Heart className="h-5 w-5 text-emerald" /> توزيع المخاطر
+              </h3>
+              {(() => {
+                const low = activeUsers.filter(u => u.wellnessScore?.riskLevel === 'low').length;
+                const medium = activeUsers.filter(u => u.wellnessScore?.riskLevel === 'medium').length;
+                const high = activeUsers.filter(u => u.wellnessScore?.riskLevel === 'high').length;
+                const critical = activeUsers.filter(u => u.wellnessScore?.riskLevel === 'critical').length;
+                const hasData = low + medium + high + critical > 0;
+                const pieData = [
+                  { name: 'منخفض', value: low, color: '#24A170' },
+                  { name: 'متوسط', value: medium, color: '#F59E0B' },
+                  { name: 'مرتفع', value: high, color: '#F97316' },
+                  { name: 'حرج', value: critical, color: '#EF4444' },
+                ].filter(d => d.value > 0);
+                return hasData ? (
+                  <ResponsiveContainer width="100%" height={280}>
+                    <PieChart>
+                      <Pie data={pieData} cx="50%" cy="50%" innerRadius={60} outerRadius={100} paddingAngle={3} dataKey="value">
+                        {pieData.map((entry, idx) => (
+                          <Cell key={idx} fill={entry.color} />
+                        ))}
+                      </Pie>
+                      <Tooltip
+                        contentStyle={{ backgroundColor: 'rgba(15,23,42,0.9)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '12px', color: '#fff', fontSize: '12px' }}
+                        formatter={(value: any, name: any) => [`${value} موظف`, name]}
+                      />
+                      <Legend
+                        verticalAlign="bottom"
+                        formatter={(value: string) => <span style={{ color: '#94A3B8', fontSize: '12px' }}>{value}</span>}
+                      />
+                    </PieChart>
+                  </ResponsiveContainer>
+                ) : (
+                  <p className="text-sm text-secondary text-center py-8">لا توجد بيانات مخاطر</p>
+                );
+              })()}
             </div>
           </div>
 

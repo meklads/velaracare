@@ -20,7 +20,10 @@ import {
   Award,
   Zap,
   Loader2,
+  Lightbulb,
+  RefreshCw,
 } from "lucide-react";
+import { LineChart, Line, AreaChart, Area, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, RadarChart, Radar, PolarGrid, PolarAngleAxis, PolarRadiusAxis } from "recharts";
 import { SkeletonDashboard } from "@/components/ui/skeleton";
 
 type WellnessData = {
@@ -64,6 +67,45 @@ const maxChartValue = 100;
 const typeEmoji: Record<string, string> = {
   nutrition: "🥗", fitness: "💪", general: "🩺", mental: "🧠",
 };
+
+// ── Daily Wellness Tips ──
+const dailyTips = [
+  { tip: "اشرب ٨ أكواب من الماء يومياً — يساعد على تحسين التركيز والطاقة", emoji: "💧" },
+  { tip: "المشي لمدة ٣٠ دقيقة يومياً يقلل من مخاطر القلب بنسبة ٣٥٪", emoji: "🚶" },
+  { tip: "النوم ٧-٨ ساعات يومياً يحسن الذاكرة ويقوي المناعة", emoji: "😴" },
+  { tip: "تناول وجبة الإفطار قبل الساعة ٩ صباحاً ينشط الأيض", emoji: "🌅" },
+  { tip: "خذ استراحة ٥ دقائق كل ساعة — تزيد الإنتاجية ٢٠٪", emoji: "☕" },
+  { tip: "مارس التنفس العميق لمدة دقيقتين عند الشعور بالتوتر", emoji: "🧘" },
+  { tip: "تناول الخضروات الورقية يومياً — مصدر غني بالفيتامينات", emoji: "🥬" },
+  { tip: "قلل من السكريات المصنعة — استبدلها بالفواكه الطازجة", emoji: "🍎" },
+  { tip: "الجلوس بوضعية صحيحة يقلل آلام الظهر والرقبة", emoji: "🪑" },
+  { tip: "خصص ١٥ دقيقة يومياً للقراءة — تقوي الدماغ وتقلل التوتر", emoji: "📖" },
+  { tip: "تعرض لأشعة الشمس ١٥ دقيقة يومياً للحصول على فيتامين د", emoji: "☀️" },
+  { tip: "تواصل مع زملائك — العلاقات الاجتماعية تطيل العمر", emoji: "🤝" },
+  { tip: "قلل من استخدام الجوال قبل النوم — الضوء الأزرق يضعف النوم", emoji: "📱" },
+  { tip: "تناول البروتين في كل وجبة — يساعد على بناء العضلات والشعور بالشبع", emoji: "🥩" },
+  { tip: "خصص وقتاً للهوايات — توازن الحياة يزيد السعادة والإنتاجية", emoji: "🎨" },
+  { tip: "اشرب كوب ماء فور الاستيقاظ — ينشط الدورة الدموية", emoji: "💦" },
+  { tip: "تمارين التمدد في الصباح تحسن المرونة وتقلل الإصابات", emoji: "🤸" },
+  { tip: "تناول المكسرات كوجبة خفيفة — غنية بالدهون الصحية والمغنيسيوم", emoji: "🥜" },
+  { tip: "ابتسم — الضحك يقلل هرمون التوتر ويقوي المناعة", emoji: "😊" },
+  { tip: "خطط لوجباتك الأسبوعية — يساعد على تناول طعام صحي وتوفير المال", emoji: "📋" },
+  { tip: "صعود الدرج بدل المصعد — طريقة سهلة لزيادة النشاط اليومي", emoji: "🪜" },
+  { tip: "تناول الزبادي للبروبيوتك — يحسن صحة الأمعاء والمناعة", emoji: "🥛" },
+  { tip: "خصص ١٠ دقائق للتأمل اليومي — يخفض التوتر ويحسن التركيز", emoji: "🧠" },
+  { tip: "اختر زيت الزيتون بدل الزيوت المهدرجة — صحي للقلب", emoji: "🫒" },
+  { tip: "مارس رياضة المقاومة مرتين أسبوعياً — تقوي العظام والعضلات", emoji: "🏋️" },
+  { tip: "قلل من الملح في الطعام — يخفض ضغط الدم ويحمي الكلى", emoji: "🧂" },
+  { tip: "اشرب الشاي الأخضر — مضاد للأكسدة ويحسن التمثيل الغذائي", emoji: "🍵" },
+  { tip: "استخدم تطبيقات تتبع الخطوات — تشجع على الحركة اليومية", emoji: "👟" },
+  { tip: "تناول السمك مرتين أسبوعياً — أوميغا ٣ لصحة القلب والدماغ", emoji: "🐟" },
+  { tip: "تجنب السهر المستمر — يضعف المناعة ويزيد الوزن", emoji: "🌙" },
+];
+
+function getDailyTip() {
+  const dayOfYear = Math.floor((Date.now() - new Date(new Date().getFullYear(), 0, 0).getTime()) / 86400000);
+  return dailyTips[dayOfYear % dailyTips.length];
+}
 
 export default function EmployeeDashboard() {
   const { data: session } = useSession();
@@ -149,11 +191,30 @@ export default function EmployeeDashboard() {
               <h1 className="text-2xl font-bold text-primary">مرحباً، {userName} 👋</h1>
               <p className="text-secondary text-sm mt-1">هذه حالتك الصحية اليوم</p>
             </div>
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-3">
+              <Link
+                href="/dashboard/employee/insights"
+                className="text-xs py-1.5 px-3 rounded-xl bg-emerald-soft text-emerald-dark hover:bg-emerald-200 transition-all flex items-center gap-1.5 font-medium"
+              >
+                <Brain className="h-3.5 w-3.5" />
+                الرؤى الصحية
+              </Link>
               <div className="text-right">
                 <p className="text-xs text-secondary">مستوى المخاطر</p>
                 <span className={`tag text-xs px-3 py-1 ${riskColor}`}>{riskLabel}</span>
               </div>
+            </div>
+          </div>
+
+          {/* ── Daily Health Tip ── */}
+          <div className="fade-in-up mb-4">
+            <div className="glass-card px-4 py-3 flex items-center gap-3 bg-gradient-to-r from-emerald-500/5 to-transparent border-r-4 border-emerald-500">
+              <span className="text-xl shrink-0">{getDailyTip().emoji}</span>
+              <div className="flex-1 min-w-0">
+                <p className="text-xs text-secondary font-medium">💡 نصيحة اليوم</p>
+                <p className="text-sm font-medium text-primary">{getDailyTip().tip}</p>
+              </div>
+              <span className="text-[10px] text-secondary shrink-0 hidden sm:block">نصائح Velara Care</span>
             </div>
           </div>
 
@@ -238,29 +299,45 @@ export default function EmployeeDashboard() {
                 </div>
               </div>
 
-              {/* ── Health Status Today ── */}
+              {/* ── Health Status Today + Radar ── */}
               <div className="glass-card p-6 fade-in-up-delay-2">
                 <div className="flex items-center justify-between mb-5">
                   <h3 className="text-base font-bold text-primary">حالتك الصحية اليوم</h3>
                   {wellness && <span className="text-xs text-secondary">آخر تحديث: منذ لحظات</span>}
                 </div>
-                <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
-                  {healthMetrics.map((m) => (
-                    <div key={m.label} className={`rounded-2xl ${m.bg} p-4 text-center`}>
-                      <m.icon className={`h-5 w-5 ${m.color} mx-auto mb-2`} />
-                      <p className="text-xs text-secondary mb-1">{m.label}</p>
-                      <p className="text-lg font-bold text-primary">{m.value}</p>
-                      <p className="text-[10px] text-muted">{m.unit}</p>
-                      <span className={`inline-block mt-1.5 text-[10px] font-semibold px-2 py-0.5 rounded-full ${
-                        m.status === "ممتاز" || m.status === "ممتازة" || m.status === "جيد جداً" ? "text-emerald-400 bg-emerald-500/10" :
-                        m.status === "جيد" || m.status === "جيدة" ? "text-cyan-400 bg-cyan-500/10" :
-                        m.status === "منخفض" ? "text-amber-400 bg-amber-500/10" :
-                        "text-red-400 bg-red-500/10"
-                      }`}>
-                        {m.status}
-                      </span>
-                    </div>
-                  ))}
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div className="grid grid-cols-2 gap-3">
+                    {healthMetrics.slice(0, 4).map((m) => (
+                      <div key={m.label} className={`rounded-2xl ${m.bg} p-4 text-center`}>
+                        <m.icon className={`h-5 w-5 ${m.color} mx-auto mb-2`} />
+                        <p className="text-xs text-secondary mb-1">{m.label}</p>
+                        <p className="text-lg font-bold text-primary">{m.value}</p>
+                        <p className="text-[10px] text-muted">{m.unit}</p>
+                        <span className={`inline-block mt-1.5 text-[10px] font-semibold px-2 py-0.5 rounded-full ${
+                          m.status === "ممتاز" || m.status === "ممتازة" || m.status === "جيد جداً" ? "text-emerald-400 bg-emerald-500/10" :
+                          m.status === "جيد" || m.status === "جيدة" ? "text-cyan-400 bg-cyan-500/10" :
+                          m.status === "منخفض" ? "text-amber-400 bg-amber-500/10" :
+                          "text-red-400 bg-red-500/10"
+                        }`}>
+                          {m.status}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="h-[220px]">
+                    <ResponsiveContainer width="100%" height="100%">
+                      <RadarChart data={healthMetrics.filter(m => m.label !== "العافية").map(m => ({ ...m, fullMark: 100 }))}>
+                        <PolarGrid stroke="rgba(255,255,255,0.08)" />
+                        <PolarAngleAxis dataKey="label" tick={{ fontSize: 10, fill: '#94A3B8' }} />
+                        <PolarRadiusAxis angle={30} domain={[0, 100]} tick={false} axisLine={false} />
+                        <Radar name="الصحة" dataKey="value" stroke="#24A170" fill="#24A170" fillOpacity={0.2} strokeWidth={2} />
+                        <Tooltip
+                          contentStyle={{ backgroundColor: 'rgba(15,23,42,0.9)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '12px', color: '#fff', fontSize: '12px' }}
+                          formatter={(value: any) => [`${value}%`, '']}
+                        />
+                      </RadarChart>
+                    </ResponsiveContainer>
+                  </div>
                 </div>
               </div>
 
@@ -380,34 +457,43 @@ export default function EmployeeDashboard() {
                 </Link>
               </div>
 
-              {/* ── Weekly Trend ── */}
+              {/* ── Weekly Trend (Recharts) ── */}
               <div className="glass-card p-6 fade-in-up-delay-4">
                 <div className="flex items-center justify-between mb-4">
                   <div className="flex items-center gap-2">
                     <Activity className="h-5 w-5 text-emerald-400" />
                     <h3 className="text-base font-bold text-primary">اتجاه الأسبوع</h3>
                   </div>
+                  {wellness?.trend && (
+                    <span className={`text-xs font-medium ${trendDirection === "تحسن" ? "text-emerald-400" : "text-amber-400"}`}>
+                      {trendDirection} {trendIcon}
+                    </span>
+                  )}
                 </div>
-                <div className="flex items-end justify-between gap-1.5 h-28 pt-2">
-                  {weeklyTrend.map((day) => (
-                    <div key={day.day} className="flex flex-col items-center gap-1.5 flex-1">
-                      <div
-                        className="w-full rounded-t-lg transition-all duration-500"
-                        style={{
-                          height: `${(day.value / maxChartValue) * 100}%`,
-                          background: day.day === "اليوم"
-                            ? 'linear-gradient(180deg, #10B981, #06B6D4)'
-                            : 'rgba(255,255,255,0.08)',
-                          minHeight: '8px',
-                        }}
-                      />
-                      <span className={`text-[10px] ${day.day === "اليوم" ? "text-emerald-400 font-semibold" : "text-muted"}`}>
-                        {day.value}
-                      </span>
-                      <span className="text-[8px] text-muted">{day.day}</span>
-                    </div>
-                  ))}
-                </div>
+                <ResponsiveContainer width="100%" height={200}>
+                  <AreaChart data={weeklyTrend} margin={{ top: 5, right: 5, left: -20, bottom: 0 }}>
+                    <defs>
+                      <linearGradient id="scoreGradient" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="5%" stopColor="#24A170" stopOpacity={0.3} />
+                        <stop offset="95%" stopColor="#24A170" stopOpacity={0} />
+                      </linearGradient>
+                    </defs>
+                    <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.06)" />
+                    <XAxis dataKey="day" tick={{ fontSize: 11, fill: '#94A3B8' }} axisLine={false} tickLine={false} />
+                    <YAxis domain={[30, 100]} tick={{ fontSize: 11, fill: '#94A3B8' }} axisLine={false} tickLine={false} />
+                    <Tooltip
+                      contentStyle={{
+                        backgroundColor: 'rgba(15,23,42,0.9)',
+                        border: '1px solid rgba(255,255,255,0.1)',
+                        borderRadius: '12px',
+                        color: '#fff',
+                        fontSize: '12px',
+                      }}
+                      formatter={(value: any) => [`${value}`, 'درجة العافية']}
+                    />
+                    <Area type="monotone" dataKey="value" stroke="#24A170" strokeWidth={2} fill="url(#scoreGradient)" />
+                  </AreaChart>
+                </ResponsiveContainer>
               </div>
 
               {/* ── Gamification ── */}

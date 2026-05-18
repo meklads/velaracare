@@ -2,16 +2,25 @@ import Link from "next/link";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { prisma } from "@/lib/prisma";
+import { auth } from "@/lib/auth";
+import { redirect } from "next/navigation";
 import { Users, TrendingDown, Heart, Brain, Apple, Download } from "lucide-react";
+import { RiskPieChart, DeptBarChart } from "@/components/charts/AdminCharts";
 
 export const metadata = {
-  title: "لوحة تحكم HR",
+  title: "لوحة تحكم الإدارة",
   description: "إدارة صحة موظفيك بذكاء",
 };
 
 export const dynamic = "force-dynamic";
 
 export default async function AdminDashboard() {
+  const session = await auth();
+  const user = session?.user as any;
+  if (!user || (user.role !== "COMPANY_ADMIN" && user.role !== "SUPER_ADMIN")) {
+    redirect("/login");
+  }
+
   // ── Real Data ──
   let totalUsers = 0;
   let activeUsers = 0;
@@ -22,7 +31,10 @@ export default async function AdminDashboard() {
   let deptScores: { dept: string; score: number }[] = [];
 
   try {
+    const whereFilter = user.role === "SUPER_ADMIN" ? {} : { companyId: user.companyId };
+
     const users = await prisma.user.findMany({
+      where: whereFilter,
       select: {
         id: true,
         isActive: true,
@@ -90,7 +102,7 @@ export default async function AdminDashboard() {
           {/* Header */}
           <div className="fade-in-up mb-8 flex flex-wrap items-center justify-between gap-4">
             <div>
-              <h1 className="text-2xl font-bold text-primary">لوحة تحكم الموارد البشرية</h1>
+              <h1 className="text-2xl font-bold text-primary">لوحة تحكم الإدارة</h1>
               <p className="text-secondary">{activeUsers} موظف نشط من أصل {totalUsers}</p>
             </div>
             <Link href="/dashboard/admin/reports" className="btn-primary text-sm py-2 px-5">
@@ -122,47 +134,14 @@ export default async function AdminDashboard() {
             ))}
           </div>
 
-          <div className="grid md:grid-cols-2 gap-6 mb-6">
-            {/* Risk Distribution */}
-            <div className="shade-card p-6 fade-in-up-delay-2">
-              <h3 className="font-bold text-primary mb-4">توزيع المخاطر الصحية</h3>
-              <div className="space-y-4">
-                {[
-                  { label: "منخفض", value: lowPct, color: "bg-emerald-400" },
-                  { label: "متوسط", value: medPct, color: "bg-amber-400" },
-                  { label: "عالٍ", value: highPct, color: "bg-orange-500" },
-                  { label: "حرج", value: critPct, color: "bg-red-500" },
-                ].map((item) => (
-                  <div key={item.label}>
-                    <div className="flex justify-between text-sm mb-1">
-                      <span className="text-secondary">{item.label}</span>
-                      <span className="font-semibold text-primary">{item.value}%</span>
-                    </div>
-                    <div className="w-full bg-[var(--surface-border)] rounded-full h-2">
-                      <div className={`${item.color} h-2 rounded-full`} style={{ width: `${item.value}%` }} />
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Department Comparison */}
-            <div className="shade-card p-6 fade-in-up-delay-3">
-              <h3 className="font-bold text-primary mb-4">مقارنة الأقسام</h3>
-              <div className="space-y-4">
-                {deptScores.map((d) => (
-                  <div key={d.dept}>
-                    <div className="flex justify-between text-sm mb-1">
-                      <span className="text-secondary">{d.dept}</span>
-                      <span className="font-semibold text-primary">{d.score}</span>
-                    </div>
-                    <div className="w-full bg-[var(--surface-border)] rounded-full h-1.5">
-                      <div className="bg-emerald-gradient h-1.5 rounded-full" style={{ width: `${d.score}%` }} />
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
+          <div className="grid md:grid-cols-2 gap-6 mb-6 fade-in-up-delay-2">
+            <RiskPieChart data={[
+              { label: "منخفض", value: lowPct, color: "#24A170" },
+              { label: "متوسط", value: medPct, color: "#F59E0B" },
+              { label: "عالٍ", value: highPct, color: "#F97316" },
+              { label: "حرج", value: critPct, color: "#EF4444" },
+            ]} />
+            <DeptBarChart data={deptScores} />
           </div>
 
           {/* Bottom Row */}
@@ -223,6 +202,11 @@ export default async function AdminDashboard() {
               <span className="text-2xl block mb-1">🧑‍🍳</span>
               <p className="text-sm font-semibold text-primary">المطعم</p>
               <p className="text-[10px] text-secondary">عرض الطلبات</p>
+            </Link>
+            <Link href="/dashboard/admin/billing" className="shade-card p-4 text-center hover:shadow-md transition-all hover:-translate-y-0.5">
+              <span className="text-2xl block mb-1">💰</span>
+              <p className="text-sm font-semibold text-primary">الفواتير</p>
+              <p className="text-[10px] text-secondary">الاشتراك والفوترة</p>
             </Link>
           </div>
 

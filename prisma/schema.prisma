@@ -28,6 +28,7 @@ model Company {
   mealPlans     MealPlan[]
   wellnessScores WellnessScore[]
   consultations Consultation[]
+  invoices      Invoice[]
 }
 
 // ── User (Employee, HR, Admin, Nutritionist, Restaurant) ──
@@ -66,6 +67,7 @@ model User {
   consultations        Consultation[]  @relation("PatientConsultations")
   consultationNotes    Consultation[]  @relation("ConsultantConsultations")
   aiPredictions        AIPrediction[]
+  pushSubscriptions    PushSubscription[]
   accounts             Account[]
   sessions             Session[]
 }
@@ -192,6 +194,45 @@ model Session {
   userId       String
   expires      DateTime
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+// ── Push Subscription (PWA) ──
+model PushSubscription {
+  id           String   @id @default(cuid())
+  userId       String   @unique
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  subscription String   // JSON string of PushSubscription
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+// ── Invoice / Billing ──
+model Invoice {
+  id            String   @id @default(cuid())
+  companyId     String
+  company       Company  @relation(fields: [companyId], references: [id])
+  amount        Float    @default(0)
+  currency      String   @default("SAR")
+  status        String   @default("pending") // pending, paid, overdue, cancelled
+  plan          String   @default("basic") // basic, standard, professional
+  periodStart   DateTime
+  periodEnd     DateTime
+  paidAt        DateTime?
+  invoiceUrl    String?  // Link to PDF invoice
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@index([companyId, status])
+}
+
+// ── Event Log (SSE / real-time events) ──
+model EventLog {
+  id        String   @id @default(cuid())
+  type      String   // order_updated, new_order, consultation_updated, new_consultation
+  data      String?  // Optional JSON payload
+  createdAt DateTime @default(now())
+
+  @@index([type, createdAt])
 }
 
 // ── Verification Token (NextAuth) ──

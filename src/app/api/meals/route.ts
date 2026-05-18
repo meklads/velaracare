@@ -40,6 +40,9 @@ export async function GET(req: Request) {
           { isActive: true },
         ],
       },
+      include: {
+        _count: { select: { orders: true } },
+      },
       orderBy: { createdAt: "desc" },
     });
     return NextResponse.json(plans);

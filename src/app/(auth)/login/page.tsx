@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Eye, EyeOff, LogIn, Loader2 } from "lucide-react";
+import { Eye, EyeOff, LogIn, Loader2, User, Shield, Users, Apple, Utensils } from "lucide-react";
 import { signIn, useSession } from "next-auth/react";
 import { getDashboardPath } from "@/lib/auth-utils";
 
@@ -168,11 +168,35 @@ export default function LoginPage() {
               إنشاء حساب جديد
             </Link>
           </p>
-          <div className="pt-3 border-t border-[var(--surface-border)]">
-            <p className="text-xs text-muted mb-2">حسابات تجريبية:</p>
-            <p className="text-xs text-muted">admin@velaracare.co / demo123</p>
-            <p className="text-xs text-muted">employee@velaracare.co / demo123</p>
-            <p className="text-xs text-muted">nutrition@velaracare.co / demo123</p>
+
+          {/* ── Demo Quick Access ── */}
+          <div className="pt-4 border-t border-[var(--surface-border)]">
+            <p className="text-xs font-medium text-primary mb-3">🚀 دخول تجريبي سريع</p>
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+              {[
+                { label: "مدير الشركة", email: "admin@velaracare.co", icon: Shield, color: "from-emerald-500 to-emerald-600" },
+                { label: "موظف", email: "mohamed.alahmed@velaracare.co", icon: User, color: "from-blue-500 to-indigo-600" },
+                { label: "موارد بشرية", email: "hr@velaracare.co", icon: Users, color: "from-amber-500 to-orange-600" },
+                { label: "أخصائي تغذية", email: "nutrition@velaracare.co", icon: Apple, color: "from-green-500 to-emerald-600" },
+              ].map((account) => (
+                <button
+                  key={account.email}
+                  type="button"
+                  onClick={() => {
+                    setEmail(account.email);
+                    setPassword("demo123");
+                  }}
+                  className="flex flex-col items-center gap-1.5 p-2.5 rounded-xl bg-surface-mid border border-[var(--surface-border)] hover:border-emerald-500/30 hover:bg-emerald-50 transition-all text-center group"
+                >
+                  <div className={`w-8 h-8 rounded-lg bg-gradient-to-br ${account.color} flex items-center justify-center group-hover:scale-110 transition-transform`}>
+                    <account.icon className="h-4 w-4 text-white" />
+                  </div>
+                  <span className="text-[10px] font-medium text-primary leading-tight">{account.label}</span>
+                  <span className="text-[8px] text-muted truncate w-full">{account.email}</span>
+                </button>
+              ))}
+            </div>
+            <p className="text-[9px] text-muted mt-2">كلمة المرور للجميع: <span className="font-mono font-bold text-primary">demo123</span></p>
           </div>
         </div>
       </div>

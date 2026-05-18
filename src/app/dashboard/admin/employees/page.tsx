@@ -6,7 +6,8 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import {
   Loader2, ChevronLeft, Users, Search, Plus, Filter,
-  Mail, Phone, Building, Shield, MoreHorizontal, CheckCircle, XCircle, UserPlus, Download
+  Mail, Phone, Building, Shield, MoreHorizontal, CheckCircle, XCircle, UserPlus, Download,
+  Edit3, Save, X
 } from "lucide-react";
 import { SkeletonKPIGrid, SkeletonTable, SkeletonBlock } from "@/components/ui/skeleton";
 
@@ -49,6 +50,10 @@ export default function AdminEmployeesPage() {
   const [filterRole, setFilterRole] = useState("all");
   const [showAddModal, setShowAddModal] = useState(false);
   const [togglingId, setTogglingId] = useState<string | null>(null);
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [editEmployee, setEditEmployee] = useState<Employee | null>(null);
+  const [editForm, setEditForm] = useState({ department: "", position: "", role: "", isActive: true });
+  const [savingEdit, setSavingEdit] = useState(false);
   const [page, setPage] = useState(0);
   const [totalCount, setTotalCount] = useState(0);
   const pageSize = 25;
@@ -93,6 +98,38 @@ export default function AdminEmployeesPage() {
       console.error("Toggle failed", e);
     } finally {
       setTogglingId(null);
+    }
+  }
+
+  function handleEditClick(emp: Employee) {
+    setEditEmployee(emp);
+    setEditForm({
+      department: emp.department || "",
+      position: emp.position || "",
+      role: emp.role,
+      isActive: emp.isActive,
+    });
+    setShowEditModal(true);
+  }
+
+  async function handleEditSave() {
+    if (!editEmployee) return;
+    setSavingEdit(true);
+    try {
+      const res = await fetch(`/api/users/${editEmployee.id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(editForm),
+      });
+      if (res.ok) {
+        const updated = await res.json();
+        setEmployees((prev) => prev.map((e) => (e.id === editEmployee.id ? { ...e, ...updated } : e)));
+        setShowEditModal(false);
+      }
+    } catch (e) {
+      console.error("Edit failed", e);
+    } finally {
+      setSavingEdit(false);
     }
   }
 
@@ -319,7 +356,16 @@ export default function AdminEmployeesPage() {
                           {new Date(emp.createdAt).toLocaleDateString("ar-SA")}
                         </td>
                         <td className="py-3 px-4 text-center">
-                          <Link href={`/dashboard/admin/employees/${emp.id}`} className="text-xs text-emerald hover:underline font-medium">عرض</Link>
+                          <div className="flex items-center justify-center gap-1">
+                            <Link href={`/dashboard/admin/employees/${emp.id}`} className="text-xs text-emerald hover:underline font-medium">عرض</Link>
+                            <button
+                              onClick={() => handleEditClick(emp)}
+                              className="text-xs p-1 rounded-lg text-secondary hover:text-primary hover:bg-surface-mid transition-all"
+                              title="تعديل سريع"
+                            >
+                              <Edit3 className="h-3 w-3" />
+                            </button>
+                          </div>
                         </td>
                       </tr>
                     ))}
@@ -365,6 +411,94 @@ export default function AdminEmployeesPage() {
               </button>
             </div>
           </div>
+
+          {/* ── Quick Edit Modal ── */}
+          {showEditModal && editEmployee && (
+            <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm" onClick={() => setShowEditModal(false)}>
+              <div className="shade-card w-full max-w-md p-6 m-4" onClick={(e) => e.stopPropagation()}>
+                <div className="flex items-center justify-between mb-5">
+                  <h2 className="font-bold text-primary text-lg flex items-center gap-2">
+                    <Edit3 className="h-5 w-5 text-emerald" /> تعديل {editEmployee.firstName} {editEmployee.lastName}
+                  </h2>
+                  <button onClick={() => setShowEditModal(false)} className="text-secondary hover:text-primary transition-colors">
+                    <X className="h-5 w-5" />
+                  </button>
+                </div>
+                <div className="space-y-4">
+                  <div className="space-y-1.5">
+                    <label className="text-sm font-medium text-primary">القسم</label>
+                    <select
+                      value={editForm.department}
+                      onChange={(e) => setEditForm((p) => ({ ...p, department: e.target.value }))}
+                      className="w-full rounded-xl border border-[var(--surface-border)] bg-surface-mid px-4 py-2.5 text-sm text-primary focus:outline-none focus:ring-2 focus:ring-emerald-ai/30"
+                    >
+                      <option value="">بدون قسم</option>
+                      <option value="تقنية المعلومات">تقنية المعلومات</option>
+                      <option value="الموارد البشرية">الموارد البشرية</option>
+                      <option value="المالية">المالية</option>
+                      <option value="التسويق">التسويق</option>
+                      <option value="المبيعات">المبيعات</option>
+                      <option value="العمليات">العمليات</option>
+                      <option value="الإدارة">الإدارة</option>
+                    </select>
+                  </div>
+                  <div className="space-y-1.5">
+                    <label className="text-sm font-medium text-primary">المسمى الوظيفي</label>
+                    <input
+                      type="text" value={editForm.position}
+                      onChange={(e) => setEditForm((p) => ({ ...p, position: e.target.value }))}
+                      placeholder="مطور برمجيات"
+                      className="w-full rounded-xl border border-[var(--surface-border)] bg-surface-mid px-4 py-2.5 text-sm text-primary focus:outline-none focus:ring-2 focus:ring-emerald-ai/30"
+                    />
+                  </div>
+                  <div className="space-y-1.5">
+                    <label className="text-sm font-medium text-primary">الدور</label>
+                    <select
+                      value={editForm.role}
+                      onChange={(e) => setEditForm((p) => ({ ...p, role: e.target.value }))}
+                      className="w-full rounded-xl border border-[var(--surface-border)] bg-surface-mid px-4 py-2.5 text-sm text-primary focus:outline-none focus:ring-2 focus:ring-emerald-ai/30"
+                    >
+                      {Object.entries(roleLabels).filter(([k]) => k !== "SUPER_ADMIN").map(([k, v]) => (
+                        <option key={k} value={k}>{v}</option>
+                      ))}
+                    </select>
+                  </div>
+                  <div className="flex items-center gap-3 pt-2">
+                    <button
+                      onClick={() => setEditForm((p) => ({ ...p, isActive: !p.isActive }))}
+                      className={`w-12 h-6 rounded-full transition-all relative ${
+                        editForm.isActive ? "bg-emerald" : "bg-gray-300"
+                      }`}
+                    >
+                      <div className={`w-4 h-4 rounded-full bg-white absolute top-1 transition-all ${
+                        editForm.isActive ? "right-1" : "right-7"
+                      }`} />
+                    </button>
+                    <span className="text-sm text-primary font-medium">
+                      {editForm.isActive ? "الحساب نشط" : "الحساب غير نشط"}
+                    </span>
+                  </div>
+                </div>
+                <div className="flex gap-2 mt-6 pt-4 border-t border-[var(--surface-border)]">
+                  <button
+                    type="button"
+                    onClick={() => setShowEditModal(false)}
+                    className="flex-1 py-2.5 rounded-xl border border-[var(--surface-border)] text-secondary text-sm hover:text-primary transition-all"
+                  >
+                    إلغاء
+                  </button>
+                  <button
+                    onClick={handleEditSave}
+                    disabled={savingEdit}
+                    className="flex-1 py-2.5 rounded-xl bg-emerald text-white text-sm font-semibold hover:bg-emerald-dark transition-all disabled:opacity-50 flex items-center justify-center gap-1"
+                  >
+                    {savingEdit ? <Loader2 className="h-4 w-4 animate-spin" /> : <Save className="h-4 w-4" />}
+                    {savingEdit ? "جاري الحفظ..." : "حفظ"}
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       </main>
       <Footer />

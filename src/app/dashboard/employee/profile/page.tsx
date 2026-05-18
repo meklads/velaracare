@@ -5,13 +5,16 @@ import Link from "next/link";
 import { useSession } from "next-auth/react";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
-import { Loader2, ChevronLeft, User, Mail, Building, Phone, Save, Lock, CheckCircle } from "lucide-react";
+import { Loader2, ChevronLeft, User, Mail, Building, Phone, Save, Lock, CheckCircle, Camera } from "lucide-react";
+import FileUpload from "@/components/ui/FileUpload";
 
 export default function ProfilePage() {
   const { data: session, update: updateSession } = useSession();
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const [savingAvatar, setSavingAvatar] = useState(false);
   const [saved, setSaved] = useState(false);
+  const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
   const [form, setForm] = useState({
     firstName: "",
     lastName: "",
@@ -35,6 +38,26 @@ export default function ProfilePage() {
       setLoading(false);
     }
   }, [session]);
+
+  async function handleAvatarUpload(url: string) {
+    setSavingAvatar(true);
+    try {
+      // Save avatar URL to user profile
+      const res = await fetch("/api/users", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ avatarUrl: url }),
+      });
+      if (res.ok) {
+        setAvatarUrl(url);
+        updateSession({ image: url });
+      }
+    } catch {
+      console.error("Failed to save avatar");
+    } finally {
+      setSavingAvatar(false);
+    }
+  }
 
   async function handleSave(e: React.FormEvent) {
     e.preventDefault();
@@ -137,8 +160,25 @@ export default function ProfilePage() {
           {/* Profile Info */}
           <div className="shade-card p-6 mb-6 fade-in-up">
             <div className="flex items-center gap-4 mb-6">
-              <div className="w-16 h-16 rounded-full bg-emerald-gradient flex items-center justify-center text-2xl font-bold text-white">
-                {form.firstName[0] || "?"}
+              <div className="relative group">
+                <div className="w-16 h-16 rounded-full bg-emerald-gradient flex items-center justify-center text-2xl font-bold text-white overflow-hidden">
+                  {avatarUrl ? (
+                    <img src={avatarUrl} alt="الصورة الشخصية" className="w-full h-full object-cover" />
+                  ) : (
+                    <>
+                      <Camera className="h-6 w-6 opacity-0 group-hover:opacity-100 absolute transition-opacity z-10" />
+                      <span className="group-hover:opacity-30 transition-opacity">{form.firstName[0] || "?"}</span>
+                    </>
+                  )}
+                </div>
+                <div className="absolute -bottom-1 -right-1">
+                  <FileUpload
+                    folder="avatars"
+                    onUpload={handleAvatarUpload}
+                    label=""
+                    currentImage={avatarUrl}
+                  />
+                </div>
               </div>
               <div>
                 <h2 className="text-lg font-bold text-primary">{form.firstName} {form.lastName}</h2>

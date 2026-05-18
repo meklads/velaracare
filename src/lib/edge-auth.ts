@@ -24,6 +24,7 @@ export async function getEdgeSession(request: NextRequest) {
         email: token.email as string,
         name: token.name as string,
         role: token.role as string,
+        companyId: token.companyId as string,
       },
       expires: token.exp ? String(token.exp) : "",
     };
