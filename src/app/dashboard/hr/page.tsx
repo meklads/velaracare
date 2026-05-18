@@ -67,17 +67,22 @@ export default function HRDashboard() {
   return (
     <>
       <Header />
-      <main className="min-h-screen bg-surface-mid pt-24">
-        <div className="container-shade py-8">
+      <main className="min-h-screen bg-gradient-to-b from-[var(--bg-primary)] via-[var(--bg-secondary)] to-[var(--bg-primary)] pt-24">
+        <div className="absolute inset-0 vp-grid-bg opacity-20 pointer-events-none" />
+        <div className="container-shade relative z-10 py-8">
 
           {/* ── Header ── */}
           <div className="fade-in-up mb-8 flex flex-wrap items-center justify-between gap-4">
             <div>
-              <h1 className="text-2xl font-bold text-primary">👥 لوحة الموارد البشرية</h1>
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[var(--vp-glow-soft)] border border-[var(--vp-accent)]/10 text-[var(--vp-accent)] text-xs font-medium mb-3">
+                <span className="vp-breathing-ring inline-block" style={{ width: '5px', height: '5px' }} />
+                الموارد البشرية
+              </div>
+              <h1 className="text-2xl font-bold text-primary">لوحة الموارد البشرية</h1>
               <p className="text-secondary">{totalEmployees} موظف نشط</p>
             </div>
             <div className="flex items-center gap-3">
-              <Link href="/dashboard/admin/employees" className="btn-primary text-sm py-2 px-5">
+              <Link href="/dashboard/admin/employees" className="btn-premium text-sm !h-auto py-2.5 px-5">
                 <UserCheck className="ml-2 h-4 w-4" />
                 إدارة الموظفين
               </Link>
@@ -92,12 +97,12 @@ export default function HRDashboard() {
               { label: "المخاطر العالية", value: `${highRisk}`, change: highRisk > 0 ? "يحتاج متابعة" : "آمن", icon: Brain, color: "from-orange-500 to-red-600" },
               { label: "الأقسام", value: `${departments.length}`, change: `${users.filter(u => !u.department).length} بدون قسم`, icon: BarChart3, color: "from-emerald-ai to-emerald-ai-dark" },
             ].map((kpi, i) => (
-              <div key={kpi.label} className={`shade-card p-5 fade-in-up-delay-${Math.min(i + 1, 4)}`}>
+              <div key={kpi.label} className={`card-premium !p-5 fade-in-up-delay-${Math.min(i + 1, 4)}`}>
                 <div className="flex items-center gap-3 mb-2">
                   <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${kpi.color} flex items-center justify-center`}>
                     <kpi.icon className="h-5 w-5 text-white" />
                   </div>
-                  <span className={`text-sm font-semibold ${typeof kpi.change === "string" && kpi.change.startsWith("+") ? "text-emerald" : "text-rose-500"}`}>
+                  <span className={`text-sm font-semibold ${typeof kpi.change === "string" && kpi.change.startsWith("+") ? "text-[var(--vp-accent)]" : "text-rose-500"}`}>
                     {kpi.change}
                   </span>
                 </div>
@@ -111,10 +116,10 @@ export default function HRDashboard() {
           <div className="grid lg:grid-cols-3 gap-6 mb-6">
 
             {/* ── Department Scores ── */}
-            <div className="lg:col-span-2 shade-card p-6 fade-in-up-delay-2">
+            <div className="lg:col-span-2 card-premium !p-6 fade-in-up-delay-2">
               <div className="flex items-center justify-between mb-4">
                 <h3 className="font-bold text-primary">درجات العافية حسب القسم</h3>
-                <BarChart3 className="h-5 w-5 text-emerald" />
+                <BarChart3 className="h-5 w-5 text-[var(--vp-accent)]" />
               </div>
               {departments.length === 0 ? (
                 <div className="text-center py-8 text-secondary">
@@ -143,7 +148,7 @@ export default function HRDashboard() {
                                 <span className="font-semibold text-primary">{d.score}</span>
                                 <div className="w-16 bg-[var(--surface-border)] rounded-full h-1.5">
                                   <div
-                                    className={`h-1.5 rounded-full ${(d.score || 0) >= 75 ? "bg-emerald" : (d.score || 0) >= 60 ? "bg-amber-500" : "bg-rose-500"}`}
+                                    className={`h-1.5 rounded-full ${(d.score || 0) >= 75 ? "bg-[var(--vp-accent)]" : (d.score || 0) >= 60 ? "bg-amber-500" : "bg-rose-500"}`}
                                     style={{ width: `${d.score}%` }}
                                   />
                                 </div>
@@ -163,7 +168,7 @@ export default function HRDashboard() {
                             </span>
                           </td>
                           <td className="py-3">
-                            <Link href={`/dashboard/admin/employees?department=${encodeURIComponent(d.dept)}`} className="text-xs text-emerald hover:underline">
+                            <Link href={`/dashboard/admin/employees?department=${encodeURIComponent(d.dept)}`} className="text-xs text-[var(--vp-accent)] hover:underline">
                               عرض الموظفين
                             </Link>
                           </td>
@@ -179,11 +184,11 @@ export default function HRDashboard() {
             <div className="space-y-6">
 
               {/* ── Quick Actions ── */}
-              <div className="shade-card p-6 fade-in-up-delay-3">
+              <div className="card-premium !p-6 fade-in-up-delay-3">
                 <h3 className="font-bold text-primary mb-4">إجراءات سريعة</h3>
                 <div className="space-y-3">
                   {[
-                    { icon: UserCheck, label: "إدارة الموظفين", href: "/dashboard/admin/employees", color: "text-emerald" },
+                    { icon: UserCheck, label: "إدارة الموظفين", href: "/dashboard/admin/employees", color: "text-[var(--vp-accent)]" },
                     { icon: Calendar, label: "الاستشارات", href: "/dashboard/admin/consultations", color: "text-cyan-400" },
                     { icon: Apple, label: "الوجبات الذكية", href: "/dashboard/admin/meals", color: "text-emerald-400" },
                     { icon: Activity, label: "المطعم", href: "/dashboard/restaurant", color: "text-indigo-400" },
@@ -201,14 +206,14 @@ export default function HRDashboard() {
               </div>
 
               {/* ── High Risk Alerts ── */}
-              <div className="shade-card p-6 fade-in-up-delay-3">
+              <div className="card-premium !p-6 fade-in-up-delay-3">
                 <div className="flex items-center justify-between mb-4">
                   <h3 className="font-bold text-primary">تنبيهات المخاطر</h3>
                   <AlertTriangle className="h-5 w-5 text-amber-500" />
                 </div>
                 {highRisk === 0 ? (
                   <div className="text-center py-6 text-secondary">
-                    <Heart className="h-8 w-8 mx-auto mb-2 text-emerald" />
+                    <Heart className="h-8 w-8 mx-auto mb-2 text-[var(--vp-accent)]" />
                     <p className="text-sm">لا توجد مخاطر عالية حالياً</p>
                   </div>
                 ) : (
@@ -229,7 +234,7 @@ export default function HRDashboard() {
                     ))}
                   </div>
                 )}
-                <Link href="/dashboard/admin/employees" className="btn-outline text-xs py-2 px-4 mt-4 w-full justify-center block text-center rounded-xl hover:bg-[var(--white-warm)] transition-colors text-secondary border border-[var(--surface-border)]">
+                <Link href="/dashboard/admin/employees" className="btn-ghost text-xs !h-auto py-2.5 px-4 mt-4 w-full justify-center block text-center">
                   عرض جميع الموظفين
                 </Link>
               </div>
@@ -239,9 +244,9 @@ export default function HRDashboard() {
           {/* ── Charts Section ── */}
           <div className="grid md:grid-cols-2 gap-6 mb-6 fade-in-up-delay-3">
             {/* Department Bar Chart */}
-            <div className="shade-card p-6">
+            <div className="card-premium !p-6">
               <h3 className="font-bold text-primary mb-4 flex items-center gap-2">
-                <BarChart3 className="h-5 w-5 text-emerald" /> مقارنة الأقسام
+                <BarChart3 className="h-5 w-5 text-[var(--vp-accent)]" /> مقارنة الأقسام
               </h3>
               {departments.length === 0 ? (
                 <p className="text-sm text-secondary text-center py-8">لا توجد بيانات</p>
@@ -267,9 +272,9 @@ export default function HRDashboard() {
             </div>
 
             {/* Risk Distribution Pie Chart */}
-            <div className="shade-card p-6">
+            <div className="card-premium !p-6">
               <h3 className="font-bold text-primary mb-4 flex items-center gap-2">
-                <Heart className="h-5 w-5 text-emerald" /> توزيع المخاطر
+                <Heart className="h-5 w-5 text-[var(--vp-accent)]" /> توزيع المخاطر
               </h3>
               {(() => {
                 const low = activeUsers.filter(u => u.wellnessScore?.riskLevel === 'low').length;
@@ -309,10 +314,10 @@ export default function HRDashboard() {
           </div>
 
           {/* ── Health Recommendations ── */}
-          <div className="shade-card p-6 fade-in-up-delay-4">
+          <div className="card-premium !p-6 fade-in-up-delay-4">
             <div className="flex items-center justify-between mb-4">
               <h3 className="font-bold text-primary">🧠 توصيات الصحة والعافية</h3>
-              <Heart className="h-5 w-5 text-emerald" />
+              <Heart className="h-5 w-5 text-[var(--vp-accent)]" />
             </div>
             <div className="grid md:grid-cols-3 gap-4">
               {[
@@ -334,7 +339,7 @@ export default function HRDashboard() {
                   icon: "🍎",
                 },
               ].map((rec) => (
-                <div key={rec.title} className="p-4 rounded-xl bg-white/[0.03] hover:bg-white/[0.05] transition-colors">
+                <div key={rec.title} className="p-4 rounded-xl bg-[var(--vp-glow-soft)] hover:bg-[var(--vp-glow-medium)] transition-colors">
                   <span className="text-2xl block mb-2">{rec.icon}</span>
                   <h4 className="text-sm font-semibold text-primary mb-1">{rec.title}</h4>
                   <p className="text-xs text-secondary leading-relaxed">{rec.desc}</p>

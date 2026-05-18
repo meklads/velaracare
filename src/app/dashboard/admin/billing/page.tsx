@@ -57,14 +57,15 @@ export default function BillingPage() {
   return (
     <>
       <Header />
-      <main className="min-h-screen bg-surface-mid pt-24 pb-12">
-        <div className="container-shade py-6">
+      <main className="min-h-screen bg-gradient-to-b from-[var(--bg-primary)] via-[var(--bg-secondary)] to-[var(--bg-primary)] pt-24 pb-12">
+        <div className="absolute inset-0 vp-grid-bg opacity-20 pointer-events-none" />
+        <div className="container-shade relative z-10 py-6">
           <div className="fade-in-up mb-5">
-            <Link href="/dashboard/admin" className="text-sm text-emerald hover:underline inline-flex items-center gap-1 mb-2">
+            <Link href="/dashboard/admin" className="text-sm text-[var(--vp-accent)] hover:underline inline-flex items-center gap-1 mb-2">
               <ChevronLeft className="h-4 w-4" /> العودة للوحة التحكم
             </Link>
             <h1 className="text-2xl font-bold text-primary flex items-center gap-2">
-              <CreditCard className="h-7 w-7 text-emerald" /> الفواتير والاشتراك
+              <CreditCard className="h-7 w-7 text-[var(--vp-accent)]" /> الفواتير والاشتراك
             </h1>
             <p className="text-secondary mt-1">إدارة الفواتير وخطط الاشتراك</p>
           </div>
@@ -76,7 +77,7 @@ export default function BillingPage() {
               { label: "المستحق", value: `${summary.pendingAmount.toLocaleString()} ر.س`, icon: Clock, color: "from-amber-500 to-orange-600" },
               { label: "مدفوعة", value: summary.paidCount > 0 ? `${Math.round((summary.paidCount / summary.totalInvoices) * 100)}%` : "—", icon: TrendingUp, color: "from-purple-500 to-violet-600" },
             ].map((s) => (
-              <div key={s.label} className="shade-card p-5 text-center">
+              <div key={s.label} className="card-premium !p-5 text-center">
                 <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${s.color} flex items-center justify-center mx-auto mb-2`}>
                   <s.icon className="h-5 w-5 text-white" />
                 </div>
@@ -86,7 +87,7 @@ export default function BillingPage() {
             ))}
           </div>
 
-          <div className="shade-card p-6 fade-in-up-delay-2">
+          <div className="card-premium !p-6 fade-in-up-delay-2">
             <h3 className="font-bold text-primary mb-4">سجل الفواتير</h3>
             {invoices.length === 0 ? (
               <div className="text-center py-10 text-secondary">

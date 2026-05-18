@@ -125,15 +125,20 @@ export default async function AdminDashboard() {
   return (
     <>
       <Header />
-      <main className="min-h-screen bg-surface-mid pt-24">
-        <div className="container-shade py-8">
+      <main className="min-h-screen bg-gradient-to-b from-[var(--bg-primary)] via-[var(--bg-secondary)] to-[var(--bg-primary)] pt-24">
+        <div className="absolute inset-0 vp-grid-bg opacity-20 pointer-events-none" />
+        <div className="container-shade relative z-10 py-8">
           {/* Header */}
           <div className="fade-in-up mb-8 flex flex-wrap items-center justify-between gap-4">
             <div>
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[var(--vp-glow-soft)] border border-[var(--vp-accent)]/10 text-[var(--vp-accent)] text-xs font-medium mb-3">
+                <span className="vp-breathing-ring inline-block" style={{ width: '5px', height: '5px' }} />
+                الإدارة
+              </div>
               <h1 className="text-2xl font-bold text-primary">لوحة تحكم الإدارة</h1>
               <p className="text-secondary">{activeUsers} موظف نشط من أصل {totalUsers}</p>
             </div>
-            <Link href="/dashboard/admin/reports" className="btn-primary text-sm py-2 px-5">
+            <Link href="/dashboard/admin/reports" className="btn-premium text-sm py-2.5 px-5 !h-auto">
               <Download className="ml-2 h-4 w-4" />
               تصدير التقرير
             </Link>
@@ -147,12 +152,12 @@ export default async function AdminDashboard() {
               { label: "المخاطر العالية", value: `${highRisk}`, change: totalRisk > 0 ? `${Math.round((highRisk / totalRisk) * 100)}%` : "—", icon: Activity, color: "from-orange-500 to-red-600" },
               { label: "معدل الاكتمال", value: totalUsers > 0 ? `${Math.round((usersWithScore / totalUsers) * 100)}%` : "0%", change: "التقييم الصحي", icon: Brain, color: "from-emerald to-emerald-600" },
             ].map((kpi, i) => (
-              <div key={kpi.label} className={`shade-card p-5 ${i === 0 ? "fade-in-up-delay-1" : i === 1 ? "fade-in-up-delay-2" : i === 2 ? "fade-in-up-delay-3" : "fade-in-up-delay-4"}`}>
+              <div key={kpi.label} className={`card-premium !p-5 ${i === 0 ? "fade-in-up-delay-1" : i === 1 ? "fade-in-up-delay-2" : i === 2 ? "fade-in-up-delay-3" : "fade-in-up-delay-4"}`}>
                 <div className="flex items-center gap-3 mb-2">
                   <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${kpi.color} flex items-center justify-center`}>
                     <kpi.icon className="h-5 w-5 text-white" />
                   </div>
-                  <span className={`text-xs font-semibold ${kpi.label === "المخاطر العالية" && highRisk > 0 ? "text-rose-500" : "text-emerald"}`}>
+                  <span className={`text-xs font-semibold ${kpi.label === "المخاطر العالية" && highRisk > 0 ? "text-rose-500" : "text-[var(--vp-accent)]"}`}>
                     {kpi.change}
                   </span>
                 </div>
@@ -164,7 +169,7 @@ export default async function AdminDashboard() {
 
           {/* Secondary KPIs Row */}
           <div className="grid grid-cols-3 gap-3 mb-8 fade-in-up-delay-2">
-            <div className="shade-card p-4 flex items-center gap-3">
+            <div className="card-premium !p-4 flex items-center gap-3">
               <div className="w-9 h-9 rounded-lg bg-blue-100 dark:bg-blue-900/20 flex items-center justify-center">
                 <Calendar className="h-4 w-4 text-blue-500" />
               </div>
@@ -173,7 +178,7 @@ export default async function AdminDashboard() {
                 <p className="text-[10px] text-secondary">استشارات اليوم</p>
               </div>
             </div>
-            <div className="shade-card p-4 flex items-center gap-3">
+            <div className="card-premium !p-4 flex items-center gap-3">
               <div className="w-9 h-9 rounded-lg bg-amber-100 dark:bg-amber-900/20 flex items-center justify-center">
                 <ShoppingBag className="h-4 w-4 text-amber-500" />
               </div>
@@ -182,9 +187,9 @@ export default async function AdminDashboard() {
                 <p className="text-[10px] text-secondary">طلبات قيد التحضير</p>
               </div>
             </div>
-            <div className="shade-card p-4 flex items-center gap-3">
+            <div className="card-premium !p-4 flex items-center gap-3">
               <div className="w-9 h-9 rounded-lg bg-emerald-100 dark:bg-emerald-900/20 flex items-center justify-center">
-                <DollarSign className="h-4 w-4 text-emerald" />
+                <DollarSign className="h-4 w-4 text-[var(--vp-accent)]" />
               </div>
               <div>
                 <p className="text-sm font-bold text-primary">{pendingInvoices}</p>
@@ -194,46 +199,50 @@ export default async function AdminDashboard() {
           </div>
 
           <div className="grid md:grid-cols-2 gap-6 mb-6 fade-in-up-delay-2">
-            <RiskPieChart data={[
-              { label: "منخفض", value: lowPct, color: "#24A170" },
-              { label: "متوسط", value: medPct, color: "#F59E0B" },
-              { label: "عالٍ", value: highPct, color: "#F97316" },
-              { label: "حرج", value: critPct, color: "#EF4444" },
-            ]} />
-            <DeptBarChart data={deptScores} />
+            <div className="card-premium !p-6">
+              <RiskPieChart data={[
+                { label: "منخفض", value: lowPct, color: "#24A170" },
+                { label: "متوسط", value: medPct, color: "#F59E0B" },
+                { label: "عالٍ", value: highPct, color: "#F97316" },
+                { label: "حرج", value: critPct, color: "#EF4444" },
+              ]} />
+            </div>
+            <div className="card-premium !p-6">
+              <DeptBarChart data={deptScores} />
+            </div>
           </div>
 
           {/* Bottom Row */}
           <div className="grid md:grid-cols-2 gap-6 mb-6">
-            <div className="shade-card p-6 fade-in-up-delay-3">
+            <div className="card-premium !p-6 fade-in-up-delay-3">
               <h3 className="font-bold text-primary mb-4">🍎 تغذية الموظفين</h3>
               <p className="text-sm text-secondary mb-3">
                 {usersWithScore > 0
                   ? `${Math.round((activeUsers / totalUsers) * 100)}% من الموظفين نشطون — قم بتفعيل خطط الوجبات الصحية لدعم العافية العامة.`
                   : 'لم يقم الموظفون بالتقييم الصحي بعد — قم بدعوتهم لإجراء التقييم.'}
               </p>
-              <Link href="/dashboard/admin/meals" className="text-sm text-[var(--emerald-ai)] hover:underline font-medium">
+              <Link href="/dashboard/admin/meals" className="text-sm text-[var(--vp-accent)] hover:underline font-medium">
                 عرض خطط التغذية ←
               </Link>
             </div>
 
-            <div className="shade-card p-6 fade-in-up-delay-4">
+            <div className="card-premium !p-6 fade-in-up-delay-4">
               <h3 className="font-bold text-primary mb-4">🧠 توصيات ذكية</h3>
               <ul className="space-y-2 text-sm text-secondary">
                 {highRisk > 0 ? (
                   <li className="flex items-start gap-2">
-                    <span className="mt-1 h-1.5 w-1.5 rounded-full bg-emerald shrink-0" />
+                    <span className="mt-1 h-1.5 w-1.5 rounded-full bg-[var(--vp-accent)] shrink-0" />
                     {highRisk} موظفاً بمخاطر عالية — يوصى بعمل فحوصات دورية وتوفير استشارات تغذية
                   </li>
                 ) : null}
                 {deptScores.length > 0 && deptScores[deptScores.length - 1]?.score < 65 ? (
                   <li className="flex items-start gap-2">
-                    <span className="mt-1 h-1.5 w-1.5 rounded-full bg-emerald shrink-0" />
+                    <span className="mt-1 h-1.5 w-1.5 rounded-full bg-[var(--vp-accent)] shrink-0" />
                     قسم {deptScores[deptScores.length - 1].dept} بحاجة لبرنامج تحسين عافية — العافية {deptScores[deptScores.length - 1].score}%
                   </li>
                 ) : null}
                 <li className="flex items-start gap-2">
-                  <span className="mt-1 h-1.5 w-1.5 rounded-full bg-emerald shrink-0" />
+                  <span className="mt-1 h-1.5 w-1.5 rounded-full bg-[var(--vp-accent)] shrink-0" />
                   {usersWithScore > 0 ? `تم تقييم ${usersWithScore} موظفاً — متوسط العافية ${avgWellness}%` : 'لم يتم إجراء تقييمات صحية بعد'}
                 </li>
               </ul>
@@ -242,27 +251,27 @@ export default async function AdminDashboard() {
 
           {/* Quick Links */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8 fade-in-up-delay-4">
-            <Link href="/dashboard/admin/meals" className="shade-card p-4 text-center hover:shadow-md transition-all hover:-translate-y-0.5">
+            <Link href="/dashboard/admin/meals" className="card-premium !p-4 text-center">
               <span className="text-2xl block mb-1">🍽️</span>
               <p className="text-sm font-semibold text-primary">الوجبات</p>
               <p className="text-[10px] text-secondary">إدارة خطط الوجبات</p>
             </Link>
-            <Link href="/dashboard/admin/employees" className="shade-card p-4 text-center hover:shadow-md transition-all hover:-translate-y-0.5">
+            <Link href="/dashboard/admin/employees" className="card-premium !p-4 text-center">
               <span className="text-2xl block mb-1">👥</span>
               <p className="text-sm font-semibold text-primary">الموظفين</p>
               <p className="text-[10px] text-secondary">إدارة الموظفين</p>
             </Link>
-            <Link href="/dashboard/employee/meals" className="shade-card p-4 text-center hover:shadow-md transition-all hover:-translate-y-0.5">
+            <Link href="/dashboard/employee/meals" className="card-premium !p-4 text-center">
               <span className="text-2xl block mb-1">📋</span>
               <p className="text-sm font-semibold text-primary">المينيو</p>
               <p className="text-[10px] text-secondary">معاينة قائمة الوجبات</p>
             </Link>
-            <Link href="/dashboard/restaurant" className="shade-card p-4 text-center hover:shadow-md transition-all hover:-translate-y-0.5">
+            <Link href="/dashboard/restaurant" className="card-premium !p-4 text-center">
               <span className="text-2xl block mb-1">🧑‍🍳</span>
               <p className="text-sm font-semibold text-primary">المطعم</p>
               <p className="text-[10px] text-secondary">عرض الطلبات</p>
             </Link>
-            <Link href="/dashboard/admin/billing" className="shade-card p-4 text-center hover:shadow-md transition-all hover:-translate-y-0.5">
+            <Link href="/dashboard/admin/billing" className="card-premium !p-4 text-center">
               <span className="text-2xl block mb-1">💰</span>
               <p className="text-sm font-semibold text-primary">الفواتير</p>
               <p className="text-[10px] text-secondary">الاشتراك والفوترة</p>

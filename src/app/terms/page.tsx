@@ -1,40 +1,40 @@
-import type { Metadata } from "next";
+"use client";
+
+import { useEffect } from "react";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
-
-export const metadata: Metadata = {
-  title: "الشروط والأحكام",
-  description: "شروط وأحكام استخدام منصة Velara Care",
-};
+import { initScrollAnimations } from "@/lib/scroll-animations";
 
 const sections = [
-  { title: "القبول بالشروط", content: "باستخدامك لمنصة Velara Care، فإنك توافق على هذه الشروط والأحكام. إذا كنت لا توافق على أي جزء من هذه الشروط، يجب عليك التوقف عن استخدام المنصة." },
-  { title: "الخدمات المقدمة", content: "توفر Velara Care منصة متكاملة لإدارة الصحة المؤسسية تشمل: التقييم الصحي الذكي (HRA)، التحليلات التنبؤية بالذكاء الاصطناعي، نظام الوجبات الصحية المخصصة، الاستشارات الغذائية والرياضية، وتقارير العافية للشركات." },
-  { title: "حسابات المستخدمين", content: "أنت مسؤول عن الحفاظ على سرية بيانات تسجيل الدخول الخاصة بك. يجب إبلاغنا فوراً عن أي استخدام غير مصرح به لحسابك. يحق لنا تعليق أو إلغاء أي حساب ينتهك هذه الشروط." },
-  { title: "البيانات الصحية", content: "البيانات الصحية التي تقدمها تستخدم فقط لتقديم التوصيات المخصصة وتحسين خدماتنا. نحن نلتزم بأعلى معايير الخصوصية والأمان في التعامل مع بياناتك الصحية وفقاً لسياسة الخصوصية." },
-  { title: "الملكية الفكرية", content: "جميع حقوق الملكية الفكرية للمنصة ومحتواها محفوظة لـ Velara Care. لا يجوز نسخ أو توزيع أو استخدام أي جزء من المنصة دون إذن كتابي." },
-  { title: "الدفع والاشتراكات", content: "يتم الدفع شهرياً حسب الخطة المختارة وعدد الموظفين. جميع الأسعار بالريال السعودي. يمكن إلغاء الاشتراك في أي وقت مع تطبيق سياسة الإلغاء." },
-  { title: "إخلاء المسؤولية", content: "التوصيات المقدمة من المنصة هي لأغراض توعوية فقط ولا تغني عن الاستشارة الطبية المباشرة. في الحالات الطارئة، يرجى الاتصال بالطوارئ مباشرة." },
-  { title: "تعديل الشروط", content: "نحتفظ بالحق في تعديل هذه الشروط في أي وقت. سيتم إخطار المستخدمين بالتغييرات الجوهرية عبر البريد الإلكتروني." },
+  { title: "القبول بالشروط", content: "باستخدامك لمنصة Velara Care، فإنك توافق على هذه الشروط والأحكام. إذا كنت لا توافق على أي جزء من هذه الشروط، يرجى عدم استخدام المنصة." },
+  { title: "الحسابات", content: "لتستخدم المنصة، يجب عليك إنشاء حساب. أنت مسؤول عن الحفاظ على سرية معلومات حسابك وكلمة المرور. يجب أن تكون المعلومات التي تقدمها دقيقة وكاملة." },
+  { title: "الخدمات", content: "تقدم Velara Care خدمات التقييم الصحي، التوصيات الغذائية، الاستشارات المتخصصة، وتقارير العافية. قد نقوم بتحديث أو تعديل خدماتنا من وقت لآخر." },
+  { title: "الخصوصية", content: "جمع واستخدام بياناتك يخضع لسياسة الخصوصية الخاصة بنا. باستخدام المنصة، فإنك توافق على ممارسات جمع البيانات الموضحة في سياسة الخصوصية." },
+  { title: "الاشتراك والدفع", content: "الاشتراك في المنصة شهري ويتم احتسابه حسب عدد الموظفين. يتم إصدار فواتير شهرية ويجب الدفع خلال ٣٠ يوماً من تاريخ الفاتورة." },
+  { title: "إلغاء الاشتراك", content: "يمكنك إلغاء اشتراكك في أي وقت. سيتم إلغاء الخدمات في نهاية فترة الفوترة الحالية. لا نقدم استرداداً للفترة المتبقية." },
+  { title: "الملكية الفكرية", content: "جميع حقوق الملكية الفكرية للمنصة ومحتواها تعود لشركة Velara Care. لا يجوز نسخ أو توزيع أو استخدام أي جزء من المنصة دون إذن خطي." },
+  { title: "اتصل بنا", content: "للاستفسارات المتعلقة بالشروط والأحكام، يرجى التواصل معنا على: legal@velaracare.co" },
 ];
 
 export default function TermsPage() {
+  useEffect(() => { const c = initScrollAnimations(); return () => c(); }, []);
+
   return (
     <>
       <Header />
-      <main className="min-h-screen bg-surface-mid pt-28 pb-16">
+      <main className="min-h-screen bg-[var(--bg-primary)] pt-28 pb-16" dir="rtl">
         <div className="container-shade max-w-4xl">
-          <div className="text-center mb-12 fade-in-up">
-            <span className="tag mb-4">الشروط والأحكام</span>
-            <h1 className="section-title">الشروط والأحكام</h1>
-            <p className="subtitle text-secondary mt-4">آخر تحديث: مايو ٢٠٢٦</p>
+          <div className="text-center mb-12" data-vp-animate="fade-up">
+            <span className="vp-label">الشروط والأحكام</span>
+            <h1 className="vp-section-title mt-4">الشروط والأحكام</h1>
+            <p className="vp-subtitle text-[var(--text-secondary)] mt-4">آخر تحديث: مايو ٢٠٢٦</p>
           </div>
 
-          <div className="space-y-8 fade-in-up-delay-2">
+          <div className="space-y-6" data-vp-animate="fade-up" data-vp-delay="2">
             {sections.map((s) => (
-              <div key={s.title} className="shade-card p-8">
-                <h2 className="text-xl font-bold text-primary mb-3">{s.title}</h2>
-                <p className="text-secondary leading-relaxed">{s.content}</p>
+              <div key={s.title} className="card-premium p-8">
+                <h2 className="text-xl font-bold text-[var(--text-primary)] mb-3">{s.title}</h2>
+                <p className="text-[var(--text-secondary)] leading-relaxed">{s.content}</p>
               </div>
             ))}
           </div>

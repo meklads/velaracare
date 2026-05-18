@@ -1,4 +1,6 @@
-import type { Metadata } from "next";
+"use client";
+
+import { useEffect } from "react";
 import Link from "next/link";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
@@ -13,13 +15,9 @@ import {
   Activity,
   FileText,
   Shield,
-  ChevronLeft,
+  ArrowLeft,
 } from "lucide-react";
-
-export const metadata: Metadata = {
-  title: "الميزات",
-  description: "منصة متكاملة لإدارة صحة الموظفين بالذكاء الاصطناعي",
-};
+import { initScrollAnimations } from "@/lib/scroll-animations";
 
 const featuresDetailed = [
   {
@@ -55,80 +53,62 @@ const featuresDetailed = [
 ];
 
 export default function FeaturesPage() {
+  useEffect(() => { const c = initScrollAnimations(); return () => c(); }, []);
+
   return (
     <>
       <Header />
       <main>
-        {/* ── Hero ── */}
-        <section className="bg-surface-mid section-padding relative overflow-hidden">
-          <div className="shade-circle w-[500px] h-[500px] -top-40 -left-40 opacity-40" />
-          <div className="shade-circle w-[300px] h-[300px] top-20 -right-20 opacity-30" />
-
+        {/* ✦ HERO ✦ */}
+        <section className="relative py-28 overflow-hidden bg-gradient-to-b from-[var(--bg-primary)] via-[var(--bg-secondary)] to-[var(--bg-primary)]" dir="rtl">
+          <div className="absolute inset-0 pointer-events-none" style={{ background: 'var(--vp-gradient-hero)' }} />
+          <div className="absolute inset-0 vp-grid-bg opacity-30" />
           <div className="container-shade relative z-10 text-center">
-            <div className="fade-in-up">
-              <span className="tag mb-6">الميزات</span>
+            <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-[var(--vp-glow-soft)] border border-[var(--vp-accent)]/10 text-[var(--vp-accent)] text-sm font-medium mb-6" data-vp-animate="fade-up">
+              <span className="vp-breathing-ring inline-block" style={{ width: '6px', height: '6px' }} />
+              الميزات
             </div>
-            <h1 className="section-title fade-in-up-delay-1 max-w-4xl mx-auto">
+            <h1 className="vp-hero max-w-4xl mx-auto" data-vp-animate="fade-up" data-vp-delay="1">
               منصة متكاملة لإدارة صحة الموظفين
               <br />
-              <span className="text-emerald">بالذكاء الاصطناعي</span>
+              <span className="vp-hero-em">بالذكاء الاصطناعي</span>
             </h1>
-            <p className="subtitle text-secondary max-w-2xl mx-auto mt-6 fade-in-up-delay-2">
+            <p className="vp-subtitle text-[var(--text-secondary)] max-w-2xl mx-auto mt-6" data-vp-animate="fade-up" data-vp-delay="2">
               Velara Care تجمع بين التحليل الصحي، الذكاء الاصطناعي، الوجبات الصحية، والاستشارات المتخصصة داخل منصة واحدة قابلة للقياس والتوسع.
             </p>
           </div>
         </section>
 
-        {/* ── Features Grid ── */}
-        <section className="section-padding bg-surface-deeper relative overflow-hidden">
-          <div className="shade-circle w-[400px] h-[400px] -bottom-32 -right-32 opacity-20" />
-
+        {/* ✦ FEATURES GRID ✦ */}
+        <section className="section-padding relative overflow-hidden" dir="rtl">
+          <div className="absolute inset-0 vp-grid-bg opacity-20" />
           <div className="container-shade relative z-10">
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
               {featuresDetailed.map((f, i) => (
-                <div
-                  key={f.title}
-                  className={`shade-card p-6 fade-in-up-delay-${Math.min(i + 1, 4)}`}
-                >
-                  <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-emerald-soft text-emerald shadow-lg">
+                <div key={f.title} className="card-premium p-6" data-vp-animate="fade-up" data-vp-delay={String(Math.min(i + 1, 4))}>
+                  <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-[var(--vp-glow-soft)] text-[var(--vp-accent)]">
                     <f.icon className="h-7 w-7" />
                   </div>
-                  <h3 className="text-xl font-bold text-primary mb-2">
-                    {f.title}
-                  </h3>
-                  <p className="text-secondary leading-relaxed text-sm">
-                    {f.desc}
-                  </p>
+                  <h3 className="text-xl font-bold text-[var(--text-primary)] mb-2">{f.title}</h3>
+                  <p className="text-[var(--text-secondary)] leading-relaxed text-sm">{f.desc}</p>
                 </div>
               ))}
             </div>
           </div>
         </section>
 
-        {/* ── CTA ── */}
-        <section className="section-padding relative overflow-hidden">
-          <div className="shade-circle w-[600px] h-[600px] -top-60 -left-60 opacity-20" />
-
+        {/* ✦ CTA ✦ */}
+        <section className="relative py-28 overflow-hidden" dir="rtl" style={{ background: 'var(--vp-gradient-dark)' }}>
+          <div className="absolute inset-0 vp-grid-bg opacity-[0.03]" />
+          <div className="absolute top-1/2 left-1/4 w-72 h-72 rounded-full bg-[var(--vp-accent)]/5 blur-3xl" />
           <div className="container-shade relative z-10">
-            <div className="bg-surface-dark rounded-3xl p-12 sm:p-16 text-center text-white relative overflow-hidden">
-              <div className="shade-circle w-[300px] h-[300px] -top-20 -right-20 bg-white/5" />
-              <div className="shade-circle w-[200px] h-[200px] -bottom-10 -left-10 bg-white/5" />
-
-              <h2 className="section-title text-white relative z-10">
-                جاهز تجرب المنصة؟
-              </h2>
-              <p className="subtitle text-white/80 mt-4 max-w-xl mx-auto relative z-10">
-                احجز عرضاً تجريبياً مجاناً لمدة ١٤ يوماً
-              </p>
-              <div className="mt-8 relative z-10">
-                <Link
-                  href="/demo"
-                  className="btn-primary inline-flex"
-                >
-                  اطلب عرضاً تجريبياً
-                  <ChevronLeft className="h-4 w-4" />
-                </Link>
-              </div>
+            <div className="mx-auto max-w-2xl text-center" data-vp-animate="slide-up">
+              <h2 className="vp-hero text-white mb-6">جاهز تجرب المنصة؟</h2>
+              <p className="vp-subtitle text-white/70 max-w-xl mx-auto mb-10">احجز عرضاً تجريبياً مجاناً لمدة ١٤ يوماً</p>
+              <Link href="/demo" className="btn-premium !bg-white !text-[var(--vp-ink)] group">
+                اطلب عرضاً تجريبياً
+                <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
+              </Link>
             </div>
           </div>
         </section>

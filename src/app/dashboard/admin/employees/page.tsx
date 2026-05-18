@@ -172,8 +172,9 @@ export default function AdminEmployeesPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-surface-mid pt-24">
-        <div className="container-shade py-6">
+      <div className="min-h-screen bg-gradient-to-b from-[var(--bg-primary)] via-[var(--bg-secondary)] to-[var(--bg-primary)] pt-24">
+        <div className="absolute inset-0 vp-grid-bg opacity-20 pointer-events-none" />
+        <div className="container-shade relative z-10 py-6">
           <div className="fade-in-up mb-6">
             <SkeletonBlock width="200px" height="28px" />
             <div className="mt-2"><SkeletonBlock width="140px" height="14px" /></div>
@@ -188,8 +189,9 @@ export default function AdminEmployeesPage() {
   return (
     <>
       <Header />
-      <main className="min-h-screen bg-surface-mid pt-24 pb-12">
-        <div className="container-shade py-6">
+      <main className="min-h-screen bg-gradient-to-b from-[var(--bg-primary)] via-[var(--bg-secondary)] to-[var(--bg-primary)] pt-24 pb-12">
+        <div className="absolute inset-0 vp-grid-bg opacity-20 pointer-events-none" />
+        <div className="container-shade relative z-10 py-6">
           {/* Breadcrumb */}
           <div className="fade-in-up mb-5">
             <Link href="/dashboard/admin" className="text-sm text-emerald hover:underline inline-flex items-center gap-1">
@@ -216,7 +218,7 @@ export default function AdminEmployeesPage() {
               </button>
               <button
                 onClick={() => setShowAddModal(true)}
-                className="btn-primary text-sm py-2.5 px-5"
+                className="btn-premium text-sm !h-auto py-2.5 px-5"
               >
                 <UserPlus className="ml-2 h-4 w-4" />
                 إضافة موظف
@@ -232,7 +234,7 @@ export default function AdminEmployeesPage() {
               { label: "مخاطر عالية", value: stats.highRisk, color: "from-rose-500 to-pink-600" },
               { label: "متوسط العافية", value: `${stats.avgScore}%`, color: "from-amber-500 to-orange-600" },
             ].map((stat) => (
-              <div key={stat.label} className="shade-card p-4">
+              <div key={stat.label} className="card-premium !p-4">
                 <p className="text-2xl font-bold text-primary">{stat.value}</p>
                 <p className="text-xs text-secondary">{stat.label}</p>
               </div>
@@ -274,7 +276,7 @@ export default function AdminEmployeesPage() {
           </div>
 
           {/* Employees Table */}
-          <div className="shade-card overflow-hidden">
+          <div className="card-premium overflow-hidden">
             {filtered.length === 0 ? (
               <div className="text-center py-16 text-secondary">
                 <Users className="h-12 w-12 mx-auto mb-3 opacity-30" />
@@ -415,10 +417,10 @@ export default function AdminEmployeesPage() {
           {/* ── Quick Edit Modal ── */}
           {showEditModal && editEmployee && (
             <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm" onClick={() => setShowEditModal(false)}>
-              <div className="shade-card w-full max-w-md p-6 m-4" onClick={(e) => e.stopPropagation()}>
+              <div className="card-premium w-full max-w-md p-6 m-4" onClick={(e) => e.stopPropagation()}>
                 <div className="flex items-center justify-between mb-5">
                   <h2 className="font-bold text-primary text-lg flex items-center gap-2">
-                    <Edit3 className="h-5 w-5 text-emerald" /> تعديل {editEmployee.firstName} {editEmployee.lastName}
+                    <Edit3 className="h-5 w-5 text-[var(--vp-accent)]" /> تعديل {editEmployee.firstName} {editEmployee.lastName}
                   </h2>
                   <button onClick={() => setShowEditModal(false)} className="text-secondary hover:text-primary transition-colors">
                     <X className="h-5 w-5" />

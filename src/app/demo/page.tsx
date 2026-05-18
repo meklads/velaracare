@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
-import { CalendarDays, ChevronLeft, CheckCircle2, Loader2 } from "lucide-react";
+import { CalendarDays, ArrowLeft, CheckCircle2, Loader2, Sparkles } from "lucide-react";
 import { useState } from "react";
 
 export default function DemoPage() {
@@ -22,7 +22,7 @@ export default function DemoPage() {
       });
       if (res.ok) setSubmitted(true);
     } catch {
-      setSubmitted(true); // Still show success even if API fails
+      setSubmitted(true);
     } finally {
       setSending(false);
     }
@@ -32,25 +32,22 @@ export default function DemoPage() {
     return (
       <>
         <Header />
-        <main className="min-h-screen bg-surface-mid flex items-center justify-center p-4">
-          <div className="shade-card max-w-lg w-full p-10 text-center relative overflow-hidden">
-            <div className="shade-circle w-48 h-48 -top-20 -right-20 opacity-20" />
-            <div className="relative z-10">
-              <div className="w-16 h-16 rounded-full bg-emerald-soft flex items-center justify-center mx-auto mb-6">
-                <CheckCircle2 className="h-8 w-8 text-emerald" />
-              </div>
-              <h2 className="text-2xl font-bold text-primary mb-3">تم استلام طلبك!</h2>
-              <p className="text-secondary mb-2">
-                شكراً لاهتمامك بـ <strong>Velara Care</strong>.
-              </p>
-              <p className="text-sm text-secondary mb-8">
-                سيتواصل معك فريقنا خلال ٢٤ ساعة لتحديد موعد العرض التجريبي.
-              </p>
-              <Link href="/" className="btn-primary">
-                العودة للرئيسية
-                <ChevronLeft className="h-4 w-4" />
-              </Link>
+        <main className="min-h-screen bg-[var(--bg-primary)] flex items-center justify-center p-4" dir="rtl">
+          <div className="card-premium max-w-lg w-full p-10 text-center" data-vp-animate="scale-in">
+            <div className="w-16 h-16 rounded-full bg-[var(--vp-glow-soft)] flex items-center justify-center mx-auto mb-6">
+              <CheckCircle2 className="h-8 w-8 text-[var(--vp-accent)]" />
             </div>
+            <h2 className="text-2xl font-bold text-[var(--text-primary)] mb-3">تم استلام طلبك!</h2>
+            <p className="text-[var(--text-secondary)] mb-2">
+              شكراً لاهتمامك بـ <strong>Velara Care</strong>.
+            </p>
+            <p className="text-sm text-[var(--text-secondary)] mb-8">
+              سيتواصل معك فريقنا خلال ٢٤ ساعة لتحديد موعد العرض التجريبي.
+            </p>
+            <Link href="/" className="btn-premium">
+              العودة للرئيسية
+              <ArrowLeft className="h-4 w-4" />
+            </Link>
           </div>
         </main>
         <Footer />
@@ -62,62 +59,57 @@ export default function DemoPage() {
     <>
       <Header />
       <main>
-        <section className="bg-surface-mid section-padding relative overflow-hidden">
-          <div className="shade-circle w-[500px] h-[500px] -top-40 -right-40 opacity-40" />
-          <div className="shade-circle w-[300px] h-[300px] top-20 -left-20 opacity-30" />
+        <section className="relative py-28 overflow-hidden bg-gradient-to-b from-[var(--bg-primary)] via-[var(--bg-secondary)] to-[var(--bg-primary)]" dir="rtl">
+          <div className="absolute inset-0 pointer-events-none" style={{ background: 'var(--vp-gradient-hero)' }} />
+          <div className="absolute inset-0 vp-grid-bg opacity-30" />
           <div className="container-shade relative z-10">
             <div className="grid md:grid-cols-2 gap-12 items-center">
-              <div>
-                <div className="fade-in-up"><span className="tag mb-6">عرض تجريبي</span></div>
-                <h1 className="hero-title fade-in-up-delay-1">
-                  احجز عرضاً تجريبياً لـ{" "}
-                  <span className="text-emerald">منصتك الصحية الذكية</span>
+              <div data-vp-animate="fade-up">
+                <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-[var(--vp-glow-soft)] border border-[var(--vp-accent)]/10 text-[var(--vp-accent)] text-sm font-medium mb-6">
+                  <span className="vp-breathing-ring inline-block" style={{ width: '6px', height: '6px' }} />
+                  عرض تجريبي
+                </div>
+                <h1 className="vp-hero">
+                  احجز عرضاً تجريبياً لـ{' '}
+                  <span className="vp-hero-em">منصتك الصحية الذكية</span>
                 </h1>
-                <p className="subtitle text-secondary mt-6 fade-in-up-delay-2">
+                <p className="vp-subtitle text-[var(--text-secondary)] mt-6">
                   دعنا نريك كيف تستطيع Velara Care مساعدة شركتك على تحسين صحة الموظفين وتقليل التكاليف الصحية خلال أشهر قليلة.
                 </p>
-                <div className="mt-8 space-y-4 fade-in-up-delay-3">
-                  {[
-                    "تجربة كاملة لجميع الميزات",
-                    "دعم فني مخصص طوال الفترة",
-                    "تقرير تحليلي لصحة شركتك",
-                    "لا حاجة لبطاقة ائتمان",
-                  ].map((item) => (
+                <div className="mt-8 space-y-4">
+                  {["تجربة كاملة لجميع الميزات", "دعم فني مخصص طوال الفترة", "تقرير تحليلي لصحة شركتك", "لا حاجة لبطاقة ائتمان"].map((item) => (
                     <div key={item} className="flex items-center gap-3">
-                      <CheckCircle2 className="h-5 w-5 text-emerald shrink-0" />
-                      <span className="text-sm text-secondary">{item}</span>
+                      <CheckCircle2 className="h-5 w-5 text-[var(--vp-accent)] shrink-0" />
+                      <span className="text-sm text-[var(--text-secondary)]">{item}</span>
                     </div>
                   ))}
                 </div>
               </div>
 
-              <div className="shade-card p-8 fade-in-up-delay-3 relative overflow-hidden">
-                <div className="shade-circle w-32 h-32 -bottom-10 -left-10 opacity-10" />
-                <h3 className="text-xl font-bold text-primary mb-6 relative z-10">
-                  سجل الآن
-                </h3>
-                <form className="space-y-4 relative z-10" onSubmit={handleSubmit}>
+              <div className="card-premium p-8" data-vp-animate="fade-up" data-vp-delay="2">
+                <h3 className="text-xl font-bold text-[var(--text-primary)] mb-6">سجل الآن</h3>
+                <form className="space-y-4" onSubmit={handleSubmit}>
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <label className="text-sm font-medium text-primary">الاسم الكامل</label>
-                      <input type="text" value={formData.name} onChange={(e) => setFormData(p => ({...p, name: e.target.value}))} placeholder="محمد العلي" required className="mt-1 w-full rounded-xl border border-[var(--surface-border)] bg-white px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-ai/30 focus:border-emerald-ai" />
+                      <label className="text-sm font-medium text-[var(--text-primary)]">الاسم الكامل</label>
+                      <input type="text" value={formData.name} onChange={(e) => setFormData(p => ({...p, name: e.target.value}))} placeholder="محمد العلي" required className="shade-input mt-1" />
                     </div>
                     <div>
-                      <label className="text-sm font-medium text-primary">اسم الشركة</label>
-                      <input type="text" value={formData.company} onChange={(e) => setFormData(p => ({...p, company: e.target.value}))} placeholder="شركتك" required className="mt-1 w-full rounded-xl border border-[var(--surface-border)] bg-white px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-ai/30 focus:border-emerald-ai" />
+                      <label className="text-sm font-medium text-[var(--text-primary)]">اسم الشركة</label>
+                      <input type="text" value={formData.company} onChange={(e) => setFormData(p => ({...p, company: e.target.value}))} placeholder="شركتك" required className="shade-input mt-1" />
                     </div>
                   </div>
                   <div>
-                    <label className="text-sm font-medium text-primary">البريد الإلكتروني للشركة</label>
-                    <input type="email" value={formData.email} onChange={(e) => setFormData(p => ({...p, email: e.target.value}))} placeholder="hr@company.com" dir="ltr" required className="mt-1 w-full rounded-xl border border-[var(--surface-border)] bg-white px-4 py-2.5 text-sm text-left focus:outline-none focus:ring-2 focus:ring-emerald-ai/30 focus:border-emerald-ai" />
+                    <label className="text-sm font-medium text-[var(--text-primary)]">البريد الإلكتروني للشركة</label>
+                    <input type="email" value={formData.email} onChange={(e) => setFormData(p => ({...p, email: e.target.value}))} placeholder="hr@company.com" dir="ltr" required className="shade-input mt-1 text-left" />
                   </div>
                   <div>
-                    <label className="text-sm font-medium text-primary">رقم الجوال</label>
-                    <input type="tel" value={formData.phone} onChange={(e) => setFormData(p => ({...p, phone: e.target.value}))} placeholder="+966 5x xxx xxxx" dir="ltr" className="mt-1 w-full rounded-xl border border-[var(--surface-border)] bg-white px-4 py-2.5 text-sm text-left focus:outline-none focus:ring-2 focus:ring-emerald-ai/30 focus:border-emerald-ai" />
+                    <label className="text-sm font-medium text-[var(--text-primary)]">رقم الجوال</label>
+                    <input type="tel" value={formData.phone} onChange={(e) => setFormData(p => ({...p, phone: e.target.value}))} placeholder="+966 5x xxx xxxx" dir="ltr" className="shade-input mt-1 text-left" />
                   </div>
                   <div>
-                    <label className="text-sm font-medium text-primary">عدد الموظفين</label>
-                    <select value={formData.employeeCount} onChange={(e) => setFormData(p => ({...p, employeeCount: e.target.value}))} className="mt-1 w-full rounded-xl border border-[var(--surface-border)] bg-white px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-ai/30 focus:border-emerald-ai">
+                    <label className="text-sm font-medium text-[var(--text-primary)]">عدد الموظفين</label>
+                    <select value={formData.employeeCount} onChange={(e) => setFormData(p => ({...p, employeeCount: e.target.value}))} className="shade-input mt-1">
                       <option>١-٥٠ موظف</option>
                       <option>٥١-٢٠٠ موظف</option>
                       <option>٢٠١-٥٠٠ موظف</option>
@@ -125,7 +117,7 @@ export default function DemoPage() {
                       <option>أكثر من ١٠٠٠ موظف</option>
                     </select>
                   </div>
-                  <button type="submit" disabled={sending} className="btn-primary w-full justify-center">
+                  <button type="submit" disabled={sending} className="btn-premium w-full justify-center">
                     {sending ? <Loader2 className="ml-2 h-4 w-4 animate-spin" /> : <CalendarDays className="ml-2 h-4 w-4" />}
                     {sending ? "جاري الإرسال..." : "احجز العرض التجريبي"}
                   </button>

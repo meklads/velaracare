@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;600;700;900&family=Tajawal:wght@200;300;400;500;600;700;800;900&family=Bebas+Neue&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Lato:wght@400;600;700;900&family=Tajawal:wght@200;300;400;500;600;700;800;900&family=Bebas+Neue&display=swap');
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
@@ -8,7 +8,7 @@
 @theme inline {
   --color-background: var(--bg-primary);
   --color-foreground: var(--text-primary);
-  --font-sans: 'Lato', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-sans: 'Inter', 'Lato', -apple-system, BlinkMacSystemFont, sans-serif;
   --font-arabic: 'Avenir Arabic', 'Tajawal', sans-serif;
   --font-display: 'Bebas Neue', sans-serif;
   --color-sidebar-ring: var(--sidebar-ring);
@@ -260,7 +260,7 @@
   align-items: center;
   justify-content: center;
   gap: 8px;
-  background: var(--accent);
+  background: linear-gradient(135deg, var(--vp-accent, var(--accent)) 0%, var(--vp-accent-dark, var(--accent-dark)) 100%);
   color: #ffffff;
   font-weight: 700;
   font-size: 14px;
@@ -270,20 +270,30 @@
   border: none;
   border-radius: 999px;
   cursor: pointer;
-  transition: all 0.35s cubic-bezier(0.45, 0, 0.55, 1);
+  transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
   text-align: center;
   line-height: 1;
   text-decoration: none;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-primary::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, transparent 50%);
+  pointer-events: none;
 }
 
 .btn-primary:hover {
-  background: var(--accent-dark);
-  transform: translateY(-2px);
-  box-shadow: 0 12px 32px var(--accent-glow-strong);
+  transform: translateY(-3px);
+  box-shadow: 0 16px 40px -8px rgba(43, 159, 122, 0.35);
 }
 
 .btn-primary:active {
   transform: translateY(0);
+  transition-duration: 0.1s;
 }
 
 .btn-outline {
@@ -335,14 +345,14 @@
   background: var(--bg-card);
   border-radius: 20px;
   padding: 32px;
-  transition: all 0.4s cubic-bezier(0.45, 0, 0.55, 1);
+  transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
   border: 1px solid var(--border-primary);
 }
 
 .shade-card:hover {
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
-  border-color: var(--accent);
-  transform: translateY(-4px);
+  border-color: var(--vp-accent);
+  box-shadow: 0 20px 60px -12px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(43, 159, 122, 0.06);
+  transform: translateY(-3px);
 }
 
 /* Glass card */
@@ -354,11 +364,12 @@
   border-radius: 20px;
   padding: 32px;
   box-shadow: var(--glass-shadow);
-  transition: all 0.4s cubic-bezier(0.45, 0, 0.55, 1);
+  transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .glass-card:hover {
-  border-color: var(--accent);
+  border-color: var(--vp-accent, var(--accent));
+  box-shadow: 0 12px 40px -8px rgba(43, 159, 122, 0.1);
   transform: translateY(-2px);
 }
 
@@ -422,8 +433,8 @@
 .bg-card { background-color: var(--bg-card); }
 .bg-elevated { background-color: var(--bg-elevated); }
 
-.bg-surface-mid { background-color: var(--bg-secondary); }
-.bg-surface-deeper { background-color: var(--bg-primary); }
+.bg-surface-mid { background: linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-secondary) 50%, var(--bg-primary) 100%); }
+.bg-surface-deeper { background: linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-secondary) 60%, var(--bg-primary) 100%); }
 .bg-surface-card { background-color: var(--bg-card); }
 .bg-surface-dark { background-color: var(--bg-inverse); }
 .bg-inverse { background-color: var(--bg-inverse); }
@@ -906,4 +917,108 @@ button.hover\:text-emerald-300:hover,
   font-size: 13px;
   font-weight: 500;
   color: var(--vp-accent);
+}
+
+/* ═══════════════════════════════════════════
+   ✦ MICRO-INTERACTIONS ✦
+   System-wide premium interactions
+   ═══════════════════════════════════════════ */
+
+/* ── Smooth everything ── */
+* {
+  scroll-behavior: smooth;
+}
+
+a, button, input, select, textarea, .card-premium, .shade-card, .glass-card, .glass-premium {
+  transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ── Premium Focus Ring ── */
+*:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(43, 159, 122, 0.25), 0 0 0 1px rgba(43, 159, 122, 0.5);
+  border-radius: 4px;
+}
+
+/* ── Keyboard shortcut badges (⌘K, etc.) ── */
+.kbd-shortcut {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding: 2px 6px;
+  background: var(--vp-glow-soft);
+  border: 1px solid var(--border-primary);
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  font-family: 'Inter', system-ui, sans-serif;
+  color: var(--text-secondary);
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+}
+
+/* ── Elegant divider variant ── */
+.vp-divider-gradient {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--vp-accent), transparent);
+  opacity: 0.2;
+  border: none;
+  margin: 0;
+}
+
+/* ── Subtle shimmer skeleton ── */
+@keyframes vpShimmerSkeleton {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.vp-skeleton {
+  background: linear-gradient(90deg, var(--bg-card) 25%, var(--vp-glow-soft) 50%, var(--bg-card) 75%);
+  background-size: 200% 100%;
+  animation: vpShimmerSkeleton 1.5s ease-in-out infinite;
+  border-radius: 8px;
+}
+
+/* ── Status dot indicator ── */
+.vp-status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+.vp-status-dot.active { background: #24A170; box-shadow: 0 0 6px rgba(36, 161, 112, 0.4); }
+.vp-status-dot.pending { background: #F59E0B; box-shadow: 0 0 6px rgba(245, 158, 11, 0.4); }
+.vp-status-dot.inactive { background: #94A3B8; }
+.vp-status-dot.error { background: #EF4444; box-shadow: 0 0 6px rgba(239, 68, 68, 0.4); }
+
+/* ── Container variant ── */
+.container-shade {
+  width: 100%;
+  max-width: 1280px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .container-shade {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+/* ── Section padding ── */
+.section-padding {
+  padding-top: 6rem;
+  padding-bottom: 6rem;
+}
+
+@media (min-width: 768px) {
+  .section-padding {
+    padding-top: 8rem;
+    padding-bottom: 8rem;
+  }
 }
