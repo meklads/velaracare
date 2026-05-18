@@ -1022,3 +1022,355 @@ a, button, input, select, textarea, .card-premium, .shade-card, .glass-card, .gl
     padding-bottom: 8rem;
   }
 }
+
+/* ═══════════════════════════════════════════
+   ✦ HEALTHCARE TECHNOLOGY IDENTITY ✦
+   Premium medical-tech visual language
+   ═══════════════════════════════════════════ */
+
+/* ── Soft medical glow (pulse) ── */
+@keyframes vpMedicalGlow {
+  0%, 100% { box-shadow: 0 0 20px rgba(43, 159, 122, 0.08), 0 0 60px rgba(43, 159, 122, 0.02); }
+  50% { box-shadow: 0 0 30px rgba(43, 159, 122, 0.15), 0 0 80px rgba(43, 159, 122, 0.05); }
+}
+
+.vp-medical-glow {
+  animation: vpMedicalGlow 4s ease-in-out infinite;
+}
+
+/* ── Cinematic gradient overlay ── */
+.vp-cinematic-overlay {
+  position: relative;
+}
+
+.vp-cinematic-overlay::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    transparent 40%,
+    rgba(11, 26, 46, 0.4) 80%,
+    rgba(11, 26, 46, 0.6) 100%
+  );
+  pointer-events: none;
+}
+
+/* ── Subtle scanning line (medical-tech) ── */
+@keyframes vpScanLine {
+  0% { transform: translateY(-100%); opacity: 0; }
+  50% { opacity: 0.15; }
+  100% { transform: translateY(100vh); opacity: 0; }
+}
+
+.vp-scan-line {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--vp-accent), transparent);
+  opacity: 0;
+  animation: vpScanLine 6s ease-in-out infinite;
+  pointer-events: none;
+}
+
+/* ── Data dot matrix (shows AI/tech feel) ── */
+.vp-data-dots {
+  background-image: radial-gradient(circle, var(--vp-accent) 1px, transparent 1px);
+  background-size: 24px 24px;
+  opacity: 0.04;
+}
+
+/* ── Premium divider with medical cross ── */
+.vp-medical-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  width: 100%;
+}
+
+.vp-medical-divider::before,
+.vp-medical-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border-primary), transparent);
+}
+
+.vp-medical-divider-icon {
+  width: 24px;
+  height: 24px;
+  border-radius: 4px;
+  border: 2px solid var(--vp-accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.3;
+}
+
+.vp-medical-divider-icon::before {
+  content: '+';
+  color: var(--vp-accent);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+/* ── Premium tag/badge variants ── */
+.vp-tag-premium {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: 100px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  background: rgba(43, 159, 122, 0.06);
+  border: 1px solid rgba(43, 159, 122, 0.12);
+  color: var(--vp-accent);
+}
+
+.vp-tag-white {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* ── Split text hero layout ── */
+.vp-split-hero {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  align-items: center;
+}
+
+@media (min-width: 768px) {
+  .vp-split-hero {
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+  }
+}
+
+/* ── Stat display premium ── */
+.vp-stat-card {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 16px;
+  padding: 20px 24px;
+  transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.vp-stat-card:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+}
+
+/* ── Feature list with icon ── */
+.vp-feature-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 12px 16px;
+  border-radius: 12px;
+  transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.vp-feature-item:hover {
+  background: rgba(43, 159, 122, 0.03);
+}
+
+/* ── Cinematic CTA section ── */
+.vp-cta-cinema {
+  position: relative;
+  overflow: hidden;
+  border-radius: 24px;
+}
+
+.vp-cta-cinema::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(43, 159, 122, 0.05) 0%, rgba(14, 165, 233, 0.05) 100%);
+  pointer-events: none;
+}
+
+/* ── Step connector line ── */
+.vp-step-line {
+  position: absolute;
+  top: 2rem;
+  right: -1rem;
+  width: 2rem;
+  height: 2px;
+  background: linear-gradient(90deg, var(--vp-accent), transparent);
+}
+
+[dir="rtl"] .vp-step-line {
+  right: auto;
+  left: -1rem;
+  background: linear-gradient(-90deg, var(--vp-accent), transparent);
+}
+
+/* ═══════════════════════════════════════════
+   ✦ BRAND DISTINCTIVENESS ✦
+   Visual signature elements for Velara Care
+   ═══════════════════════════════════════════ */
+
+/* ── Brand watermark (subtle V pattern) ── */
+.vp-watermark {
+  position: relative;
+  overflow: hidden;
+}
+
+.vp-watermark::before {
+  content: '';
+  position: absolute;
+  top: -20%;
+  right: -10%;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(43, 159, 122, 0.03) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── Section transition with brand color ── */
+.vp-section-accent-top {
+  position: relative;
+}
+
+.vp-section-accent-top::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--vp-accent), transparent);
+  border-radius: 2px;
+}
+
+/* ── Emphasis underline (brand signature) ── */
+.vp-em-underline {
+  display: inline-block;
+  position: relative;
+}
+
+.vp-em-underline::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--vp-accent), transparent);
+  border-radius: 1px;
+}
+
+/* ── Premium small stat (compact metric display) ── */
+.vp-metric {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.vp-metric-value {
+  font-size: clamp(24px, 3vw, 36px);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  background: var(--vp-gradient-cta);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.vp-metric-label {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* ── Dark section subtle border accent ── */
+.vp-dark-accent {
+  position: relative;
+}
+
+.vp-dark-accent::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40%;
+  max-width: 400px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(43, 159, 122, 0.15), transparent);
+}
+
+/* ── Alternating section rhythm ── */
+.section-light + .section-dark,
+.section-dark + .section-light {
+  --section-transition-gap: 0;
+}
+
+.section-light { background: var(--bg-primary); }
+.section-dark { background: var(--bg-secondary); }
+
+/* ── Premium vp-hero enhancement ── */
+.vp-hero {
+  font-size: clamp(36px, 5.5vw, 72px);
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  color: var(--text-primary);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Smooth scroll indicator ── */
+@keyframes vpScrollIndicator {
+  0% { transform: translateY(0); opacity: 1; }
+  100% { transform: translateY(12px); opacity: 0; }
+}
+
+.vp-scroll-indicator {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  opacity: 0.4;
+}
+
+.vp-scroll-indicator span {
+  display: block;
+  width: 1.5px;
+  height: 24px;
+  background: linear-gradient(180deg, var(--vp-accent), transparent);
+  animation: vpScrollIndicator 2s ease-in-out infinite;
+}
+
+/* ── Alternate card style for visual variety ── */
+.card-premium-alt {
+  background: linear-gradient(135deg, var(--vp-glow-soft) 0%, var(--bg-card) 100%);
+  border-radius: 20px;
+  padding: 32px;
+  border: 1px solid var(--border-primary);
+  transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.card-premium-alt:hover {
+  border-color: var(--vp-accent);
+  box-shadow: 0 20px 60px -12px rgba(0, 0, 0, 0.08);
+  transform: translateY(-3px);
+}

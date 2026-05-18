@@ -28,6 +28,7 @@ import EnterpriseProductPreview from "@/components/home/EnterpriseProductPreview
 import FinancialImpactSection from "@/components/home/FinancialImpactSection";
 import AITrustSection from "@/components/home/AITrustSection";
 import FutureVisionSection from "@/components/home/FutureVisionSection";
+import WhyVelaraSection from "@/components/home/WhyVelaraSection";
 
 const features = [
   {
@@ -116,64 +117,74 @@ export default function Home() {
       <Header />
       <main>
         {/* ═══════════════════════════════════════════════
-           ✦ HERO — Enterprise Workforce Health Intelligence
+           ✦ HERO — Cinematic Premium Healthcare Technology
            ═══════════════════════════════════════════════ */}
         <section className="relative min-h-screen flex items-center overflow-hidden bg-gradient-to-b from-[var(--bg-primary)] via-[var(--bg-secondary)] to-[var(--bg-primary)]" dir="rtl">
-          <div className="absolute inset-0 pointer-events-none" style={{ background: 'var(--vp-gradient-hero)' }} />
-          <div className="absolute inset-0 vp-grid-bg opacity-30" />
+          {/* Scanning line effect */}
+          <div className="vp-scan-line" />
 
-          {/* Cinematic ambient particles */}
-          <div className="absolute top-1/5 left-[10%] w-2 h-2 rounded-full bg-[var(--vp-accent)]/20 vp-float" style={{ animationDelay: '0s' }} />
-          <div className="absolute top-1/4 right-[15%] w-3 h-3 rounded-full bg-[var(--vp-cyan)]/15 vp-float" style={{ animationDelay: '2s' }} />
-          <div className="absolute bottom-1/3 right-[25%] w-4 h-4 rounded-full bg-[var(--vp-accent)]/10 vp-float" style={{ animationDelay: '4s' }} />
-          <div className="absolute top-2/3 left-[20%] w-2 h-2 rounded-full bg-[var(--vp-lavender)]/15 vp-float" style={{ animationDelay: '1s' }} />
-          <div className="absolute bottom-1/4 left-[40%] w-3 h-3 rounded-full bg-[var(--vp-accent)]/12 vp-float" style={{ animationDelay: '3s' }} />
+          {/* Cinematic gradient layers */}
+          <div className="absolute inset-0 pointer-events-none" style={{ background: 'var(--vp-gradient-hero)' }} />
+          <div className="absolute inset-0 vp-grid-bg opacity-20" />
+          <div className="absolute inset-0 vp-data-dots" />
+
+          {/* Ambient light orbs — medical-tech feel */}
+          <div className="absolute top-1/4 left-[15%] w-64 h-64 rounded-full bg-[var(--vp-accent)]/5 blur-3xl vp-medical-glow" />
+          <div className="absolute bottom-1/3 right-[10%] w-80 h-80 rounded-full bg-[var(--vp-cyan)]/5 blur-3xl vp-medical-glow" style={{ animationDelay: '2s' }} />
+          <div className="absolute top-1/2 left-[45%] w-48 h-48 rounded-full bg-[var(--vp-lavender)]/5 blur-3xl vp-medical-glow" style={{ animationDelay: '4s' }} />
+
+          {/* Decorative particles */}
+          <div className="absolute top-1/5 left-[8%] w-1.5 h-1.5 rounded-full bg-[var(--vp-accent)]/20 vp-float" style={{ animationDelay: '0s' }} />
+          <div className="absolute top-1/4 right-[12%] w-2 h-2 rounded-full bg-[var(--vp-cyan)]/15 vp-float" style={{ animationDelay: '2.5s' }} />
+          <div className="absolute bottom-1/3 right-[30%] w-3 h-3 rounded-full bg-[var(--vp-accent)]/10 vp-float" style={{ animationDelay: '4.5s' }} />
+          <div className="absolute top-2/3 left-[20%] w-2 h-2 rounded-full bg-[var(--vp-lavender)]/15 vp-float" style={{ animationDelay: '1.5s' }} />
+          <div className="absolute bottom-1/4 left-[35%] w-2.5 h-2.5 rounded-full bg-white/5 vp-float" style={{ animationDelay: '3.5s' }} />
 
           <div className="container-shade relative z-10 w-full py-24">
             <div className="mx-auto max-w-5xl text-center">
-              {/* Category-defining badge */}
-              <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-[var(--vp-glow-soft)] border border-[var(--vp-accent)]/10 text-[var(--vp-accent)] text-sm font-medium mb-6" data-vp-animate="fade-up">
+              {/* Premium category badge */}
+              <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-[var(--vp-glow-soft)] border border-[var(--vp-accent)]/10 text-[var(--vp-accent)] text-sm font-medium mb-6 backdrop-blur-sm" data-vp-animate="fade-up">
                 <span className="vp-breathing-ring inline-block" style={{ width: '6px', height: '6px' }} />
                 Workforce Health Intelligence Platform
               </div>
 
-              {/* Hero headline — enterprise scale */}
+              {/* Split headline with gradient accent */}
               <h1 className="vp-hero mb-6" data-vp-animate="fade-up" data-vp-delay="1">
                 <span className="text-[var(--text-primary)]">حوِّل صحة موظفيك</span>
                 <br />
                 <span className="vp-hero-em">إلى ذكاء مؤسسي وقيمة مالية</span>
               </h1>
 
-              <p className="vp-subtitle max-w-3xl mx-auto mb-10" data-vp-animate="fade-up" data-vp-delay="2">
+              <p className="vp-subtitle max-w-3xl mx-auto mb-10 leading-relaxed" data-vp-animate="fade-up" data-vp-delay="2">
                 منصة ذكاء صحي مؤسسي تستخدم الذكاء الاصطناعي التنبؤي لتحليل مخاطر القوى العاملة،
                 خفض التكاليف التأمينية، وتحويل صحة الموظفين إلى ميزة تنافسية قابلة للقياس.
               </p>
 
-              {/* Enterprise CTA Group */}
+              {/* Enterprise CTA Group with visual hierarchy */}
               <div className="flex flex-col sm:flex-row items-center justify-center gap-4" data-vp-animate="fade-up" data-vp-delay="3">
-                <Link href="/demo" className="btn-premium group text-base px-10 py-4 !h-auto">
+                <Link href="/demo" className="btn-premium group text-base px-10 py-4 !h-auto shadow-2xl shadow-[var(--vp-accent)]/20">
                   اطلب عرضاً تجريبياً للمؤسسات
                   <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
                 </Link>
-                <Link href="/features" className="btn-ghost text-base px-8 py-4 !h-auto">
+                <Link href="/product" className="btn-ghost text-base px-8 py-4 !h-auto">
                   <LineChart className="h-4 w-4" />
                   اكتشف المنصة
                 </Link>
               </div>
             </div>
 
-            {/* Enterprise Trust Metrics */}
+            {/* Trust metrics — redesigned with premium stat cards */}
             <div className="mt-20 grid grid-cols-2 md:grid-cols-4 gap-3 max-w-4xl mx-auto" data-vp-animate="slide-up" data-vp-delay="4">
               {[
                 { value: "٢٥٠+", label: "شركة تستخدم المنصة", icon: Users },
-                { value: "٩٨٪", label: "دقة التنبؤ بالمخاطر", icon: Brain },
+                { value: "٩٨٪", label: "دقة التنبؤ", icon: Brain },
                 { value: "٤٠٪", label: "متوسط خفض التكاليف", icon: TrendingDown },
                 { value: "٤.٩/٥", label: "تقييم العملاء", icon: Star },
               ].map((item) => (
-                <div key={item.label} className="glass-premium rounded-2xl p-4 text-center hover:bg-[var(--vp-glow-soft)] transition-all duration-500">
+                <div key={item.label} className="vp-stat-card text-center">
                   <item.icon className="h-5 w-5 text-[var(--vp-accent)] mx-auto mb-2" />
-                  <span className="vp-stat text-lg" data-vp-count-to={item.value}>{item.value}</span>
-                  <p className="text-xs text-[var(--text-secondary)] mt-0.5">{item.label}</p>
+                  <span className="text-2xl font-extrabold text-white">{item.value}</span>
+                  <p className="text-xs text-white/60 mt-0.5">{item.label}</p>
                 </div>
               ))}
             </div>
@@ -265,6 +276,11 @@ export default function Home() {
             </div>
           </div>
         </section>
+
+        {/* ═══════════════════════════════════════════════
+           ✦ WHY VELARA — Differentiation
+           ═══════════════════════════════════════════════ */}
+        <WhyVelaraSection />
 
         {/* ═══════════════════════════════════════════════
            ✦ PRICING — Enterprise Plans
