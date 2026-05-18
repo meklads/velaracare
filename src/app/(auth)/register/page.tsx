@@ -13,7 +13,7 @@ export default function RegisterPage() {
     lastName: "",
     email: "",
     companyName: "",
-    employeeCount: "١-٥٠ موظف",
+    employeeCount: "1-50 موظف",
     password: "",
     agree: false,
   });
@@ -169,11 +169,11 @@ export default function RegisterPage() {
               onChange={(e) => update("employeeCount", e.target.value)}
               className="w-full rounded-xl border border-[var(--surface-border)] bg-surface-mid px-4 py-3 text-sm text-primary focus:outline-none focus:ring-2 focus:ring-[var(--emerald-ai)]/30 focus:border-[var(--emerald-ai)] transition-all"
             >
-              <option>١-٥٠ موظف</option>
-              <option>٥١-٢٠٠ موظف</option>
-              <option>٢٠١-٥٠٠ موظف</option>
-              <option>٥٠١-١٠٠٠ موظف</option>
-              <option>أكثر من ١٠٠٠ موظف</option>
+              <option>1-50 موظف</option>
+              <option>51-200 موظف</option>
+              <option>201-500 موظف</option>
+              <option>501-1000 موظف</option>
+              <option>أكثر من 1000 موظف</option>
             </select>
           </div>
 

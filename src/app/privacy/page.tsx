@@ -27,7 +27,7 @@ export default function PrivacyPage() {
           <div className="text-center mb-12" data-vp-animate="fade-up">
             <span className="vp-label">سياسة الخصوصية</span>
             <h1 className="vp-section-title mt-4">سياسة الخصوصية</h1>
-            <p className="vp-subtitle text-[var(--text-secondary)] mt-4">آخر تحديث: مايو ٢٠٢٦</p>
+            <p className="vp-subtitle text-[var(--text-secondary)] mt-4">آخر تحديث: مايو 2026</p>
           </div>
 
           <div className="space-y-6" data-vp-animate="fade-up" data-vp-delay="2">

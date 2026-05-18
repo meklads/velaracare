@@ -29,7 +29,7 @@ export async function POST(req: Request) {
     }
 
     if (file.size > MAX_SIZE) {
-      return NextResponse.json({ error: "حجم الملف يتجاوز ٥ ميجابايت" }, { status: 400 });
+      return NextResponse.json({ error: "حجم الملف يتجاوز 5 ميجابايت" }, { status: 400 });
     }
 
     const bytes = await file.arrayBuffer();

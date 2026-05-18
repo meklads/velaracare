@@ -6,23 +6,23 @@ import Link from "next/link";
 const financialStats = [
   {
     icon: DollarSign,
-    value: "٢.٤",
+    value: "2.4",
     suffix: "مليون ر.س",
     label: "توفير سنوي متوقع",
-    desc: "لشركة متوسطة ٥٠٠ موظف",
+    desc: "لشركة متوسطة 500 موظف",
     color: "from-[var(--vp-accent)] to-[var(--vp-accent-dark)]",
   },
   {
     icon: TrendingDown,
-    value: "٤٠",
+    value: "40",
     suffix: "%",
     label: "خفض التكاليف التأمينية",
-    desc: "خلال ١٢ شهراً من التطبيق",
+    desc: "خلال 12 شهراً من التطبيق",
     color: "from-blue-500 to-indigo-600",
   },
   {
     icon: BarChart3,
-    value: "٣.٢",
+    value: "3.2",
     suffix: "x",
     label: "العائد على الاستثمار",
     desc: "ROI لكل ريال مدفوع",
@@ -30,7 +30,7 @@ const financialStats = [
   },
   {
     icon: Users,
-    value: "٣٢",
+    value: "32",
     suffix: "%",
     label: "تحسن الإنتاجية",
     desc: "انخفاض الإجازات المرضية",
@@ -41,13 +41,13 @@ const financialStats = [
 const caseStudy = {
   company: "شركة التقنية المتقدمة",
   industry: "تقنية معلومات",
-  employees: "٤٥٠",
-  period: "١٢ شهراً",
+  employees: "450",
+  period: "12 شهراً",
   results: [
-    { label: "خفض التكاليف التأمينية", value: "٣٨٪" },
-    { label: "انخفاض الإجازات المرضية", value: "٤٢٪" },
-    { label: "تحسن Wellness Score", value: "+٢٤ نقطة" },
-    { label: "رضا الموظفين", value: "٩٤٪" },
+    { label: "خفض التكاليف التأمينية", value: "38٪" },
+    { label: "انخفاض الإجازات المرضية", value: "42٪" },
+    { label: "تحسن Wellness Score", value: "+24 نقطة" },
+    { label: "رضا الموظفين", value: "94٪" },
   ],
 };
 
@@ -68,7 +68,7 @@ export default function FinancialImpactSection() {
             </h2>
             <div className="w-16 h-1 rounded-full bg-gradient-to-l from-[var(--vp-accent)] to-[var(--vp-cyan)] mx-auto mt-4" />
             <p className="vp-subtitle text-white/70 mt-4 max-w-2xl mx-auto">
-              كل ريال تستثمره في صحة موظفيك يعود عليك بأكثر من ٣ أضعاف — 
+              كل ريال تستثمره في صحة موظفيك يعود عليك بأكثر من 3 أضعاف — 
               عبر خفض التكاليف التأمينية، زيادة الإنتاجية، وتقليل الغياب.
             </p>
           </div>
@@ -134,9 +134,9 @@ export default function FinancialImpactSection() {
                 <div className="flex items-start gap-3">
                   <Shield className="h-5 w-5 text-[var(--vp-accent)] shrink-0 mt-0.5" />
                   <p className="text-sm text-[var(--text-secondary)] leading-relaxed">
-                    بعد تطبيق منصة Velara Care لمدة ١٢ شهراً، تمكنت الشركة من خفض التكاليف التأمينية بنسبة ٣٨٪ 
+                    بعد تطبيق منصة Velara Care لمدة 12 شهراً، تمكنت الشركة من خفض التكاليف التأمينية بنسبة 38٪ 
                     وتحسين إنتاجية الموظفين بشكل ملحوظ. النظام مكن فريق الموارد البشرية من اكتشاف 
-                    ٢٧ حالة صحية حرجة مبكراً وتقديم التدخل المناسب قبل تطور الحالات.
+                    27 حالة صحية حرجة مبكراً وتقديم التدخل المناسب قبل تطور الحالات.
                   </p>
                 </div>
               </div>

@@ -48,7 +48,7 @@ export default function ContactPage() {
                     { icon: Mail, label: "البريد الإلكتروني", value: "hello@velaracare.co", href: "mailto:hello@velaracare.co" },
                     { icon: Phone, label: "الهاتف", value: "+966 55 123 4567", href: "tel:+966551234567" },
                     { icon: MapPin, label: "المقر", value: "الرياض، المملكة العربية السعودية", href: null },
-                    { icon: Clock, label: "ساعات العمل", value: "الأحد – الخميس ٩:٠٠ ص – ٦:٠٠ م", href: null },
+                    { icon: Clock, label: "ساعات العمل", value: "الأحد – الخميس 9:00 ص – 6:00 م", href: null },
                   ].map((item) => (
                     <div key={item.label} className="flex items-start gap-4">
                       <div className="w-11 h-11 rounded-xl bg-[var(--vp-glow-soft)] flex items-center justify-center shrink-0">
@@ -130,7 +130,7 @@ export default function ContactPage() {
             </div>
             <div className="space-y-4" data-vp-animate="fade-up" data-vp-delay="2">
               {[
-                { q: "ما هي تكلفة الاشتراك في Velara Care؟", a: "تبدأ الخطط من ٣٥ ريالاً لكل موظف شهرياً. نوفر أيضاً خصومات للشركات الكبرى." },
+                { q: "ما هي تكلفة الاشتراك في Velara Care؟", a: "تبدأ الخطط من 35 ريالاً لكل موظف شهرياً. نوفر أيضاً خصومات للشركات الكبرى." },
                 { q: "هل بيانات الموظفين الصحية آمنة؟", a: "نعم، جميع البيانات مشفرة ومحمية وفق أعلى معايير الأمان. لا يتم مشاركة أي بيانات فردية مع أطراف ثالثة." },
                 { q: "كم من الوقت يستغرق إعداد المنصة؟", a: "يمكن إعداد الحساب وتفعيله خلال دقائق. دعوة الموظفين وإجراء التقييم الصحي لا يستغرق أكثر من أسبوع." },
               ].map((faq, i) => (

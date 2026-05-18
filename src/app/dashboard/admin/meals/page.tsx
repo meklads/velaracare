@@ -336,9 +336,9 @@ export default function AdminMealsPage() {
                 <h3 className="font-bold text-primary text-sm">أوقات التقديم</h3>
               </div>
               <div className="space-y-2 text-sm text-secondary">
-                <p className="flex justify-between"><span>الفطور</span><span className="font-medium text-primary">٧:٣٠ – ٩:٠٠ ص</span></p>
-                <p className="flex justify-between"><span>الغداء</span><span className="font-medium text-primary">١٢:٠٠ – ٢:٠٠ م</span></p>
-                <p className="flex justify-between"><span>العشاء</span><span className="font-medium text-primary">٦:٠٠ – ٨:٠٠ م</span></p>
+                <p className="flex justify-between"><span>الفطور</span><span className="font-medium text-primary">7:30 – 9:00 ص</span></p>
+                <p className="flex justify-between"><span>الغداء</span><span className="font-medium text-primary">12:00 – 2:00 م</span></p>
+                <p className="flex justify-between"><span>العشاء</span><span className="font-medium text-primary">6:00 – 8:00 م</span></p>
               </div>
             </div>
 
@@ -448,7 +448,7 @@ export default function AdminMealsPage() {
                         type="number"
                         value={newMeal.calories}
                         onChange={(e) => setNewMeal((p) => ({ ...p, calories: e.target.value }))}
-                        placeholder="٤٥٠"
+                        placeholder="450"
                         className="w-full rounded-xl border border-[var(--surface-border)] bg-surface-mid px-4 py-2.5 text-sm text-primary focus:outline-none focus:ring-2 focus:ring-emerald-ai/30"
                       />
                     </div>

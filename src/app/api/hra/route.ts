@@ -197,7 +197,7 @@ function generateRecommendations(responses: Record<string, any>, riskLevel: stri
     recs.push("برنامج الإقلاع عن التدخين — ندعمك برنامج تدريجي متكامل");
   }
   if (responses.activity === "none" || responses.activity === "light") {
-    recs.push("ابدأ بالمشي ٣٠ دقيقة يومياً — سنساعدك بخطة تدريجية");
+    recs.push("ابدأ بالمشي 30 دقيقة يومياً — سنساعدك بخطة تدريجية");
   }
   if (responses.stress === "high") {
     recs.push("جلسات استرخاء وتأمل — احجز استشارة مع مختص الصحة النفسية");

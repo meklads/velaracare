@@ -137,9 +137,9 @@ const statusConfig: Record<string, { label: string; color: string; icon: any }> 
 };
 
 const mealTimes = [
-  { name: "الفطور", time: "٧:٣٠ – ٩:٠٠ ص", emoji: "🌅" },
-  { name: "الغداء", time: "١٢:٠٠ – ٢:٠٠ م", emoji: "☀️" },
-  { name: "العشاء", time: "٦:٠٠ – ٨:٠٠ م", emoji: "🌙" },
+  { name: "الفطور", time: "7:30 – 9:00 ص", emoji: "🌅" },
+  { name: "الغداء", time: "12:00 – 2:00 م", emoji: "☀️" },
+  { name: "العشاء", time: "6:00 – 8:00 م", emoji: "🌙" },
 ];
 
 // ── Component ──

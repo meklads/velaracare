@@ -79,12 +79,12 @@ export default function HRAPage() {
       <h2 className="text-3xl font-bold text-primary mb-4">التقييم الصحي الذكي</h2>
       <p className="text-secondary max-w-lg mx-auto mb-8 leading-relaxed">
         أجب على بضعة أسئلة بسيطة وسيقوم نظام الذكاء الاصطناعي بتحليل حالتك الصحية
-        وتقديم توصيات مخصصة لتحسين عافيتك. التقييم يستغرق أقل من ٥ دقائق.
+        وتقديم توصيات مخصصة لتحسين عافيتك. التقييم يستغرق أقل من 5 دقائق.
       </p>
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-2xl mx-auto mb-10">
         {[
           { icon: Brain, label: "تحليل ذكي", desc: "AI" },
-          { icon: Activity, label: "٥ دقائق فقط", desc: "سريع" },
+          { icon: Activity, label: "5 دقائق فقط", desc: "سريع" },
           { icon: Shield, label: "بياناتك آمنة", desc: "خصوصية" },
           { icon: CheckCircle2, label: "توصيات فورية", desc: "فوري" },
         ].map((item) => (
@@ -110,10 +110,10 @@ export default function HRAPage() {
           <label className="text-sm font-medium text-primary">ما هو مؤشر كتلة الجسم (BMI) الخاص بك؟</label>
           <select value={responses.bmi} onChange={(e) => update("bmi", e.target.value)} className="w-full rounded-xl border border-[var(--surface-border)] bg-surface-mid px-4 py-3 text-sm">
             <option value="">اختر...</option>
-            <option value="18.5">أقل من ١٨.٥ (نحيف)</option>
-            <option value="22">١٨.٥ - ٢٥ (طبيعي)</option>
-            <option value="27">٢٥ - ٣٠ (وزن زائد)</option>
-            <option value="32">أكثر من ٣٠ (سمنة)</option>
+            <option value="18.5">أقل من 18.5 (نحيف)</option>
+            <option value="22">18.5 - 25 (طبيعي)</option>
+            <option value="27">25 - 30 (وزن زائد)</option>
+            <option value="32">أكثر من 30 (سمنة)</option>
           </select>
         </div>
         <div className="space-y-2">
@@ -129,7 +129,7 @@ export default function HRAPage() {
           <label className="text-sm font-medium text-primary">مستوى النشاط البدني</label>
           <select value={responses.activity} onChange={(e) => update("activity", e.target.value)} className="w-full rounded-xl border border-[var(--surface-border)] bg-surface-mid px-4 py-3 text-sm">
             <option value="">اختر...</option>
-            <option value="active">نشط (رياضة ٣+ مرات أسبوعياً)</option>
+            <option value="active">نشط (رياضة 3+ مرات أسبوعياً)</option>
             <option value="light">خفيف (مشي أحياناً)</option>
             <option value="none">غير نشط</option>
           </select>
@@ -146,10 +146,10 @@ export default function HRAPage() {
           <label className="text-sm font-medium text-primary">كم ساعة تنام في المتوسط؟</label>
           <select value={responses.sleepHours} onChange={(e) => update("sleepHours", e.target.value)} className="w-full rounded-xl border border-[var(--surface-border)] bg-surface-mid px-4 py-3 text-sm">
             <option value="">اختر...</option>
-            <option value="4">أقل من ٥ ساعات</option>
-            <option value="5.5">٥ - ٦ ساعات</option>
-            <option value="7">٧ - ٨ ساعات (ممتاز)</option>
-            <option value="9">أكثر من ٩ ساعات</option>
+            <option value="4">أقل من 5 ساعات</option>
+            <option value="5.5">5 - 6 ساعات</option>
+            <option value="7">7 - 8 ساعات (ممتاز)</option>
+            <option value="9">أكثر من 9 ساعات</option>
           </select>
         </div>
         <div className="space-y-2">
@@ -199,9 +199,9 @@ export default function HRAPage() {
           <label className="text-sm font-medium text-primary">كم كوب ماء تشرب يومياً؟</label>
           <select value={responses.water} onChange={(e) => update("water", e.target.value)} className="w-full rounded-xl border border-[var(--surface-border)] bg-surface-mid px-4 py-3 text-sm">
             <option value="">اختر...</option>
-            <option value="8">أكثر من ٨ أكواب</option>
-            <option value="5">٤ - ٧ أكواب</option>
-            <option value="3">أقل من ٤ أكواب</option>
+            <option value="8">أكثر من 8 أكواب</option>
+            <option value="5">4 - 7 أكواب</option>
+            <option value="3">أقل من 4 أكواب</option>
           </select>
         </div>
       </div>

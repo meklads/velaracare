@@ -53,7 +53,7 @@ export default function ResetPasswordPage() {
       return;
     }
     if (password.length < 6) {
-      setError("كلمة المرور يجب أن تكون ٦ أحرف على الأقل");
+      setError("كلمة المرور يجب أن تكون 6 أحرف على الأقل");
       return;
     }
 

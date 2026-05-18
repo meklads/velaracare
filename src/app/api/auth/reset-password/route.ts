@@ -11,7 +11,7 @@ export async function POST(req: Request) {
     }
 
     if (password.length < 6) {
-      return NextResponse.json({ error: "كلمة المرور يجب أن تكون ٦ أحرف على الأقل" }, { status: 400 });
+      return NextResponse.json({ error: "كلمة المرور يجب أن تكون 6 أحرف على الأقل" }, { status: 400 });
     }
 
     const user = await prisma.user.findUnique({ where: { email } });

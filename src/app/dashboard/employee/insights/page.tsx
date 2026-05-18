@@ -459,19 +459,19 @@ export default function EmployeeInsightsPage() {
                   },
                   {
                     label: "نوم مثالي", achieved: (wellness.sleepScore || 0) >= 75,
-                    desc: "درجة النوم ٧٥٪ فأكثر", icon: "🌙",
+                    desc: "درجة النوم 75٪ فأكثر", icon: "🌙",
                   },
                   {
                     label: "نشاط عالي", achieved: (wellness.activityScore || 0) >= 75,
-                    desc: "درجة النشاط ٧٥٪ فأكثر", icon: "⚡",
+                    desc: "درجة النشاط 75٪ فأكثر", icon: "⚡",
                   },
                   {
                     label: "عافية ممتازة", achieved: (wellness.score || 0) >= 80,
-                    desc: "درجة العافية ٨٠٪ فأكثر", icon: "🏆",
+                    desc: "درجة العافية 80٪ فأكثر", icon: "🏆",
                   },
                   {
                     label: "تغذية متوازنة", achieved: (wellness.nutritionScore || 0) >= 75,
-                    desc: "درجة التغذية ٧٥٪ فأكثر", icon: "🥗",
+                    desc: "درجة التغذية 75٪ فأكثر", icon: "🥗",
                   },
                   {
                     label: "هادئ", achieved: (wellness.stressScore || 100) <= 30,

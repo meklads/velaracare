@@ -57,7 +57,7 @@ export async function GET() {
           id: "hra-reminder",
           type: "hra",
           title: "📋 تقييم صحي",
-          message: !lastHRA ? "لم تقم بإجراء التقييم الصحي بعد" : "آخر تقييم صحي منذ أكثر من ٣ أشهر",
+          message: !lastHRA ? "لم تقم بإجراء التقييم الصحي بعد" : "آخر تقييم صحي منذ أكثر من 3 أشهر",
           href: "/hra",
           urgent: !lastHRA,
         });

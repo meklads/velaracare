@@ -8,7 +8,7 @@ import { CheckCircle2, ArrowLeft } from "lucide-react";
 import { initScrollAnimations } from "@/lib/scroll-animations";
 
 const plans = [
-  { name: "Basic", price: "35", desc: "حل أساسي لتوفير الوجبات الصحية للشركات.", popular: false, features: ["١٠ وجبات صحية شهرياً", "لوحة طلب للموظفين", "تقارير استخدام بسيطة", "دعم فني أساسي"] },
+  { name: "Basic", price: "35", desc: "حل أساسي لتوفير الوجبات الصحية للشركات.", popular: false, features: ["10 وجبات صحية شهرياً", "لوحة طلب للموظفين", "تقارير استخدام بسيطة", "دعم فني أساسي"] },
   { name: "Standard", price: "75", desc: "حل متكامل للصحة الوقائية والتقييم الصحي.", popular: true, features: ["جميع مميزات Basic", "تقييم HRA صحي", "Wellness Score", "تقارير شهرية للشركة", "توصيات غذائية ذكية"] },
   { name: "Enterprise", price: "160", desc: "منصة صحة مؤسسية متقدمة للشركات الكبرى.", popular: false, features: ["جميع مميزات Standard", "AI Predictive Engine", "استشارات تغذية ولياقة", "لوحة تنفيذية متقدمة", "تقارير ROI وتقليل التكاليف", "مدير حساب مخصص"] },
 ];
@@ -76,7 +76,7 @@ export default function PricingPage() {
               <p className="text-sm text-[var(--text-secondary)]">
                 جميع الأسعار بالريال السعودي. اشتراك شهري لكل موظف.
                 <br />
-                اتصل بنا للحصول على خصم للشركات الكبرى (أكثر من ١٠٠٠ موظف).
+                اتصل بنا للحصول على خصم للشركات الكبرى (أكثر من 1000 موظف).
               </p>
             </div>
           </div>

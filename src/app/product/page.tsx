@@ -46,29 +46,29 @@ const productHighlights = [
   {
     icon: Target,
     title: "التنبؤ المبكر",
-    desc: "نموذج AI يحلل ١٢ مؤشراً صحياً ويتنبأ بالمخاطر قبل ١٨ شهراً من تطور الحالات.",
-    stat: "٩٨٪",
+    desc: "نموذج AI يحلل 12 مؤشراً صحياً ويتنبأ بالمخاطر قبل 18 شهراً من تطور الحالات.",
+    stat: "98%",
     statLabel: "دقة التنبؤ",
   },
   {
     icon: TrendingDown,
     title: "خفض التكاليف",
     desc: "تحليل مستمر للتكاليف التأمينية مع توصيات لتقليل الأعباء المالية.",
-    stat: "٤٠٪",
+    stat: "40%",
     statLabel: "متوسط التوفير",
   },
   {
     icon: LineChart,
     title: "ذكاء مؤسسي",
     desc: "لوحة تنفيذية تعرض مؤشرات الصحة المؤسسية والتكاليف والعائد على الاستثمار.",
-    stat: "٣.٢x",
+    stat: "3.2x",
     statLabel: "ROI",
   },
   {
     icon: Shield,
     title: "امتثال كامل",
     desc: "منصة مصممة للتوافق مع أنظمة حماية البيانات السعودية والعالمية.",
-    stat: "١٠٠٪",
+    stat: "100%",
     statLabel: "امتثال",
   },
 ];
@@ -186,10 +186,10 @@ export default function ProductPage() {
 
             <div className="grid gap-6 md:grid-cols-4" data-vp-animate="fade-up" data-vp-delay="2">
               {[
-                { icon: Activity, step: "١", title: "التقييم", desc: "يقيم صحته في ٧ دقائق عبر HRA الذكي", color: "text-blue-500" },
-                { icon: Brain, step: "٢", title: "التحليل", desc: "AI يحلل البيانات ويصنف مستوى المخاطر", color: "text-[var(--vp-accent)]" },
-                { icon: Heart, step: "٣", title: "التوصيات", desc: "يحصل على خطط تغذية ولياقة مخصصة", color: "text-amber-500" },
-                { icon: TrendingDown, step: "٤", title: "التحسن", desc: "يتابع تقدمه مع تحسن مستمر في العافية", color: "text-purple-500" },
+                { icon: Activity, step: "1", title: "التقييم", desc: "يقيم صحته في 7 دقائق عبر HRA الذكي", color: "text-blue-500" },
+                { icon: Brain, step: "2", title: "التحليل", desc: "AI يحلل البيانات ويصنف مستوى المخاطر", color: "text-[var(--accent)]" },
+                { icon: Heart, step: "3", title: "التوصيات", desc: "يحصل على خطط تغذية ولياقة مخصصة", color: "text-amber-500" },
+                { icon: TrendingDown, step: "4", title: "التحسن", desc: "يتابع تقدمه مع تحسن مستمر في العافية", color: "text-purple-500" },
               ].map((item) => (
                 <div key={item.title} className="card-premium p-6 text-center">
                   <div className={`w-14 h-14 rounded-2xl bg-[var(--vp-glow-soft)] flex items-center justify-center mx-auto mb-4`}>

@@ -17,7 +17,7 @@ export async function POST(req: Request) {
   }
 
   if (newPassword.length < 6) {
-    return NextResponse.json({ error: "كلمة المرور يجب أن تكون ٦ أحرف على الأقل" }, { status: 400 });
+    return NextResponse.json({ error: "كلمة المرور يجب أن تكون 6 أحرف على الأقل" }, { status: 400 });
   }
 
   try {

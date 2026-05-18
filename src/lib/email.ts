@@ -62,7 +62,7 @@ export function forgotPasswordEmail(name: string, code: string): string {
     <div style="text-align:center;margin:24px 0;">
       <span class="code">${code}</span>
     </div>
-    <p style="font-size:13px;color:#94a3b8;">هذا الرمز صالح لمدة ٣٠ دقيقة.</p>
+    <p style="font-size:13px;color:#94a3b8;">هذا الرمز صالح لمدة 30 دقيقة.</p>
     <div style="text-align:center;">
       <a href="${baseUrl}/reset-password" class="btn">إعادة تعيين كلمة المرور</a>
     </div>

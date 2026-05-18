@@ -42,11 +42,11 @@ const connections = [
 ];
 
 const phaseLabels = [
-  { phase: 1, label: "١. جمع البيانات", x: 12, desc: "الدخول والتقييم" },
-  { phase: 2, label: "٢. المعالجة والتحليل", x: 30, desc: "AI — تصنيف المخاطر" },
-  { phase: 3, label: "٣. التوصيات المخصصة", x: 48, desc: "خطط صحية ذكية" },
-  { phase: 4, label: "٤. المتابعة والقياس", x: 65, desc: "تقارير وتحليلات" },
-  { phase: 5, label: "٥. النتائج المالية", x: 82, desc: "ROI وتوفير التكاليف" },
+  { phase: 1, label: "1. جمع البيانات", x: 12, desc: "الدخول والتقييم" },
+  { phase: 2, label: "2. المعالجة والتحليل", x: 30, desc: "AI — تصنيف المخاطر" },
+  { phase: 3, label: "3. التوصيات المخصصة", x: 48, desc: "خطط صحية ذكية" },
+  { phase: 4, label: "4. المتابعة والقياس", x: 65, desc: "تقارير وتحليلات" },
+  { phase: 5, label: "5. النتائج المالية", x: 82, desc: "ROI وتوفير التكاليف" },
 ];
 
 export default function SystemArchitecture() {

@@ -14,45 +14,45 @@ const operationalPillars = [
     icon: Search,
     title: "التشخيص الهندسي الدقيق",
     desc: "كل جهاز يخضع لفحص هندسي شامل باستخدام أحدث أجهزة التشخيص. فريق فني معتمد من كبرى الشركات المصنعة.",
-    metrics: ["فحص ٣٢ نقطة لكل جهاز", "أجهزة تشخيص معتمدة", "كفاءات فنية معتمدة"],
+    metrics: ["فحص 32 نقطة لكل جهاز", "أجهزة تشخيص معتمدة", "كفاءات فنية معتمدة"],
     color: "from-blue-500 to-indigo-600",
   },
   {
     icon: Wrench,
     title: "الصيانة والإصلاح المتقدم",
     desc: "ورشة صيانة مجهزة بأحدث التقنيات. قطع غيار أصلية، ضمان معتمد، وجدولة صيانة دورية ذكية.",
-    metrics: ["قطع غيار أصلية ١٠٠٪", "ضمان معتمد على جميع الإصلاحات", "جدولة صيانة ذكية"],
+    metrics: ["قطع غيار أصلية 100٪", "ضمان معتمد على جميع الإصلاحات", "جدولة صيانة ذكية"],
     color: "from-[var(--vp-accent)] to-[var(--vp-accent-dark)]",
   },
   {
     icon: Truck,
     title: "سلسلة توريد ولوجستيات",
     desc: "نظام لوجستي متكامل يضمن توفر الأجهزة وقطع الغيار في الوقت المناسب. مخزون استراتيجي يغطي جميع المناطق.",
-    metrics: ["توصيل خلال ٢٤ ساعة", "مخزون استراتيجي", "تغطية جميع المناطق"],
+    metrics: ["توصيل خلال 24 ساعة", "مخزون استراتيجي", "تغطية جميع المناطق"],
     color: "from-amber-500 to-orange-600",
   },
   {
     icon: HeadphonesIcon,
     title: "دعم فني 24/7/365",
     desc: "فريق دعم فني متخصص متاح على مدار الساعة. نظام تذاكر ذكي مع تصنيف آلي للأولويات ومتابعة لحظية.",
-    metrics: ["استجابة < ١٥ دقيقة", "فريق متخصص ٢٤ ساعة", "نظام تذاكر ذكي"],
+    metrics: ["استجابة < 15 دقيقة", "فريق متخصص 24 ساعة", "نظام تذاكر ذكي"],
     color: "from-purple-500 to-violet-600",
   },
 ];
 
 const qualityMetrics = [
-  { icon: Clock, value: "٩٩.٧٪", label: "معدل الالتزام بمواعيد الصيانة" },
-  { icon: CheckCircle2, value: "٩٨.٥٪", label: "رضا العملاء عن جودة الإصلاح" },
-  { icon: Award, value: "٤٥+", label: "سنوات الخبرة التراكمية للفريق" },
-  { icon: Settings, value: "١٢,٠٠٠+", label: "جهاز تمت صيانته" },
+  { icon: Clock, value: "99.7٪", label: "معدل الالتزام بمواعيد الصيانة" },
+  { icon: CheckCircle2, value: "98.5٪", label: "رضا العملاء عن جودة الإصلاح" },
+  { icon: Award, value: "45+", label: "سنوات الخبرة التراكمية للفريق" },
+  { icon: Settings, value: "12,000+", label: "جهاز تمت صيانته" },
 ];
 
 const workflowSteps = [
-  { step: "١", title: "استقبال البلاغ", desc: "نظام تذاكر ذكي يصنف الأولوية ويسجل تفاصيل المشكلة", icon: HeadphonesIcon },
-  { step: "٢", title: "التشخيص عن بُعد", desc: "فريق الدعم يجري تشخيصاً أولياً لتحديد المشكلة والحل المناسب", icon: Search },
-  { step: "٣", title: "الجدولة والتنسيق", desc: "جدولة زيارة الصيانة في الوقت المناسب مع إرسال تأكيد للعميل", icon: Clock },
-  { step: "٤", title: "التنفيذ والاختبار", desc: "الصيانة تجرى بمعايير دقيقة مع اختبار شامل بعد الإصلاح", icon: Wrench },
-  { step: "٥", title: "المتابعة والضمان", desc: "متابعة مع العميل بعد الخدمة لضمان الرضا وجودة العمل", icon: Shield },
+  { step: "1", title: "استقبال البلاغ", desc: "نظام تذاكر ذكي يصنف الأولوية ويسجل تفاصيل المشكلة", icon: HeadphonesIcon },
+  { step: "2", title: "التشخيص عن بُعد", desc: "فريق الدعم يجري تشخيصاً أولياً لتحديد المشكلة والحل المناسب", icon: Search },
+  { step: "3", title: "الجدولة والتنسيق", desc: "جدولة زيارة الصيانة في الوقت المناسب مع إرسال تأكيد للعميل", icon: Clock },
+  { step: "4", title: "التنفيذ والاختبار", desc: "الصيانة تجرى بمعايير دقيقة مع اختبار شامل بعد الإصلاح", icon: Wrench },
+  { step: "5", title: "المتابعة والضمان", desc: "متابعة مع العميل بعد الخدمة لضمان الرضا وجودة العمل", icon: Shield },
 ];
 
 export default function OperationalExcellence() {
@@ -122,7 +122,7 @@ export default function OperationalExcellence() {
             <span className="vp-tag-premium">سير العمل</span>
             <h2 className="vp-section-title mt-4">
               من البلاغ إلى المتابعة —{' '}
-              <span className="vp-hero-em">٥ خطوات دقيقة</span>
+              <span className="vp-hero-em">5 خطوات دقيقة</span>
             </h2>
             <div className="w-16 h-1 rounded-full bg-gradient-to-l from-[var(--vp-accent)] to-[var(--vp-cyan)] mx-auto mt-4" />
             <p className="vp-subtitle mt-4 text-[var(--text-secondary)] max-w-2xl mx-auto">

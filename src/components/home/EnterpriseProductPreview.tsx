@@ -9,10 +9,10 @@ import Link from "next/link";
  */
 
 const dashboardMetrics = [
-  { label: "Wellness Score", value: "٧٨", change: "+١٢٪", color: "text-[var(--vp-accent)]" },
-  { label: "مخاطر عالية", value: "١٤", change: "-٢٣٪", color: "text-amber-500" },
-  { label: "موظفون نشطون", value: "٨٤٢", change: "+٥٪", color: "text-blue-500" },
-  { label: "توفير متوقع", value: "٢.٤م", change: "ر.س", color: "text-[var(--vp-accent)]" },
+  { label: "Wellness Score", value: "78", change: "+12٪", color: "text-[var(--vp-accent)]" },
+  { label: "مخاطر عالية", value: "14", change: "-23٪", color: "text-amber-500" },
+  { label: "موظفون نشطون", value: "842", change: "+5٪", color: "text-blue-500" },
+  { label: "توفير متوقع", value: "2.4م", change: "ر.س", color: "text-[var(--vp-accent)]" },
 ];
 
 const riskData = [
@@ -54,7 +54,7 @@ export default function EnterpriseProductPreview() {
                 </div>
                 <div>
                   <p className="text-sm font-bold text-[var(--text-primary)]">لوحة الصحة المؤسسية</p>
-                  <p className="text-[10px] text-[var(--text-secondary)]">آخر تحديث: منذ ٣ دقائق</p>
+                  <p className="text-[10px] text-[var(--text-secondary)]">آخر تحديث: منذ 3 دقائق</p>
                 </div>
               </div>
               <div className="flex items-center gap-2">
@@ -129,9 +129,9 @@ export default function EnterpriseProductPreview() {
               </div>
               <div className="grid sm:grid-cols-3 gap-3">
                 {[
-                  { icon: AlertTriangle, text: "١٤ موظفاً بمخاطر عالية — يوصى بتفعيل برنامج تدخل مبكر", color: "text-amber-500" },
-                  { icon: TrendingDown, text: "قسم المبيعات بحاجة لتحسين عافية — الدرجة ٥٤٪", color: "text-rose-500" },
-                  { icon: DollarSign, text: "التوفير المتوقع ٢.٤م ر.س في التكاليف التأمينية هذا الربع", color: "text-[var(--vp-accent)]" },
+                  { icon: AlertTriangle, text: "14 موظفاً بمخاطر عالية — يوصى بتفعيل برنامج تدخل مبكر", color: "text-amber-500" },
+                  { icon: TrendingDown, text: "قسم المبيعات بحاجة لتحسين عافية — الدرجة 54٪", color: "text-rose-500" },
+                  { icon: DollarSign, text: "التوفير المتوقع 2.4م ر.س في التكاليف التأمينية هذا الربع", color: "text-[var(--vp-accent)]" },
                 ].map((rec) => (
                   <div key={rec.text} className="flex items-start gap-2 p-2.5 rounded-xl bg-[var(--vp-glow-soft)]">
                     <rec.icon className={`h-4 w-4 ${rec.color} shrink-0 mt-0.5`} />

@@ -11,7 +11,7 @@ const services = [
   {
     icon: Brain,
     title: "التقييم الصحي التنبؤي",
-    desc: "تحليل ذكي لـ ١٢ مؤشراً صحياً مع تقارير مخصصة لكل موظف. نحدد المخاطر قبل ١٢ شهراً من تطورها.",
+    desc: "تحليل ذكي لـ 12 مؤشراً صحياً مع تقارير مخصصة لكل موظف. نحدد المخاطر قبل 12 شهراً من تطورها.",
   },
   {
     icon: Heart,
@@ -21,7 +21,7 @@ const services = [
   {
     icon: TrendingDown,
     title: "خفض التكاليف التأمينية",
-    desc: "تحليلات مالية تنبؤية تخفض التكاليف التأمينية بنسبة تصل إلى ٤٠٪ مع تحسين العائد على الاستثمار.",
+    desc: "تحليلات مالية تنبؤية تخفض التكاليف التأمينية بنسبة تصل إلى 40% مع تحسين العائد على الاستثمار.",
   },
   {
     icon: BarChart3,
@@ -31,9 +31,9 @@ const services = [
 ];
 
 const trustPillars = [
-  { icon: Award, title: "خبرة تمتد لـ ٤٥+ عاماً", desc: "فريقنا يضم خبراء في الصحة المؤسسية والتكنولوجيا" },
+  { icon: Award, title: "خبرة تمتد لـ 45+ عاماً", desc: "فريقنا يضم خبراء في الصحة المؤسسية والتكنولوجيا" },
   { icon: Shield, title: "أمان وامتثال دولي", desc: "ISO 27001, PDPL, SDAIA, SOC 2 — نطبق أعلى معايير الأمان" },
-  { icon: Users, title: "أكثر من ٢٥٠ مؤسسة", desc: "تثق بنا في تحسين صحة موظفيها وخفض التكاليف" },
+  { icon: Users, title: "أكثر من 250 مؤسسة", desc: "تثق بنا في تحسين صحة موظفيها وخفض التكاليف" },
 ];
 
 const certifications = [
@@ -46,10 +46,10 @@ const certifications = [
 ];
 
 const steps = [
-  { icon: ClipboardCheck, step: "١", title: "تقييم شامل", desc: "يقيم الموظف صحته عبر HRA ذكي في ٧ دقائق" },
-  { icon: Cpu, step: "٢", title: "تحليل ذكي", desc: "AI يحلل البيانات ويصنف المخاطر بدقة ٩٨٪" },
-  { icon: Heart, step: "٣", title: "خطط مخصصة", desc: "توصيات تغذية ولياقة واستشارات حسب الحالة" },
-  { icon: TrendingUp, step: "٤", title: "قياس وتحسين", desc: "متابعة مستمرة وتقارير دورية وقياس العائد" },
+  { icon: ClipboardCheck, step: "1", title: "تقييم شامل", desc: "يقيم الموظف صحته عبر HRA ذكي في 7 دقائق" },
+  { icon: Cpu, step: "2", title: "تحليل ذكي", desc: "AI يحلل البيانات ويصنف المخاطر بدقة 98%" },
+  { icon: Heart, step: "3", title: "خطط مخصصة", desc: "توصيات تغذية ولياقة واستشارات حسب الحالة" },
+  { icon: TrendingUp, step: "4", title: "قياس وتحسين", desc: "متابعة مستمرة وتقارير دورية وقياس العائد" },
 ];
 
 import { ClipboardCheck, Cpu, TrendingUp } from "lucide-react";
@@ -110,7 +110,7 @@ export default function Home() {
                 </span>
                 <span className="inline-flex items-center gap-1.5">
                   <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent)]" />
-                  يستخدم من ٢٥٠+ مؤسسة
+                  يستخدم من 250+ مؤسسة
                 </span>
               </div>
             </div>
@@ -240,10 +240,10 @@ export default function Home() {
             {/* Quick stats */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-16">
               {[
-                { value: "٢٥٠+", label: "مؤسسة تثق بنا" },
-                { value: "٩٨٪", label: "دقة التنبؤ" },
-                { value: "٤٠٪", label: "خفض التكاليف" },
-                { value: "٤.٩/٥", label: "تقييم العملاء" },
+                { value: "250+", label: "مؤسسة تثق بنا" },
+                { value: "98%", label: "دقة التنبؤ" },
+                { value: "40%", label: "خفض التكاليف" },
+                { value: "4.9/5", label: "تقييم العملاء" },
               ].map((stat) => (
                 <div key={stat.label} className="text-center p-6 bg-white border border-[var(--border-primary)] rounded-2xl">
                   <p className="text-[clamp(32px,3vw,44px)] font-extrabold text-[var(--accent)] leading-none mb-2">

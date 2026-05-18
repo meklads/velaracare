@@ -37,7 +37,7 @@ export async function POST(req: Request) {
     }
 
     if (employees.length > 200) {
-      return NextResponse.json({ error: "الحد الأقصى ٢٠٠ موظف في المرة الواحدة" }, { status: 400 });
+      return NextResponse.json({ error: "الحد الأقصى 200 موظف في المرة الواحدة" }, { status: 400 });
     }
 
     const results: { success: boolean; email: string; name: string; error?: string }[] = [];

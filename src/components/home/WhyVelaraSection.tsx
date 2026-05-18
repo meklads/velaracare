@@ -8,51 +8,51 @@ const differentiators = [
     icon: Cpu,
     title: "هندسة دقيقة",
     desc: "نظامنا مبني على معايير هندسية دقيقة مع تكامل API مفتوح، قابلية توسع، وبنية تحتية سحابية موزعة.",
-    stat: "٩٩.٩٥٪",
+    stat: "99.95٪",
     statLabel: "uptime",
   },
   {
     icon: Clock,
     title: "استجابة فورية",
-    desc: "متوسط وقت الاستجابة للدعم الفني أقل من ١٥ دقيقة. فرق الدعم متاحة ٢٤/٧/٣٦٥.",
-    stat: "< ١٥",
+    desc: "متوسط وقت الاستجابة للدعم الفني أقل من 15 دقيقة. فرق الدعم متاحة 24/7/365.",
+    stat: "< 15",
     statLabel: "دقيقة للاستجابة",
   },
   {
     icon: Shield,
     title: "موثوقية مؤسسية",
     desc: "جميع العمليات موثقة ومعتمدة. سجل تدقيق كامل، تقارير امتثال جاهزة، وشهادات أمان دولية.",
-    stat: "٤",
+    stat: "4",
     statLabel: "شهادات أمان",
   },
   {
     icon: RefreshCw,
     title: "تحسين مستمر",
     desc: "تحديثات أسبوعية للنظام، تحسينات بناءً على تغذية راجعة، وتطوير مستمر للقدرات التنبؤية.",
-    stat: "٥٢",
+    stat: "52",
     statLabel: "تحديث سنوياً",
   },
   {
     icon: Heart,
     title: "عناية مخصصة",
     desc: "كل مؤسسة تحصل على خطة صحية مخصصة حسب احتياجات قوتها العاملة — ليس حلّاً جاهزاً.",
-    stat: "١٠٠٪",
+    stat: "100٪",
     statLabel: "تخصيص",
   },
   {
     icon: Award,
     title: "كفاءة مثبتة",
     desc: "نتائج موثقة من شركات حقيقية: خفض التكاليف، تحسن الإنتاجية، ورضا الموظفين.",
-    stat: "٣.٢x",
+    stat: "3.2x",
     statLabel: "متوسط ROI",
   },
 ];
 
 const operationalMetrics = [
-  { icon: Clock, label: "متوسط وقت الإعداد", value: "أقل من ٢٤ ساعة" },
-  { icon: Users, label: "حجم الفريق التشغيلي", value: "٤٠+ مختص" },
-  { icon: HeadphonesIcon, label: "الدعم الفني", value: "٢٤/٧/٣٦٥" },
-  { icon: TrendingUp, label: "تحسن سنوي", value: "+٣٥٪ كفاءة" },
+  { icon: Clock, label: "متوسط وقت الإعداد", value: "أقل من 24 ساعة" },
+  { icon: Users, label: "حجم الفريق التشغيلي", value: "40+ مختص" },
+  { icon: HeadphonesIcon, label: "الدعم الفني", value: "24/7/365" },
+  { icon: TrendingUp, label: "تحسن سنوي", value: "+35٪ كفاءة" },
 ];
 
 export default function WhyVelaraSection() {

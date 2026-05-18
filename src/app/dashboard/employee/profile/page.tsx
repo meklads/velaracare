@@ -94,7 +94,7 @@ export default function ProfilePage() {
     }
 
     if (passwordForm.newPass.length < 6) {
-      setPasswordError("كلمة المرور يجب أن تكون ٦ أحرف على الأقل");
+      setPasswordError("كلمة المرور يجب أن تكون 6 أحرف على الأقل");
       return;
     }
 

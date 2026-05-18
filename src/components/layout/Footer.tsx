@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Shield, Heart, Phone, Mail, MapPin, ArrowLeft } from "lucide-react";
+import { Shield, Heart, Phone, Mail, MapPin } from "lucide-react";
 
 const footerLinks = {
   المنصة: [
@@ -43,17 +43,14 @@ export default function Footer() {
   if (pathname?.startsWith("/dashboard")) return null;
 
   return (
-    <footer className="relative overflow-hidden border-t border-[var(--border-primary)] bg-gradient-to-b from-[var(--bg-primary)] to-[var(--bg-secondary)]">
-      {/* Background grid */}
-      <div className="absolute inset-0 vp-grid-bg opacity-[0.03] pointer-events-none" />
-
-      <div className="container-shade relative z-10 py-16 lg:py-20">
-        {/* Top section: Brand + Trust */}
-        <div className="grid gap-10 lg:grid-cols-6 mb-14">
-          {/* Brand column — wider */}
+    <footer className="border-t border-[var(--border-primary)] bg-[var(--bg-primary)]" dir="rtl">
+      <div className="container-shade py-16 lg:py-20">
+        {/* Top section: Brand + Links */}
+        <div className="grid gap-10 lg:grid-cols-6 mb-12">
+          {/* Brand column */}
           <div className="lg:col-span-2">
-            <Link href="/" className="flex items-center gap-2.5 group">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-[var(--vp-accent)] to-[var(--vp-accent-dark)] shadow-lg shadow-[var(--vp-accent)]/20 transition-transform group-hover:scale-105">
+            <Link href="/" className="inline-flex items-center gap-2.5">
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--accent)]">
                 <span className="text-lg font-bold text-white">V</span>
               </div>
               <div>
@@ -67,15 +64,18 @@ export default function Footer() {
               الذكاء الاصطناعي التنبؤي والتحليلات الوقائية.
             </p>
 
-            {/* Trust / Certifications */}
+            {/* Certifications */}
             <div className="mt-6">
-              <p className="text-xs font-semibold text-[var(--text-muted)] mb-3 tracking-wider uppercase">الشهادات والاعتماد</p>
+              <p className="text-xs font-semibold text-[var(--text-muted)] mb-3">الشهادات والاعتماد</p>
               <div className="flex flex-wrap gap-2">
                 {certifications.map((cert) => (
-                  <div key={cert.name} className="vp-tag-premium text-[10px]">
-                    <Shield className="h-3 w-3" />
+                  <div
+                    key={cert.name}
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[var(--bg-secondary)] border border-[var(--border-primary)] text-[11px] font-medium text-[var(--text-secondary)]"
+                  >
+                    <Shield className="h-3 w-3 text-[var(--accent)]" />
                     {cert.name}
-                    <span className="opacity-50">—</span>
+                    <span className="text-[var(--text-muted)]">—</span>
                     {cert.desc}
                   </div>
                 ))}
@@ -92,9 +92,8 @@ export default function Footer() {
                   <li key={link.title}>
                     <Link
                       href={link.href}
-                      className="text-sm text-[var(--text-secondary)] hover:text-[var(--vp-accent)] transition-all duration-300 inline-flex items-center gap-1.5 group"
+                      className="text-sm text-[var(--text-secondary)] hover:text-[var(--accent)] transition-colors"
                     >
-                      <span className="w-0 group-hover:w-1.5 h-1.5 rounded-full bg-[var(--vp-accent)] transition-all duration-300" />
                       {link.title}
                     </Link>
                   </li>
@@ -105,45 +104,45 @@ export default function Footer() {
         </div>
 
         {/* Contact bar */}
-        <div className="flex flex-wrap gap-4 items-center justify-between py-6 px-6 rounded-2xl bg-[var(--vp-glow-soft)] border border-[var(--vp-accent)]/10 mb-10">
+        <div className="flex flex-wrap gap-4 items-center justify-between py-5 px-6 rounded-xl bg-[var(--bg-secondary)] border border-[var(--border-primary)] mb-10">
           <div className="flex items-center gap-2 text-sm text-[var(--text-secondary)]">
-            <Phone className="h-4 w-4 text-[var(--vp-accent)]" />
+            <Phone className="h-4 w-4 text-[var(--accent)]" />
             <span>+966 800 123 4567</span>
           </div>
           <div className="flex items-center gap-2 text-sm text-[var(--text-secondary)]">
-            <Mail className="h-4 w-4 text-[var(--vp-accent)]" />
+            <Mail className="h-4 w-4 text-[var(--accent)]" />
             <span>hello@velara.care</span>
           </div>
           <div className="flex items-center gap-2 text-sm text-[var(--text-secondary)]">
-            <MapPin className="h-4 w-4 text-[var(--vp-accent)]" />
+            <MapPin className="h-4 w-4 text-[var(--accent)]" />
             <span>الرياض، المملكة العربية السعودية</span>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 text-sm text-[var(--text-secondary)]">
             <Heart className="h-4 w-4 text-rose-500" />
-            <span className="text-xs text-[var(--text-muted)]">دعم فني 24/7</span>
+            <span>دعم فني 24/7</span>
           </div>
         </div>
 
         {/* Bottom bar */}
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-8 border-t border-[var(--border-primary)]">
           <p className="text-xs text-[var(--text-muted)]">
-            © {new Date().getFullYear()} Velara Care. جميع الحقوق محفوظة.
+            &copy; {new Date().getFullYear()} Velara Care. جميع الحقوق محفوظة.
           </p>
           <div className="flex items-center gap-4">
-            <Link href="/privacy" className="text-xs text-[var(--text-muted)] hover:text-[var(--vp-accent)] transition-colors">
+            <Link href="/privacy" className="text-xs text-[var(--text-muted)] hover:text-[var(--accent)] transition-colors">
               الخصوصية
             </Link>
-            <span className="text-[var(--text-muted)] opacity-30">|</span>
-            <Link href="/terms" className="text-xs text-[var(--text-muted)] hover:text-[var(--vp-accent)] transition-colors">
+            <span className="text-[var(--text-muted)]">|</span>
+            <Link href="/terms" className="text-xs text-[var(--text-muted)] hover:text-[var(--accent)] transition-colors">
               الشروط
             </Link>
-            <span className="text-[var(--text-muted)] opacity-30">|</span>
-            <Link href="/compliance" className="text-xs text-[var(--text-muted)] hover:text-[var(--vp-accent)] transition-colors">
+            <span className="text-[var(--text-muted)]">|</span>
+            <Link href="/compliance" className="text-xs text-[var(--text-muted)] hover:text-[var(--accent)] transition-colors">
               الامتثال
             </Link>
           </div>
           <p className="text-xs text-[var(--text-muted)]">
-            Predict. Prevent. Perform. — المملكة العربية السعودية
+            Predict. Prevent. Perform.
           </p>
         </div>
       </div>

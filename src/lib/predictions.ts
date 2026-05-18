@@ -68,8 +68,8 @@ export function generatePredictions(responses: HRAResponses): Prediction[] {
         suggestions: [
           ...(bmi > 25 ? ["تحسين مؤشر كتلة الجسم عبر برنامج غذائي مخصص"] : []),
           ...(isPoorDiet ? ["استشارة أخصائي تغذية لوضع نظام غذائي متوازن"] : []),
-          ...(isSedentary ? ["زيادة النشاط البدني — المشي ٣٠ دقيقة يومياً"] : []),
-          ...(hasFamilyHistory ? ["فحص دوري للسكر التراكمي كل ٦ أشهر"] : []),
+          ...(isSedentary ? ["زيادة النشاط البدني — المشي 30 دقيقة يومياً"] : []),
+          ...(hasFamilyHistory ? ["فحص دوري للسكر التراكمي كل 6 أشهر"] : []),
         ],
       });
     }
@@ -154,7 +154,7 @@ export function generatePredictions(responses: HRAResponses): Prediction[] {
         suggestions: [
           ...(bmi > 30 ? ["برنامج تخفيف وزن تدريجي تحت إشراف أخصائي تغذية"] : []),
           ...(isPoorDiet ? ["خطة تغذية متوازنة تعتمد على البروتين والخضروات"] : []),
-          ...(isSedentary ? ["ابدأ بالمشي ٣٠ دقيقة ٥ أيام في الأسبوع"] : []),
+          ...(isSedentary ? ["ابدأ بالمشي 30 دقيقة 5 أيام في الأسبوع"] : []),
           ["متابعة الوزن أسبوعياً وتسجيل الوجبات لزيادة الوعي الغذائي"],
         ].flat(),
       });
@@ -179,9 +179,9 @@ export function generatePredictions(responses: HRAResponses): Prediction[] {
         riskLevel: probability >= 0.5 ? "high" : probability >= 0.25 ? "moderate" : "low",
         factors,
         suggestions: [
-          ...(sleepHours < 6 ? ["تحسين النوم يزيد الإنتاجية —目标是 ٧-٨ ساعات"] : []),
+          ...(sleepHours < 6 ? ["تحسين النوم يزيد الإنتاجية —目标是 7-8 ساعات"] : []),
           ...(isHighStress ? ["إدارة التوتر تزيد التركيز — خذ استراحة منتظمة"] : []),
-          ...(isLowWater ? ["شرب الماء يحسن الوظائف الإدراكية — ٨ أكواب يومياً"] : []),
+          ...(isLowWater ? ["شرب الماء يحسن الوظائف الإدراكية — 8 أكواب يومياً"] : []),
         ],
       });
     }

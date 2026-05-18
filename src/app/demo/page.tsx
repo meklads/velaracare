@@ -9,7 +9,7 @@ import { useState } from "react";
 export default function DemoPage() {
   const [submitted, setSubmitted] = useState(false);
   const [sending, setSending] = useState(false);
-  const [formData, setFormData] = useState({ name: "", company: "", email: "", phone: "", employeeCount: "١-٥٠ موظف" });
+  const [formData, setFormData] = useState({ name: "", company: "", email: "", phone: "", employeeCount: "1-50 موظف" });
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -42,7 +42,7 @@ export default function DemoPage() {
               شكراً لاهتمامك بـ <strong>Velara Care</strong>.
             </p>
             <p className="text-sm text-[var(--text-secondary)] mb-8">
-              سيتواصل معك فريقنا خلال ٢٤ ساعة لتحديد موعد العرض التجريبي.
+              سيتواصل معك فريقنا خلال 24 ساعة لتحديد موعد العرض التجريبي.
             </p>
             <Link href="/" className="btn-premium">
               العودة للرئيسية
@@ -110,11 +110,11 @@ export default function DemoPage() {
                   <div>
                     <label className="text-sm font-medium text-[var(--text-primary)]">عدد الموظفين</label>
                     <select value={formData.employeeCount} onChange={(e) => setFormData(p => ({...p, employeeCount: e.target.value}))} className="shade-input mt-1">
-                      <option>١-٥٠ موظف</option>
-                      <option>٥١-٢٠٠ موظف</option>
-                      <option>٢٠١-٥٠٠ موظف</option>
-                      <option>٥٠١-١٠٠٠ موظف</option>
-                      <option>أكثر من ١٠٠٠ موظف</option>
+                      <option>1-50 موظف</option>
+                      <option>51-200 موظف</option>
+                      <option>201-500 موظف</option>
+                      <option>501-1000 موظف</option>
+                      <option>أكثر من 1000 موظف</option>
                     </select>
                   </div>
                   <button type="submit" disabled={sending} className="btn-premium w-full justify-center">
