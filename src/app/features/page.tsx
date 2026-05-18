@@ -21,34 +21,34 @@ import { initScrollAnimations } from "@/lib/scroll-animations";
 
 const featuresDetailed = [
   {
-    icon: Heart,
-    title: "Health Risk Assessment (HRA)",
-    desc: "يقوم الموظف بالإجابة على تقييم صحي ذكي خلال أقل من ٧ دقائق، يشمل مؤشرات النوم، النشاط، التغذية، الإجهاد، التاريخ العائلي، والوزن.",
+    icon: Brain,
+    title: "محرك التقييم الصحي التنبؤي (AI-HRA)",
+    desc: "تقييم صحي ذكي خلال ٧ دقائق يحلل ١٢ مؤشراً صحياً — النوم، النشاط، التغذية، الإجهاد، التاريخ العائلي، الوزن، وغيرها — بدقة تنبؤ ٩٨٪.",
   },
   {
-    icon: Sparkles,
-    title: "Predictive AI Engine",
-    desc: "محرك تنبؤي يحلل البيانات الصحية ويصنف الموظفين إلى مستويات مخاطر مختلفة مع اقتراحات عملية للتدخل المبكر.",
-  },
-  {
-    icon: Heart,
-    title: "Wellness Score",
-    desc: "رقم ذكي من ١٠٠ يعكس مستوى الصحة المؤسسية للفريق بالكامل ويساعد الإدارة على قياس التحسن شهرياً.",
-  },
-  {
-    icon: Apple,
-    title: "Smart Meal System",
-    desc: "نظام توصية وجبات صحية حسب احتياجات كل موظف وربط مباشر مع مزودي الأغذية الصحية.",
-  },
-  {
-    icon: Users,
-    title: "Professional Consultations",
-    desc: "إمكانية حجز استشارات تغذية ولياقة وصحة نفسية مباشرة من داخل المنصة.",
+    icon: TrendingDown,
+    title: "التنبؤ بالتكاليف التأمينية",
+    desc: "نماذج رياضية تعتمد على AI لتحليل أنماط المخاطر الصحية وتوقع التكاليف التأمينية المستقبلية — تخطيط دقيق لميزانية الرعاية الصحية.",
   },
   {
     icon: BarChart3,
-    title: "Executive Dashboard",
-    desc: "لوحة تنفيذية للإدارة تعرض مؤشرات الصحة المؤسسية والتكاليف المتوقعة والعائد على الاستثمار.",
+    title: "Wellness Score المؤسسي",
+    desc: "مؤشر رقمي من ١٠٠ يعكس مستوى الصحة المؤسسية للقوى العاملة بالكامل. يمكن الإدارة من قياس التحسن شهرياً وربطه بالأداء المالي.",
+  },
+  {
+    icon: Heart,
+    title: "نظام التدخل الوقائي الذكي",
+    desc: "يحدد الموظفين الأكثر عرضة للمخاطر الصحية ويوصي بخطط تدخل مخصصة — استشارات تغذية، برامج لياقة، وجبات مخصصة — قبل تطور الحالات.",
+  },
+  {
+    icon: Apple,
+    title: "نظام التوصيات الصحية المتكامل",
+    desc: "توصيات وجبات وتمارين واستشارات مبنية على التحليل التنبؤي لكل موظف. ربط مباشر مع مزودي الخدمات الصحية والغذائية.",
+  },
+  {
+    icon: Shield,
+    title: "لوحة القيادة التنفيذية والتقارير",
+    desc: "لوحة تفاعلية حية تعرض Wellness Score، توزيع المخاطر، التكاليف المتوقعة، العائد على الاستثمار، وتقارير جاهزة لمجلس الإدارة.",
   },
 ];
 
@@ -69,12 +69,13 @@ export default function FeaturesPage() {
               الميزات
             </div>
             <h1 className="vp-hero max-w-4xl mx-auto" data-vp-animate="fade-up" data-vp-delay="1">
-              منصة متكاملة لإدارة صحة الموظفين
+              بنية تحتية متكاملة{' '}
               <br />
-              <span className="vp-hero-em">بالذكاء الاصطناعي</span>
+              <span className="vp-hero-em">لذكاء صحة القوى العاملة</span>
             </h1>
             <p className="vp-subtitle text-[var(--text-secondary)] max-w-2xl mx-auto mt-6" data-vp-animate="fade-up" data-vp-delay="2">
-              Velara Care تجمع بين التحليل الصحي، الذكاء الاصطناعي، الوجبات الصحية، والاستشارات المتخصصة داخل منصة واحدة قابلة للقياس والتوسع.
+              ليس مجرد نظام wellness. Sehhati هي بنية تحتية للصحة المؤسسية تجمع بين التقييم التنبؤي،
+              الذكاء الاصطناعي، التوصيات المخصصة، والتحليلات المالية في منصة واحدة قابلة للتوسع.
             </p>
           </div>
         </section>
@@ -103,10 +104,10 @@ export default function FeaturesPage() {
           <div className="absolute top-1/2 left-1/4 w-72 h-72 rounded-full bg-[var(--vp-accent)]/5 blur-3xl" />
           <div className="container-shade relative z-10">
             <div className="mx-auto max-w-2xl text-center" data-vp-animate="slide-up">
-              <h2 className="vp-hero text-white mb-6">جاهز تجرب المنصة؟</h2>
-              <p className="vp-subtitle text-white/70 max-w-xl mx-auto mb-10">احجز عرضاً تجريبياً مجاناً لمدة ١٤ يوماً</p>
+              <h2 className="vp-hero text-white mb-6">جاهز لتحويل صحة قواك العاملة؟</h2>
+              <p className="vp-subtitle text-white/70 max-w-xl mx-auto mb-10">احصل على عرض تجريبي مخصص لاحتياجات مؤسستك — مع تحليل أولي مجاني للتكاليف</p>
               <Link href="/demo" className="btn-premium !bg-white !text-[var(--vp-ink)] group">
-                اطلب عرضاً تجريبياً
+                اطلب عرضاً تجريبياً للمؤسسات
                 <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
               </Link>
             </div>

@@ -13,91 +13,92 @@ import {
   Sparkles,
   CheckCircle2,
   Apple,
-  ChevronLeft,
   Activity,
   Shield,
   ArrowLeft,
   Star,
+  Target,
+  DollarSign,
+  LineChart,
+  AlertTriangle,
 } from "lucide-react";
 import { initScrollAnimations, initCountUpAnimations } from "@/lib/scroll-animations";
+import SystemArchitecture from "@/components/home/SystemArchitecture";
+import EnterpriseProductPreview from "@/components/home/EnterpriseProductPreview";
+import FinancialImpactSection from "@/components/home/FinancialImpactSection";
+import AITrustSection from "@/components/home/AITrustSection";
+import FutureVisionSection from "@/components/home/FutureVisionSection";
 
 const features = [
   {
     icon: Brain,
-    title: "تقييم المخاطر الصحية الذكي",
-    desc: "استبيان صحي ذكي يقيس مؤشرات الخطر مثل السمنة، السكري، الضغط، النوم والإجهاد خلال دقائق.",
-  },
-  {
-    icon: Sparkles,
-    title: "محرك تنبؤي بالذكاء الاصطناعي",
-    desc: "يقوم النظام بتحليل البيانات وتصنيف الموظفين حسب مستوى المخاطر الصحية قبل تطور الحالات.",
-  },
-  {
-    icon: Apple,
-    title: "نظام وجبات صحية متكامل",
-    desc: "اقتراح وجبات صحية مخصصة حسب حالة كل موظف وربط مباشر مع مزودي الطعام الصحي.",
-  },
-  {
-    icon: BarChart3,
-    title: "لوحة تحكم تنفيذية للشركات",
-    desc: "تقارير فورية عن Wellness Score، المخاطر المتوقعة، والعائد الصحي والاستثماري.",
-  },
-  {
-    icon: Users,
-    title: "استشارات تغذية ولياقة",
-    desc: "إحالة الموظفين إلى مختصين مع خطط غذائية ورياضية مخصصة بناءً على نتائج التقييم.",
+    title: "محرك التقييم الصحي التنبؤي (HRA)",
+    desc: "تقييم ذكي خلال ٧ دقائق يحلل ١٢ مؤشراً صحياً ويصنف المخاطر بدقة ٩٨٪ باستخدام AI.",
   },
   {
     icon: TrendingDown,
-    title: "تقارير وتقليل التكاليف",
-    desc: "متابعة تأثير البرنامج على الإجازات المرضية والإنتاجية والتكاليف التأمينية.",
+    title: "التنبؤ بالتكاليف التأمينية",
+    desc: "نماذج رياضية تتنبأ بالتكاليف الصحية المستقبلية للقوى العاملة — تخطط للميزانية بدقة.",
   },
-];
-
-const stats = [
-  { value: "٤٠٪", label: "خفض متوقع في الإجازات المرضية" },
-  { value: "٢٥٪", label: "تحسن في إنتاجية الموظفين" },
-  { value: "١٨", label: "قدرة تنبؤية مبكرة للمخاطر", suffix: "شهر" },
-  { value: "١٠٠٪", label: "خصوصية وأمان للبيانات الصحية" },
+  {
+    icon: BarChart3,
+    title: "ذكاء العافية المؤسسية",
+    desc: "لوحة تنفيذية تعرض Wellness Score، اتجاهات المخاطر، والعائد على الاستثمار الصحي.",
+  },
+  {
+    icon: Target,
+    title: "التدخل الوقائي الذكي",
+    desc: "النظام يحدد الموظفين الأكثر عرضة للخطر ويوصي بخطط تدخل مخصصة قبل تطور الحالات.",
+  },
+  {
+    icon: Apple,
+    title: "نظام التوصيات الصحية المتكامل",
+    desc: "وجبات مخصصة، استشارات تغذية ولياقة، وخطط عافية مبنية على التحليل التنبؤي لكل موظف.",
+  },
+  {
+    icon: Shield,
+    title: "تقارير الحوكمة والامتثال",
+    desc: "تقارير جاهزة لمتطلبات هيئة الصحة العامة و SDAIA — مع توثيق كامل للامتثال الصحي.",
+  },
 ];
 
 const plans = [
   {
-    name: "Basic",
+    name: "Starter",
     price: "٣٥",
-    desc: "حل أساسي لتوفير الوجبات الصحية للشركات.",
+    desc: "للشركات الناشئة والصغيرة.",
     features: [
-      "١٠ وجبات صحية شهرياً",
-      "لوحة طلب للموظفين",
-      "تقارير استخدام بسيطة",
-      "دعم فني أساسي",
+      "لوحة تحكم أساسية",
+      "تقييم صحي للموظفين",
+      "نظام الوجبات الذكية",
+      "تقرير شهري",
     ],
     popular: false,
   },
   {
-    name: "Standard",
+    name: "Growth",
     price: "٧٥",
-    desc: "حل متكامل للصحة الوقائية والتقييم الصحي.",
+    desc: "للشركات المتوسطة — الأكثر طلباً.",
     features: [
-      "جميع مميزات Basic",
-      "تقييم HRA صحي",
-      "Wellness Score",
-      "تقارير شهرية للشركة",
-      "توصيات غذائية ذكية",
+      "جميع مميزات Starter",
+      "AI Predictive Engine",
+      "Wellness Score + اتجاهات",
+      "استشارات تغذية ولياقة",
+      "تقارير ROI شهرية",
     ],
     popular: true,
   },
   {
     name: "Enterprise",
     price: "١٦٠",
-    desc: "منصة صحة مؤسسية متقدمة للشركات الكبرى.",
+    desc: "للشركات الكبرى والمؤسسات.",
     features: [
-      "جميع مميزات Standard",
-      "AI Predictive Engine",
-      "استشارات تغذية ولياقة",
-      "لوحة تنفيذية متقدمة",
-      "تقارير ROI وتقليل التكاليف",
-      "مدير حساب مخصص",
+      "جميع مميزات Growth",
+      "Loحة تنفيذية متقدمة",
+      "تكامل مع أنظمة ERP/HRMS",
+      "التنبؤ بالتكاليف التأمينية",
+      "مدير حساب مخصص + دعم ٢٤/٧",
+      "API مفتوح للتكامل",
     ],
     popular: false,
   },
@@ -114,172 +115,102 @@ export default function Home() {
     <>
       <Header />
       <main>
-        {/* ════════════════════════════════════
-           ✦ HERO — "The Moment of Trust"
-           ════════════════════════════════════ */}
-        <section className="relative min-h-[90vh] flex items-center overflow-hidden bg-gradient-to-b from-[var(--bg-primary)] via-[var(--bg-secondary)] to-[var(--bg-primary)]" dir="rtl">
-          {/* Ambient background gradient */}
+        {/* ═══════════════════════════════════════════════
+           ✦ HERO — Enterprise Workforce Health Intelligence
+           ═══════════════════════════════════════════════ */}
+        <section className="relative min-h-screen flex items-center overflow-hidden bg-gradient-to-b from-[var(--bg-primary)] via-[var(--bg-secondary)] to-[var(--bg-primary)]" dir="rtl">
           <div className="absolute inset-0 pointer-events-none" style={{ background: 'var(--vp-gradient-hero)' }} />
-          <div className="absolute inset-0 vp-grid-bg opacity-40" />
+          <div className="absolute inset-0 vp-grid-bg opacity-30" />
 
-          {/* Floating decorative particles */}
-          <div className="absolute top-1/4 left-[15%] w-3 h-3 rounded-full bg-[var(--vp-accent)]/10 vp-float" style={{ animationDelay: '0s' }} />
-          <div className="absolute top-1/3 right-[20%] w-4 h-4 rounded-full bg-[var(--vp-cyan)]/10 vp-float" style={{ animationDelay: '1.5s' }} />
-          <div className="absolute bottom-1/4 right-[30%] w-5 h-5 rounded-full bg-[var(--vp-accent)]/8 vp-float" style={{ animationDelay: '3s' }} />
-          <div className="absolute top-2/3 left-[25%] w-3 h-3 rounded-full bg-[var(--vp-lavender)]/8 vp-float" style={{ animationDelay: '2s' }} />
+          {/* Cinematic ambient particles */}
+          <div className="absolute top-1/5 left-[10%] w-2 h-2 rounded-full bg-[var(--vp-accent)]/20 vp-float" style={{ animationDelay: '0s' }} />
+          <div className="absolute top-1/4 right-[15%] w-3 h-3 rounded-full bg-[var(--vp-cyan)]/15 vp-float" style={{ animationDelay: '2s' }} />
+          <div className="absolute bottom-1/3 right-[25%] w-4 h-4 rounded-full bg-[var(--vp-accent)]/10 vp-float" style={{ animationDelay: '4s' }} />
+          <div className="absolute top-2/3 left-[20%] w-2 h-2 rounded-full bg-[var(--vp-lavender)]/15 vp-float" style={{ animationDelay: '1s' }} />
+          <div className="absolute bottom-1/4 left-[40%] w-3 h-3 rounded-full bg-[var(--vp-accent)]/12 vp-float" style={{ animationDelay: '3s' }} />
 
-          <div className="container-shade relative z-10 w-full py-20">
-            <div className="mx-auto max-w-4xl text-center">
-              {/* Premium badge */}
+          <div className="container-shade relative z-10 w-full py-24">
+            <div className="mx-auto max-w-5xl text-center">
+              {/* Category-defining badge */}
               <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-[var(--vp-glow-soft)] border border-[var(--vp-accent)]/10 text-[var(--vp-accent)] text-sm font-medium mb-6" data-vp-animate="fade-up">
                 <span className="vp-breathing-ring inline-block" style={{ width: '6px', height: '6px' }} />
-                ذكاء تنفسي — صحي — مؤسسي
+                Workforce Health Intelligence Platform
               </div>
 
-              {/* Hero headline */}
+              {/* Hero headline — enterprise scale */}
               <h1 className="vp-hero mb-6" data-vp-animate="fade-up" data-vp-delay="1">
-                <span className="text-[var(--text-primary)]">صحة موظفيك تبدأ</span>
+                <span className="text-[var(--text-primary)]">حوِّل صحة موظفيك</span>
                 <br />
-                <span className="vp-hero-em">قبل ظهور المرض</span>
+                <span className="vp-hero-em">إلى ذكاء مؤسسي وقيمة مالية</span>
               </h1>
 
-              <p className="vp-subtitle max-w-2xl mx-auto mb-10" data-vp-animate="fade-up" data-vp-delay="2">
-                Velara Care تجمع بين الذكاء الاصطناعي والرعاية الصحية الوقائية —
-                تتنبأ بالمخاطر، تقدم حلولاً مخصصة، وتحوِّل صحة فريقك إلى ميزة تنافسية.
+              <p className="vp-subtitle max-w-3xl mx-auto mb-10" data-vp-animate="fade-up" data-vp-delay="2">
+                منصة ذكاء صحي مؤسسي تستخدم الذكاء الاصطناعي التنبؤي لتحليل مخاطر القوى العاملة،
+                خفض التكاليف التأمينية، وتحويل صحة الموظفين إلى ميزة تنافسية قابلة للقياس.
               </p>
 
-              {/* CTA Group */}
+              {/* Enterprise CTA Group */}
               <div className="flex flex-col sm:flex-row items-center justify-center gap-4" data-vp-animate="fade-up" data-vp-delay="3">
-                <Link href="/demo" className="btn-premium group">
-                  احجز عرضاً تجريبياً
+                <Link href="/demo" className="btn-premium group text-base px-10 py-4 !h-auto">
+                  اطلب عرضاً تجريبياً للمؤسسات
                   <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
                 </Link>
-                <Link href="/features" className="btn-ghost">
-                  <Sparkles className="h-4 w-4" />
-                  استكشف المنصة
+                <Link href="/features" className="btn-ghost text-base px-8 py-4 !h-auto">
+                  <LineChart className="h-4 w-4" />
+                  اكتشف المنصة
                 </Link>
               </div>
             </div>
 
-            {/* Trust metrics bar */}
-            <div className="mt-16 grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-2xl mx-auto" data-vp-animate="slide-up" data-vp-delay="4">
+            {/* Enterprise Trust Metrics */}
+            <div className="mt-20 grid grid-cols-2 md:grid-cols-4 gap-3 max-w-4xl mx-auto" data-vp-animate="slide-up" data-vp-delay="4">
               {[
-                { value: "98", suffix: "%", label: "دقة التنبؤ المبكر", desc: "باستخدام AI" },
-                { value: "40", suffix: "%", label: "خفض التكاليف", desc: "متوسط التوفير" },
-                { value: "92", suffix: "%", label: "رضا الموظفين", desc: "مشاركة واستمرار" },
+                { value: "٢٥٠+", label: "شركة تستخدم المنصة", icon: Users },
+                { value: "٩٨٪", label: "دقة التنبؤ بالمخاطر", icon: Brain },
+                { value: "٤٠٪", label: "متوسط خفض التكاليف", icon: TrendingDown },
+                { value: "٤.٩/٥", label: "تقييم العملاء", icon: Star },
               ].map((item) => (
-                <div key={item.label} className="glass-premium rounded-2xl p-5 text-center hover:bg-[var(--vp-glow-soft)] transition-all duration-500">
-                  <div className="flex items-baseline justify-center gap-1">
-                    <span className="vp-stat" data-vp-count-to={item.value} data-vp-count-suffix={item.suffix}>0{item.suffix}</span>
-                  </div>
-                  <p className="text-sm font-semibold text-[var(--text-primary)] mt-1">{item.label}</p>
-                  <p className="text-xs text-[var(--text-secondary)] mt-0.5">{item.desc}</p>
+                <div key={item.label} className="glass-premium rounded-2xl p-4 text-center hover:bg-[var(--vp-glow-soft)] transition-all duration-500">
+                  <item.icon className="h-5 w-5 text-[var(--vp-accent)] mx-auto mb-2" />
+                  <span className="vp-stat text-lg" data-vp-count-to={item.value}>{item.value}</span>
+                  <p className="text-xs text-[var(--text-secondary)] mt-0.5">{item.label}</p>
                 </div>
               ))}
             </div>
           </div>
         </section>
 
-        {/* ════════════════════════════════════
-           ✦ PROBLEM → SOLUTION
-           ════════════════════════════════════ */}
-        <section className="section-padding relative overflow-hidden" dir="rtl">
-          <div className="absolute inset-0 vp-grid-bg opacity-30" />
-          <div className="container-shade relative">
-            <div className="grid gap-12 lg:grid-cols-2 items-center">
-              <div data-vp-animate="fade-up">
-                <span className="vp-label">المشكلة والحل</span>
-                <h2 className="vp-section-title mt-4">
-                  معظم الشركات تدفع تكاليف صحية مرتفعة…
-                  <br />
-                  <span className="vp-hero-em">دون معرفة السبب الحقيقي</span>
-                </h2>
-                <div className="w-16 h-1 rounded-full bg-gradient-to-l from-[var(--vp-accent)] to-[var(--vp-cyan)] mt-4" />
-                <p className="vp-subtitle mt-6">
-                  ترتفع تكاليف التأمين الصحي والإجازات المرضية سنوياً بسبب غياب الرؤية الوقائية.
-                  Velara Care تمنح الشركات القدرة على اكتشاف المخاطر الصحية مبكراً،
-                  وتحويل البيانات الصحية إلى قرارات عملية قابلة للقياس.
-                </p>
-                <ul className="mt-6 space-y-4">
-                  {[
-                    "توقع المخاطر الصحية قبل حدوثها",
-                    "تحسين صحة الموظفين بشكل مستمر",
-                    "خفض تكاليف الرعاية الصحية بنسبة تصل إلى ٤٠٪",
-                    "زيادة الإنتاجية وتقليل الغياب",
-                  ].map((item) => (
-                    <li key={item} className="flex items-start gap-3">
-                      <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[var(--vp-glow-medium)]">
-                        <CheckCircle2 className="h-4 w-4 text-[var(--vp-accent)]" />
-                      </div>
-                      <span className="text-[var(--text-secondary)]">{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+        {/* ═══════════════════════════════════════════════
+           ✦ PRODUCT ARCHITECTURE VISUALIZATION
+           ═══════════════════════════════════════════════ */}
+        <SystemArchitecture />
 
-              <div data-vp-animate="fade-up" data-vp-delay="2">
-                <div className="card-premium p-8" style={{ background: 'var(--vp-gradient-card)' }}>
-                  <h3 className="vp-section-title text-2xl sm:text-3xl mb-6">
-                    ٤ أنظمة في منصة واحدة
-                  </h3>
-                  <div className="space-y-4">
-                    {[
-                      { icon: Brain, title: "تقييم المخاطر الصحية", desc: "استبيان صحي ذكي" },
-                      { icon: Sparkles, title: "محرك AI تنبؤي", desc: "تصنيف المخاطر والتوقع المستقبلي" },
-                      { icon: Apple, title: "نظام الوجبات المخصصة", desc: "توصيات حسب الملف الصحي" },
-                      { icon: Users, title: "خدمات العافية المتصلة", desc: "أخصائيو تغذية ومدربو لياقة" },
-                    ].map((item) => (
-                      <div key={item.title} className="flex items-center gap-4 rounded-xl bg-[var(--bg-card)] p-4 depth-1 hover:depth-2 transition-all duration-300">
-                        <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-[var(--vp-glow-soft)]">
-                          <item.icon className="h-6 w-6 text-[var(--vp-accent)]" />
-                        </div>
-                        <div>
-                          <p className="font-semibold text-[var(--text-primary)]">{item.title}</p>
-                          <p className="text-sm text-[var(--text-secondary)]">{item.desc}</p>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
+        {/* ═══════════════════════════════════════════════
+           ✦ ENTERPRISE PRODUCT EXPERIENCE
+           ═══════════════════════════════════════════════ */}
+        <EnterpriseProductPreview />
 
-        {/* ════════════════════════════════════
-           ✦ STATS — with count-up
-           ════════════════════════════════════ */}
-        <section className="section-padding relative overflow-hidden" dir="rtl" style={{ background: 'var(--vp-gradient-dark)' }}>
-          <div className="absolute inset-0 vp-grid-bg opacity-[0.04]" />
-          <div className="container-shade relative">
-            <div className="grid grid-cols-2 gap-8 lg:grid-cols-4">
-              {stats.map((stat, i) => (
-                <div key={stat.label} className="text-center" data-vp-animate="fade-up" data-vp-delay={String(i + 1)}>
-                  <p className="vp-stat text-white">
-                    {stat.value.replace(/[٪]/g, '')}
-                    <span className="text-2xl font-bold text-white/80 mr-1">
-                      {stat.suffix || (stat.value.includes('٪') ? '%' : '')}
-                    </span>
-                  </p>
-                  <p className="mt-2 text-white/70">{stat.label}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
+        {/* ═══════════════════════════════════════════════
+           ✦ FINANCIAL IMPACT + CASE STUDY
+           ═══════════════════════════════════════════════ */}
+        <FinancialImpactSection />
 
-        {/* ════════════════════════════════════
-           ✦ FEATURES
-           ════════════════════════════════════ */}
+        {/* ═══════════════════════════════════════════════
+           ✦ FEATURES GRID
+           ═══════════════════════════════════════════════ */}
         <section className="section-padding relative overflow-hidden" id="features" dir="rtl">
-          <div className="container-shade">
-            <div className="mx-auto max-w-2xl text-center" data-vp-animate="fade-up">
-              <span className="vp-label">الميزات</span>
+          <div className="absolute inset-0 vp-grid-bg opacity-20" />
+          <div className="container-shade relative">
+            <div className="mx-auto max-w-3xl text-center" data-vp-animate="fade-up">
+              <span className="vp-label">قدرات المنصة</span>
               <h2 className="vp-section-title mt-4">
-                كل ما تحتاجه لصحة موظفيك في{' '}
-                <span className="vp-hero-em">منصة واحدة</span>
+                بنية تحتية متكاملة لذكاء{' '}
+                <span className="vp-hero-em">صحة القوى العاملة</span>
               </h2>
               <div className="w-16 h-1 rounded-full bg-gradient-to-l from-[var(--vp-accent)] to-[var(--vp-cyan)] mx-auto mt-4" />
+              <p className="vp-subtitle mt-4 text-[var(--text-secondary)]">
+                ليس مجرد نظام wellness — منصة حوكمة صحية مؤسسية مدعومة بالذكاء الاصطناعي.
+              </p>
             </div>
 
             <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -288,60 +219,68 @@ export default function Home() {
                   <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[var(--vp-glow-soft)] mb-5">
                     <f.icon className="h-7 w-7 text-[var(--vp-accent)]" />
                   </div>
-                  <h3 className="text-xl font-bold text-[var(--text-primary)]">{f.title}</h3>
-                  <p className="mt-3 text-[var(--text-secondary)] leading-relaxed">{f.desc}</p>
+                  <h3 className="text-lg font-bold text-[var(--text-primary)]">{f.title}</h3>
+                  <p className="mt-2 text-sm text-[var(--text-secondary)] leading-relaxed">{f.desc}</p>
                 </div>
               ))}
             </div>
           </div>
         </section>
 
-        {/* ════════════════════════════════════
-           ✦ HOW IT WORKS
-           ════════════════════════════════════ */}
+        {/* ═══════════════════════════════════════════════
+           ✦ HOW IT WORKS — Enterprise Flow
+           ═══════════════════════════════════════════════ */}
         <section className="section-padding relative overflow-hidden" dir="rtl" style={{ background: 'var(--vp-gradient-card)' }}>
           <div className="container-shade">
-            <div className="mx-auto max-w-2xl text-center" data-vp-animate="fade-up">
-              <span className="vp-label">كيف تعمل</span>
+            <div className="mx-auto max-w-3xl text-center" data-vp-animate="fade-up">
+              <span className="vp-label">كيف تعمل المنصة</span>
               <h2 className="vp-section-title mt-4">
-                ثلاث خطوات لصحة أفضل
+                من التقييم إلى التوفير —{' '}
+                <span className="vp-hero-em">في ٥ مراحل</span>
               </h2>
               <div className="w-16 h-1 rounded-full bg-gradient-to-l from-[var(--vp-accent)] to-[var(--vp-cyan)] mx-auto mt-4" />
             </div>
 
-            <div className="mt-12 grid gap-8 md:grid-cols-3">
+            <div className="mt-12 grid gap-6 md:grid-cols-5">
               {[
-                { step: "01", title: "تقييم الصحة", desc: "الموظف يجيب على استبيان صحي ذكي. النظام يحلل البيانات ويحسب درجة العافية." },
-                { step: "02", title: "التوصيات الذكية", desc: "الذكاء الاصطناعي يوصي بوجبات مخصصة، جلسات استشارية، وبرامج لياقة." },
-                { step: "03", title: "التحليل والتقارير", desc: "الشركة تشاهد لوحة تحكم شاملة وتقارير دورية عن العائد على الاستثمار." },
+                { step: "01", title: "تقييم صحي ذكي", desc: "الموظف يجيب على تقييم HRA خلال ٧ دقائق — يحلل ١٢ مؤشراً صحياً." },
+                { step: "02", title: "AI يصنف المخاطر", desc: "محرك تنبؤي يحلل البيانات ويصنف كل موظف حسب مستوى الخطورة." },
+                { step: "03", title: "توصيات مخصصة", desc: "خطط تغذية، لياقة، واستشارات مبنية على التحليل التنبؤي لكل موظف." },
+                { step: "04", title: "متابعة وتحليل", desc: "لوحة تنفيذية حية تعرض التقدم، المخاطر، والعائد على الاستثمار." },
+                { step: "05", title: "توفير مالي", desc: "تقارير ربع سنوية توضح خفض التكاليف التأمينية وتحسن الإنتاجية." },
               ].map((item, i) => (
-                <div key={item.step} className="card-premium p-8 text-center" data-vp-animate="fade-up" data-vp-delay={String(i + 1)}>
-                  <div className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-2xl bg-[var(--vp-glow-soft)]">
-                    <span className="text-2xl font-bold text-[var(--vp-accent)]">{item.step}</span>
+                <div key={item.step} className="card-premium p-6 text-center relative" data-vp-animate="fade-up" data-vp-delay={String(i + 1)}>
+                  <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-[var(--vp-glow-soft)]">
+                    <span className="text-xl font-bold text-[var(--vp-accent)]">{item.step}</span>
                   </div>
-                  <h3 className="text-xl font-bold text-[var(--text-primary)]">{item.title}</h3>
-                  <p className="mt-3 text-[var(--text-secondary)] leading-relaxed">{item.desc}</p>
+                  <h3 className="text-base font-bold text-[var(--text-primary)] mb-2">{item.title}</h3>
+                  <p className="text-xs text-[var(--text-secondary)] leading-relaxed">{item.desc}</p>
+                  {i < 4 && (
+                    <div className="hidden md:block absolute -left-3 top-1/2 -translate-y-1/2 text-[var(--vp-accent)]/30">
+                      <ArrowLeft className="h-5 w-5" />
+                    </div>
+                  )}
                 </div>
               ))}
             </div>
           </div>
         </section>
 
-        {/* ════════════════════════════════════
-           ✦ PRICING
-           ════════════════════════════════════ */}
+        {/* ═══════════════════════════════════════════════
+           ✦ PRICING — Enterprise Plans
+           ═══════════════════════════════════════════════ */}
         <section className="section-padding relative overflow-hidden" id="pricing" dir="rtl">
           <div className="absolute inset-0 vp-grid-bg opacity-20" />
           <div className="container-shade relative">
-            <div className="mx-auto max-w-2xl text-center" data-vp-animate="fade-up">
+            <div className="mx-auto max-w-3xl text-center" data-vp-animate="fade-up">
               <span className="vp-label">الأسعار</span>
               <h2 className="vp-section-title mt-4">
-                خطط مرنة تناسب{' '}
-                <span className="vp-hero-em">جميع الشركات</span>
+                استثمار في صحة{' '}
+                <span className="vp-hero-em">قواك العاملة</span>
               </h2>
               <div className="w-16 h-1 rounded-full bg-gradient-to-l from-[var(--vp-accent)] to-[var(--vp-cyan)] mx-auto mt-4" />
               <p className="vp-subtitle mt-4 text-[var(--text-secondary)]">
-                اشتراك شهري حسب عدد الموظفين
+                اشتراك شهري لكل موظف — مع عائد استثمار يصل إلى ٣ أضعاف التكلفة
               </p>
             </div>
 
@@ -389,29 +328,34 @@ export default function Home() {
           </div>
         </section>
 
-        {/* ════════════════════════════════════
-           ✦ TESTIMONIALS
-           ════════════════════════════════════ */}
+        {/* ═══════════════════════════════════════════════
+           ✦ AI TRUST & EXPLAINABILITY
+           ═══════════════════════════════════════════════ */}
+        <AITrustSection />
+
+        {/* ═══════════════════════════════════════════════
+           ✦ TESTIMONIALS — Enterprise
+           ═══════════════════════════════════════════════ */}
         <section className="section-padding relative overflow-hidden" dir="rtl" style={{ background: 'var(--vp-gradient-card)' }}>
           <div className="container-shade">
-            <div className="mx-auto max-w-2xl text-center" data-vp-animate="fade-up">
-              <span className="vp-label">آراء العملاء</span>
+            <div className="mx-auto max-w-3xl text-center" data-vp-animate="fade-up">
+              <span className="vp-label">شهادات المؤسسات</span>
               <h2 className="vp-section-title mt-4">
-                ماذا يقولون عن{' '}
-                <span className="vp-hero-em">Velara Care</span>
+                ماذا يقول{' '}
+                <span className="vp-hero-em">قادة المؤسسات</span>
               </h2>
               <div className="w-16 h-1 rounded-full bg-gradient-to-l from-[var(--vp-accent)] to-[var(--vp-cyan)] mx-auto mt-4" />
             </div>
 
             <div className="mt-12 grid gap-6 md:grid-cols-3">
               {[
-                { quote: "منذ استخدام Velara Care، انخفضت الإجازات المرضية في شركتنا بنسبة ٣٥٪. النظام غير طريقة تعاملنا مع صحة الموظفين.", name: "أ. محمد العبدالله", role: "مدير الموارد البشرية", company: "شركة التقنية المتقدمة" },
-                { quote: "تقرير العائد على الاستثمار وحده كان كافياً ليقنع الإدارة العليا. Velara Care أثبتت أن الاستثمار في صحة الموظفين مربح.", name: "أ. سارة القحطاني", role: "الرئيس التنفيذي", company: "مجموعة الخليج المالية" },
-                { quote: "نظام الوجبات الذكي غير حياة موظفينا. التوصيات المخصصة حسب الحالة الصحية فرق كبير عن أي خدمة تانية.", name: "م. فيصل الدوسري", role: "مدير العمليات", company: "شركة الاتصالات السعودية" },
+                { quote: "منصة Sehhati غيرت نظرتنا لصحة الموظفين من مصروف إلى استثمار. التقرير الربعي للـ ROI أقنع مجلس الإدارة بتوسيع البرنامج ليشمل كل الفروع.", name: "أ. محمد العبدالله", role: "CHRO", company: "شركة التقنية المتقدمة" },
+                { quote: "كنا ندفع ١٢ مليون في السنة تكاليف تأمينية. بعد سنة من Sehhati، انخفضت الفواتير ٣٨٪. النظام دفع نفسه بنفسه.", name: "أ. سارة القحطاني", role: "الرئيس التنفيذي", company: "مجموعة الخليج المالية" },
+                { quote: "النظام التنبؤي اكتشف ٢٧ حالة حرجة مبكراً — موظفين كنا هنفقدهم بدون تدخل وقائي. هذا هو المستقبل الحقيقي للصحة المؤسسية.", name: "م. فيصل الدوسري", role: "مدير العمليات", company: "شركة الاتصالات السعودية" },
               ].map((item, i) => (
                 <div key={item.name} className="card-premium p-6 sm:p-8 flex flex-col" data-vp-animate="fade-up" data-vp-delay={String(i + 1)}>
                   <Star className="h-5 w-5 text-[var(--vp-accent)]/30 mb-3" />
-                  <p className="text-[var(--text-secondary)] leading-relaxed flex-1">&ldquo;{item.quote}&rdquo;</p>
+                  <p className="text-[var(--text-secondary)] leading-relaxed flex-1 text-sm">&ldquo;{item.quote}&rdquo;</p>
                   <div className="mt-6 flex items-center gap-3 border-t border-[var(--border-primary)] pt-4">
                     <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[var(--vp-glow-soft)] text-sm font-bold text-[var(--vp-accent)]">{item.name.charAt(0)}</div>
                     <div>
@@ -425,35 +369,41 @@ export default function Home() {
           </div>
         </section>
 
-        {/* ════════════════════════════════════
-           ✦ FINAL CTA
-           ════════════════════════════════════ */}
+        {/* ═══════════════════════════════════════════════
+           ✦ FUTURE VISION
+           ═══════════════════════════════════════════════ */}
+        <FutureVisionSection />
+
+        {/* ═══════════════════════════════════════════════
+           ✦ FINAL CTA — Enterprise
+           ═══════════════════════════════════════════════ */}
         <section className="relative py-32 overflow-hidden" dir="rtl" style={{ background: 'var(--vp-gradient-dark)' }}>
           <div className="absolute inset-0 vp-grid-bg opacity-[0.03]" />
-          <div className="absolute top-1/2 left-1/4 w-72 h-72 rounded-full bg-[var(--vp-accent)]/5 blur-3xl" />
+          <div className="absolute top-1/3 left-1/4 w-80 h-80 rounded-full bg-[var(--vp-accent)]/5 blur-3xl" />
           <div className="absolute bottom-0 right-1/4 w-96 h-96 rounded-full bg-[var(--vp-cyan)]/5 blur-3xl" />
 
           <div className="container-shade relative">
-            <div className="mx-auto max-w-3xl text-center" data-vp-animate="slide-up">
+            <div className="mx-auto max-w-4xl text-center" data-vp-animate="slide-up">
               <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-white/5 border border-white/10 text-white/80 text-sm font-medium mb-6">
                 <span className="vp-breathing-ring inline-block" style={{ width: '6px', height: '6px', background: 'var(--vp-accent)' }} />
-                ابدأ الآن
+                Workforce Health Intelligence
               </div>
 
               <h2 className="vp-hero text-white mb-6">
-                جاهز لتحويل صحة موظفيك؟
+                استعد لمستقبل الصحة المؤسسية
               </h2>
 
-              <p className="vp-subtitle text-white/70 max-w-xl mx-auto mb-10">
-                احجز عرضاً تجريبياً مجاناً واكتشف كيف يمكن لـ Velara Care أن تخفض تكاليف الرعاية الصحية وتزيد إنتاجية فريقك.
+              <p className="vp-subtitle text-white/70 max-w-2xl mx-auto mb-10">
+                البنية التحتية لصحة القوى العاملة في المملكة.
+                انضم إلى الشركات الرائدة التي تستخدم Sehhati لتحويل صحة موظفيها إلى ذكاء مؤسسي وقيمة مالية.
               </p>
 
               <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                <Link href="/demo" className="btn-premium !bg-white !text-[var(--vp-ink)] group">
-                  احجز عرضاً تجريبياً
+                <Link href="/demo" className="btn-premium !bg-white !text-[var(--vp-ink)] group text-base px-10 py-4 !h-auto">
+                  اطلب عرضاً تجريبياً
                   <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
                 </Link>
-                <Link href="/pricing" className="btn-ghost !border-white/20 !text-white hover:!bg-white/5">
+                <Link href="/pricing" className="btn-ghost !border-white/20 !text-white hover:!bg-white/5 text-base px-8 py-4 !h-auto">
                   شاهد الأسعار
                 </Link>
               </div>
