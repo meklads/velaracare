@@ -140,7 +140,15 @@ export default function NotificationBell() {
             </div>
 
             {notifications.length > 0 && (
-              <div className="px-4 py-2.5 border-t border-[var(--border-primary)] text-center">
+              <div className="px-4 py-2.5 border-t border-[var(--border-primary)] text-center flex items-center justify-center gap-3">
+                <Link
+                  href="/dashboard/employee/notifications"
+                  onClick={() => setOpen(false)}
+                  className="text-xs text-emerald hover:text-emerald-600 font-medium transition-colors"
+                >
+                  عرض جميع الإشعارات ←
+                </Link>
+                <span className="text-muted">|</span>
                 <button
                   onClick={() => { setOpen(false); loadNotifications(); }}
                   className="text-xs text-secondary hover:text-primary transition-colors"
