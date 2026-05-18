@@ -1,6 +1,9 @@
+"use client";
+
 import Link from "next/link";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import { useEffect } from "react";
 import {
   Brain,
   Heart,
@@ -10,11 +13,13 @@ import {
   Sparkles,
   CheckCircle2,
   Apple,
-  Quote,
   ChevronLeft,
   Activity,
   Shield,
+  ArrowLeft,
+  Star,
 } from "lucide-react";
+import { initScrollAnimations, initCountUpAnimations } from "@/lib/scroll-animations";
 
 const features = [
   {
@@ -99,75 +104,98 @@ const plans = [
 ];
 
 export default function Home() {
+  useEffect(() => {
+    const cleanup1 = initScrollAnimations();
+    const cleanup2 = initCountUpAnimations();
+    return () => { cleanup1(); cleanup2(); };
+  }, []);
+
   return (
     <>
       <Header />
       <main>
-        {/* ── Hero ── */}
-        <section className="section-padding bg-surface-mid relative overflow-hidden">
-          <div className="shade-circle w-72 h-72 -top-20 -right-20" />
-          <div className="shade-circle w-48 h-48 -bottom-10 -left-10" />
+        {/* ════════════════════════════════════
+           ✦ HERO — "The Moment of Trust"
+           ════════════════════════════════════ */}
+        <section className="relative min-h-[90vh] flex items-center overflow-hidden bg-gradient-to-b from-[var(--bg-primary)] via-[var(--bg-secondary)] to-[var(--bg-primary)]" dir="rtl">
+          {/* Ambient background gradient */}
+          <div className="absolute inset-0 pointer-events-none" style={{ background: 'var(--vp-gradient-hero)' }} />
+          <div className="absolute inset-0 vp-grid-bg opacity-40" />
 
-          <div className="container-shade">
+          {/* Floating decorative particles */}
+          <div className="absolute top-1/4 left-[15%] w-3 h-3 rounded-full bg-[var(--vp-accent)]/10 vp-float" style={{ animationDelay: '0s' }} />
+          <div className="absolute top-1/3 right-[20%] w-4 h-4 rounded-full bg-[var(--vp-cyan)]/10 vp-float" style={{ animationDelay: '1.5s' }} />
+          <div className="absolute bottom-1/4 right-[30%] w-5 h-5 rounded-full bg-[var(--vp-accent)]/8 vp-float" style={{ animationDelay: '3s' }} />
+          <div className="absolute top-2/3 left-[25%] w-3 h-3 rounded-full bg-[var(--vp-lavender)]/8 vp-float" style={{ animationDelay: '2s' }} />
+
+          <div className="container-shade relative z-10 w-full py-20">
             <div className="mx-auto max-w-4xl text-center">
-              <span className="tag fade-in-up">AI-Powered Corporate Health Intelligence</span>
+              {/* Premium badge */}
+              <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-[var(--vp-glow-soft)] border border-[var(--vp-accent)]/10 text-[var(--vp-accent)] text-sm font-medium mb-6" data-vp-animate="fade-up">
+                <span className="vp-breathing-ring inline-block" style={{ width: '6px', height: '6px' }} />
+                ذكاء تنفسي — صحي — مؤسسي
+              </div>
 
-              <h1 className="hero-title mt-6 fade-in-up-delay-1">
-                مستقبل الصحة المؤسسية
+              {/* Hero headline */}
+              <h1 className="vp-hero mb-6" data-vp-animate="fade-up" data-vp-delay="1">
+                <span className="text-[var(--text-primary)]">صحة موظفيك تبدأ</span>
                 <br />
-                <span className="text-emerald">يبدأ قبل ظهور المرض</span>
+                <span className="vp-hero-em">قبل ظهور المرض</span>
               </h1>
 
-              <p className="subtitle mt-6 text-secondary fade-in-up-delay-2">
-                Velara Care هي منصة ذكية تساعد الشركات على التنبؤ بالمخاطر الصحية لموظفيها
-                وتقليل التكاليف الطبية والإجازات المرضية عبر الذكاء الاصطناعي، الوجبات الصحية، والاستشارات الوقائية.
+              <p className="vp-subtitle max-w-2xl mx-auto mb-10" data-vp-animate="fade-up" data-vp-delay="2">
+                Velara Care تجمع بين الذكاء الاصطناعي والرعاية الصحية الوقائية —
+                تتنبأ بالمخاطر، تقدم حلولاً مخصصة، وتحوِّل صحة فريقك إلى ميزة تنافسية.
               </p>
 
-              <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4 fade-in-up-delay-3">
-                <Link href="/demo" className="btn-primary">
-                    احجز عرضاً تجريبياً
-                    <ChevronLeft className="h-4 w-4" />
+              {/* CTA Group */}
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-4" data-vp-animate="fade-up" data-vp-delay="3">
+                <Link href="/demo" className="btn-premium group">
+                  احجز عرضاً تجريبياً
+                  <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
                 </Link>
-                <Link href="/features" className="btn-outline">
+                <Link href="/features" className="btn-ghost">
+                  <Sparkles className="h-4 w-4" />
                   استكشف المنصة
                 </Link>
               </div>
             </div>
 
-            {/* Preview cards */}
-            <div className="mt-16 grid grid-cols-1 gap-5 sm:grid-cols-3 max-w-3xl mx-auto fade-in-up-delay-4">
+            {/* Trust metrics bar */}
+            <div className="mt-16 grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-2xl mx-auto" data-vp-animate="slide-up" data-vp-delay="4">
               {[
-                { icon: Heart, value: "٨٥", label: "متوسط العافية" },
-                { icon: TrendingDown, value: "-٤٠٪", label: "خفض التكاليف" },
-                { icon: Users, value: "٩٢٪", label: "مشاركة الموظفين" },
+                { value: "98", suffix: "%", label: "دقة التنبؤ المبكر", desc: "باستخدام AI" },
+                { value: "40", suffix: "%", label: "خفض التكاليف", desc: "متوسط التوفير" },
+                { value: "92", suffix: "%", label: "رضا الموظفين", desc: "مشاركة واستمرار" },
               ].map((item) => (
-                <div key={item.label} className="glass-shade rounded-2xl p-4 sm:p-5 flex items-center gap-4">
-                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-emerald-soft">
-                    <item.icon className="h-6 w-6 text-emerald" />
+                <div key={item.label} className="glass-premium rounded-2xl p-5 text-center hover:bg-[var(--vp-glow-soft)] transition-all duration-500">
+                  <div className="flex items-baseline justify-center gap-1">
+                    <span className="vp-stat" data-vp-count-to={item.value} data-vp-count-suffix={item.suffix}>0{item.suffix}</span>
                   </div>
-                  <div>
-                    <p className="stat-number text-emerald">{item.value}</p>
-                    <p className="text-sm text-secondary">{item.label}</p>
-                  </div>
+                  <p className="text-sm font-semibold text-[var(--text-primary)] mt-1">{item.label}</p>
+                  <p className="text-xs text-[var(--text-secondary)] mt-0.5">{item.desc}</p>
                 </div>
               ))}
             </div>
           </div>
         </section>
 
-        {/* ── Problem / Solution ── */}
-        <section className="section-padding bg-surface-deeper">
-          <div className="container-shade">
+        {/* ════════════════════════════════════
+           ✦ PROBLEM → SOLUTION
+           ════════════════════════════════════ */}
+        <section className="section-padding relative overflow-hidden" dir="rtl">
+          <div className="absolute inset-0 vp-grid-bg opacity-30" />
+          <div className="container-shade relative">
             <div className="grid gap-12 lg:grid-cols-2 items-center">
-              <div className="fade-in-up">
-                <span className="tag">المشكلة والحل</span>
-                <h2 className="section-title mt-4">
+              <div data-vp-animate="fade-up">
+                <span className="vp-label">المشكلة والحل</span>
+                <h2 className="vp-section-title mt-4">
                   معظم الشركات تدفع تكاليف صحية مرتفعة…
                   <br />
-                  <span className="text-emerald">دون معرفة السبب الحقيقي</span>
+                  <span className="vp-hero-em">دون معرفة السبب الحقيقي</span>
                 </h2>
-                <div className="shade-divider mt-4" />
-                <p className="subtitle mt-6 text-secondary">
+                <div className="w-16 h-1 rounded-full bg-gradient-to-l from-[var(--vp-accent)] to-[var(--vp-cyan)] mt-4" />
+                <p className="vp-subtitle mt-6">
                   ترتفع تكاليف التأمين الصحي والإجازات المرضية سنوياً بسبب غياب الرؤية الوقائية.
                   Velara Care تمنح الشركات القدرة على اكتشاف المخاطر الصحية مبكراً،
                   وتحويل البيانات الصحية إلى قرارات عملية قابلة للقياس.
@@ -180,17 +208,18 @@ export default function Home() {
                     "زيادة الإنتاجية وتقليل الغياب",
                   ].map((item) => (
                     <li key={item} className="flex items-start gap-3">
-                      <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-emerald-soft">
-                        <CheckCircle2 className="h-4 w-4 text-emerald" />
+                      <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[var(--vp-glow-medium)]">
+                        <CheckCircle2 className="h-4 w-4 text-[var(--vp-accent)]" />
                       </div>
-                      <span className="text-secondary">{item}</span>
+                      <span className="text-[var(--text-secondary)]">{item}</span>
                     </li>
                   ))}
                 </ul>
               </div>
-              <div className="relative fade-in-up-delay-2">
-                <div className="shade-card p-8">
-                  <h3 className="section-title text-2xl sm:text-3xl mb-6">
+
+              <div data-vp-animate="fade-up" data-vp-delay="2">
+                <div className="card-premium p-8" style={{ background: 'var(--vp-gradient-card)' }}>
+                  <h3 className="vp-section-title text-2xl sm:text-3xl mb-6">
                     ٤ أنظمة في منصة واحدة
                   </h3>
                   <div className="space-y-4">
@@ -200,13 +229,13 @@ export default function Home() {
                       { icon: Apple, title: "نظام الوجبات المخصصة", desc: "توصيات حسب الملف الصحي" },
                       { icon: Users, title: "خدمات العافية المتصلة", desc: "أخصائيو تغذية ومدربو لياقة" },
                     ].map((item) => (
-                      <div key={item.title} className="flex items-center gap-4 rounded-xl bg-emerald-soft p-4">
-                        <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-white">
-                          <item.icon className="h-6 w-6 text-emerald" />
+                      <div key={item.title} className="flex items-center gap-4 rounded-xl bg-[var(--bg-card)] p-4 depth-1 hover:depth-2 transition-all duration-300">
+                        <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-[var(--vp-glow-soft)]">
+                          <item.icon className="h-6 w-6 text-[var(--vp-accent)]" />
                         </div>
                         <div>
-                          <p className="font-semibold text-primary">{item.title}</p>
-                          <p className="text-sm text-secondary">{item.desc}</p>
+                          <p className="font-semibold text-[var(--text-primary)]">{item.title}</p>
+                          <p className="text-sm text-[var(--text-secondary)]">{item.desc}</p>
                         </div>
                       </div>
                     ))}
@@ -217,14 +246,20 @@ export default function Home() {
           </div>
         </section>
 
-        {/* ── Stats ── */}
-        <section className="section-padding bg-surface-dark text-white">
-          <div className="container-shade">
+        {/* ════════════════════════════════════
+           ✦ STATS — with count-up
+           ════════════════════════════════════ */}
+        <section className="section-padding relative overflow-hidden" dir="rtl" style={{ background: 'var(--vp-gradient-dark)' }}>
+          <div className="absolute inset-0 vp-grid-bg opacity-[0.04]" />
+          <div className="container-shade relative">
             <div className="grid grid-cols-2 gap-8 lg:grid-cols-4">
               {stats.map((stat, i) => (
-                <div key={stat.label} className={`text-center fade-in-up-delay-${i + 1}`}>
-                  <p className="stat-number text-emerald">{stat.value}
-                    {stat.suffix && <span className="text-2xl font-bold text-emerald mr-1">{stat.suffix}</span>}
+                <div key={stat.label} className="text-center" data-vp-animate="fade-up" data-vp-delay={String(i + 1)}>
+                  <p className="vp-stat text-white">
+                    {stat.value.replace(/[٪]/g, '')}
+                    <span className="text-2xl font-bold text-white/80 mr-1">
+                      {stat.suffix || (stat.value.includes('٪') ? '%' : '')}
+                    </span>
                   </p>
                   <p className="mt-2 text-white/70">{stat.label}</p>
                 </div>
@@ -233,97 +268,111 @@ export default function Home() {
           </div>
         </section>
 
-        {/* ── Features ── */}
-        <section className="section-padding bg-surface-deeper" id="features">
+        {/* ════════════════════════════════════
+           ✦ FEATURES
+           ════════════════════════════════════ */}
+        <section className="section-padding relative overflow-hidden" id="features" dir="rtl">
           <div className="container-shade">
-            <div className="mx-auto max-w-2xl text-center fade-in-up">
-              <span className="tag">الميزات</span>
-              <h2 className="section-title mt-4">
-                كل ما تحتاجه لصحة موظفيك في{" "}
-                <span className="text-emerald">منصة واحدة</span>
+            <div className="mx-auto max-w-2xl text-center" data-vp-animate="fade-up">
+              <span className="vp-label">الميزات</span>
+              <h2 className="vp-section-title mt-4">
+                كل ما تحتاجه لصحة موظفيك في{' '}
+                <span className="vp-hero-em">منصة واحدة</span>
               </h2>
-              <div className="shade-divider mx-auto mt-4" />
+              <div className="w-16 h-1 rounded-full bg-gradient-to-l from-[var(--vp-accent)] to-[var(--vp-cyan)] mx-auto mt-4" />
             </div>
 
             <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {features.map((f, i) => (
-                <div key={f.title} className={`shade-card p-6 sm:p-8 fade-in-up-delay-${(i % 4) + 1}`}>
-                  <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-emerald-soft mb-5">
-                    <f.icon className="h-7 w-7 text-emerald" />
+                <div key={f.title} className="card-premium p-6 sm:p-8" data-vp-animate="fade-up" data-vp-delay={String((i % 4) + 1)}>
+                  <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[var(--vp-glow-soft)] mb-5">
+                    <f.icon className="h-7 w-7 text-[var(--vp-accent)]" />
                   </div>
-                  <h3 className="text-xl font-bold text-primary">{f.title}</h3>
-                  <p className="mt-3 text-secondary leading-relaxed">{f.desc}</p>
+                  <h3 className="text-xl font-bold text-[var(--text-primary)]">{f.title}</h3>
+                  <p className="mt-3 text-[var(--text-secondary)] leading-relaxed">{f.desc}</p>
                 </div>
               ))}
             </div>
           </div>
         </section>
 
-        {/* ── How it Works ── */}
-        <section className="section-padding bg-surface-mid">
+        {/* ════════════════════════════════════
+           ✦ HOW IT WORKS
+           ════════════════════════════════════ */}
+        <section className="section-padding relative overflow-hidden" dir="rtl" style={{ background: 'var(--vp-gradient-card)' }}>
           <div className="container-shade">
-            <div className="mx-auto max-w-2xl text-center fade-in-up">
-              <span className="tag">كيف تعمل</span>
-              <h2 className="section-title mt-4">
+            <div className="mx-auto max-w-2xl text-center" data-vp-animate="fade-up">
+              <span className="vp-label">كيف تعمل</span>
+              <h2 className="vp-section-title mt-4">
                 ثلاث خطوات لصحة أفضل
               </h2>
-              <div className="shade-divider mx-auto mt-4" />
+              <div className="w-16 h-1 rounded-full bg-gradient-to-l from-[var(--vp-accent)] to-[var(--vp-cyan)] mx-auto mt-4" />
             </div>
 
             <div className="mt-12 grid gap-8 md:grid-cols-3">
               {[
-                { step: "٠١", title: "تقييم الصحة", desc: "الموظف يجيب على استبيان صحي ذكي. النظام يحلل البيانات ويحسب درجة العافية." },
-                { step: "٠٢", title: "التوصيات الذكية", desc: "الذكاء الاصطناعي يوصي بوجبات مخصصة، جلسات استشارية، وبرامج لياقة." },
-                { step: "٠٣", title: "التحليل والتقارير", desc: "الشركة تشاهد لوحة تحكم شاملة وتقارير دورية عن العائد على الاستثمار." },
+                { step: "01", title: "تقييم الصحة", desc: "الموظف يجيب على استبيان صحي ذكي. النظام يحلل البيانات ويحسب درجة العافية." },
+                { step: "02", title: "التوصيات الذكية", desc: "الذكاء الاصطناعي يوصي بوجبات مخصصة، جلسات استشارية، وبرامج لياقة." },
+                { step: "03", title: "التحليل والتقارير", desc: "الشركة تشاهد لوحة تحكم شاملة وتقارير دورية عن العائد على الاستثمار." },
               ].map((item, i) => (
-                <div key={item.step} className={`text-center shade-card p-8 fade-in-up-delay-${i + 1}`}>
-                  <div className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-2xl bg-emerald-soft">
-                    <span className="text-2xl font-bold text-emerald">{item.step}</span>
+                <div key={item.step} className="card-premium p-8 text-center" data-vp-animate="fade-up" data-vp-delay={String(i + 1)}>
+                  <div className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-2xl bg-[var(--vp-glow-soft)]">
+                    <span className="text-2xl font-bold text-[var(--vp-accent)]">{item.step}</span>
                   </div>
-                  <h3 className="text-xl font-bold text-primary">{item.title}</h3>
-                  <p className="mt-3 text-secondary leading-relaxed">{item.desc}</p>
+                  <h3 className="text-xl font-bold text-[var(--text-primary)]">{item.title}</h3>
+                  <p className="mt-3 text-[var(--text-secondary)] leading-relaxed">{item.desc}</p>
                 </div>
               ))}
             </div>
           </div>
         </section>
 
-        {/* ── Pricing ── */}
-        <section className="section-padding bg-surface-deeper" id="pricing">
-          <div className="container-shade">
-            <div className="mx-auto max-w-2xl text-center fade-in-up">
-              <span className="tag">الأسعار</span>
-              <h2 className="section-title mt-4">
-                خطط مرنة تناسب{" "}
-                <span className="text-emerald">جميع الشركات</span>
+        {/* ════════════════════════════════════
+           ✦ PRICING
+           ════════════════════════════════════ */}
+        <section className="section-padding relative overflow-hidden" id="pricing" dir="rtl">
+          <div className="absolute inset-0 vp-grid-bg opacity-20" />
+          <div className="container-shade relative">
+            <div className="mx-auto max-w-2xl text-center" data-vp-animate="fade-up">
+              <span className="vp-label">الأسعار</span>
+              <h2 className="vp-section-title mt-4">
+                خطط مرنة تناسب{' '}
+                <span className="vp-hero-em">جميع الشركات</span>
               </h2>
-              <div className="shade-divider mx-auto mt-4" />
-              <p className="subtitle mt-4 text-secondary">
+              <div className="w-16 h-1 rounded-full bg-gradient-to-l from-[var(--vp-accent)] to-[var(--vp-cyan)] mx-auto mt-4" />
+              <p className="vp-subtitle mt-4 text-[var(--text-secondary)]">
                 اشتراك شهري حسب عدد الموظفين
               </p>
             </div>
 
             <div className="mt-12 grid gap-6 lg:grid-cols-3 max-w-5xl mx-auto">
               {plans.map((plan, i) => (
-                <div key={plan.name} className={`shade-card p-6 sm:p-8 text-center fade-in-up-delay-${(i % 4) + 1} ${plan.popular ? 'border-2 border-teal shadow-lg shadow-teal/10' : ''}`}>
+                <div key={plan.name} className={`card-premium p-6 sm:p-8 text-center relative ${plan.popular ? 'border-2 border-[var(--vp-accent)] shadow-xl shadow-[var(--vp-accent)]/5' : ''}`} data-vp-animate="scale-in" data-vp-delay={String(i + 1)}>
                   {plan.popular && (
-                    <span className="tag bg-emerald-ai text-white text-xs mb-4">الأكثر طلباً</span>
+                    <div className="absolute -top-3 left-1/2 -translate-x-1/2">
+                      <span className="px-4 py-1.5 rounded-full text-xs font-bold text-white" style={{ background: 'var(--vp-gradient-cta)' }}>
+                        الأكثر طلباً
+                      </span>
+                    </div>
                   )}
-                  <p className="text-lg font-bold text-primary">{plan.name}</p>
-                  <p className="mt-1 text-sm text-secondary">{plan.desc}</p>
-                  <div className="mt-4">
-                    <span className="stat-number text-emerald">{plan.price}</span>
-                    <span className="text-sm text-secondary mr-1">ريال/موظف</span>
+                  <p className="text-lg font-bold text-[var(--text-primary)]">{plan.name}</p>
+                  <p className="mt-1 text-sm text-[var(--text-secondary)]">{plan.desc}</p>
+                  <div className="mt-4 flex items-baseline justify-center gap-1">
+                    <span className="vp-stat">{plan.price}</span>
+                    <span className="text-sm text-[var(--text-secondary)]">ريال/موظف</span>
                   </div>
                   <ul className="mt-6 space-y-3 text-right">
                     {plan.features.map((f) => (
-                      <li key={f} className="flex items-center gap-2 text-sm text-secondary">
-                        <CheckCircle2 className="h-4 w-4 shrink-0 text-emerald" />
+                      <li key={f} className="flex items-center gap-2 text-sm text-[var(--text-secondary)]">
+                        <CheckCircle2 className="h-4 w-4 shrink-0 text-[var(--vp-accent)]" />
                         {f}
                       </li>
                     ))}
                   </ul>
-                  <Link href="/demo" className={`${plan.popular ? 'btn-primary' : 'btn-outline'} mt-6 w-full justify-center text-center`}>
+                  <Link
+                    href="/demo"
+                    className={`${plan.popular ? 'btn-premium' : 'btn-ghost'} mt-6 w-full justify-center text-center`}
+                  >
                     اطلع على الخطة
                   </Link>
                 </div>
@@ -331,7 +380,7 @@ export default function Home() {
             </div>
 
             <div className="mt-12 text-center">
-              <p className="text-sm text-muted">
+              <p className="text-sm text-[var(--text-muted)]">
                 جميع الأسعار بالريال السعودي. اشتراك شهري لكل موظف.
                 <br />
                 اتصل بنا للحصول على خصم للشركات الكبرى (أكثر من ١٠٠٠ موظف).
@@ -340,16 +389,18 @@ export default function Home() {
           </div>
         </section>
 
-        {/* ── Testimonials ── */}
-        <section className="section-padding bg-surface-mid">
+        {/* ════════════════════════════════════
+           ✦ TESTIMONIALS
+           ════════════════════════════════════ */}
+        <section className="section-padding relative overflow-hidden" dir="rtl" style={{ background: 'var(--vp-gradient-card)' }}>
           <div className="container-shade">
-            <div className="mx-auto max-w-2xl text-center fade-in-up">
-              <span className="tag">آراء العملاء</span>
-              <h2 className="section-title mt-4">
-                ماذا يقولون عن{" "}
-                <span className="text-emerald">Velara Care</span>
+            <div className="mx-auto max-w-2xl text-center" data-vp-animate="fade-up">
+              <span className="vp-label">آراء العملاء</span>
+              <h2 className="vp-section-title mt-4">
+                ماذا يقولون عن{' '}
+                <span className="vp-hero-em">Velara Care</span>
               </h2>
-              <div className="shade-divider mx-auto mt-4" />
+              <div className="w-16 h-1 rounded-full bg-gradient-to-l from-[var(--vp-accent)] to-[var(--vp-cyan)] mx-auto mt-4" />
             </div>
 
             <div className="mt-12 grid gap-6 md:grid-cols-3">
@@ -358,14 +409,14 @@ export default function Home() {
                 { quote: "تقرير العائد على الاستثمار وحده كان كافياً ليقنع الإدارة العليا. Velara Care أثبتت أن الاستثمار في صحة الموظفين مربح.", name: "أ. سارة القحطاني", role: "الرئيس التنفيذي", company: "مجموعة الخليج المالية" },
                 { quote: "نظام الوجبات الذكي غير حياة موظفينا. التوصيات المخصصة حسب الحالة الصحية فرق كبير عن أي خدمة تانية.", name: "م. فيصل الدوسري", role: "مدير العمليات", company: "شركة الاتصالات السعودية" },
               ].map((item, i) => (
-                <div key={item.name} className={`shade-card p-6 sm:p-8 flex flex-col fade-in-up-delay-${i + 1}`}>
-                  <Quote className="h-8 w-8 text-emerald/20 mb-4" />
-                  <p className="text-secondary leading-relaxed flex-1">&ldquo;{item.quote}&rdquo;</p>
-                  <div className="mt-6 flex items-center gap-3 border-t border-[var(--surface-border)] pt-4">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-full bg-emerald-soft text-sm font-bold text-emerald">{item.name.charAt(0)}</div>
+                <div key={item.name} className="card-premium p-6 sm:p-8 flex flex-col" data-vp-animate="fade-up" data-vp-delay={String(i + 1)}>
+                  <Star className="h-5 w-5 text-[var(--vp-accent)]/30 mb-3" />
+                  <p className="text-[var(--text-secondary)] leading-relaxed flex-1">&ldquo;{item.quote}&rdquo;</p>
+                  <div className="mt-6 flex items-center gap-3 border-t border-[var(--border-primary)] pt-4">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[var(--vp-glow-soft)] text-sm font-bold text-[var(--vp-accent)]">{item.name.charAt(0)}</div>
                     <div>
-                      <p className="font-semibold text-sm text-primary">{item.name}</p>
-                      <p className="text-xs text-secondary">{item.role} — {item.company}</p>
+                      <p className="font-semibold text-sm text-[var(--text-primary)]">{item.name}</p>
+                      <p className="text-xs text-[var(--text-secondary)]">{item.role} — {item.company}</p>
                     </div>
                   </div>
                 </div>
@@ -374,18 +425,37 @@ export default function Home() {
           </div>
         </section>
 
-        {/* ── CTA ── */}
-        <section className="section-padding bg-surface-dark text-white relative overflow-hidden">
-          <div className="shade-circle w-96 h-96 -top-48 -right-48 bg-white/5" />
-          <div className="shade-circle w-64 h-64 -bottom-32 -left-32 bg-white/5" />
+        {/* ════════════════════════════════════
+           ✦ FINAL CTA
+           ════════════════════════════════════ */}
+        <section className="relative py-32 overflow-hidden" dir="rtl" style={{ background: 'var(--vp-gradient-dark)' }}>
+          <div className="absolute inset-0 vp-grid-bg opacity-[0.03]" />
+          <div className="absolute top-1/2 left-1/4 w-72 h-72 rounded-full bg-[var(--vp-accent)]/5 blur-3xl" />
+          <div className="absolute bottom-0 right-1/4 w-96 h-96 rounded-full bg-[var(--vp-cyan)]/5 blur-3xl" />
+
           <div className="container-shade relative">
-            <div className="mx-auto max-w-3xl text-center">
-              <span className="tag bg-emerald-ai text-white border border-white/20 mb-4">ابدأ الآن</span>
-              <h2 className="hero-title text-white">جاهز لتحويل صحة موظفيك؟</h2>
-              <p className="subtitle mt-6 text-white/80">احجز عرضاً تجريبياً مجاناً واكتشف كيف يمكن لـ Velara Care أن تخفض تكاليف الرعاية الصحية وتزيد إنتاجية فريقك.</p>
-              <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
-                <Link href="/demo" className="btn-primary !bg-white !text-primary hover:!shadow-xl">احجز عرضاً تجريبياً <ChevronLeft className="h-4 w-4" /></Link>
-                <Link href="/pricing" className="btn-outline !border-white/40 !text-white hover:!bg-white/10">شاهد الأسعار</Link>
+            <div className="mx-auto max-w-3xl text-center" data-vp-animate="slide-up">
+              <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-white/5 border border-white/10 text-white/80 text-sm font-medium mb-6">
+                <span className="vp-breathing-ring inline-block" style={{ width: '6px', height: '6px', background: 'var(--vp-accent)' }} />
+                ابدأ الآن
+              </div>
+
+              <h2 className="vp-hero text-white mb-6">
+                جاهز لتحويل صحة موظفيك؟
+              </h2>
+
+              <p className="vp-subtitle text-white/70 max-w-xl mx-auto mb-10">
+                احجز عرضاً تجريبياً مجاناً واكتشف كيف يمكن لـ Velara Care أن تخفض تكاليف الرعاية الصحية وتزيد إنتاجية فريقك.
+              </p>
+
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <Link href="/demo" className="btn-premium !bg-white !text-[var(--vp-ink)] group">
+                  احجز عرضاً تجريبياً
+                  <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
+                </Link>
+                <Link href="/pricing" className="btn-ghost !border-white/20 !text-white hover:!bg-white/5">
+                  شاهد الأسعار
+                </Link>
               </div>
             </div>
           </div>
