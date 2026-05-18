@@ -172,12 +172,13 @@ export default function LoginPage() {
           {/* ── Demo Quick Access ── */}
           <div className="pt-4 border-t border-[var(--surface-border)]">
             <p className="text-xs font-medium text-primary mb-3">🚀 دخول تجريبي سريع</p>
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+            <div className="grid grid-cols-2 sm:grid-cols-5 gap-2">
               {[
                 { label: "مدير الشركة", email: "admin@velaracare.co", icon: Shield, color: "from-emerald-500 to-emerald-600" },
                 { label: "موظف", email: "mohamed.alahmed@velaracare.co", icon: User, color: "from-blue-500 to-indigo-600" },
                 { label: "موارد بشرية", email: "hr@velaracare.co", icon: Users, color: "from-amber-500 to-orange-600" },
                 { label: "أخصائي تغذية", email: "nutrition@velaracare.co", icon: Apple, color: "from-green-500 to-emerald-600" },
+                { label: "مطعم", email: "restaurant@velaracare.co", icon: Utensils, color: "from-rose-500 to-pink-600" },
               ].map((account) => (
                 <button
                   key={account.email}
