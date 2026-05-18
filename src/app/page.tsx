@@ -4,7 +4,7 @@ import Footer from "@/components/layout/Footer";
 import {
   Shield, Heart, Phone, Mail, MapPin, ArrowLeft,
   Users, TrendingDown, BarChart3, Activity, Brain,
-  CheckCircle2, Clock, Award, Star
+  CheckCircle2, Clock, Award, Star, ClipboardCheck, Cpu, TrendingUp
 } from "lucide-react";
 
 const services = [
@@ -51,8 +51,6 @@ const steps = [
   { icon: Heart, step: "3", title: "خطط مخصصة", desc: "توصيات تغذية ولياقة واستشارات حسب الحالة" },
   { icon: TrendingUp, step: "4", title: "قياس وتحسين", desc: "متابعة مستمرة وتقارير دورية وقياس العائد" },
 ];
-
-import { ClipboardCheck, Cpu, TrendingUp } from "lucide-react";
 
 export default function Home() {
   return (

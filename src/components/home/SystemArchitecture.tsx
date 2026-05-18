@@ -6,7 +6,7 @@ import Link from "next/link";
 
 /**
  * System Architecture Visualization
- * Animated enterprise-grade flow showing the complete Sehhati ecosystem.
+ * Animated enterprise-grade flow showing the complete Velara Care ecosystem.
  */
 
 type FlowNode = {

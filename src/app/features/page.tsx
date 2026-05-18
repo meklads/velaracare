@@ -74,7 +74,7 @@ export default function FeaturesPage() {
               <span className="vp-hero-em">لذكاء صحة القوى العاملة</span>
             </h1>
             <p className="vp-subtitle text-[var(--text-secondary)] max-w-2xl mx-auto mt-6" data-vp-animate="fade-up" data-vp-delay="2">
-              ليس مجرد نظام wellness. Sehhati هي بنية تحتية للصحة المؤسسية تجمع بين التقييم التنبؤي،
+              ليس مجرد نظام wellness. Velara Care هي بنية تحتية للصحة المؤسسية تجمع بين التقييم التنبؤي،
               الذكاء الاصطناعي، التوصيات المخصصة، والتحليلات المالية في منصة واحدة قابلة للتوسع.
             </p>
           </div>
@@ -97,6 +97,14 @@ export default function FeaturesPage() {
             </div>
           </div>
         </section>
+
+        {/* Section anchors for Header navigation */}
+        <div id="hra" />
+        <div id="ai" />
+        <div id="meals" />
+        <div id="dashboard" />
+        <div id="consultations" />
+        <div id="reports" />
 
         {/* ✦ CTA ✦ */}
         <section className="relative py-28 overflow-hidden" dir="rtl" style={{ background: 'var(--vp-gradient-dark)' }}>

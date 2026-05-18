@@ -111,7 +111,7 @@ export default function Footer() {
           </div>
           <div className="flex items-center gap-2 text-sm text-[var(--text-secondary)]">
             <Mail className="h-4 w-4 text-[var(--accent)]" />
-            <span>hello@velara.care</span>
+            <span>hello@velaracare.co</span>
           </div>
           <div className="flex items-center gap-2 text-sm text-[var(--text-secondary)]">
             <MapPin className="h-4 w-4 text-[var(--accent)]" />

@@ -80,7 +80,7 @@ export default function AITrustPage() {
               <span className="vp-hero-em">آمن وشفاف</span>
             </h1>
             <p className="vp-subtitle text-[var(--text-secondary)] max-w-2xl mx-auto mt-6" data-vp-animate="fade-up" data-vp-delay="2">
-              في Sehhati، نتعامل مع البيانات الصحية بأعلى معايير الأمان والخصوصية.
+              في Velara Care، نتعامل مع البيانات الصحية بأعلى معايير الأمان والخصوصية.
               منصتنا مصممة للامتثال للأنظمة السعودية والعالمية مع شفافية كاملة في قرارات الذكاء الاصطناعي.
             </p>
           </div>

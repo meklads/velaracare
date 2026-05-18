@@ -51,7 +51,7 @@ export default function FutureVisionSection() {
           </h2>
           <div className="w-16 h-1 rounded-full bg-gradient-to-l from-[var(--vp-accent)] to-[var(--vp-cyan)] mx-auto mt-4" />
           <p className="vp-subtitle mt-4 text-[var(--text-secondary)] max-w-2xl mx-auto">
-            Sehhati ليست مجرد منصة — إنها رؤية لإعادة تعريف العلاقة بين صحة الموظفين والقرارات المؤسسية.
+            Velara Care ليست مجرد منصة — إنها رؤية لإعادة تعريف العلاقة بين صحة الموظفين والقرارات المؤسسية.
             نبني المستقبل اليوم.
           </p>
         </div>
@@ -77,7 +77,7 @@ export default function FutureVisionSection() {
             <h3 className="text-2xl font-bold mb-3">كن جزءاً من المستقبل</h3>
             <p className="text-white/80 mb-6 text-sm">
               نحن نبني البنية التحتية الصحية للقوى العاملة في الشرق الأوسط. 
-              انضم إلى الشركات الرائدة التي تثق في Sehhati.
+              انضم إلى الشركات الرائدة التي تثق في Velara Care.
             </p>
             <Link href="/demo" className="inline-flex items-center gap-2 px-8 py-3 rounded-xl bg-white text-[var(--vp-accent)] font-bold text-sm hover:shadow-xl hover:shadow-black/20 transition-all">
               اطلب عرضاً تجريبياً
