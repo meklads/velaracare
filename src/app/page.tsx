@@ -29,6 +29,7 @@ import FinancialImpactSection from "@/components/home/FinancialImpactSection";
 import AITrustSection from "@/components/home/AITrustSection";
 import FutureVisionSection from "@/components/home/FutureVisionSection";
 import WhyVelaraSection from "@/components/home/WhyVelaraSection";
+import OperationalExcellence from "@/components/home/OperationalExcellence";
 
 const features = [
   {
@@ -201,15 +202,21 @@ export default function Home() {
            ═══════════════════════════════════════════════ */}
         <EnterpriseProductPreview />
 
+        {/* Section divider */}
+        <div className="vp-section-divider" />
+
         {/* ═══════════════════════════════════════════════
            ✦ FINANCIAL IMPACT + CASE STUDY
            ═══════════════════════════════════════════════ */}
         <FinancialImpactSection />
 
+        {/* Section divider */}
+        <div className="vp-section-divider" />
+
         {/* ═══════════════════════════════════════════════
            ✦ FEATURES GRID
            ═══════════════════════════════════════════════ */}
-        <section className="section-padding relative overflow-hidden" id="features" dir="rtl">
+        <section className="section-padding relative overflow-hidden" id="features" dir="rtl" data-vp-reveal data-vp-delay="100">
           <div className="absolute inset-0 vp-grid-bg opacity-20" />
           <div className="container-shade relative">
             <div className="mx-auto max-w-3xl text-center" data-vp-animate="fade-up">
@@ -241,7 +248,7 @@ export default function Home() {
         {/* ═══════════════════════════════════════════════
            ✦ HOW IT WORKS — Enterprise Flow
            ═══════════════════════════════════════════════ */}
-        <section className="section-padding relative overflow-hidden" dir="rtl" style={{ background: 'var(--vp-gradient-card)' }}>
+        <section className="section-padding relative overflow-hidden" dir="rtl" style={{ background: 'var(--vp-gradient-card)' }} data-vp-reveal data-vp-delay="100">
           <div className="container-shade">
             <div className="mx-auto max-w-3xl text-center" data-vp-animate="fade-up">
               <span className="vp-label">كيف تعمل المنصة</span>
@@ -283,9 +290,14 @@ export default function Home() {
         <WhyVelaraSection />
 
         {/* ═══════════════════════════════════════════════
+           ✦ OPERATIONAL EXCELLENCE
+           ═══════════════════════════════════════════════ */}
+        <OperationalExcellence />
+
+        {/* ═══════════════════════════════════════════════
            ✦ PRICING — Enterprise Plans
            ═══════════════════════════════════════════════ */}
-        <section className="section-padding relative overflow-hidden" id="pricing" dir="rtl">
+        <section className="section-padding relative overflow-hidden" id="pricing" dir="rtl" data-vp-reveal data-vp-delay="100">
           <div className="absolute inset-0 vp-grid-bg opacity-20" />
           <div className="container-shade relative">
             <div className="mx-auto max-w-3xl text-center" data-vp-animate="fade-up">
@@ -349,10 +361,13 @@ export default function Home() {
            ═══════════════════════════════════════════════ */}
         <AITrustSection />
 
+        {/* Section divider */}
+        <div className="vp-section-divider" />
+
         {/* ═══════════════════════════════════════════════
            ✦ TESTIMONIALS — Enterprise
            ═══════════════════════════════════════════════ */}
-        <section className="section-padding relative overflow-hidden" dir="rtl" style={{ background: 'var(--vp-gradient-card)' }}>
+        <section className="section-padding relative overflow-hidden" dir="rtl" style={{ background: 'var(--vp-gradient-card)' }} data-vp-reveal data-vp-delay="100">
           <div className="container-shade">
             <div className="mx-auto max-w-3xl text-center" data-vp-animate="fade-up">
               <span className="vp-label">شهادات المؤسسات</span>
