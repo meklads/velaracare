@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { auth } from "@/lib/auth";
 import { generatePredictions } from "@/lib/predictions";
+import { sendEmail, wellnessReportEmail } from "@/lib/email";
 
 export const runtime = "nodejs";
 
@@ -67,6 +68,32 @@ export async function POST(req: Request) {
           expiresAt: new Date(Date.now() + 90 * 24 * 60 * 60 * 1000),
         },
       });
+    }
+
+    // Notify SSE clients
+    fetch(`${process.env.NEXTAUTH_URL || ""}/api/events`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ type: "hra_completed" }),
+    }).catch(() => {});
+
+    // Send wellness report email (non-blocking)
+    const userData = await prisma.user.findUnique({
+      where: { id: user.id },
+      select: { firstName: true, lastName: true, email: true },
+    });
+    if (userData?.email) {
+      const reportUrl = `${process.env.NEXTAUTH_URL || "https://velaracare.co"}/dashboard/employee/insights`;
+      sendEmail(
+        userData.email,
+        "📊 تقرير العافية — Velara Care",
+        wellnessReportEmail(
+          `${userData.firstName} ${userData.lastName}`,
+          Math.max(0, 100 - riskScore * 10),
+          riskLevel,
+          reportUrl
+        )
+      );
     }
 
     return NextResponse.json({ ...result, predictionsGenerated: predictions.length }, { status: 201 });

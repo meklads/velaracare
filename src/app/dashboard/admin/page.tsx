@@ -4,7 +4,7 @@ import Footer from "@/components/layout/Footer";
 import { prisma } from "@/lib/prisma";
 import { auth } from "@/lib/auth";
 import { redirect } from "next/navigation";
-import { Users, TrendingDown, Heart, Brain, Apple, Download } from "lucide-react";
+import { Users, TrendingDown, Heart, Brain, Apple, Download, Calendar, ShoppingBag, DollarSign, Activity } from "lucide-react";
 import { RiskPieChart, DeptBarChart } from "@/components/charts/AdminCharts";
 
 export const metadata = {
@@ -29,6 +29,10 @@ export default async function AdminDashboard() {
   let usersWithScore = 0;
   let riskDistribution = { low: 0, medium: 0, high: 0, critical: 0 };
   let deptScores: { dept: string; score: number }[] = [];
+  let todayConsultations = 0;
+  let pendingOrders = 0;
+  let totalInvoices = 0;
+  let pendingInvoices = 0;
 
   try {
     const whereFilter = user.role === "SUPER_ADMIN" ? {} : { companyId: user.companyId };
@@ -72,7 +76,6 @@ export default async function AdminDashboard() {
       .sort((a, b) => b.score - a.score)
       .slice(0, 5);
 
-    // If no departments with scores, show some defaults
     if (deptScores.length === 0) {
       deptScores = [
         { dept: "تقنية المعلومات", score: 0 },
@@ -82,6 +85,31 @@ export default async function AdminDashboard() {
         { dept: "الإدارة", score: 0 },
       ];
     }
+
+    // ── Extra stats ──
+    const now = new Date();
+    const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    const todayEnd = new Date(todayStart.getTime() + 24 * 60 * 60 * 1000);
+
+    todayConsultations = await prisma.consultation.count({
+      where: {
+        ...whereFilter,
+        scheduledAt: { gte: todayStart, lte: todayEnd },
+        status: { not: "cancelled" },
+      },
+    });
+
+    pendingOrders = await prisma.mealOrder.count({
+      where: { status: { in: ["pending", "preparing"] } },
+    });
+
+    const invoices = await prisma.invoice.findMany({
+      where: whereFilter,
+      select: { status: true, amount: true },
+    });
+    totalInvoices = invoices.length;
+    pendingInvoices = invoices.filter((inv) => inv.status === "pending" || inv.status === "overdue").length;
+
   } catch (e) {
     console.error("Admin dashboard data error:", e);
   }
@@ -114,17 +142,17 @@ export default async function AdminDashboard() {
           {/* KPI Cards */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
             {[
-              { label: "درجة العافية الإجمالية", value: `${avgWellness}%`, change: usersWithScore > 0 ? `من ${usersWithScore} موظف` : "لا توجد بيانات", icon: Heart, color: "from-rose-500 to-pink-600" },
+              { label: "درجة العافية الإجمالية", value: `${avgWellness}%`, change: usersWithScore > 0 ? `${usersWithScore} موظف` : "لا توجد بيانات", icon: Heart, color: "from-rose-500 to-pink-600" },
               { label: "الموظفون النشطون", value: `${activeUsers}`, change: `من أصل ${totalUsers}`, icon: Users, color: "from-blue-500 to-indigo-600" },
-              { label: "المخاطر العالية", value: `${highRisk}`, change: totalRisk > 0 ? `${Math.round((highRisk / totalRisk) * 100)}%` : "—", icon: Brain, color: "from-orange-500 to-red-600" },
-              { label: "معدل الاكتمال", value: totalUsers > 0 ? `${Math.round((usersWithScore / totalUsers) * 100)}%` : "0%", change: "التقييم الصحي", icon: Heart, color: "from-emerald-ai to-emerald-ai-dark" },
+              { label: "المخاطر العالية", value: `${highRisk}`, change: totalRisk > 0 ? `${Math.round((highRisk / totalRisk) * 100)}%` : "—", icon: Activity, color: "from-orange-500 to-red-600" },
+              { label: "معدل الاكتمال", value: totalUsers > 0 ? `${Math.round((usersWithScore / totalUsers) * 100)}%` : "0%", change: "التقييم الصحي", icon: Brain, color: "from-emerald to-emerald-600" },
             ].map((kpi, i) => (
               <div key={kpi.label} className={`shade-card p-5 ${i === 0 ? "fade-in-up-delay-1" : i === 1 ? "fade-in-up-delay-2" : i === 2 ? "fade-in-up-delay-3" : "fade-in-up-delay-4"}`}>
                 <div className="flex items-center gap-3 mb-2">
                   <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${kpi.color} flex items-center justify-center`}>
                     <kpi.icon className="h-5 w-5 text-white" />
                   </div>
-                  <span className={`text-sm font-semibold ${kpi.change.startsWith("+") ? "text-emerald" : "text-rose-500"}`}>
+                  <span className={`text-xs font-semibold ${kpi.label === "المخاطر العالية" && highRisk > 0 ? "text-rose-500" : "text-emerald"}`}>
                     {kpi.change}
                   </span>
                 </div>
@@ -132,6 +160,37 @@ export default async function AdminDashboard() {
                 <p className="text-xs text-[var(--text-muted)] mt-1">{kpi.label}</p>
               </div>
             ))}
+          </div>
+
+          {/* Secondary KPIs Row */}
+          <div className="grid grid-cols-3 gap-3 mb-8 fade-in-up-delay-2">
+            <div className="shade-card p-4 flex items-center gap-3">
+              <div className="w-9 h-9 rounded-lg bg-blue-100 dark:bg-blue-900/20 flex items-center justify-center">
+                <Calendar className="h-4 w-4 text-blue-500" />
+              </div>
+              <div>
+                <p className="text-sm font-bold text-primary">{todayConsultations}</p>
+                <p className="text-[10px] text-secondary">استشارات اليوم</p>
+              </div>
+            </div>
+            <div className="shade-card p-4 flex items-center gap-3">
+              <div className="w-9 h-9 rounded-lg bg-amber-100 dark:bg-amber-900/20 flex items-center justify-center">
+                <ShoppingBag className="h-4 w-4 text-amber-500" />
+              </div>
+              <div>
+                <p className="text-sm font-bold text-primary">{pendingOrders}</p>
+                <p className="text-[10px] text-secondary">طلبات قيد التحضير</p>
+              </div>
+            </div>
+            <div className="shade-card p-4 flex items-center gap-3">
+              <div className="w-9 h-9 rounded-lg bg-emerald-100 dark:bg-emerald-900/20 flex items-center justify-center">
+                <DollarSign className="h-4 w-4 text-emerald" />
+              </div>
+              <div>
+                <p className="text-sm font-bold text-primary">{pendingInvoices}</p>
+                <p className="text-[10px] text-secondary">فواتير غير مدفوعة</p>
+              </div>
+            </div>
           </div>
 
           <div className="grid md:grid-cols-2 gap-6 mb-6 fade-in-up-delay-2">

@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useRef, useCallback } from "react";
 import Link from "next/link";
-import { Bell, X, Loader2, AlertTriangle, Calendar, ClipboardList, ShoppingBag } from "lucide-react";
+import { Bell, X, Loader2, AlertTriangle, Calendar, ClipboardList, ShoppingBag, Wifi, WifiOff } from "lucide-react";
 
 type Notification = {
   id: string;
@@ -24,7 +24,9 @@ export default function NotificationBell() {
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [connected, setConnected] = useState(false);
   const pollRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const sseRef = useRef<EventSource | null>(null);
 
   const loadNotifications = useCallback(async () => {
     try {
@@ -37,11 +39,44 @@ export default function NotificationBell() {
     }
   }, []);
 
+  // ── Connect to SSE for real-time updates ──
   useEffect(() => {
     loadNotifications();
-    // Poll every 60 seconds
+
+    function connectSSE() {
+      const es = new EventSource("/api/notifications/stream");
+      sseRef.current = es;
+
+      es.addEventListener("open", () => {
+        setConnected(true);
+      });
+
+      es.addEventListener("message", (event) => {
+        try {
+          const data = JSON.parse(event.data);
+          if (data.type === "notification_refresh") {
+            loadNotifications();
+          }
+        } catch {
+          // ignore non-JSON (heartbeats)
+        }
+      });
+
+      es.addEventListener("error", () => {
+        setConnected(false);
+        es.close();
+        // Reconnect after 5 seconds
+        setTimeout(connectSSE, 5000);
+      });
+    }
+
+    connectSSE();
+
+    // Fallback polling every 60 seconds
     pollRef.current = setInterval(loadNotifications, 60000);
+
     return () => {
+      if (sseRef.current) sseRef.current.close();
       if (pollRef.current) clearInterval(pollRef.current);
     };
   }, [loadNotifications]);
@@ -55,7 +90,9 @@ export default function NotificationBell() {
         onClick={() => setOpen(!open)}
         className="relative flex items-center justify-center w-9 h-9 rounded-xl border border-[var(--border-primary)] bg-[var(--bg-card)] hover:border-[var(--accent)] transition-all"
         aria-label="الإشعارات"
+        title={connected ? "متصل مباشر" : "غير متصل — تحديث دوري"}
       >
+        <span className={`absolute -top-0.5 -left-0.5 w-2 h-2 rounded-full ${connected ? "bg-emerald animate-pulse" : "bg-gray-400"}`} />
         <Bell className="h-4 w-4 text-primary" />
         {totalCount > 0 && (
           <span className={`absolute -top-1.5 -right-1.5 flex items-center justify-center w-4.5 h-4.5 text-[10px] font-bold text-white rounded-full ${

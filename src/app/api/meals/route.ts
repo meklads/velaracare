@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { auth } from "@/lib/auth";
+import { sendEmail, mealOrderConfirmationEmail } from "@/lib/email";
 
 export const runtime = "nodejs";
 
@@ -73,6 +74,14 @@ export async function POST(req: Request) {
           status: "pending",
         },
       });
+
+      // Send order confirmation email (non-blocking)
+      const orderDate = new Date().toLocaleDateString("ar-SA");
+      sendEmail(
+        session.user.email!,
+        "🍽️ تأكيد طلب وجبة — Velara Care",
+        mealOrderConfirmationEmail(session.user.name || "مستخدم", body.mealName || "وجبة مخصصة", orderDate)
+      );
 
       // Notify SSE clients
       fetch(`${process.env.NEXTAUTH_URL || ""}/api/events`, {

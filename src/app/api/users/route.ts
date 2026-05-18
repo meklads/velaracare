@@ -137,6 +137,13 @@ export async function POST(req: Request) {
       },
     });
 
+    // Notify SSE clients
+    fetch(`${process.env.NEXTAUTH_URL || ""}/api/events`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ type: "user_invited" }),
+    }).catch(() => {});
+
     // Send invitation email (non-blocking)
     sendEmail(body.email, "🎉 مرحباً بك في Velara Care", invitationEmail(
       `${body.firstName} ${body.lastName}`,
