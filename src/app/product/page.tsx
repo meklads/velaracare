@@ -37,7 +37,7 @@ const platformLayers = [
     icon: Shield,
     title: "طبقة الأمان والحوكمة",
     subtitle: "Security & Compliance",
-    items: ["تشفير AES-256 و TLS 1.3", "إخفاء الهوية (Anonymization)", "سجل تدقيق كامل (Audit Log)", "الامتثال لـ PDPL و SDAIA", "الموافقة المستنيرة (Consent)"],
+    items: ["تشفير AES-256 و TLS 1.3", "إخفاء الهوية (Anonymization)", "سجل تدقيق كامل (Audit Log)", "توافق مع PDPL و SDAIA", "الموافقة المستنيرة (Consent)"],
     color: "from-purple-500 to-violet-600",
   },
 ];

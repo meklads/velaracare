@@ -189,13 +189,13 @@ export default function AITrustPage() {
               </div>
 
               <div className="card-premium p-8" data-vp-animate="fade-up" data-vp-delay="2">
-                <h3 className="text-lg font-bold text-[var(--text-primary)] mb-4">الشهادات والامتثال</h3>
+                <h3 className="text-lg font-bold text-[var(--text-primary)] mb-4">تقنيات الأمان في المنصة</h3>
                 <div className="space-y-4">
                   {[
-                    { icon: Shield, title: "ISO 27001", desc: "نظام إدارة أمن المعلومات" },
-                    { icon: Database, title: "PDPL", desc: "نظام حماية البيانات الشخصية السعودي" },
-                    { icon: Cpu, title: "SDAIA", desc: "الهيئة السعودية للبيانات والذكاء الاصطناعي" },
-                    { icon: Lock, title: "SOC 2 Type II", desc: "معايير الأمان والخصوصية" },
+                    { icon: Shield, title: "تشفير AES-256", desc: "تشفير البيانات أثناء التخزين" },
+                    { icon: Lock, title: "TLS 1.3", desc: "تشفير البيانات أثناء النقل" },
+                    { icon: Shield, title: "RBAC", desc: "صلاحيات وصول دقيقة حسب الدور" },
+                    { icon: Shield, title: "2FA", desc: "مصادقة متعددة العوامل" },
                   ].map((cert) => (
                     <div key={cert.title} className="flex items-center gap-3 p-3 rounded-xl bg-[var(--vp-glow-soft)]">
                       <cert.icon className="h-5 w-5 text-[var(--vp-accent)] shrink-0" />

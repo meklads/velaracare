@@ -31,11 +31,11 @@ const footerLinks = {
   ],
 };
 
-const certifications = [
-  { name: "ISO 27001", desc: "أمن المعلومات" },
-  { name: "PDPL", desc: "حماية البيانات" },
-  { name: "SDAIA", desc: "الذكاء الاصطناعي" },
-  { name: "SOC 2", desc: "الخصوصية" },
+const trustSignals = [
+  { name: "AI", desc: "تقييم تنبؤي" },
+  { name: "TLS 1.3", desc: "تشفير البيانات" },
+  { name: "RBAC", desc: "صلاحيات آمنة" },
+  { name: "2FA", desc: "مصادثة آمنة" },
 ];
 
 export default function Footer() {
@@ -64,19 +64,19 @@ export default function Footer() {
               الذكاء الاصطناعي التنبؤي والتحليلات الوقائية.
             </p>
 
-            {/* Certifications */}
+            {/* Trust signals */}
             <div className="mt-6">
-              <p className="text-xs font-semibold text-[var(--text-muted)] mb-3">الشهادات والاعتماد</p>
+              <p className="text-xs font-semibold text-[var(--text-muted)] mb-3">تقنيات المنصة</p>
               <div className="flex flex-wrap gap-2">
-                {certifications.map((cert) => (
+                {trustSignals.map((signal) => (
                   <div
-                    key={cert.name}
+                    key={signal.name}
                     className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[var(--bg-secondary)] border border-[var(--border-primary)] text-[11px] font-medium text-[var(--text-secondary)]"
                   >
                     <Shield className="h-3 w-3 text-[var(--accent)]" />
-                    {cert.name}
+                    {signal.name}
                     <span className="text-[var(--text-muted)]">—</span>
-                    {cert.desc}
+                    {signal.desc}
                   </div>
                 ))}
               </div>

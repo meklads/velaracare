@@ -31,18 +31,18 @@ const services = [
 ];
 
 const trustPillars = [
-  { icon: Award, title: "خبرة تمتد لـ 45+ عاماً", desc: "فريقنا يضم خبراء في الصحة المؤسسية والتكنولوجيا" },
-  { icon: Shield, title: "أمان وامتثال دولي", desc: "ISO 27001, PDPL, SDAIA, SOC 2 — نطبق أعلى معايير الأمان" },
-  { icon: Users, title: "أكثر من 250 مؤسسة", desc: "تثق بنا في تحسين صحة موظفيها وخفض التكاليف" },
+  { icon: Award, title: "فريق متخصص", desc: "خبرات متنوعة في الصحة المؤسسية وتقنيات الذكاء الاصطناعي" },
+  { icon: Shield, title: "أمان وخصوصية", desc: "نطبق أفضل ممارسات الأمان لحماية بيانات الموظفين والالتزام بالأنظمة المحلية" },
+  { icon: Users, title: "شراكات استراتيجية", desc: "نبني علاقات تعاون مع مؤسسات رائدة في القطاع الصحي والتقني" },
 ];
 
-const certifications = [
-  { name: "ISO 27001", desc: "أمن المعلومات" },
-  { name: "PDPL", desc: "حماية البيانات" },
-  { name: "SDAIA", desc: "الذكاء الاصطناعي" },
-  { name: "SOC 2", desc: "الخصوصية" },
-  { name: "PIPL", desc: "الامتثال الصحي" },
-  { name: "GDPR", desc: "الخصوصية الأوروبية" },
+const trustSignals = [
+  { name: "AI", desc: "محرك تقييم تنبؤي" },
+  { name: "HRA", desc: "تقييم صحي شامل" },
+  { name: "TLS 1.3", desc: "تشفير البيانات" },
+  { name: "RBAC", desc: "صلاحيات دقيقة" },
+  { name: "2FA", desc: "مصادقة آمنة" },
+  { name: "SLA", desc: "دعم فني مضمون" },
 ];
 
 const steps = [
@@ -100,15 +100,15 @@ export default function Home() {
               <div className="mt-16 flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-sm text-[var(--text-muted)]">
                 <span className="inline-flex items-center gap-1.5">
                   <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent)]" />
-                  معتمد من هيئة الصحة السعودية
+                  تقييم صحي بالذكاء الاصطناعي
                 </span>
                 <span className="inline-flex items-center gap-1.5">
                   <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent)]" />
-                  متوافق مع PDPL و SDAIA
+                  منصة سحابية آمنة
                 </span>
                 <span className="inline-flex items-center gap-1.5">
                   <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent)]" />
-                  يستخدم من 250+ مؤسسة
+                  دعم فني متخصص
                 </span>
               </div>
             </div>
@@ -209,28 +209,29 @@ export default function Home() {
         </section>
 
         {/* ═══════════════════════════════════════
-           CERTIFICATIONS & TRUST
+           TRUST & TRANSPARENCY
            ═══════════════════════════════════════ */}
         <section className="py-20 bg-[var(--bg-secondary)]" dir="rtl">
           <div className="container-shade">
             <div className="max-w-2xl mb-14 text-center mx-auto">
               <h2 className="text-[clamp(28px,3vw,40px)] font-extrabold text-[var(--text-primary)] leading-tight">
-                الشهادات والاعتمادات
+                الشفافية والأمان
               </h2>
               <p className="mt-4 text-[var(--text-secondary)] leading-relaxed">
-                نطبق أعلى معايير الأمان والجودة العالمية لضمان حماية بياناتكم وامتثال المنصة.
+                نبني Velara Care على أسس أمان وخصوصية عالية. نستخدم أحدث التقنيات لحماية بياناتكم
+                ونعمل باستمرار على تطوير المنصة وفق أفضل الممارسات العالمية.
               </p>
             </div>
 
             <div className="flex flex-wrap items-center justify-center gap-4">
-              {certifications.map((cert) => (
+              {trustSignals.map((signal) => (
                 <div
-                  key={cert.name}
+                  key={signal.name}
                   className="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-white border border-[var(--border-primary)] text-sm font-semibold text-[var(--text-primary)]"
                 >
                   <Shield className="h-4 w-4 text-[var(--accent)]" />
-                  {cert.name}
-                  <span className="text-[var(--text-muted)] font-normal">— {cert.desc}</span>
+                  {signal.name}
+                  <span className="text-[var(--text-muted)] font-normal">— {signal.desc}</span>
                 </div>
               ))}
             </div>
@@ -238,10 +239,10 @@ export default function Home() {
             {/* Quick stats */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-16">
               {[
-                { value: "250+", label: "مؤسسة تثق بنا" },
                 { value: "98%", label: "دقة التنبؤ" },
                 { value: "40%", label: "خفض التكاليف" },
-                { value: "4.9/5", label: "تقييم العملاء" },
+                { value: "7", label: "دقائق للتقييم" },
+                { value: "12", label: "مؤشراً صحياً" },
               ].map((stat) => (
                 <div key={stat.label} className="text-center p-6 bg-white border border-[var(--border-primary)] rounded-2xl">
                   <p className="text-[clamp(32px,3vw,44px)] font-extrabold text-[var(--accent)] leading-none mb-2">
