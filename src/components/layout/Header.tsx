@@ -17,12 +17,12 @@ import {
 } from "@/components/ui/navigation-menu";
 
 const features = [
-  { title: "تقييم المخاطر الصحية (HRA)", href: "/features#hra" },
-  { title: "المحرك التنبؤي AI", href: "/features#ai" },
-  { title: "نظام الوجبات الذكي", href: "/features#meals" },
-  { title: "لوحة التحكم التنفيذية", href: "/features#dashboard" },
-  { title: "الاستشارات", href: "/features#consultations" },
-  { title: "التقارير والتكاليف", href: "/features#reports" },
+  { title: "مسح صحة القوى العاملة", href: "/features" },
+  { title: "ذكاء تحليل التكاليف الصحية", href: "/features" },
+  { title: "التدخل الوقائي الذكي", href: "/features" },
+  { title: "لوحة القيادة التنفيذية", href: "/features" },
+  { title: "تقارير العائد على الاستثمار", href: "/features" },
+  { title: "إدارة برامج العافية", href: "/features" },
 ];
 
 export default function Header() {
@@ -86,6 +86,12 @@ export default function Header() {
           </NavigationMenu>
 
           <Link
+            href="/product"
+            className="h-10 px-4 text-sm font-medium inline-flex items-center text-primary hover:text-emerald transition-colors"
+          >
+            المنتج
+          </Link>
+          <Link
             href="/pricing"
             className="h-10 px-4 text-sm font-medium inline-flex items-center text-primary hover:text-emerald transition-colors"
           >
@@ -95,7 +101,7 @@ export default function Header() {
             href="/about"
             className="h-10 px-4 text-sm font-medium inline-flex items-center text-primary hover:text-emerald transition-colors"
           >
-            عن Velara Care
+            عن المنصة
           </Link>
         </nav>
 
@@ -162,7 +168,7 @@ export default function Header() {
                 href="/demo"
                 className="btn-primary h-9 px-5 text-sm"
               >
-                احجز عرضاً
+                عرض تجريبي للمؤسسات
               </Link>
             </>
           )}
@@ -200,6 +206,13 @@ export default function Header() {
             ))}
           </div>
           <Link
+            href="/product"
+            className="block py-2 text-sm text-secondary"
+            onClick={() => setMobileOpen(false)}
+          >
+            المنتج
+          </Link>
+          <Link
             href="/pricing"
             className="block py-2 text-sm text-secondary"
             onClick={() => setMobileOpen(false)}
@@ -211,7 +224,7 @@ export default function Header() {
             className="block py-2 text-sm text-secondary"
             onClick={() => setMobileOpen(false)}
           >
-            عن Velara Care
+            عن المنصة
           </Link>
           <hr className="border-[var(--surface-border)]" />
           {isLoggedIn ? (
@@ -250,7 +263,7 @@ export default function Header() {
                 onClick={() => setMobileOpen(false)}
                 className="btn-primary w-full justify-center text-sm"
               >
-                احجز عرضاً
+                عرض تجريبي للمؤسسات
               </Link>
             </>
           )}

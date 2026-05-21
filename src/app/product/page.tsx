@@ -5,71 +5,100 @@ import Link from "next/link";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import {
-  Brain, BarChart3, Users, Apple, Shield, ArrowLeft, Activity, Heart,
-  TrendingDown, Sparkles, CheckCircle2, Target, LineChart, DollarSign,
-  Layers, Server, Network, Zap, Lock, FileText, Building2, Cpu
+  Brain, BarChart3, Users, Shield, ArrowLeft, Activity, Heart,
+  TrendingDown, Target, LineChart, DollarSign,
+  Layers, Server, Building2, Cpu, FileText, PieChart,
+  UserCheck, Clock, CheckCircle2, GitBranch
 } from "lucide-react";
 import { initScrollAnimations } from "@/lib/scroll-animations";
 
-const platformLayers = [
+const platformArchitecture = [
   {
     icon: Users,
     title: "طبقة المستخدمين",
-    subtitle: "Employee Experience",
-    items: ["تقييم HRA الذكي", "لوحة العافية الشخصية", "نظام الوجبات المخصصة", "حجز الاستشارات", "متابعة التقدم الصحي"],
+    subtitle: "User Layer — الواجهات والتجارب",
+    items: [
+      "بوابة HR — إدارة البرامج والتقارير",
+      "تطبيق الموظف — تقييم ومتابعة وتوصيات",
+      "لوحة الإدارة التنفيذية — مؤشرات وعائد استثمار",
+      "بوابة الشركاء — مطاعم واستشاريو تغذية",
+    ],
     color: "from-blue-500 to-indigo-600",
   },
   {
-    icon: Brain,
-    title: "طبقة الذكاء الاصطناعي",
-    subtitle: "AI Intelligence Layer",
-    items: ["محرك التنبؤ بالمخاطر", "تصنيف المخاطر (Low/Medium/High/Critical)", "توصيات ذكية مخصصة", "تحليل الاتجاهات المستقبلية", "تفسير القرارات (Explainable AI)"],
+    icon: Cpu,
+    title: "طبقة الذكاء التحليلي",
+    subtitle: "Intelligence Layer — التحليل والتنبؤ",
+    items: [
+      "محرك تقييم صحة القوى العاملة (Wellness Score)",
+      "نموذج التنبؤ بالمخاطر والتكاليف",
+      "تحليل اتجاهات الصحة المؤسسية",
+      "توصيات وقائية مخصصة لكل موظف",
+    ],
     color: "from-[var(--vp-accent)] to-[var(--vp-accent-dark)]",
   },
   {
     icon: BarChart3,
     title: "طبقة التحليلات المؤسسية",
-    subtitle: "Enterprise Analytics",
-    items: ["لوحة القيادة التنفيذية", "Wellness Score المؤسسي", "تقارير ROI والتكاليف", "تحليل الأقسام والفروع", "التنبؤ بالتكاليف التأمينية"],
+    subtitle: "Enterprise Analytics — القياس والتقارير",
+    items: [
+      "Wellness Score المؤسسي (0-100)",
+      "تقارير خفض التكاليف والعائد على الاستثمار",
+      "تحليل الأقسام والفروع والمقارنات",
+      "تقارير جاهزة لمجلس الإدارة",
+    ],
     color: "from-amber-500 to-orange-600",
   },
   {
     icon: Shield,
-    title: "طبقة الأمان والحوكمة",
-    subtitle: "Security & Compliance",
-    items: ["تشفير AES-256 و TLS 1.3", "إخفاء الهوية (Anonymization)", "سجل تدقيق كامل (Audit Log)", "توافق مع PDPL و SDAIA", "الموافقة المستنيرة (Consent)"],
+    title: "طبقة الأمان والامتثال",
+    subtitle: "Security & Compliance — الحماية والحوكمة",
+    items: [
+      "تشفير AES-256 و TLS 1.3",
+      "إخفاء الهوية (Anonymization)",
+      "سجل تدقيق كامل (Audit Log)",
+      "توافق مع PDPL و SDAIA",
+    ],
     color: "from-purple-500 to-violet-600",
   },
 ];
 
-const productHighlights = [
+const businessModules = [
   {
-    icon: Target,
-    title: "التنبؤ المبكر",
-    desc: "نموذج AI يحلل 12 مؤشراً صحياً ويتنبأ بالمخاطر قبل 18 شهراً من تطور الحالات.",
-    stat: "98%",
-    statLabel: "دقة التنبؤ",
+    icon: Activity,
+    title: "مسح صحة القوى العاملة",
+    desc: "أداة تقييم جماعية تجمع بيانات صحية شاملة من جميع الموظفين خلال أيام. تنتج لوحة قيادة تنفيذية عن صحة المؤسسة بالكامل.",
+    bizValue: "رؤية موضوعية عن صحة القوى العاملة — أول مرة",
   },
   {
     icon: TrendingDown,
-    title: "خفض التكاليف",
-    desc: "تحليل مستمر للتكاليف التأمينية مع توصيات لتقليل الأعباء المالية.",
-    stat: "40%",
-    statLabel: "متوسط التوفير",
+    title: "ذكاء التكاليف الصحية",
+    desc: "نموذج تحليلي يربط البيانات الصحية بالتكاليف التأمينية. يتوقع الإنفاق المستقبلي ويوصي بخطط وقائية لتخفيض الأعباء.",
+    bizValue: "خفض تكاليف التأمين الصحي حتى 40%",
   },
   {
-    icon: LineChart,
-    title: "ذكاء مؤسسي",
-    desc: "لوحة تنفيذية تعرض مؤشرات الصحة المؤسسية والتكاليف والعائد على الاستثمار.",
-    stat: "3.2x",
-    statLabel: "ROI",
+    icon: PieChart,
+    title: "تقارير العائد على الاستثمار",
+    desc: "تقارير جاهزة لمجلس الإدارة تربط بين الاستثمار في الصحة والنتائج المالية — خفض التكاليف، تحسن الإنتاجية، انخفاض الغياب.",
+    bizValue: "إثبات العائد على استثمار الصحة بالأرقام",
   },
   {
-    icon: Shield,
-    title: "امتثال كامل",
-    desc: "منصة مصممة للتوافق مع أنظمة حماية البيانات السعودية والعالمية.",
-    stat: "100%",
-    statLabel: "امتثال",
+    icon: Target,
+    title: "التدخل الوقائي للقوى العاملة",
+    desc: "يحدد الفئات الأكثر عرضة للمخاطر ويطلق تلقائياً برامج وقائية مخصصة — استشارات، تغذية، لياقة — قبل تطور الحالات.",
+    bizValue: "تقليل حالات الطوارئ الصحية بنسبة تصل إلى 50%",
+  },
+  {
+    icon: BarChart3,
+    title: "لوحة قيادة HR التنفيذية",
+    desc: "مؤشرات حية لمشاركة الموظفين، تحسن Wellness Score، توزيع المخاطر، والتكاليف المتوقعة. كل ما تحتاجه في شاشة واحدة.",
+    bizValue: "قرارات مبنية على بيانات آنية — لا تخمين",
+  },
+  {
+    icon: Users,
+    title: "إدارة برامج العافية المؤسسية",
+    desc: "منصة تشغيلية تدير دورة حياة برامج الصحة بالكامل — من الإعلان والدعوات إلى التسجيل والمتابعة والتقارير.",
+    bizValue: "إدارة آلية توفر 70% من وقت فريق HR",
   },
 ];
 
@@ -80,30 +109,29 @@ export default function ProductPage() {
     <>
       <Header />
       <main>
-        {/* Hero */}
+        {/* HERO */}
         <section className="relative py-28 overflow-hidden bg-gradient-to-b from-[var(--bg-primary)] via-[var(--bg-secondary)] to-[var(--bg-primary)]" dir="rtl">
           <div className="absolute inset-0 pointer-events-none" style={{ background: 'var(--vp-gradient-hero)' }} />
-          <div className="absolute inset-0 vp-grid-bg opacity-30" />
           <div className="container-shade relative z-10 text-center">
             <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-[var(--vp-glow-soft)] border border-[var(--vp-accent)]/10 text-[var(--vp-accent)] text-sm font-medium mb-6" data-vp-animate="fade-up">
               <span className="vp-breathing-ring inline-block" style={{ width: '6px', height: '6px' }} />
-              المنتج
+              منصة مؤسسية
             </div>
             <h1 className="vp-hero max-w-4xl mx-auto" data-vp-animate="fade-up" data-vp-delay="1">
-              منصة متكاملة لذكاء{' '}
+              نظام تشغيل متكامل{' '}
               <br />
-              <span className="vp-hero-em">صحة القوى العاملة</span>
+              <span className="vp-hero-em">لتحسين صحة القوى العاملة</span>
             </h1>
             <p className="vp-subtitle text-[var(--text-secondary)] max-w-2xl mx-auto mt-6" data-vp-animate="fade-up" data-vp-delay="2">
-              ليس نظام wellness — إنها بنية تحتية للصحة المؤسسية مدعومة بالذكاء الاصطناعي.
-              أربع طبقات تكاملية تعمل معاً لتحويل صحة الموظفين إلى ذكاء مؤسسي وقيمة مالية.
+              ليست منصة عافية. ولا خدمة صحية. Velara Care هي بنية تحتية مؤسسية للصحة —
+              تجمع بين التقييم، التحليلات التنبؤية، إدارة البرامج، وتقارير العائد على الاستثمار
+              في نظام واحد قابل للتوسع.
             </p>
           </div>
         </section>
 
-        {/* Platform Architecture Layers */}
+        {/* PLATFORM ARCHITECTURE */}
         <section className="section-padding relative overflow-hidden" dir="rtl">
-          <div className="absolute inset-0 vp-grid-bg opacity-20" />
           <div className="container-shade relative z-10">
             <div className="mx-auto max-w-3xl text-center mb-12" data-vp-animate="fade-up">
               <span className="vp-label">البنية التحتية</span>
@@ -115,7 +143,7 @@ export default function ProductPage() {
             </div>
 
             <div className="space-y-6">
-              {platformLayers.map((layer, i) => (
+              {platformArchitecture.map((layer, i) => (
                 <div key={layer.title} className="card-premium p-6 lg:p-8" data-vp-animate="fade-up" data-vp-delay={String(i + 1)}>
                   <div className="flex flex-col lg:flex-row gap-6">
                     <div className="flex items-start gap-4 lg:w-72 shrink-0">
@@ -127,7 +155,7 @@ export default function ProductPage() {
                         <p className="text-xs text-[var(--text-secondary)]">{layer.subtitle}</p>
                       </div>
                     </div>
-                    <div className="flex-1 grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                    <div className="flex-1 grid sm:grid-cols-2 gap-3">
                       {layer.items.map((item) => (
                         <div key={item} className="flex items-center gap-2 p-2.5 rounded-xl bg-[var(--vp-glow-soft)]">
                           <CheckCircle2 className="h-4 w-4 text-[var(--vp-accent)] shrink-0" />
@@ -142,75 +170,40 @@ export default function ProductPage() {
           </div>
         </section>
 
-        {/* Product Highlights */}
-        <section className="section-padding relative overflow-hidden" dir="rtl" style={{ background: 'var(--vp-gradient-dark)' }}>
-          <div className="absolute inset-0 vp-grid-bg opacity-[0.04]" />
-          <div className="container-shade relative z-10">
-            <div className="mx-auto max-w-3xl text-center mb-12" data-vp-animate="fade-up">
-              <span className="vp-label text-white/60">المؤشرات</span>
-              <h2 className="vp-section-title text-white mt-4">
-                نتائج قابلة{' '}
-                <span className="text-[var(--vp-accent)]">للقياس والثقة</span>
-              </h2>
-              <div className="w-16 h-1 rounded-full bg-gradient-to-l from-[var(--vp-accent)] to-[var(--vp-cyan)] mx-auto mt-4" />
-            </div>
-
-            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4" data-vp-animate="fade-up" data-vp-delay="2">
-              {productHighlights.map((item) => (
-                <div key={item.title} className="card-premium !p-6 text-center bg-white/5 border-white/10 hover:!border-[var(--vp-accent)]/30">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[var(--vp-glow-soft)] mx-auto mb-4">
-                    <item.icon className="h-6 w-6 text-[var(--vp-accent)]" />
-                  </div>
-                  <h3 className="text-lg font-bold text-white mb-2">{item.title}</h3>
-                  <p className="text-sm text-white/70 mb-4">{item.desc}</p>
-                  <div className="text-2xl font-extrabold text-[var(--vp-accent)]">{item.stat}</div>
-                  <p className="text-xs text-white/50 mt-1">{item.statLabel}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Employee Journey */}
-        <section className="section-padding relative overflow-hidden" dir="rtl">
-          <div className="absolute inset-0 vp-grid-bg opacity-20" />
-          <div className="container-shade relative z-10">
-            <div className="mx-auto max-w-3xl text-center mb-12" data-vp-animate="fade-up">
-              <span className="vp-label">رحلة الموظف</span>
-              <h2 className="vp-section-title mt-4">
-                من أول تقييم إلى{' '}
-                <span className="vp-hero-em">تحسن مستدام</span>
-              </h2>
-              <div className="w-16 h-1 rounded-full bg-gradient-to-l from-[var(--vp-accent)] to-[var(--vp-cyan)] mx-auto mt-4" />
-            </div>
-
-            <div className="grid gap-6 md:grid-cols-4" data-vp-animate="fade-up" data-vp-delay="2">
-              {[
-                { icon: Activity, step: "1", title: "التقييم", desc: "يقيم صحته في 7 دقائق عبر HRA الذكي", color: "text-blue-500" },
-                { icon: Brain, step: "2", title: "التحليل", desc: "AI يحلل البيانات ويصنف مستوى المخاطر", color: "text-[var(--accent)]" },
-                { icon: Heart, step: "3", title: "التوصيات", desc: "يحصل على خطط تغذية ولياقة مخصصة", color: "text-amber-500" },
-                { icon: TrendingDown, step: "4", title: "التحسن", desc: "يتابع تقدمه مع تحسن مستمر في العافية", color: "text-purple-500" },
-              ].map((item) => (
-                <div key={item.title} className="card-premium p-6 text-center">
-                  <div className={`w-14 h-14 rounded-2xl bg-[var(--vp-glow-soft)] flex items-center justify-center mx-auto mb-4`}>
-                    <item.icon className={`h-7 w-7 ${item.color}`} />
-                  </div>
-                  <div className="w-8 h-8 rounded-full bg-[var(--vp-accent)] text-white text-sm font-bold flex items-center justify-center mx-auto mb-3">
-                    {item.step}
-                  </div>
-                  <h3 className="text-lg font-bold text-[var(--text-primary)] mb-2">{item.title}</h3>
-                  <p className="text-sm text-[var(--text-secondary)]">{item.desc}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Integrations */}
+        {/* BUSINESS MODULES */}
         <section className="section-padding relative overflow-hidden" dir="rtl" style={{ background: 'var(--vp-gradient-card)' }}>
           <div className="container-shade">
             <div className="mx-auto max-w-3xl text-center mb-12" data-vp-animate="fade-up">
-              <span className="vp-label">التكاملات</span>
+              <span className="vp-label">الوحدات التشغيلية</span>
+              <h2 className="vp-section-title mt-4">
+                كل وحدة تحقق{' '}
+                <span className="vp-hero-em">قيمة مؤسسية واضحة</span>
+              </h2>
+              <div className="w-16 h-1 rounded-full bg-gradient-to-l from-[var(--vp-accent)] to-[var(--vp-cyan)] mx-auto mt-4" />
+            </div>
+
+            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3" data-vp-animate="fade-up" data-vp-delay="2">
+              {businessModules.map((mod) => (
+                <div key={mod.title} className="card-premium p-6">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[var(--vp-glow-soft)] mb-4">
+                    <mod.icon className="h-6 w-6 text-[var(--vp-accent)]" />
+                  </div>
+                  <h3 className="text-lg font-bold text-[var(--text-primary)] mb-2">{mod.title}</h3>
+                  <p className="text-sm text-[var(--text-secondary)] mb-4">{mod.desc}</p>
+                  <div className="pt-3 border-t border-[var(--border-primary)]">
+                    <span className="text-xs font-semibold text-[var(--vp-accent)]">{mod.bizValue}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* INTEGRATION */}
+        <section className="section-padding relative overflow-hidden" dir="rtl">
+          <div className="container-shade">
+            <div className="mx-auto max-w-3xl text-center mb-12" data-vp-animate="fade-up">
+              <span className="vp-label">التكامل المؤسسي</span>
               <h2 className="vp-section-title mt-4">
                 يتكامل مع{' '}
                 <span className="vp-hero-em">أنظمتك الحالية</span>
@@ -240,13 +233,14 @@ export default function ProductPage() {
 
         {/* CTA */}
         <section className="relative py-28 overflow-hidden" dir="rtl" style={{ background: 'var(--vp-gradient-dark)' }}>
-          <div className="absolute inset-0 vp-grid-bg opacity-[0.03]" />
           <div className="container-shade relative">
             <div className="mx-auto max-w-2xl text-center" data-vp-animate="slide-up">
-              <h2 className="vp-hero text-white mb-6">جاهز لاستكشاف المنصة؟</h2>
-              <p className="vp-subtitle text-white/70 max-w-xl mx-auto mb-10">احصل على عرض تجريبي مخصص لاحتياجات مؤسستك</p>
+              <h2 className="vp-hero text-white mb-6">هل تريد رؤية المنصة في مؤسستك؟</h2>
+              <p className="vp-subtitle text-white/70 max-w-xl mx-auto mb-10">
+                احصل على عرض تجريبي مخصص لاحتياجات مؤسستك — مع تحليل أولي مجاني للتكاليف الصحية.
+              </p>
               <Link href="/demo" className="btn-premium !bg-white !text-[var(--vp-ink)] group">
-                اطلب عرضاً تجريبياً
+                اطلب عرضاً تجريبياً للمؤسسات
                 <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
               </Link>
             </div>

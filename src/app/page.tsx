@@ -2,54 +2,86 @@ import Link from "next/link";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import {
-  Shield, Heart, Phone, Mail, MapPin, ArrowLeft,
-  Users, TrendingDown, BarChart3, Activity, Brain,
-  CheckCircle2, Clock, Award, Star, ClipboardCheck, Cpu, TrendingUp
+  Shield, TrendingDown, BarChart3, Users, Building2,
+  ArrowLeft, Target, Activity, Cpu, TrendingUp, DollarSign,
+  Clock, Percent, PieChart, Layers, Network, CheckCircle2, UserCheck
 } from "lucide-react";
 
-const services = [
+const platformModules = [
   {
-    icon: Brain,
-    title: "التقييم الصحي التنبؤي",
-    desc: "تحليل ذكي لـ 12 مؤشراً صحياً مع تقارير مخصصة لكل موظف. نحدد المخاطر قبل 12 شهراً من تطورها.",
-  },
-  {
-    icon: Heart,
-    title: "برامج العافية المخصصة",
-    desc: "خطط تغذية ولياقة واستشارات صحية مبنية على التحليل الفردي. ربط مباشر مع مزودي الخدمات.",
-  },
-  {
-    icon: TrendingDown,
-    title: "خفض التكاليف التأمينية",
-    desc: "تحليلات مالية تنبؤية تخفض التكاليف التأمينية بنسبة تصل إلى 40% مع تحسين العائد على الاستثمار.",
+    icon: Activity,
+    title: "مسح صحة القوى العاملة",
+    desc: "أداة تقييم جماعية تجمع بيانات صحية شاملة من جميع الموظفين — وتحولها إلى لوحة قيادة تنفيذية عن صحة مؤسستك.",
+    metric: "آلاف الموظفين",
+    metricLabel: "يمكن مسحهم في أيام",
   },
   {
     icon: BarChart3,
-    title: "تقارير ولوحات قيادة",
-    desc: "مؤشرات أداء حية للقوى العاملة. تقارير جاهزة لمجلس الإدارة والإدارة التنفيذية.",
+    title: "تحليلات صحة المؤسسة",
+    desc: "لوحة قيادة حية تعرض Wellness Score المؤسسي، توزيع المخاطر، اتجاهات الصحة، مؤشرات الإنتاجية، ومقارنات الأقسام.",
+    metric: "100",
+    metricLabel: "مؤشر أداء رئيسي",
+  },
+  {
+    icon: TrendingDown,
+    title: "ذكاء خفض التكاليف الصحية",
+    desc: "نموذج تحليلي يربط البيانات الصحية بالتكاليف التأمينية — يتوقع الإنفاق المستقبلي ويوصي بخطط وقائية تخفض الأعباء المالية.",
+    metric: "حتى 40%",
+    metricLabel: "خفض في التكاليف",
+  },
+  {
+    icon: Target,
+    title: "التدخل الوقائي الذكي",
+    desc: "يحدد القوى العاملة الأكثر عرضة للمخاطر ويطلق توصيات وقائية مخصصة — استشارات، برامج تغذية، خطط لياقة — قبل تطور الحالات.",
+    metric: "98%",
+    metricLabel: "دقة في تحديد المخاطر",
+  },
+  {
+    icon: Users,
+    title: "إدارة برامج العافية المؤسسية",
+    desc: "منصة تشغيلية تدير برامج الصحة الوقائية — من الدعوات والتسجيل إلى المتابعة وإصدار التقارير — كل شيء في نظام واحد.",
+    metric: "100%",
+    metricLabel: "إدارة آلية للبرامج",
+  },
+  {
+    icon: PieChart,
+    title: "تقارير العائد على الاستثمار",
+    desc: "تقارير جاهزة لمجلس الإدارة تظهر العائد على استثمار الصحة — خفض التكاليف، تحسن الإنتاجية، انخفاض الإجازات المرضية.",
+    metric: "3.2x",
+    metricLabel: "متوسط العائد على الاستثمار",
   },
 ];
 
-const trustPillars = [
-  { icon: Award, title: "فريق متخصص", desc: "خبرات متنوعة في الصحة المؤسسية وتقنيات الذكاء الاصطناعي" },
-  { icon: Shield, title: "أمان وخصوصية", desc: "نطبق أفضل ممارسات الأمان لحماية بيانات الموظفين والالتزام بالأنظمة المحلية" },
-  { icon: Users, title: "شراكات استراتيجية", desc: "نبني علاقات تعاون مع مؤسسات رائدة في القطاع الصحي والتقني" },
+const businessOutcomes = [
+  { icon: DollarSign, value: "حتى 40%", label: "خفض تكاليف الرعاية الصحية" },
+  { icon: Users, value: "+25%", label: "تحسن إنتاجية القوى العاملة" },
+  { icon: TrendingDown, value: "-35%", label: "انخفاض الإجازات المرضية" },
+  { icon: Target, value: "98%", label: "دقة التنبؤ بالمخاطر الصحية" },
+  { icon: Clock, value: "7 أيام", label: "وقت النشر والتشغيل" },
+  { icon: Percent, value: "3.2x", label: "عائد على الاستثمار" },
 ];
 
-const trustSignals = [
-  { name: "AI", desc: "محرك تقييم تنبؤي" },
-  { name: "HRA", desc: "تقييم صحي شامل" },
-  { name: "TLS 1.3", desc: "تشفير البيانات" },
-  { name: "RBAC", desc: "صلاحيات دقيقة" },
-  { name: "2FA", desc: "مصادقة آمنة" },
-  { name: "SLA", desc: "دعم فني مضمون" },
-];
-
-const steps = [
-  { icon: ClipboardCheck, step: "1", title: "تقييم شامل", desc: "يقيم الموظف صحته عبر HRA ذكي في 7 دقائق" },
-  { icon: Cpu, step: "2", title: "تحليل ذكي", desc: "AI يحلل البيانات ويصنف المخاطر بدقة 98%" },
-  { icon: Heart, step: "3", title: "خطط مخصصة", desc: "توصيات تغذية ولياقة واستشارات حسب الحالة" },
-  { icon: TrendingUp, step: "4", title: "قياس وتحسين", desc: "متابعة مستمرة وتقارير دورية وقياس العائد" },
+const ecosystem = [
+  {
+    icon: Building2,
+    title: "الشركة",
+    desc: "تشتري المنصة وتحصل على عائد استثمار measurable — موظفون أكثر صحة، تكاليف أقل، إنتاجية أعلى.",
+  },
+  {
+    icon: Users,
+    title: "قسم الموارد البشرية",
+    desc: "لوحة قيادة متكاملة تراقب المشاركة، التحسن الصحي، والتكاليف — مع تقارير جاهزة للإدارة التنفيذية.",
+  },
+  {
+    icon: UserCheck,
+    title: "الموظفون",
+    desc: "تجربة صحية مخصصة — تقييم، توصيات، برامج، متابعة — داخل تطبيق واحد يحسن جودة الحياة.",
+  },
+  {
+    icon: Shield,
+    title: "المنصة (نظام التشغيل)",
+    desc: "طبقة التنسيق المركزية: تحليلات، توصيات، سير عمل، تقييم صحي، تتبع المشاركة، وإعداد التقارير.",
+  },
 ];
 
 export default function Home() {
@@ -57,27 +89,28 @@ export default function Home() {
     <>
       <Header />
       <main>
-        {/* ═══════════════════════════════════════
-           HERO — Clear, Calm, Trustworthy
-           ═══════════════════════════════════════ */}
+        {/* ═══════════════════════════════════════════════════
+           HERO — Enterprise Workforce Health Platform
+           ═══════════════════════════════════════════════════ */}
         <section className="relative pt-32 pb-24 overflow-hidden" dir="rtl">
           <div className="absolute inset-0 bg-gradient-to-b from-[var(--accent-soft)] to-transparent opacity-50" />
           <div className="container-shade relative z-10">
-            <div className="mx-auto max-w-3xl text-center">
+            <div className="mx-auto max-w-4xl text-center">
               <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[var(--accent-soft)] text-[var(--accent)] text-sm font-medium mb-6">
-                <Shield className="h-4 w-4" />
-                منصة الصحة المؤسسية — Velara Care
+                <Building2 className="h-4 w-4" />
+                منصة تحسين صحة القوى العاملة للشركات
               </div>
 
               <h1 className="text-[clamp(36px,4vw,56px)] font-extrabold leading-[1.1] tracking-[-0.02em] text-[var(--text-primary)]">
-                صحة أفضل لقوى عاملة
+                حوِّل صحة موظفيك إلى
                 <br />
-                <span className="text-[var(--accent)]">أكثر إنتاجية وعطاءً</span>
+                <span className="text-[var(--accent)]">ذكاء مؤسسي وقيمة مالية</span>
               </h1>
 
-              <p className="mt-6 text-lg text-[var(--text-secondary)] leading-relaxed max-w-2xl mx-auto">
-                Velara Care منصة ذكاء صحي مؤسسي تجمع بين التقييم التنبؤي بالذكاء الاصطناعي،
-                برامج العافية المخصصة، والتحليلات المالية — لتحويل صحة الموظفين إلى قيمة مؤسسية.
+              <p className="mt-6 text-lg text-[var(--text-secondary)] leading-relaxed max-w-3xl mx-auto">
+                Velara Care هي منصة مؤسسية لتحسين صحة القوى العاملة — تجمع بين التقييم الصحي الشامل،
+                التحليلات التنبؤية، وإدارة برامج العافية — لتخفض التكاليف، ترفع الإنتاجية،
+                وتعطيك رؤية كاملة عن صحة مؤسستك.
               </p>
 
               <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -85,7 +118,7 @@ export default function Home() {
                   href="/demo"
                   className="btn-primary text-base px-10 py-4 !h-auto"
                 >
-                  اطلب عرضاً تجريبياً
+                  اطلب عرضاً تجريبياً للمؤسسات
                   <ArrowLeft className="h-4 w-4" />
                 </Link>
                 <Link
@@ -96,100 +129,219 @@ export default function Home() {
                 </Link>
               </div>
 
-              {/* Trust indicators — simple text */}
-              <div className="mt-16 flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-sm text-[var(--text-muted)]">
+              {/* Quick value props */}
+              <div className="mt-16 flex flex-wrap items-center justify-center gap-x-10 gap-y-4 text-sm text-[var(--text-muted)]">
                 <span className="inline-flex items-center gap-1.5">
                   <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent)]" />
-                  تقييم صحي بالذكاء الاصطناعي
+                  تخفيض التكاليف الصحية حتى 40%
                 </span>
                 <span className="inline-flex items-center gap-1.5">
                   <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent)]" />
-                  منصة سحابية آمنة
+                  تحسين إنتاجية القوى العاملة
                 </span>
                 <span className="inline-flex items-center gap-1.5">
                   <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent)]" />
-                  دعم فني متخصص
+                  نظام تشغيل صحي مؤسسي متكامل
                 </span>
               </div>
             </div>
           </div>
         </section>
 
-        {/* ═══════════════════════════════════════
-           CORE SERVICES — Simple Cards
-           ═══════════════════════════════════════ */}
-        <section className="py-20" dir="rtl">
+        {/* ═══════════════════════════════════════════════════
+           THE PROBLEM WE SOLVE
+           ═══════════════════════════════════════════════════ */}
+        <section className="py-20 bg-[var(--bg-secondary)]" dir="rtl">
           <div className="container-shade">
-            <div className="max-w-2xl mb-14">
+            <div className="max-w-3xl mx-auto text-center mb-14">
               <h2 className="text-[clamp(28px,3vw,40px)] font-extrabold text-[var(--text-primary)] leading-tight">
-                خدماتنا المتكاملة
+                التحدي الذي تواجهه كل شركة
               </h2>
-              <p className="mt-4 text-[var(--text-secondary)] leading-relaxed">
-                منصة واحدة تجمع كل ما تحتاجه لتحسين صحة القوى العاملة — من التقييم إلى التنفيذ والمتابعة.
-              </p>
+              <div className="w-16 h-1 rounded-full bg-[var(--accent)] mx-auto mt-4" />
             </div>
 
-            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              {services.map((s) => (
-                <div
-                  key={s.title}
-                  className="bg-[var(--bg-card)] border border-[var(--border-primary)] rounded-2xl p-6 hover:border-[var(--accent)]/30 transition-colors"
-                >
-                  <div className="w-12 h-12 rounded-xl bg-[var(--accent-soft)] flex items-center justify-center mb-4">
-                    <s.icon className="h-6 w-6 text-[var(--accent)]" />
+            <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+              {[
+                { title: "تكاليف صحية متزايدة", desc: "أقساط التأمين الصحي ترتفع سنوياً بنسبة 15-20%. الشركات تدفع أكثر وتحصل على نتائج أقل." },
+                { title: "غياب الرؤية الصحية", desc: "ليس لديك أدوات لقياس صحة القوى العاملة بشكل موضوعي. القرارات تُبنى على تخمين وليس بيانات." },
+                { title: "حلول منفصلة غير فعالة", desc: "تطبيقات وجبات، برامج لياقة، استشارات — كلها منصات منفصلة لا تتكامل ولا تقيس العائد." },
+              ].map((item) => (
+                <div key={item.title} className="bg-[var(--bg-card)] border border-[var(--border-primary)] rounded-2xl p-6 text-center">
+                  <div className="w-12 h-12 rounded-xl bg-red-50 flex items-center justify-center mx-auto mb-4">
+                    <TrendingDown className="h-6 w-6 text-red-500" />
                   </div>
-                  <h3 className="text-lg font-bold text-[var(--text-primary)] mb-2">{s.title}</h3>
-                  <p className="text-sm text-[var(--text-secondary)] leading-relaxed">{s.desc}</p>
+                  <h3 className="text-lg font-bold text-[var(--text-primary)] mb-2">{item.title}</h3>
+                  <p className="text-sm text-[var(--text-secondary)] leading-relaxed">{item.desc}</p>
                 </div>
               ))}
             </div>
           </div>
         </section>
 
-        {/* ═══════════════════════════════════════
-           WHY VELARA — Trust Pillars
-           ═══════════════════════════════════════ */}
+        {/* ═══════════════════════════════════════════════════
+           PLATFORM MODULES — What Velara Actually Does
+           ═══════════════════════════════════════════════════ */}
+        <section className="py-20" dir="rtl">
+          <div className="container-shade">
+            <div className="max-w-2xl mb-14">
+              <h2 className="text-[clamp(28px,3vw,40px)] font-extrabold text-[var(--text-primary)] leading-tight">
+                مكونات المنصة المؤسسية
+              </h2>
+              <p className="mt-4 text-[var(--text-secondary)] leading-relaxed">
+                نظام تشغيل متكامل لتحسين صحة القوى العاملة — كل مكوّن يخدم هدفاً مؤسسياً قابلاً للقياس.
+              </p>
+            </div>
+
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {platformModules.map((m) => (
+                <div
+                  key={m.title}
+                  className="bg-[var(--bg-card)] border border-[var(--border-primary)] rounded-2xl p-6 hover:border-[var(--accent)]/30 transition-colors"
+                >
+                  <div className="w-12 h-12 rounded-xl bg-[var(--accent-soft)] flex items-center justify-center mb-4">
+                    <m.icon className="h-6 w-6 text-[var(--accent)]" />
+                  </div>
+                  <h3 className="text-lg font-bold text-[var(--text-primary)] mb-2">{m.title}</h3>
+                  <p className="text-sm text-[var(--text-secondary)] leading-relaxed mb-4">{m.desc}</p>
+                  <div className="pt-3 border-t border-[var(--border-primary)]">
+                    <span className="text-lg font-extrabold text-[var(--accent)]">{m.metric}</span>
+                    <span className="text-xs text-[var(--text-muted)] mr-1">{m.metricLabel}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ═══════════════════════════════════════════════════
+           BUSINESS OUTCOMES — Measurable, Defensible
+           ═══════════════════════════════════════════════════ */}
         <section className="py-20 bg-[var(--bg-secondary)]" dir="rtl">
           <div className="container-shade">
             <div className="max-w-2xl mb-14">
               <h2 className="text-[clamp(28px,3vw,40px)] font-extrabold text-[var(--text-primary)] leading-tight">
-                لماذا Velara Care؟
+                نتائج مؤسسية قابلة للقياس
               </h2>
               <p className="mt-4 text-[var(--text-secondary)] leading-relaxed">
-                أكثر من منصة صحية — نحن شريك استراتيجي في تحسين صحة القوى العاملة وخفض التكاليف.
+                المنصة لا تقدم وعوداً — تقدم بيانات. كل نتيجة قابلة للتتبع والقياس والإبلاغ.
               </p>
             </div>
 
-            <div className="grid md:grid-cols-3 gap-8">
-              {trustPillars.map((p) => (
-                <div key={p.title} className="text-center">
-                  <div className="w-16 h-16 rounded-2xl bg-[var(--accent-soft)] flex items-center justify-center mx-auto mb-5">
-                    <p.icon className="h-8 w-8 text-[var(--accent)]" />
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+              {businessOutcomes.map((o) => (
+                <div key={o.label} className="bg-[var(--bg-card)] border border-[var(--border-primary)] rounded-2xl p-5 text-center">
+                  <div className="w-10 h-10 rounded-xl bg-[var(--accent-soft)] flex items-center justify-center mx-auto mb-3">
+                    <o.icon className="h-5 w-5 text-[var(--accent)]" />
                   </div>
-                  <h3 className="text-xl font-bold text-[var(--text-primary)] mb-2">{p.title}</h3>
-                  <p className="text-sm text-[var(--text-secondary)] leading-relaxed">{p.desc}</p>
+                  <p className="text-xl font-extrabold text-[var(--accent)] leading-none mb-1">{o.value}</p>
+                  <p className="text-xs text-[var(--text-secondary)] leading-tight">{o.label}</p>
                 </div>
               ))}
             </div>
           </div>
         </section>
 
-        {/* ═══════════════════════════════════════
-           HOW IT WORKS — Simple Steps
-           ═══════════════════════════════════════ */}
+        {/* ═══════════════════════════════════════════════════
+           ECOSYSTEM — Who Is Involved
+           ═══════════════════════════════════════════════════ */}
         <section className="py-20" dir="rtl">
           <div className="container-shade">
             <div className="max-w-2xl mb-14">
               <h2 className="text-[clamp(28px,3vw,40px)] font-extrabold text-[var(--text-primary)] leading-tight">
-                كيف تعمل المنصة
+                منظومة متكاملة الأطراف
               </h2>
               <p className="mt-4 text-[var(--text-secondary)] leading-relaxed">
-                أربع خطوات بسيطة لتحويل صحة القوى العاملة إلى قيمة مؤسسية قابلة للقياس.
+                Velara Care تربط بين جميع الأطراف المعنية بصحة القوى العاملة في منصة واحدة.
+              </p>
+            </div>
+
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {ecosystem.map((e) => (
+                <div key={e.title} className="bg-[var(--bg-card)] border border-[var(--border-primary)] rounded-2xl p-6 text-center">
+                  <div className="w-14 h-14 rounded-2xl bg-[var(--accent-soft)] flex items-center justify-center mx-auto mb-4">
+                    <e.icon className="h-7 w-7 text-[var(--accent)]" />
+                  </div>
+                  <h3 className="text-lg font-bold text-[var(--text-primary)] mb-2">{e.title}</h3>
+                  <p className="text-sm text-[var(--text-secondary)] leading-relaxed">{e.desc}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ═══════════════════════════════════════════════════
+           FOR HR DIRECTORS — Direct Pitch
+           ═══════════════════════════════════════════════════ */}
+        <section className="py-20 bg-[var(--bg-secondary)]" dir="rtl">
+          <div className="container-shade">
+            <div className="grid md:grid-cols-2 gap-12 items-center max-w-4xl mx-auto">
+              <div>
+                <h2 className="text-[clamp(28px,3vw,40px)] font-extrabold text-[var(--text-primary)] leading-tight">
+                  لمديري الموارد البشرية
+                </h2>
+                <div className="w-16 h-1 rounded-full bg-[var(--accent)] mt-4 mb-6" />
+                <p className="text-[var(--text-secondary)] leading-relaxed mb-6">
+                  هل تواجه صعوبة في قياس أثر برامج العافية على التكاليف والإنتاجية؟
+                  هل تريد أداة واحدة تدير كل شيء — من التقييم إلى التقارير التنفيذية؟
+                </p>
+                <ul className="space-y-3">
+                  {[
+                    "لوحة قيادة حية لمؤشرات صحة القوى العاملة",
+                    "تقارير جاهزة لمجلس الإدارة والإدارة التنفيذية",
+                    "إدارة آلية لبرامج العافية من البداية للنهاية",
+                    "ربط مباشر بين البيانات الصحية والتكاليف التأمينية",
+                    "مقارنات أداء بين الأقسام والفروع",
+                  ].map((item) => (
+                    <li key={item} className="flex items-start gap-2 text-sm text-[var(--text-secondary)]">
+                      <CheckCircle2 className="h-4 w-4 text-[var(--accent)] shrink-0 mt-0.5" />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div className="bg-[var(--bg-card)] border border-[var(--border-primary)] rounded-2xl p-8">
+                <div className="text-center mb-6">
+                  <p className="text-4xl font-extrabold text-[var(--accent)]">3.2x</p>
+                  <p className="text-sm text-[var(--text-secondary)]">متوسط العائد على استثمار الصحة</p>
+                </div>
+                <div className="space-y-4">
+                  {[
+                    { label: "انخفاض الإجازات المرضية", value: "35%" },
+                    { label: "تحسن الإنتاجية", value: "25%" },
+                    { label: "خفض تكاليف التأمين", value: "40%" },
+                  ].map((item) => (
+                    <div key={item.label} className="flex items-center justify-between p-3 rounded-xl bg-[var(--bg-secondary)]">
+                      <span className="text-sm text-[var(--text-secondary)]">{item.label}</span>
+                      <span className="text-sm font-bold text-[var(--accent)]">{item.value}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ═══════════════════════════════════════════════════
+           HOW IT WORKS — Deployment Model
+           ═══════════════════════════════════════════════════ */}
+        <section className="py-20" dir="rtl">
+          <div className="container-shade">
+            <div className="max-w-2xl mb-14">
+              <h2 className="text-[clamp(28px,3vw,40px)] font-extrabold text-[var(--text-primary)] leading-tight">
+                النشر والتشغيل
+              </h2>
+              <p className="mt-4 text-[var(--text-secondary)] leading-relaxed">
+                منصة سحابية تنشر في أيام — بدون تعقيد تقني أو تكاليف بنية تحتية إضافية.
               </p>
             </div>
 
             <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
-              {steps.map((s, i) => (
+              {[
+                { icon: Building2, step: "1", title: "إعداد الحساب المؤسسي", desc: "نسجل شركتك ونحدد الصلاحيات والأدوار في دقائق" },
+                { icon: Users, step: "2", title: "دعوة القوى العاملة", desc: "نرسل دعوات للموظفين مع روابط تسجيل مخصصة" },
+                { icon: Cpu, step: "3", title: "التقييم والتحليل", desc: "الموظفون يقيمون صحتهم — AI يحلل وينتج التقارير" },
+                { icon: TrendingUp, step: "4", title: "القياس والتحسين المستمر", desc: "متابعة حية للنتائج وتقارير دورية للعائد على الاستثمار" },
+              ].map((s) => (
                 <div key={s.step} className="relative">
                   <div className="flex items-center gap-4 mb-4">
                     <div className="w-10 h-10 rounded-full bg-[var(--accent)] text-white text-sm font-bold flex items-center justify-center shrink-0">
@@ -208,92 +360,31 @@ export default function Home() {
           </div>
         </section>
 
-        {/* ═══════════════════════════════════════
-           TRUST & TRANSPARENCY
-           ═══════════════════════════════════════ */}
-        <section className="py-20 bg-[var(--bg-secondary)]" dir="rtl">
-          <div className="container-shade">
-            <div className="max-w-2xl mb-14 text-center mx-auto">
-              <h2 className="text-[clamp(28px,3vw,40px)] font-extrabold text-[var(--text-primary)] leading-tight">
-                الشفافية والأمان
-              </h2>
-              <p className="mt-4 text-[var(--text-secondary)] leading-relaxed">
-                نبني Velara Care على أسس أمان وخصوصية عالية. نستخدم أحدث التقنيات لحماية بياناتكم
-                ونعمل باستمرار على تطوير المنصة وفق أفضل الممارسات العالمية.
-              </p>
-            </div>
-
-            <div className="flex flex-wrap items-center justify-center gap-4">
-              {trustSignals.map((signal) => (
-                <div
-                  key={signal.name}
-                  className="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-white border border-[var(--border-primary)] text-sm font-semibold text-[var(--text-primary)]"
-                >
-                  <Shield className="h-4 w-4 text-[var(--accent)]" />
-                  {signal.name}
-                  <span className="text-[var(--text-muted)] font-normal">— {signal.desc}</span>
-                </div>
-              ))}
-            </div>
-
-            {/* Quick stats */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-16">
-              {[
-                { value: "98%", label: "دقة التنبؤ" },
-                { value: "40%", label: "خفض التكاليف" },
-                { value: "7", label: "دقائق للتقييم" },
-                { value: "12", label: "مؤشراً صحياً" },
-              ].map((stat) => (
-                <div key={stat.label} className="text-center p-6 bg-white border border-[var(--border-primary)] rounded-2xl">
-                  <p className="text-[clamp(32px,3vw,44px)] font-extrabold text-[var(--accent)] leading-none mb-2">
-                    {stat.value}
-                  </p>
-                  <p className="text-sm text-[var(--text-secondary)]">{stat.label}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* ═══════════════════════════════════════
-           FINAL CTA — Simple, Direct
-           ═══════════════════════════════════════ */}
-        <section className="py-24" dir="rtl">
+        {/* ═══════════════════════════════════════════════════
+           FINAL CTA — Enterprise Demo
+           ═══════════════════════════════════════════════════ */}
+        <section className="py-24 bg-[var(--bg-secondary)]" dir="rtl">
           <div className="container-shade">
             <div className="max-w-2xl mx-auto text-center">
               <h2 className="text-[clamp(28px,3vw,40px)] font-extrabold text-[var(--text-primary)] leading-tight">
-                جاهز لتحسين صحة قواك العاملة؟
+                هل تريد خفض تكاليف الرعاية الصحية وتحسين إنتاجية القوى العاملة؟
               </h2>
               <p className="mt-4 text-lg text-[var(--text-secondary)] leading-relaxed">
-                احصل على عرض تجريبي مخصص لاحتياجات مؤسستك — مع تحليل أولي مجاني للتكاليف الصحية.
+                احصل على عرض تجريبي مخصص لمؤسستك — يتضمن تحليلاً أولياً مجانياً للتكاليف الصحية
+                وتوصيات مبدئية للتحسين.
               </p>
 
               <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
                 <Link href="/demo" className="btn-primary text-base px-10 py-4 !h-auto">
-                  اطلب عرضاً تجريبياً
+                  اطلب عرضاً تجريبياً للمؤسسات
                   <ArrowLeft className="h-4 w-4" />
                 </Link>
                 <Link
-                  href="/contact"
+                  href="/pricing"
                   className="inline-flex items-center gap-2 px-8 py-4 rounded-full border border-[var(--border-primary)] text-[var(--text-secondary)] font-semibold text-sm hover:border-[var(--accent)] hover:text-[var(--accent)] transition-colors"
                 >
-                  تواصل معنا
+                  شاهد الخطط والأسعار
                 </Link>
-              </div>
-
-              <div className="mt-12 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm text-[var(--text-muted)]">
-                <span className="inline-flex items-center gap-1.5">
-                  <Phone className="h-3.5 w-3.5" />
-                  +966 800 123 4567
-                </span>
-                <span className="inline-flex items-center gap-1.5">
-                  <Mail className="h-3.5 w-3.5" />
-                  hello@velara.care
-                </span>
-                <span className="inline-flex items-center gap-1.5">
-                  <MapPin className="h-3.5 w-3.5" />
-                  الرياض، المملكة العربية السعودية
-                </span>
               </div>
             </div>
           </div>

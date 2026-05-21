@@ -6,8 +6,8 @@ import { Shield, Heart, Phone, Mail, MapPin } from "lucide-react";
 
 const footerLinks = {
   المنصة: [
-    { title: "الميزات", href: "/features" },
     { title: "المنتج", href: "/product" },
+    { title: "الميزات", href: "/features" },
     { title: "الأسعار", href: "/pricing" },
     { title: "طلب عرض تجريبي", href: "/demo" },
   ],
@@ -20,14 +20,14 @@ const footerLinks = {
   القانون: [
     { title: "شروط الخدمة", href: "/terms" },
     { title: "سياسة الخصوصية", href: "/privacy" },
-    { title: "الامتثال الصحي", href: "/compliance" },
+    { title: "الامتثال", href: "/compliance" },
     { title: "حماية البيانات", href: "/ai-trust" },
   ],
   "روابط سريعة": [
     { title: "اتصل بنا", href: "/contact" },
+    { title: "طلب عرض تجريبي", href: "/demo" },
     { title: "الأسعار", href: "/pricing" },
     { title: "المساعدة", href: "/help" },
-    { title: "عرض تجريبي", href: "/demo" },
   ],
 };
 
@@ -60,8 +60,8 @@ export default function Footer() {
             </Link>
 
             <p className="mt-4 text-sm text-[var(--text-secondary)] leading-relaxed max-w-sm">
-              منصة ذكاء صحي مؤسسي — تحوِّل صحة الموظفين إلى قيمة مالية وميزة تنافسية باستخدام
-              الذكاء الاصطناعي التنبؤي والتحليلات الوقائية.
+              منصة مؤسسية لتحسين صحة القوى العاملة — تخفض التكاليف، ترفع الإنتاجية،
+              وتعطيك رؤية كاملة عن صحة مؤسستك. نظام تشغيل صحي للمؤسسات، ليس مجرد خدمات.
             </p>
 
             {/* Trust signals */}

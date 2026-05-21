@@ -155,10 +155,10 @@ export default function ContactPage() {
           <div className="absolute inset-0 vp-grid-bg opacity-[0.03]" />
           <div className="absolute top-1/2 left-1/4 w-72 h-72 rounded-full bg-[var(--vp-accent)]/5 blur-3xl" />
           <div className="container-shade relative z-10" data-vp-animate="slide-up">
-            <h2 className="vp-hero text-white mb-6">جاهز لتحويل صحة موظفيك؟</h2>
-            <p className="vp-subtitle text-white/70 max-w-2xl mx-auto mb-10">احجز عرضاً تجريبياً مجاناً واكتشف كيف يمكن لـ Velara Care أن تخفض تكاليف الرعاية الصحية</p>
+            <h2 className="vp-hero text-white mb-6">هل تريد تحسين صحة قواك العاملة؟</h2>
+            <p className="vp-subtitle text-white/70 max-w-2xl mx-auto mb-10">احصل على عرض تجريبي مخصص لمؤسستك واكتشف كيف تخفض التكاليف الصحية وتحسن الإنتاجية</p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <Link href="/demo" className="btn-premium !bg-white !text-[var(--vp-ink)]">احجز عرضاً تجريبياً</Link>
+              <Link href="/demo" className="btn-premium !bg-white !text-[var(--vp-ink)]">اطلب عرضاً تجريبياً للمؤسسات</Link>
               <Link href="/pricing" className="btn-ghost !border-white/20 !text-white hover:!bg-white/5">شاهد الأسعار</Link>
             </div>
           </div>

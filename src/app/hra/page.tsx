@@ -4,7 +4,7 @@ import Link from "next/link";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { useState } from "react";
-import { ChevronLeft, ChevronRight, CheckCircle2, Brain, Activity, Moon, Heart, Apple, Droplets, Loader2, Shield } from "lucide-react";
+import { ChevronLeft, ChevronRight, CheckCircle2, Brain, Activity, Moon, Heart, Apple, Droplets, Loader2, Shield, BarChart3 } from "lucide-react";
 
 interface Responses {
   bmi: string;
@@ -76,17 +76,18 @@ export default function HRAPage() {
       <div className="w-20 h-20 rounded-full bg-emerald-gradient text-white flex items-center justify-center mx-auto mb-6 shadow-lg">
         <Heart className="h-10 w-10" />
       </div>
-      <h2 className="text-3xl font-bold text-primary mb-4">التقييم الصحي الذكي</h2>
+      <h2 className="text-3xl font-bold text-primary mb-4">مسح صحة القوى العاملة</h2>
       <p className="text-secondary max-w-lg mx-auto mb-8 leading-relaxed">
-        أجب على بضعة أسئلة بسيطة وسيقوم نظام الذكاء الاصطناعي بتحليل حالتك الصحية
-        وتقديم توصيات مخصصة لتحسين عافيتك. التقييم يستغرق أقل من 5 دقائق.
+        هذا التقييم الصحي الذكي هو أداة مسح جماعية تجمع بيانات صحية شاملة.
+        أجب على الأسئلة التالية — سيقوم النظام بتحليل إجاباتك وتقديم Wellness Score
+        مخصص وتوصيات وقائية. التقييم يستغرق أقل من 5 دقائق.
       </p>
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-2xl mx-auto mb-10">
         {[
           { icon: Brain, label: "تحليل ذكي", desc: "AI" },
           { icon: Activity, label: "5 دقائق فقط", desc: "سريع" },
           { icon: Shield, label: "بياناتك آمنة", desc: "خصوصية" },
-          { icon: CheckCircle2, label: "توصيات فورية", desc: "فوري" },
+          { icon: BarChart3, label: "تغذي Wellness Score", desc: "المؤسسة" },
         ].map((item) => (
           <div key={item.label} className="shade-card p-4 text-center">
             <item.icon className="h-6 w-6 text-emerald mx-auto mb-2" />
@@ -232,7 +233,7 @@ export default function HRAPage() {
         <CheckCircle2 className="h-10 w-10" />
       </div>
       <h2 className="text-2xl font-bold text-primary mb-2">تم إكمال التقييم! 🎉</h2>
-      <p className="text-secondary mb-8">إليك نتائج التقييم الصحي بناءً على إجاباتك</p>
+      <p className="text-secondary mb-8">إليك Wellness Score والتوصيات المخصصة بناءً على إجاباتك</p>
 
       {result && (
         <>
