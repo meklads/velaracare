@@ -54,7 +54,7 @@ export default function Footer() {
       {/* Top accent line */}
       <div className="h-px bg-gradient-to-l from-[var(--accent)] via-[var(--accent-light)]/40 to-transparent" />
 
-      <div className="container-shade pt-16 lg:pt-20 pb-10">
+      <div className="container-shade pt-20 lg:pt-24 pb-14 lg:pb-16">
         {/* ===== MAIN GRID: Brand + Links ===== */}
         <div className="grid gap-12 lg:grid-cols-6 mb-14">
           {/* --- Brand column --- */}
@@ -75,16 +75,16 @@ export default function Footer() {
               منصة عافية مؤسسية فقط.
             </p>
 
-            {/* Trust signals */}
+            {/* Trust signals — سطر واحد */}
             <div className="mt-8">
               <p className="text-xs font-semibold text-[var(--text-muted)] mb-3 tracking-wide">تقنيات المنصة</p>
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-nowrap gap-1.5">
                 {trustSignals.map((signal) => (
                   <div
                     key={signal.name}
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[var(--bg-secondary)] border border-[var(--border-primary)] text-[11px] font-medium text-[var(--text-secondary)] hover:border-[var(--accent)]/20 transition-colors"
+                    className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-[var(--bg-secondary)] border border-[var(--border-primary)] text-[10px] font-medium text-[var(--text-secondary)] hover:border-[var(--accent)]/20 transition-colors whitespace-nowrap"
                   >
-                    <Shield className="h-3 w-3 text-[var(--accent)]" />
+                    <Shield className="h-2.5 w-2.5 text-[var(--accent)]" />
                     {signal.name}
                     <span className="text-[var(--text-muted)]">—</span>
                     {signal.desc}
