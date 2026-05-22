@@ -14,69 +14,69 @@ import {
   Apple, ChefHat, Sparkles, Zap, Heart
 } from "lucide-react";
 
-// ===== HERO VALUE CARDS =====
+// ===== بطاقات القيمة =====
 const valueCards = [
-  { icon: TrendingDown, title: "Reduce Sick Leave", desc: "Wellness programs that lower absenteeism and keep your workforce healthy and present." },
-  { icon: Users, title: "Improve Employee Wellbeing", desc: "Personalized wellness journeys that improve quality of life and job satisfaction." },
-  { icon: BarChart3, title: "Workforce Wellness Analytics", desc: "Real-time dashboards that track participation, improvement, and business impact." },
-  { icon: Target, title: "Measurable Health Outcomes", desc: "Quantifiable results linking wellness investment to productivity and cost reduction." }
+  { icon: TrendingDown, title: "خفض أيام الغياب", desc: "برامج عافية تقلل التغيب وتحافظ على قوة عاملة صحية ومنتجة." },
+  { icon: Users, title: "تحسين عافية الموظفين", desc: "رحلات عافية مخصصة تحسن جودة الحياة والرضا الوظيفي." },
+  { icon: BarChart3, title: "تحليلات العافية", desc: "لوحات حية تتابع المشاركة والتحسن وأثر العافية على الأعمال." },
+  { icon: Target, title: "نتائج قابلة للقياس", desc: "أرقام ملموسة تربط استثمار العافية بالإنتاجية وخفض التكاليف." }
 ];
 
-// ===== SECTION 1: ECOSYSTEM =====
+// ===== القسم 1: المنظومة =====
 const ecosystemEntities = [
-  { icon: Building2, title: "Company", desc: "Invests in workforce wellness and gains measurable improvements in productivity, retention, and operational costs.", role: "Sets strategy & funds programs" },
-  { icon: Users, title: "HR Team", desc: "Manages wellness programs, monitors engagement, tracks outcomes, and generates executive reports from one dashboard.", role: "Operates & monitors programs" },
-  { icon: UserCheck, title: "Employee", desc: "Completes assessments, receives personalized recommendations, orders healthy meals, and tracks progress over time.", role: "Participates & improves over time" },
-  { icon: Apple, title: "Nutritionist", desc: "Accesses employee wellness insights, creates tailored nutrition plans, and monitors client progress through consultations.", role: "Prescribes nutrition plans" },
-  { icon: ChefHat, title: "Restaurant Partner", desc: "Receives structured wellness orders, prepares meals aligned with health goals, and delivers via integrated logistics.", role: "Fulfills healthy meals" }
+  { icon: Building2, title: "الشركة", desc: "تستثمر في عافية القوى العاملة وتحصل على تحسن measurable في الإنتاجية والاحتفاظ والتكاليف.", role: "تضع الاستراتيجية" },
+  { icon: Users, title: "الموارد البشرية", desc: "تدير برامج العافية، تراقب المشاركة، تقيس النتائج، وتصدر تقارير تنفيذية من لوحة واحدة.", role: "تدير البرامج" },
+  { icon: UserCheck, title: "الموظف", desc: "يكمل مسح نمط الحياة، يستلم توصيات مخصصة، يطلب وجبات صحية، وي追踪 تحسنه.", role: "يشارك ويتحسن" },
+  { icon: Apple, title: "أخصائي التغذية", desc: "يطلع على بيانات العافية للموظفين، يضع خطط تغذية مخصصة، ويتابع التقدم عبر الاستشارات.", role: "يضع الخطط الغذائية" },
+  { icon: ChefHat, title: "المطعم الشريك", desc: "يستلم طلبات منظمة حسب أهداف العافية، يحضر وجبات صحية، ويوصل عبر لوجستيات متكاملة.", role: "ينفذ الوجبات الصحية" }
 ];
 
-// ===== SECTION 2: HR DASHBOARD =====
+// ===== القسم 2: لوحة HR =====
 const hrDashboardMetrics = [
-  { icon: Activity, value: "87%", label: "Workforce Wellness Score", desc: "Overall workforce health index across all participants" },
-  { icon: TrendingUp, value: "72%", label: "Employee Engagement", desc: "Active participation rate in wellness programs" },
-  { icon: Apple, value: "64%", label: "Nutrition Participation", desc: "Employees actively using meal planning and ordering" },
-  { icon: PieChart, value: "3 Levels", label: "Wellness Risk Distribution", desc: "Low, moderate, and high-risk employee segments" },
-  { icon: TrendingDown, value: "-35%", label: "Sick Leave Reduction", desc: "Year-over-year decrease in absenteeism" },
-  { icon: ClipboardCheck, value: "81%", label: "Program Adoption", desc: "Percentage of employees enrolled in wellness programs" }
+  { icon: Activity, value: "87%", label: "مؤشر العافية العام", desc: "مؤشر الصحة العام للقوى العاملة" },
+  { icon: TrendingUp, value: "72%", label: "مشاركة الموظفين", desc: "نسبة المشاركة النشطة في البرامج" },
+  { icon: Apple, value: "64%", label: "مشاركة التغذية", desc: "موظفون يستخدمون خطط الوجبات" },
+  { icon: PieChart, value: "3 مستويات", label: "توزيع المخاطر", desc: "منخفض / متوسط / مرتفع" },
+  { icon: TrendingDown, value: "-35%", label: "خفض الغياب", desc: "انخفاض التغيب سنة بعد سنة" },
+  { icon: ClipboardCheck, value: "81%", label: "اعتماد البرامج", desc: "نسبة الموظفين المسجلين" }
 ];
 
-// ===== SECTION 3: EMPLOYEE JOURNEY =====
+// ===== القسم 3: رحلة الموظف =====
 const employeeJourney = [
-  { step: "1", icon: Building2, title: "Employee Joins Company", desc: "Auto-onboarded into Velara wellness platform via HR system integration." },
-  { step: "2", icon: ClipboardCheck, title: "Completes Assessment", desc: "5-minute lifestyle survey on nutrition, sleep, activity, and stress." },
-  { step: "3", icon: Brain, title: "AI Generates Profile", desc: "Personalized Wellness Score with risk analysis based on responses." },
-  { step: "4", icon: Target, title: "Nutrition Recommendations", desc: "AI-driven meal suggestions aligned with wellness goals and dietary needs." },
-  { step: "5", icon: Salad, title: "Orders Healthy Meals", desc: "Selects from restaurant partner menus through integrated ordering system." },
-  { step: "6", icon: Apple, title: "Books Consultation", desc: "One-on-one sessions with platform nutritionists for guidance." },
-  { step: "7", icon: TrendingUp, title: "Progress Tracked Over Time", desc: "Wellness Score improves, achievements logged, outcomes measured." }
+  { step: "1", icon: Building2, title: "انضمام الموظف", desc: "يتم تسجيله تلقائياً في المنصة عبر نظام HR." },
+  { step: "2", icon: ClipboardCheck, title: "يكمل مسح نمط الحياة", desc: "مسح سريع 5 دقائق عن التغذية، النوم، النشاط، والإجهاد." },
+  { step: "3", icon: Brain, title: "الذكاء الاصطناعي يحلل", desc: "ينتج Wellness Score شخصي مع تحليل المخاطر." },
+  { step: "4", icon: Target, title: "توصيات تغذية مخصصة", desc: "اقتراحات وجبات مبنية على أهدافه الصحية." },
+  { step: "5", icon: Salad, title: "يطلب وجبات صحية", desc: "يختار من قوائم المطاعم الشريكة عبر المنصة." },
+  { step: "6", icon: Apple, title: "يستشير أخصائي تغذية", desc: "جلسات فردية مع أخصائيي التغذية." },
+  { step: "7", icon: TrendingUp, title: "يتتبع تحسنه", desc: "Wellness Score يتحسن مع الوقت والنتائج تقاس." }
 ];
 
-// ===== SECTION 4: NUTRITIONIST =====
+// ===== القسم 4: أخصائي التغذية =====
 const nutritionistCapabilities = [
-  { icon: Brain, title: "Wellness Insights Access", desc: "View detailed wellness profiles and risk assessments of assigned employees." },
-  { icon: Target, title: "Connected Nutrition Plans", desc: "Create meal plans integrated directly with restaurant partner ordering systems." },
-  { icon: UserCheck, title: "Consultation Management", desc: "Schedule, conduct, and track all nutrition consultations within the platform." },
-  { icon: TrendingUp, title: "Progress Monitoring", desc: "Track employee health metrics over time and adjust recommendations." },
-  { icon: BarChart3, title: "Outcome Analytics", desc: "Measure real impact of nutrition interventions on workforce wellness scores." }
+  { icon: Brain, title: "بيانات العافية", desc: "اطلاع على ملفات العافية للموظفين المعينين." },
+  { icon: Target, title: "خطط تغذية متصلة", desc: "إعداد خطط وجبات مرتبطة بأنظمة طلب المطاعم." },
+  { icon: UserCheck, title: "إدارة الاستشارات", desc: "جدولة ومتابعة جميع الاستشارات داخل المنصة." },
+  { icon: TrendingUp, title: "متابعة التقدم", desc: "تتبع مؤشرات الموظفين وتعديل التوصيات." },
+  { icon: BarChart3, title: "تحليل النتائج", desc: "قياس أثر التدخلات الغذائية على Wellness Score." }
 ];
 
-// ===== SECTION 5: RESTAURANT =====
+// ===== القسم 5: المطعم =====
 const restaurantCapabilities = [
-  { icon: ClipboardCheck, title: "Structured Wellness Orders", desc: "Receive orders categorized by wellness goals, dietary preferences, and health requirements." },
-  { icon: Salad, title: "Wellness-Aligned Menus", desc: "Organize meal offerings by health categories — balanced, high-protein, low-calorie, and more." },
-  { icon: Activity, title: "Integrated Delivery Logistics", desc: "Fulfill orders through platform-connected delivery with real-time tracking." },
-  { icon: PieChart, title: "Performance Analytics", desc: "Track order volume, popular meals, participation trends, and satisfaction metrics." }
+  { icon: ClipboardCheck, title: "طلبات منظمة", desc: "استلام طلبات مصنفة حسب أهداف العافية والاحتياجات الغذائية." },
+  { icon: Salad, title: "قوائم متوافقة مع العافية", desc: "تنظيم الوجبات حسب الفئات الصحية — متوازن، بروتين، منخفض السعرات." },
+  { icon: Activity, title: "لوجستيات متكاملة", desc: "توصيل عبر المنصة مع تتبع آني للطلبات." },
+  { icon: PieChart, title: "تحليلات الأداء", desc: "متابعة حجم الطلبات، الوجبات الأكثر طلباً، واتجاهات المشاركة." }
 ];
 
-// ===== SECTION 6: BUSINESS IMPACT =====
+// ===== القسم 6: نتائج الأعمال =====
 const businessMetrics = [
-  { icon: TrendingDown, value: "-35%", label: "Reduced Sick Leave" },
-  { icon: TrendingUp, value: "+25%", label: "Improved Productivity" },
-  { icon: Users, value: "85%", label: "Wellness Engagement" },
-  { icon: DollarSign, value: "-28%", label: "Lower Health Costs" },
-  { icon: Award, value: "3.2x", label: "Workforce Performance" },
-  { icon: Medal, value: "+40%", label: "Employer Brand Strength" }
+  { icon: TrendingDown, value: "-35%", label: "خفض أيام الغياب" },
+  { icon: TrendingUp, value: "+25%", label: "تحسين الإنتاجية" },
+  { icon: Users, value: "85%", label: "مشاركة في العافية" },
+  { icon: DollarSign, value: "-28%", label: "خفض التكاليف الصحية" },
+  { icon: Award, value: "3.2x", label: "العائد على الاستثمار" },
+  { icon: Medal, value: "+40%", label: "قوة العلامة التجارية" }
 ];
 
 export default function Home() {
@@ -90,10 +90,8 @@ export default function Home() {
     <>
       <Header />
       <main>
-        {/* ════════════════════════════════════════
-           HERO
-           ════════════════════════════════════════ */}
-        <section className="relative pt-32 pb-24 overflow-hidden">
+        {/* ═══ HERO ═══ */}
+        <section className="relative pt-32 pb-24 overflow-hidden" dir="rtl">
           <div className="absolute inset-0 bg-gradient-to-b from-[var(--accent-soft)] via-transparent to-transparent opacity-60" />
           <div className="absolute top-[-10%] right-[-5%] w-[600px] h-[600px] rounded-full bg-gradient-to-br from-[var(--accent)]/8 via-[var(--accent)]/3 to-transparent blur-3xl pointer-events-none" />
           <div className="absolute bottom-[-15%] left-[-10%] w-[500px] h-[500px] rounded-full bg-gradient-to-tr from-[var(--accent)]/5 to-transparent blur-3xl pointer-events-none" />
@@ -104,25 +102,25 @@ export default function Home() {
               <div data-vp-animate="fade-up">
                 <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[var(--accent-soft)] border border-[var(--accent)]/10 text-[var(--accent)] text-xs font-semibold mb-6">
                   <Heart className="h-3.5 w-3.5" />
-                  Enterprise Workforce Wellness Platform
+                  منصة عافية مؤسسية متكاملة
                 </span>
               </div>
               <h1 className="vp-hero" data-vp-animate="fade-up" data-vp-delay="1">
-                Transform Workforce Health
+                حوّل عافية قواك العاملة
                 <br />
-                <span className="vp-hero-em">Into Measurable Business Performance</span>
+                <span className="vp-hero-em">إلى أداء مؤسسي قابل للقياس</span>
               </h1>
               <p className="vp-subtitle max-w-3xl mx-auto mt-6" data-vp-animate="fade-up" data-vp-delay="2">
-                Velara is an integrated workforce health operating system connecting companies,
-                employees, HR teams, nutritionists, and wellness providers inside one measurable ecosystem.
+                Velara Care هي نظام تشغيل متكامل لبرامج عافية الموظفين — يربط بين الشركات،
+                الموظفين، فرق الموارد البشرية، أخصائيي التغذية، ومزودي الخدمات في منظومة واحدة قابلة للقياس.
               </p>
               <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4" data-vp-animate="fade-up" data-vp-delay="3">
                 <Link href="/demo" className="btn-premium text-base px-10 py-4 !h-auto">
-                  Book Enterprise Demo
+                  اطلب عرضاً تجريبياً للمؤسسات
                   <ArrowLeft className="h-4 w-4" />
                 </Link>
                 <Link href="/product" className="btn-ghost text-base px-8 py-4 !h-auto">
-                  Explore Platform
+                  استكشف المنصة
                 </Link>
               </div>
               <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mx-auto" data-vp-animate="fade-up" data-vp-delay="4">
@@ -140,18 +138,16 @@ export default function Home() {
           </div>
         </section>
 
-        {/* ════════════════════════════════════════
-           STATS — Trust & Scale
-           ════════════════════════════════════════ */}
-        <section className="py-16 bg-[var(--bg-primary)] relative overflow-hidden">
+        {/* ═══ الإحصائيات ═══ */}
+        <section className="py-16 bg-[var(--bg-primary)] relative overflow-hidden" dir="rtl">
           <div className="absolute inset-0 vp-data-dots pointer-events-none opacity-50" />
           <div className="container-shade relative z-10">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-3xl mx-auto">
               {[
-                { num: "5000", suffix: "+", label: "Employees On Platform" },
-                { num: "100", suffix: "+", label: "Enterprise Clients" },
-                { num: "35", suffix: "%", label: "Sick Leave Reduction" },
-                { num: "3.2", suffix: "x", label: "Average ROI" },
+                { num: "5000", suffix: "+", label: "موظف على المنصة" },
+                { num: "100", suffix: "+", label: "شركة تثق بنا" },
+                { num: "35", suffix: "%", label: "خفض أيام الغياب" },
+                { num: "3.2", suffix: "x", label: "متوسط العائد" },
               ].map((s) => (
                 <div key={s.label} className="text-center" data-vp-animate="fade-up">
                   <p className="vp-stat" data-vp-count-to={s.num} data-vp-count-suffix={s.suffix}>{s.num}{s.suffix}</p>
@@ -162,16 +158,14 @@ export default function Home() {
           </div>
         </section>
 
-        {/* ════════════════════════════════════════
-           SECTION 1 — PLATFORM ECOSYSTEM
-           ════════════════════════════════════════ */}
-        <section className="py-24 bg-[var(--bg-secondary)] relative overflow-hidden">
+        {/* ═══ القسم 1: المنظومة ═══ */}
+        <section className="py-24 bg-[var(--bg-secondary)] relative overflow-hidden" dir="rtl">
           <div className="absolute inset-0 vp-data-dots pointer-events-none" />
           <div className="container-shade relative z-10">
             <div className="max-w-3xl mx-auto text-center mb-16" data-vp-animate="fade-up">
-              <span className="vp-label">Platform Architecture</span>
-              <h2 className="vp-section-title mt-4">How The Velara Ecosystem Works</h2>
-              <p className="vp-subtitle mt-4">Five key stakeholders connected in one measurable workforce wellness operating system.</p>
+              <span className="vp-label">هيكل المنصة</span>
+              <h2 className="vp-section-title mt-4">كيف تعمل منظومة Velara Care</h2>
+              <p className="vp-subtitle mt-4">خمسة أطراف مترابطة في نظام تشغيل واحد measurable لبرامج العافية المؤسسية.</p>
               <div className="w-16 h-1 rounded-full bg-gradient-to-l from-[var(--accent)] to-[var(--accent-light)] mx-auto mt-4" />
             </div>
 
@@ -189,7 +183,7 @@ export default function Home() {
                   {i < ecosystemEntities.length - 1 && (
                     <div className="flex items-center pt-8 px-2">
                       <div className="w-8 h-8 rounded-full bg-[var(--bg-card)] border border-[var(--border-primary)] flex items-center justify-center shadow-sm">
-                        <ArrowRight className="h-4 w-4 text-[var(--accent)]" />
+                        <ArrowLeft className="h-4 w-4 text-[var(--accent)]" />
                       </div>
                     </div>
                   )}
@@ -212,17 +206,15 @@ export default function Home() {
           </div>
         </section>
 
-        {/* ════════════════════════════════════════
-           SECTION 2 — HR CONTROL CENTER
-           ════════════════════════════════════════ */}
-        <section className="py-24 bg-[var(--bg-primary)] relative overflow-hidden">
+        {/* ═══ القسم 2: لوحة HR ═══ */}
+        <section className="py-24 bg-[var(--bg-primary)] relative overflow-hidden" dir="rtl">
           <div className="absolute top-0 right-0 w-[400px] h-[400px] rounded-full bg-gradient-to-bl from-[var(--accent)]/5 to-transparent blur-3xl pointer-events-none" />
           <div className="container-shade relative z-10">
             <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
               <div data-vp-animate="fade-up">
-                <span className="vp-label">Enterprise Analytics</span>
-                <h2 className="vp-section-title mt-4">HR Wellness Intelligence Dashboard</h2>
-                <p className="vp-subtitle mt-4 mb-8">Real-time operational intelligence for managing workforce wellness programs at scale. Monitor participation, track outcomes, and generate executive-ready reports.</p>
+                <span className="vp-label">تحليلات المؤسسة</span>
+                <h2 className="vp-section-title mt-4">لوحة قيادة العافية لـ HR</h2>
+                <p className="vp-subtitle mt-4 mb-8">ذكاء تشغيلي فوري لإدارة برامج العافية على نطاق واسع. تابع المشاركة، قس النتائج، واصدر تقارير تنفيذية جاهزة.</p>
                 <div className="grid grid-cols-2 gap-3">
                   {hrDashboardMetrics.map((metric) => (
                     <div key={metric.label} className="card-premium !p-4 group">
@@ -241,7 +233,7 @@ export default function Home() {
               <div className="relative" data-vp-animate="scale-in" data-vp-delay="2">
                 <div className="absolute -inset-6 bg-gradient-to-r from-[var(--accent)]/10 via-[var(--accent)]/5 to-transparent rounded-3xl blur-3xl" />
                 <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-[var(--border-primary)]">
-                  <Image src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=700&h=500&fit=crop&auto=format" alt="HR Analytics Dashboard" width={700} height={500} className="w-full h-auto object-cover" priority />
+                  <Image src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=700&h=500&fit=crop&auto=format" alt="لوحة قيادة HR" width={700} height={500} className="w-full h-auto object-cover" priority />
                 </div>
                 <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-white/10 pointer-events-none" />
               </div>
@@ -249,10 +241,8 @@ export default function Home() {
           </div>
         </section>
 
-        {/* ════════════════════════════════════════
-           SECTION 3 — EMPLOYEE EXPERIENCE FLOW
-           ════════════════════════════════════════ */}
-        <section className="py-24 bg-[var(--bg-secondary)] relative overflow-hidden">
+        {/* ═══ القسم 3: رحلة الموظف ═══ */}
+        <section className="py-24 bg-[var(--bg-secondary)] relative overflow-hidden" dir="rtl">
           <div className="absolute bottom-0 left-0 w-[400px] h-[400px] rounded-full bg-gradient-to-tr from-[var(--accent)]/5 to-transparent blur-3xl pointer-events-none" />
           <div className="absolute inset-0 vp-grid-bg opacity-[0.02]" />
           <div className="container-shade relative z-10">
@@ -260,14 +250,14 @@ export default function Home() {
               <div className="relative order-last lg:order-first" data-vp-animate="scale-in">
                 <div className="absolute -inset-6 bg-gradient-to-l from-[var(--accent)]/10 via-[var(--accent)]/5 to-transparent rounded-3xl blur-3xl" />
                 <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-[var(--border-primary)]">
-                  <Image src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=700&h=500&fit=crop&auto=format" alt="Employee Wellness Journey" width={700} height={500} className="w-full h-auto object-cover" />
+                  <Image src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=700&h=500&fit=crop&auto=format" alt="رحلة الموظف" width={700} height={500} className="w-full h-auto object-cover" />
                 </div>
                 <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-white/10 pointer-events-none" />
               </div>
               <div data-vp-animate="fade-up" data-vp-delay="2">
-                <span className="vp-label">Employee Journey</span>
-                <h2 className="vp-section-title mt-4">Employee Wellness Journey</h2>
-                <p className="vp-subtitle mt-4 mb-8">From onboarding to measurable improvement — a complete employee wellness experience powered by AI.</p>
+                <span className="vp-label">رحلة الموظف</span>
+                <h2 className="vp-section-title mt-4">رحلة الموظف في العافية</h2>
+                <p className="vp-subtitle mt-4 mb-8">من الانضمام إلى تحسن ملموس — تجربة عافية متكاملة مدعومة بالذكاء الاصطناعي.</p>
                 <div className="space-y-4">
                   {employeeJourney.map((item, i) => (
                     <div key={item.step} className="flex items-start gap-4 group">
@@ -292,17 +282,15 @@ export default function Home() {
           </div>
         </section>
 
-        {/* ════════════════════════════════════════
-           SECTION 4 — NUTRITIONIST OPERATIONS
-           ════════════════════════════════════════ */}
-        <section className="py-24 bg-[var(--bg-primary)] relative overflow-hidden">
+        {/* ═══ القسم 4: أخصائي التغذية ═══ */}
+        <section className="py-24 bg-[var(--bg-primary)] relative overflow-hidden" dir="rtl">
           <div className="absolute inset-0 vp-data-dots pointer-events-none" />
           <div className="container-shade relative z-10">
             <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
               <div data-vp-animate="fade-up">
-                <span className="vp-label">Nutritionist Workspace</span>
-                <h2 className="vp-section-title mt-4">Connected Nutritionist Workspace</h2>
-                <p className="vp-subtitle mt-4 mb-8">An intelligent operational workspace where nutritionists manage clients, create plans, and measure outcomes — all connected to the employee wellness ecosystem.</p>
+                <span className="vp-label">فضاء أخصائي التغذية</span>
+                <h2 className="vp-section-title mt-4">فضاء أخصائي التغذية المتصل</h2>
+                <p className="vp-subtitle mt-4 mb-8">مساحة عمل ذكية حيث يدير أخصائيو التغذية عملائهم، يضعون الخطط، ويقيسون النتائج — كل ذلك متصل بمنظومة العافية.</p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {nutritionistCapabilities.map((cap) => (
                     <div key={cap.title} className="card-premium !p-4 group">
@@ -318,7 +306,7 @@ export default function Home() {
               <div className="relative" data-vp-animate="scale-in" data-vp-delay="2">
                 <div className="absolute -inset-6 bg-gradient-to-l from-[var(--accent)]/10 via-[var(--accent)]/5 to-transparent rounded-3xl blur-3xl" />
                 <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-[var(--border-primary)]">
-                  <Image src="https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=700&h=500&fit=crop&auto=format" alt="Healthy Nutrition" width={700} height={500} className="w-full h-auto object-cover" />
+                  <Image src="https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=700&h=500&fit=crop&auto=format" alt="تغذية صحية" width={700} height={500} className="w-full h-auto object-cover" />
                 </div>
                 <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-white/10 pointer-events-none" />
               </div>
@@ -326,24 +314,22 @@ export default function Home() {
           </div>
         </section>
 
-        {/* ════════════════════════════════════════
-           SECTION 5 — RESTAURANT PARTNER SYSTEM
-           ════════════════════════════════════════ */}
-        <section className="py-24 bg-[var(--bg-secondary)] relative overflow-hidden">
+        {/* ═══ القسم 5: المطعم الشريك ═══ */}
+        <section className="py-24 bg-[var(--bg-secondary)] relative overflow-hidden" dir="rtl">
           <div className="absolute top-0 right-[-10%] w-[500px] h-[500px] rounded-full bg-gradient-to-bl from-[var(--accent)]/5 to-transparent blur-3xl pointer-events-none" />
           <div className="container-shade relative z-10">
             <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
               <div className="relative order-last lg:order-first" data-vp-animate="scale-in">
                 <div className="absolute -inset-6 bg-gradient-to-r from-[var(--accent)]/10 via-[var(--accent)]/5 to-transparent rounded-3xl blur-3xl" />
                 <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-[var(--border-primary)]">
-                  <Image src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=700&h=500&fit=crop&auto=format" alt="Restaurant Kitchen" width={700} height={500} className="w-full h-auto object-cover" />
+                  <Image src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=700&h=500&fit=crop&auto=format" alt="مطعم شريك" width={700} height={500} className="w-full h-auto object-cover" />
                 </div>
                 <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-white/10 pointer-events-none" />
               </div>
               <div data-vp-animate="fade-up" data-vp-delay="2">
-                <span className="vp-label">Partner Network</span>
-                <h2 className="vp-section-title mt-4">Restaurant Wellness Network</h2>
-                <p className="vp-subtitle mt-4 mb-8">An operational logistics ecosystem connecting restaurant partners to workforce wellness outcomes through structured ordering and integrated delivery.</p>
+                <span className="vp-label">شبكة المطاعم</span>
+                <h2 className="vp-section-title mt-4">شبكة المطاعم للعافية</h2>
+                <p className="vp-subtitle mt-4 mb-8">منظومة لوجستية تشغيلية تربط المطاعم الشريكة بأهداف العافية للقوى العاملة — من الطلبات المنظمة إلى التوصيل المتكامل.</p>
                 <div className="space-y-4">
                   {restaurantCapabilities.map((cap) => (
                     <div key={cap.title} className="card-premium !p-5 group">
@@ -364,17 +350,15 @@ export default function Home() {
           </div>
         </section>
 
-        {/* ════════════════════════════════════════
-           SECTION 6 — BUSINESS IMPACT
-           ════════════════════════════════════════ */}
-        <section className="py-24 bg-[var(--bg-primary)] relative overflow-hidden">
+        {/* ═══ القسم 6: نتائج الأعمال ═══ */}
+        <section className="py-24 bg-[var(--bg-primary)] relative overflow-hidden" dir="rtl">
           <div className="absolute inset-0 vp-grid-bg opacity-[0.03]" />
           <div className="absolute bottom-[-20%] left-[20%] w-[600px] h-[600px] rounded-full bg-gradient-to-tr from-[var(--accent)]/5 to-transparent blur-3xl pointer-events-none" />
           <div className="container-shade relative z-10">
             <div className="max-w-3xl mx-auto text-center mb-16" data-vp-animate="fade-up">
-              <span className="vp-label">ROI Metrics</span>
-              <h2 className="vp-section-title mt-4">Business Outcomes That Matter</h2>
-              <p className="vp-subtitle mt-4">Measurable enterprise KPIs that prove the return on workforce wellness investment.</p>
+              <span className="vp-label">مؤشرات العائد</span>
+              <h2 className="vp-section-title mt-4">نتائج مؤسسية تستحق القياس</h2>
+              <p className="vp-subtitle mt-4">مؤشرات أداء رئيسية تثبت العائد على استثمار برامج العافية.</p>
               <div className="w-16 h-1 rounded-full bg-gradient-to-l from-[var(--accent)] to-[var(--accent-light)] mx-auto mt-4" />
             </div>
             <div className="grid grid-cols-2 lg:grid-cols-3 gap-5 max-w-4xl mx-auto" data-vp-animate="fade-up" data-vp-delay="2">
@@ -391,26 +375,25 @@ export default function Home() {
           </div>
         </section>
 
-        {/* ════════════════════════════════════════
-           FINAL CTA
-           ════════════════════════════════════════ */}
-        <section className="relative py-24 overflow-hidden" style={{ background: 'linear-gradient(135deg, var(--vp-ink) 0%, #0D4F4F 100%)' }}>
+        {/* ═══ CTA الختامي ═══ */}
+        <section className="relative py-24 overflow-hidden" dir="rtl" style={{ background: 'linear-gradient(135deg, var(--vp-ink) 0%, #0D4F4F 100%)' }}>
           <div className="absolute inset-0 vp-grid-bg opacity-[0.03]" />
           <div className="absolute top-1/2 left-1/3 w-72 h-72 rounded-full bg-[var(--accent)]/10 blur-3xl" />
           <div className="container-shade relative z-10">
             <div className="max-w-3xl mx-auto text-center" data-vp-animate="slide-up">
               <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-white/70 text-xs font-semibold mb-6">
                 <Zap className="h-3.5 w-3.5" />
-                Get Started Today
+                ابدأ اليوم
               </span>
-              <h2 className="vp-hero text-white mb-6">Ready to Build Your Workforce Wellness<br /><span className="vp-hero-em">Operating System?</span></h2>
-              <p className="vp-subtitle text-white/70 max-w-2xl mx-auto mb-10">Get a personalized enterprise demo — including an initial workforce wellness analysis and program recommendations tailored to your organization.</p>
+              <h2 className="vp-hero text-white mb-6">هل أنت مستعد لبناء نظام العافية<br /><span className="vp-hero-em">المؤسسي الخاص بك؟</span></h2>
+              <p className="vp-subtitle text-white/70 max-w-2xl mx-auto mb-10">احصل على عرض تجريبي مخصص لمؤسستك — يتضمن تحليلاً أولياً لمستوى العافية وتوصيات مبدئية للبرامج والأنشطة.</p>
               <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                 <Link href="/demo" className="btn-premium !bg-white !text-[var(--vp-ink)] hover:!shadow-xl">
-                  Book Enterprise Demo <ArrowLeft className="h-4 w-4" />
+                  اطلب عرضاً تجريبياً للمؤسسات
+                  <ArrowLeft className="h-4 w-4" />
                 </Link>
                 <Link href="/pricing" className="inline-flex items-center gap-2 px-8 py-4 rounded-xl border border-white/20 text-white/80 font-semibold text-sm hover:bg-white/5 hover:border-white/30 transition-all">
-                  View Pricing
+                  شاهد الأسعار
                 </Link>
               </div>
             </div>
