@@ -76,18 +76,18 @@ export default function HRAPage() {
       <div className="w-20 h-20 rounded-full bg-emerald-gradient text-white flex items-center justify-center mx-auto mb-6 shadow-lg">
         <Heart className="h-10 w-10" />
       </div>
-      <h2 className="text-3xl font-bold text-primary mb-4">مسح صحة القوى العاملة</h2>
+      <h2 className="text-3xl font-bold text-primary mb-4">مسح نمط الحياة (Lifestyle Survey)</h2>
       <p className="text-secondary max-w-lg mx-auto mb-8 leading-relaxed">
-        هذا التقييم الصحي الذكي هو أداة مسح جماعية تجمع بيانات صحية شاملة.
-        أجب على الأسئلة التالية — سيقوم النظام بتحليل إجاباتك وتقديم Wellness Score
-        مخصص وتوصيات وقائية. التقييم يستغرق أقل من 5 دقائق.
+        هذا المسح السريع يجمع معلومات عن عاداتك اليومية — التغذية، النوم، النشاط، والإجهاد.
+        أجب على الأسئلة التالية — سيقوم النظام بتحليل إجاباتك وإعطائك Wellness Score
+        مخصص وتوصيات لتحسين عافيتك. المسح يستغرق أقل من 5 دقائق.
       </p>
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-2xl mx-auto mb-10">
         {[
           { icon: Brain, label: "تحليل ذكي", desc: "AI" },
           { icon: Activity, label: "5 دقائق فقط", desc: "سريع" },
           { icon: Shield, label: "بياناتك آمنة", desc: "خصوصية" },
-          { icon: BarChart3, label: "تغذي Wellness Score", desc: "المؤسسة" },
+          { icon: BarChart3, label: "يغذي Wellness Score", desc: "المؤسسة" },
         ].map((item) => (
           <div key={item.label} className="shade-card p-4 text-center">
             <item.icon className="h-6 w-6 text-emerald mx-auto mb-2" />
@@ -97,7 +97,7 @@ export default function HRAPage() {
         ))}
       </div>
       <button onClick={() => setStep("basics")} className="btn-primary text-lg px-10 py-4">
-        ابدأ التقييم الآن
+        ابدأ المسح الآن
         <ChevronLeft className="h-5 w-5" />
       </button>
     </div>

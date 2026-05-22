@@ -5,80 +5,66 @@ import Link from "next/link";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import {
-  Brain,
-  BarChart3,
-  Users,
-  TrendingDown,
-  Heart,
-  Activity,
-  FileText,
-  Shield,
-  ArrowLeft,
-  Target,
-  PieChart,
-  UserCheck,
-  DollarSign,
-  CheckCircle2,
-  GitBranch,
-  Clock,
-  Building2
+  Brain, BarChart3, Users, TrendingDown, Activity, Shield,
+  ArrowLeft, Target, PieChart, UserCheck, CheckCircle2,
+  Gift, Medal, Smile, Utensils, Clock, Sparkles, Building2, Cpu
 } from "lucide-react";
 import { initScrollAnimations } from "@/lib/scroll-animations";
 
-const platformCapabilities = [
+const capabilities = [
   {
-    icon: Brain,
-    title: "مسح صحة القوى العاملة (Workforce Health Survey)",
-    desc: "أداة مسح جماعية تجمع بيانات صحية شاملة من جميع الموظفين خلال أيام. تحوِّل البيانات الخام إلى لوحة قيادة تنفيذية عن صحة المؤسسة — بدون أجهزة أو زيارات ميدانية.",
-    bizValue: "رؤية كاملة وموضوعية عن صحة 100% من القوى العاملة",
-  },
-  {
-    icon: TrendingDown,
-    title: "ذكاء تحليل التكاليف الصحية",
-    desc: "نموذج تحليلي يربط البيانات الصحية بالتكاليف التأمينية. يتوقع الإنفاق المستقبلي بدقة ويحدد فرص خفض التكاليف من خلال تدخلات وقائية مستهدفة.",
-    bizValue: "خفض تكاليف الرعاية الصحية بنسبة تصل إلى 40%",
+    icon: Activity,
+    title: "مسح نمط الحياة (Lifestyle Survey)",
+    desc: "أداة مسح سريعة تجمع معلومات عن عادات التغذية، النوم، النشاط البدني، مستويات الإجهاد، والعافية النفسية — في 5 دقائق فقط.",
+    bizValue: "فهم شامل لمستوى عافية القوى العاملة من اليوم الأول",
   },
   {
     icon: BarChart3,
     title: "Wellness Score المؤسسي",
-    desc: "مؤشر رقمي موحد (0-100) يعكس مستوى الصحة المؤسسية للقوى العاملة بالكامل. يتيح للإدارة قياس التحسن شهرياً وربطه بالإنتاجية والتكاليف.",
-    bizValue: "مقياس موضوعي واحد لصحة المؤسسة — قابل للمقارنة والتحسن",
+    desc: "مؤشر رقمي موحد (0-100) يعكس مستوى العافية العام للقوى العاملة. يتيح للإدارة قياس التحسن شهرياً وربطه بالإنتاجية والاحتفاظ.",
+    bizValue: "مقياس موضوعي واحد لعافية المؤسسة — قابل للمقارنة والتحسن",
+  },
+  {
+    icon: Gift,
+    title: "برامج وتحديات العافية",
+    desc: "منصة تفاعلية تدير تحديات اللياقة، برامج التغذية الصحية، جلسات الاسترخاء، ومحتوى توعوي — مع إشعارات وتحفيز مستمر.",
+    bizValue: "مشاركة نشطة تصل إلى 85% من القوى العاملة",
   },
   {
     icon: Target,
-    title: "التدخل الوقائي الذكي للقوى العاملة",
-    desc: "يحدد تلقائياً الفئات الأكثر عرضة للمخاطر الصحية ويطلق برامج وقائية مخصصة — استشارات تغذية، برامج لياقة، متابعة دورية — قبل تطور الحالات.",
-    bizValue: "تقليل الحالات الحرجة بنسبة تصل إلى 50%",
-  },
-  {
-    icon: PieChart,
-    title: "تقارير العائد على استثمار الصحة",
-    desc: "تقارير جاهزة لمجلس الإدارة توثق العائد على الاستثمار في صحة القوى العاملة — خفض التكاليف، تحسن الإنتاجية، انخفاض الإجازات المرضية.",
-    bizValue: "إثبات العائد بالأرقام — لا وعود بدون دليل",
+    title: "توصيات مخصصة (ذكاء تحليلي)",
+    desc: "كل موظف يتلقى توصيات مخصصة حسب نمط حياته — وجبات مناسبة، تمارين مقترحة، نصائح للنوم وإدارة الإجهاد.",
+    bizValue: "تجربة فردية تزيد الرضا والتحسن الشخصي",
   },
   {
     icon: Users,
-    title: "إدارة برامج العافية المؤسسية",
-    desc: "منصة تشغيلية تدير دورة حياة برامج الصحة بالكامل — من الإعلان والتسجيل إلى المتابعة وإصدار التقارير. تقلل العبء الإداري على HR بنسبة 70%.",
-    bizValue: "أتمتة كاملة لإدارة البرامج — وفر وقت فريقك",
+    title: "لوحة قيادة HR",
+    desc: "لوحة تفاعلية حية تعرض Wellness Score، معدلات المشاركة، اتجاهات التحسن، مقارنات الأقسام، والأثر على الإنتاجية والغياب.",
+    bizValue: "قرارات مبنية على بيانات — لا تخمين",
+  },
+  {
+    icon: TrendingDown,
+    title: "تحليل أثر العافية على الأعمال",
+    desc: "يربط بيانات العافية بالإنتاجية، الغياب، والاحتفاظ — يظهر العائد على الاستثمار في برامج العافية بشكل رقمي ملموس.",
+    bizValue: "إثبات أثر برامج العافية على مؤشرات الأعمال",
+  },
+  {
+    icon: PieChart,
+    title: "تقارير تنفيذية جاهزة",
+    desc: "تقارير آلية لمجلس الإدارة والإدارة التنفيذية — تغطي العافية، المشاركة، الإنتاجية، والأثر المالي.",
+    bizValue: "تقارير احترافية بدون جهد يدوي — جاهزة في دقائق",
+  },
+  {
+    icon: Utensils,
+    title: "منظومة التغذية والوجبات",
+    desc: "يربط الموظفين بمطاعم ومزودي وجبات صحية معتمدين — خطط تغذية مخصصة، طلب مباشر، وتوصيل للمكتب أو المنزل.",
+    bizValue: "تغذية صحية متاحة للجميع — بدون عناء البحث",
   },
   {
     icon: UserCheck,
-    title: "بوابة الموظف للتقييم والمتابعة",
-    desc: "تطبيق يتيح لكل موظف إجراء التقييم الصحي، متابعة Wellness Score الشخصي، استلام توصيات مخصصة، ومتابعة تقدمه الصحي — كل شيء في مكان واحد.",
-    bizValue: "مشاركة عالية من الموظفين — تجربة سلسة ومخصصة",
-  },
-  {
-    icon: Heart,
-    title: "نظام التوصيات الصحية المخصصة",
-    desc: "توصيات آلية مبنية على التحليل الفردي لكل موظف — تغذية، نشاط، استشارات — مع ربط مباشر بمزودي الخدمات المعتمدين من الشركة.",
-    bizValue: "تجربة مخصصة لكل موظف — لا حل واحد يناسب الجميع",
-  },
-  {
-    icon: FileText,
-    title: "محرك تقارير تنفيذية جاهزة",
-    desc: "تقارير آلية جاهزة للإدارة التنفيذية ومجلس الإدارة — تغطي مشاركة الموظفين، Wellness Score، التكاليف، والعائد على الاستثمار.",
-    bizValue: "تقارير احترافية بدون جهد يدوي — جاهزة في دقائق",
+    title: "متابعة وتحفيز مستمر",
+    desc: "نظام مكافآت وتحفيز يشجع الموظفين على الاستمرار في برامج العافية — نقاط، شارات، ولوحات متصدرين.",
+    bizValue: "استمرارية عالية — الموظفون يبقون نشطين لأشهر",
   },
 ];
 
@@ -86,17 +72,17 @@ const whyVelara = [
   {
     icon: Building2,
     title: "للشركات متوسطة وكبيرة",
-    desc: "صممت المنصة للشركات من 50 إلى 5000+ موظف. تتوسع مع نمو مؤسستك بدون تكاليف إضافية.",
+    desc: "صممت المنصة للشركات من 50 إلى 5000+ موظف. تتوسع مع نمو مؤسستك.",
   },
   {
     icon: Shield,
-    title: "أمان وخصوصية مؤسسية",
-    desc: "متوافقة مع PDPL و SDAIA. بيانات الموظفين مشفرة ومحمية. الإدارة ترى فقط إحصائيات مجمعة.",
+    title: "خصوصية وأمان تام",
+    desc: "بيانات الموظفين مشفرة. الإدارة ترى إحصائيات مجمعة فقط — بدون تفاصيل فردية.",
   },
   {
-    icon: GitBranch,
-    title: "تكامل مع الأنظمة الحالية",
-    desc: "API مفتوح يتكامل مع ERP، HRMS، وأنظمة التأمين الصحي. لا نستبدل أنظمتك — نضيف طبقة ذكاء صحي.",
+    icon: Cpu,
+    title: "تكامل مع أنظمتك الحالية",
+    desc: "API مفتوح يتكامل مع HRMS، ERP، وأنظمة إدارة المطاعم. لا نستبدل — نضيف.",
   },
 ];
 
@@ -112,18 +98,16 @@ export default function FeaturesPage() {
           <div className="absolute inset-0 pointer-events-none" style={{ background: 'var(--vp-gradient-hero)' }} />
           <div className="container-shade relative z-10 text-center">
             <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-[var(--vp-glow-soft)] border border-[var(--vp-accent)]/10 text-[var(--vp-accent)] text-sm font-medium mb-6" data-vp-animate="fade-up">
-              <span className="vp-breathing-ring inline-block" style={{ width: '6px', height: '6px' }} />
-              إمكانيات المنصة
+              قدرات المنصة
             </div>
             <h1 className="vp-hero max-w-4xl mx-auto" data-vp-animate="fade-up" data-vp-delay="1">
-              بنية تحتية مؤسسية{' '}
+              كل ما تحتاجه لبرنامج{' '}
               <br />
-              <span className="vp-hero-em">لذكاء صحة القوى العاملة</span>
+              <span className="vp-hero-em">عافية مؤسسي متكامل</span>
             </h1>
             <p className="vp-subtitle text-[var(--text-secondary)] max-w-2xl mx-auto mt-6" data-vp-animate="fade-up" data-vp-delay="2">
-              ليس مجرد برنامج عافية. Velara Care هي منصة مؤسسية تجمع بين التقييم الصحي الشامل،
-              التحليلات التنبؤية، إدارة البرامج، وتقارير العائد على الاستثمار — لتخفض التكاليف
-              وترفع الإنتاجية.
+              Velara Care ليست منصة طبية. هي منصة عافية مؤسسية تجمع بين مسح نمط الحياة،
+              التحليلات، البرامج التفاعلية، وتقارير العائد — في نظام واحد سهل.
             </p>
           </div>
         </section>
@@ -131,17 +115,8 @@ export default function FeaturesPage() {
         {/* CAPABILITIES */}
         <section className="section-padding relative overflow-hidden" dir="rtl">
           <div className="container-shade relative z-10">
-            <div className="mx-auto max-w-3xl text-center mb-12" data-vp-animate="fade-up">
-              <span className="vp-label">قدرات المنصة</span>
-              <h2 className="vp-section-title mt-4">
-                كل قدرة تحقق{' '}
-                <span className="vp-hero-em">نتيجة مؤسسية</span>
-              </h2>
-              <div className="w-16 h-1 rounded-full bg-gradient-to-l from-[var(--vp-accent)] to-[var(--vp-cyan)] mx-auto mt-4" />
-            </div>
-
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-              {platformCapabilities.map((f, i) => (
+              {capabilities.map((f, i) => (
                 <div key={f.title} className="card-premium p-6" data-vp-animate="fade-up" data-vp-delay={String(Math.min(i + 1, 4))}>
                   <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-[var(--vp-glow-soft)] text-[var(--vp-accent)]">
                     <f.icon className="h-7 w-7" />
@@ -157,11 +132,11 @@ export default function FeaturesPage() {
           </div>
         </section>
 
-        {/* WHY VELARA FOR ENTERPRISE */}
+        {/* WHY VELARA */}
         <section className="section-padding relative overflow-hidden" dir="rtl" style={{ background: 'var(--vp-gradient-card)' }}>
           <div className="container-shade">
             <div className="mx-auto max-w-3xl text-center mb-12" data-vp-animate="fade-up">
-              <span className="vp-label">لماذا Velara Care للمؤسسات</span>
+              <span className="vp-label">لماذا Velara Care</span>
               <h2 className="vp-section-title mt-4">
                 مصممة خصيصاً{' '}
                 <span className="vp-hero-em">للمؤسسات</span>
@@ -187,9 +162,9 @@ export default function FeaturesPage() {
         <section className="relative py-28 overflow-hidden" dir="rtl" style={{ background: 'var(--vp-gradient-dark)' }}>
           <div className="container-shade relative z-10">
             <div className="mx-auto max-w-2xl text-center" data-vp-animate="slide-up">
-              <h2 className="vp-hero text-white mb-6">هل تريد تحويل صحة القوى العاملة إلى قيمة مؤسسية؟</h2>
+              <h2 className="vp-hero text-white mb-6">هل تريد بناء برنامج عافية لمؤسستك؟</h2>
               <p className="vp-subtitle text-white/70 max-w-xl mx-auto mb-10">
-                احصل على عرض تجريبي مخصص لمؤسستك — مع تحليل أولي مجاني للتكاليف الصحية.
+                اطلب عرضاً تجريبياً واكتشف كيف تدير برامج العافية في منصة واحدة.
               </p>
               <Link href="/demo" className="btn-premium !bg-white !text-[var(--vp-ink)] group">
                 اطلب عرضاً تجريبياً للمؤسسات

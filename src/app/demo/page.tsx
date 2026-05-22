@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
-import { CalendarDays, ArrowLeft, CheckCircle2, Loader2, Building2, TrendingDown, BarChart3, Users } from "lucide-react";
+import { CalendarDays, ArrowLeft, CheckCircle2, Loader2, Building2, TrendingDown, BarChart3, Users, Gift } from "lucide-react";
 import { useState } from "react";
 
 export default function DemoPage() {
@@ -80,15 +80,15 @@ export default function DemoPage() {
                 </h1>
                 <p className="vp-subtitle text-[var(--text-secondary)] mt-6">
                   في هذا العرض التجريبي، سنريك كيف تستطيع Velara Care مساعدة شركتك على
-                  خفض التكاليف الصحية، تحسين إنتاجية القوى العاملة، وقياس العائد على استثمار الصحة.
+                  بناء برنامج عافية متكامل، رفع مشاركة الموظفين، وقياس أثر العافية على الإنتاجية والاحتفاظ.
                 </p>
 
                 <div className="mt-8 space-y-4">
                   {[
-                    { icon: BarChart3, text: "عرض حي للوحة القيادة التنفيذية ومؤشرات الصحة المؤسسية" },
-                    { icon: TrendingDown, text: "تحليل أولي مجاني لتكاليفك الصحية وفرص التوفير" },
-                    { icon: Users, text: "محاكاة لمنصة الموظف والتقييم الصحي" },
-                    { icon: CheckCircle2, text: "خطة نشر وتشغيل مخصصة حسب حجم مؤسستك" },
+                    { icon: BarChart3, text: "عرض حي للوحة قيادة العافية ومؤشرات المشاركة" },
+                    { icon: TrendingDown, text: "تحليل أولي مجاني لمستوى عافية القوى العاملة وفرص التحسين" },
+                    { icon: Users, text: "محاكاة لتجربة الموظف — مسح، توصيات، برامج" },
+                    { icon: Gift, text: "خطة نشر مخصصة حسب حجم مؤسستك واحتياجاتها" },
                   ].map((item) => (
                     <div key={item.text} className="flex items-center gap-3">
                       <item.icon className="h-5 w-5 text-[var(--vp-accent)] shrink-0" />

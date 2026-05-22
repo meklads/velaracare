@@ -14,10 +14,10 @@ const plans = [
   {
     name: "Starter",
     price: "مخصص",
-    desc: "للشركات الصغيرة التي تبدأ رحلة تحسين صحة القوى العاملة.",
+    desc: "للشركات الصغيرة التي تبدأ رحلة تحسين عافية القوى العاملة.",
     popular: false,
     features: [
-      "مسح صحة القوى العاملة (حتى 200 موظف)",
+      "مسح عافية القوى العاملة (حتى 200 موظف)",
       "Wellness Score المؤسسي",
       "لوحة قيادة تنفيذية أساسية",
       "تقارير شهرية",
@@ -42,7 +42,7 @@ const plans = [
   {
     name: "Enterprise",
     price: "مخصص",
-    desc: "للشركات الكبرى التي تريد منصة صحة مؤسسية كاملة مع تكاملات مخصصة.",
+    desc: "للشركات الكبرى التي تريد منصة عافية مؤسسية كاملة مع تكاملات مخصصة.",
     popular: false,
     features: [
       "جميع ميزات Professional",
@@ -58,7 +58,7 @@ const plans = [
 ];
 
 const planModules = [
-  { name: "مسح صحة القوى العاملة", starter: true, pro: true, enterprise: true },
+  { name: "مسح عافية القوى العاملة", starter: true, pro: true, enterprise: true },
   { name: "Wellness Score المؤسسي", starter: true, pro: true, enterprise: true },
   { name: "لوحة قيادة تنفيذية", starter: true, pro: true, enterprise: true },
   { name: "تقارير شهرية", starter: true, pro: true, enterprise: true },

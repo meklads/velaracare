@@ -5,21 +5,21 @@ import PWASetup from "@/components/PWASetup";
 
 export const metadata: Metadata = {
   title: {
-    default: "Velara Care — Workforce Health Optimization Platform for Enterprises",
+    default: "Velara Care — Workforce Wellness Platform for Enterprises",
     template: "%s | Velara Care",
   },
   description:
-    "Velara Care is an enterprise workforce health optimization platform. Reduce healthcare costs, lower sick leave, improve productivity, and centralize wellness operations with AI-powered workforce health intelligence.",
+    "Velara Care is an enterprise wellness platform. Manage employee wellness programs, track participation, improve wellbeing, and measure impact on productivity and retention. Built for HR teams.",
   keywords: [
-    "workforce health platform",
-    "enterprise wellness",
-    "employee health optimization",
-    "corporate health intelligence",
-    "healthcare cost reduction",
+    "workplace wellness",
+    "employee wellbeing",
+    "corporate wellness platform",
     "HR technology",
-    "workforce productivity",
+    "wellness program management",
+    "employee engagement",
+    "workforce wellness",
     "Velara Care",
-    "B2B health platform Saudi",
+    "B2B wellness Saudi",
   ],
   manifest: "/manifest.json",
   other: {
