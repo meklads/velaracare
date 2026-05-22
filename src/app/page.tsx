@@ -97,11 +97,11 @@ export default function Home() {
           <div className="absolute bottom-[-15%] left-[-10%] w-[500px] h-[500px] rounded-full bg-gradient-to-tr from-[var(--accent)]/5 to-transparent blur-3xl pointer-events-none" />
           <div className="absolute inset-0 vp-grid-bg opacity-[0.03]" />
 
-          {/* SVG clipPath لشكل قطرة الماء */}
+          {/* SVG clipPath لشكل عضوي غير منتظم */}
           <svg width="0" height="0" className="absolute">
             <defs>
-              <clipPath id="waterDropClip" clipPathUnits="objectBoundingBox">
-                <path d="M0.5,0.02 C0.5,0.02 0.96,0.36 0.96,0.68 C0.96,0.89 0.76,0.98 0.5,0.98 C0.24,0.98 0.04,0.89 0.04,0.68 C0.04,0.36 0.5,0.02 0.5,0.02 Z" />
+              <clipPath id="organicBlob" clipPathUnits="objectBoundingBox">
+                <path d="M0.45,0.03 C0.68,0 0.88,0.12 0.93,0.3 C0.98,0.48 0.92,0.68 0.82,0.83 C0.72,0.98 0.55,1 0.38,0.95 C0.21,0.9 0.05,0.8 0.02,0.6 C-0.01,0.4 0.08,0.2 0.2,0.1 C0.32,0 0.35,0.04 0.45,0.03 Z" />
               </clipPath>
             </defs>
           </svg>
@@ -145,47 +145,61 @@ export default function Home() {
                 </div>
               </div>
 
-              {/* ===== قطرة الماء بالصورة — الجانب الأيسر ===== */}
-              <div className="relative flex items-center justify-center lg:justify-start" data-vp-animate="scale-in" data-vp-delay="2">
-                {/* Glow خلف القطرة */}
-                <div className="absolute w-[380px] h-[380px] lg:w-[480px] lg:h-[480px] rounded-full bg-gradient-to-br from-[var(--accent)]/20 via-[var(--accent)]/8 to-transparent blur-[80px] pointer-events-none" />
+              {/* ===== الصورة بشكل عضوي — الجانب الأيسر ===== */}
+              <div className="relative flex items-center justify-center min-h-[400px] lg:min-h-[520px]" data-vp-animate="scale-in" data-vp-delay="2">
+                {/* Glow خلف الشكل العضوي */}
+                <div className="absolute w-[420px] h-[420px] lg:w-[520px] lg:h-[520px] rounded-full bg-gradient-to-br from-[var(--accent)]/15 via-[var(--accent)]/5 to-transparent blur-[100px] pointer-events-none" />
 
-                {/* حاوية قطرة الماء */}
-                <div className="relative w-[300px] h-[340px] lg:w-[400px] lg:h-[450px]">
-                  {/* الصورة داخل القطرة */}
-                  <div className="w-full h-full" style={{ clipPath: 'url(#waterDropClip)' }}>
+                {/* حاوية الشكل العضوي */}
+                <div className="relative w-[340px] lg:w-[460px]" style={{ aspectRatio: '4/5' }}>
+                  {/* الصورة داخل الشكل العضوي */}
+                  <div className="w-full h-full" style={{ clipPath: 'url(#organicBlob)' }}>
                     <Image
-                      src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=600&h=700&fit=crop&auto=format"
+                      src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=700&h=900&fit=crop&auto=format"
                       alt="فريق عمل مؤسسي"
-                      width={600}
-                      height={700}
+                      width={700}
+                      height={900}
                       className="w-full h-full object-cover"
                       priority
                     />
+                    {/* تدرج شفاف علوي */}
+                    <div className="absolute inset-0" style={{ background: 'linear-gradient(180deg, rgba(0,0,0,0.15) 0%, transparent 30%, transparent 70%, rgba(0,0,0,0.25) 100%)' }} />
                   </div>
 
-                  {/* إطار شفاف حول القطرة */}
-                  <div className="absolute inset-0 pointer-events-none" style={{ clipPath: 'url(#waterDropClip)' }}>
-                    <div className="w-full h-full ring-[3px] ring-inset ring-white/10 rounded-full" />
+                  {/* إطار متوهج حول الشكل العضوي */}
+                  <div className="absolute inset-0 pointer-events-none" style={{ clipPath: 'url(#organicBlob)' }}>
+                    <div className="w-full h-full ring-2 ring-inset ring-white/15" />
+                    <div className="absolute inset-[2px] rounded-full ring-1 ring-inset ring-[var(--accent)]/10" />
                   </div>
 
-                  {/* تدرج سفلي شفاف داخل القطرة */}
-                  <div className="absolute bottom-0 left-0 right-0 h-1/3 pointer-events-none" style={{ clipPath: 'url(#waterDropClip)', background: 'linear-gradient(to top, rgba(0,0,0,0.4) 0%, transparent 100%)' }} />
+                  {/* عناصر عائمة حول الشكل العضوي */}
+                  <div className="absolute -top-4 -right-3 w-16 h-16 rounded-2xl bg-gradient-to-br from-[var(--accent-soft)] to-[var(--accent)]/10 border border-[var(--accent)]/15 flex items-center justify-center shadow-lg backdrop-blur-sm -rotate-6">
+                    <Heart className="h-7 w-7 text-[var(--accent)]" />
+                  </div>
+                  <div className="absolute -bottom-3 -left-4 w-14 h-14 rounded-2xl bg-[var(--bg-card)] border border-[var(--border-primary)] flex items-center justify-center shadow-lg backdrop-blur-sm rotate-3">
+                    <Activity className="h-6 w-6 text-[var(--accent)]" />
+                  </div>
+                  <div className="absolute top-[15%] -left-5 w-10 h-10 rounded-xl bg-white/80 dark:bg-gray-800/80 border border-[var(--border-primary)] flex items-center justify-center shadow-md backdrop-blur-sm -rotate-12">
+                    <TrendingUp className="h-5 w-5 text-emerald-500" />
+                  </div>
+                  <div className="absolute bottom-[20%] -right-5 w-10 h-10 rounded-xl bg-white/80 dark:bg-gray-800/80 border border-[var(--border-primary)] flex items-center justify-center shadow-md backdrop-blur-sm rotate-12">
+                    <Users className="h-5 w-5 text-[var(--accent)]" />
+                  </div>
                 </div>
 
-                {/* عناصر زخرفية عائمة */}
-                <div className="absolute -top-3 -right-3 w-4 h-4 rounded-full bg-[var(--accent)]/30 animate-pulse" />
-                <div className="absolute -bottom-2 -left-2 w-3 h-3 rounded-full bg-[var(--accent)]/20" />
-                <div className="absolute top-[25%] -left-7 w-2 h-2 rounded-full bg-[var(--accent)]/40" />
-                <div className="absolute bottom-[30%] -right-7 w-2 h-2 rounded-full bg-[var(--accent)]/25" />
+                {/* نقاط زخرفية عائمة */}
+                <div className="absolute top-[5%] right-[8%] w-3 h-3 rounded-full bg-[var(--accent)]/30 animate-pulse" />
+                <div className="absolute bottom-[10%] left-[5%] w-2 h-2 rounded-full bg-rose-400/30" />
+                <div className="absolute top-[40%] left-[2%] w-1.5 h-1.5 rounded-full bg-[var(--accent)]/40" />
+                <div className="absolute bottom-[35%] right-[3%] w-2 h-2 rounded-full bg-[var(--accent)]/20" />
 
-                {/* أيقونة عائمة صغيرة */}
-                <div className="absolute top-[15%] -right-8 w-9 h-9 rounded-xl bg-[var(--bg-card)] border border-[var(--border-primary)] flex items-center justify-center shadow-lg backdrop-blur-sm">
-                  <Heart className="h-4 w-4 text-rose-400" />
-                </div>
-                <div className="absolute bottom-[20%] -left-8 w-9 h-9 rounded-xl bg-[var(--bg-card)] border border-[var(--border-primary)] flex items-center justify-center shadow-lg backdrop-blur-sm">
-                  <Activity className="h-4 w-4 text-[var(--accent)]" />
-                </div>
+                {/* خطوط منحنية زخرفية */}
+                <svg className="absolute -top-6 -left-6 w-24 h-24 opacity-10 pointer-events-none" viewBox="0 0 100 100" fill="none">
+                  <path d="M10,50 Q40,20 70,50 T90,50" stroke="var(--accent)" strokeWidth="1.5" strokeLinecap="round" />
+                </svg>
+                <svg className="absolute -bottom-4 -right-4 w-20 h-20 opacity-10 pointer-events-none rotate-45" viewBox="0 0 100 100" fill="none">
+                  <path d="M10,50 Q40,20 70,50 T90,50" stroke="var(--accent)" strokeWidth="1.5" strokeLinecap="round" />
+                </svg>
               </div>
             </div>
           </div>
