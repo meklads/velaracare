@@ -54,6 +54,29 @@ const platformCapabilities = [
   },
 ];
 
+const valueCards = [
+  {
+    icon: TrendingDown,
+    title: "Reduce Sick Leave",
+    desc: "Wellness programs that lower absenteeism and keep your workforce healthy and present."
+  },
+  {
+    icon: Users,
+    title: "Improve Employee Wellbeing",
+    desc: "Personalized wellness journeys that improve quality of life and job satisfaction."
+  },
+  {
+    icon: BarChart3,
+    title: "Workforce Wellness Analytics",
+    desc: "Real-time dashboards that track participation, improvement, and business impact."
+  },
+  {
+    icon: Target,
+    title: "Measurable Health Outcomes",
+    desc: "Quantifiable results linking wellness investment to productivity and cost reduction."
+  }
+];
+
 const businessOutcomes = [
   { icon: DollarSign, value: "حتى 40%", label: "توفير في التكاليف التشغيلية" },
   { icon: Users, value: "+25%", label: "تحسن إنتاجية القوى العاملة" },
@@ -92,52 +115,44 @@ export default function Home() {
       <Header />
       <main>
         {/* ════════════════════════════════════════
-           HERO — Enterprise Wellness Platform
+           HERO — Enterprise Workforce Health Platform
            ════════════════════════════════════════ */}
-        <section className="relative pt-32 pb-24 overflow-hidden" dir="rtl">
+        <section className="relative pt-32 pb-24 overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-b from-[var(--accent-soft)] to-transparent opacity-50" />
           <div className="container-shade relative z-10">
             <div className="mx-auto max-w-4xl text-center">
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[var(--accent-soft)] text-[var(--accent)] text-sm font-medium mb-6">
-                <Sparkles className="h-4 w-4" />
-                منصة العافية المؤسسية — Velara Care
-              </div>
 
               <h1 className="text-[clamp(36px,4vw,56px)] font-extrabold leading-[1.1] tracking-[-0.02em] text-[var(--text-primary)]">
-                حسّن عافية فريقك
+                Transform Workforce Health
                 <br />
-                <span className="text-[var(--accent)]">وارفع إنتاجية مؤسستك</span>
+                <span className="text-[var(--accent)]">Into Measurable Business Performance</span>
               </h1>
 
               <p className="mt-6 text-lg text-[var(--text-secondary)] leading-relaxed max-w-3xl mx-auto">
-                Velara Care منصة مؤسسية لبرامج العافية — تجمع بين مسح نمط الحياة، تحليلات المشاركة،
-                وإدارة الأنشطة — كل هذا في نظام واحد يساعد الموارد البشرية على تحسين جودة حياة الموظفين
-                وقياس أثر برامج العافية على أداء المؤسسة.
+                Velara helps companies improve employee wellbeing, reduce healthcare-related costs,
+                increase productivity, and manage workforce wellness through an integrated
+                health optimization platform.
               </p>
 
               <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
                 <Link href="/demo" className="btn-primary text-base px-10 py-4 !h-auto">
-                  اطلب عرضاً تجريبياً للمؤسسات
+                  Book Enterprise Demo
                   <ArrowLeft className="h-4 w-4" />
                 </Link>
                 <Link href="/product" className="inline-flex items-center gap-2 px-8 py-4 rounded-full border border-[var(--border-primary)] text-[var(--text-secondary)] font-semibold text-sm hover:border-[var(--accent)] hover:text-[var(--accent)] transition-colors">
-                  اكتشف المنصة
+                  Explore Platform
                 </Link>
               </div>
 
-              <div className="mt-16 flex flex-wrap items-center justify-center gap-x-10 gap-y-4 text-sm text-[var(--text-muted)]">
-                <span className="inline-flex items-center gap-1.5">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent)]" />
-                  برامج عافية مدعومة بالذكاء التحليلي
-                </span>
-                <span className="inline-flex items-center gap-1.5">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent)]" />
-                  لوحة قيادة تنفيذية للعافية
-                </span>
-                <span className="inline-flex items-center gap-1.5">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent)]" />
-                  تكامل مع منظومة التغذية واللياقة
-                </span>
+              {/* Enterprise value cards */}
+              <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mx-auto">
+                {valueCards.map((card) => (
+                  <div key={card.title} className="bg-[var(--bg-card)] border border-[var(--border-primary)] rounded-xl p-4 text-center hover:border-[var(--accent)]/30 transition-colors">
+                    <card.icon className="h-5 w-5 text-[var(--accent)] mx-auto mb-2" />
+                    <h3 className="text-sm font-bold text-[var(--text-primary)] mb-1">{card.title}</h3>
+                    <p className="text-xs text-[var(--text-secondary)] leading-tight">{card.desc}</p>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
