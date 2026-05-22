@@ -97,27 +97,11 @@ export default function Home() {
           <div className="absolute bottom-[-15%] left-[-10%] w-[500px] h-[500px] rounded-full bg-gradient-to-tr from-[var(--accent)]/5 to-transparent blur-3xl pointer-events-none" />
           <div className="absolute inset-0 vp-grid-bg opacity-[0.03]" />
 
-          {/* SVG clipPath — رشة رسام (paint splash) */}
+          {/* SVG clipPath — دائرة نظيفة */}
           <svg width="0" height="0" className="absolute">
             <defs>
-              <clipPath id="paintSplash" clipPathUnits="objectBoundingBox">
-                <path d="M0.38,0.06 C0.55,0.02 0.68,0.07 0.8,0.15 C0.9,0.22 0.96,0.32 0.94,0.44 C0.99,0.53 0.97,0.66 0.9,0.76 C0.83,0.86 0.73,0.93 0.6,0.96 C0.5,0.99 0.38,0.95 0.28,0.9 C0.18,0.85 0.07,0.82 0.04,0.7 C0.01,0.58 0.03,0.45 0.09,0.35 C0.15,0.25 0.2,0.14 0.3,0.09 C0.4,0.04 0.35,0.07 0.38,0.06 Z" />
-                <circle cx="0.05" cy="0.3" r="0.045" />
-                <circle cx="0.03" cy="0.52" r="0.028" />
-                <circle cx="0.08" cy="0.18" r="0.035" />
-                <circle cx="0.12" cy="0.08" r="0.02" />
-                <circle cx="0.93" cy="0.22" r="0.04" />
-                <circle cx="0.97" cy="0.45" r="0.022" />
-                <circle cx="0.92" cy="0.62" r="0.03" />
-                <circle cx="0.88" cy="0.88" r="0.05" />
-                <circle cx="0.78" cy="0.97" r="0.025" />
-                <circle cx="0.62" cy="0.99" r="0.02" />
-                <circle cx="0.25" cy="0.05" r="0.03" />
-                <circle cx="0.15" cy="0.94" r="0.028" />
-                <circle cx="0.45" cy="0.03" r="0.018" />
-                <circle cx="0.85" cy="0.05" r="0.015" />
-                <circle cx="0.06" cy="0.68" r="0.018" />
-                <circle cx="0.95" cy="0.78" r="0.015" />
+              <clipPath id="circleFrame" clipPathUnits="objectBoundingBox">
+                <circle cx="0.5" cy="0.5" r="0.5" />
               </clipPath>
             </defs>
           </svg>
@@ -161,64 +145,49 @@ export default function Home() {
                 </div>
               </div>
 
-              {/* ===== الصورة في رشة رسام — الجانب الأيسر ===== */}
+              {/* ===== الصورة في دائرة بإطار أنيق — الجانب الأيسر ===== */}
               <div className="relative flex items-center justify-center min-h-[400px] lg:min-h-[520px]" data-vp-animate="scale-in" data-vp-delay="2">
-                {/* Glow خلف الرشة */}
-                <div className="absolute w-[440px] h-[440px] lg:w-[540px] lg:h-[540px] rounded-full bg-gradient-to-br from-[var(--accent)]/12 via-[var(--accent)]/3 to-transparent blur-[100px] pointer-events-none" />
+                {/* طبقات glow خلف الدائرة */}
+                <div className="absolute w-[400px] h-[400px] lg:w-[500px] lg:h-[500px] rounded-full bg-gradient-to-br from-[var(--accent)]/10 via-[var(--accent)]/3 to-transparent blur-[80px] pointer-events-none" />
+                <div className="absolute w-[320px] h-[320px] lg:w-[400px] lg:h-[400px] rounded-full bg-gradient-to-tr from-[var(--accent)]/8 to-transparent blur-[60px] pointer-events-none translate-y-8" />
 
-                {/* حاوية رشة الرسام */}
-                <div className="relative w-[340px] lg:w-[460px]" style={{ aspectRatio: '4/5' }}>
-                  {/* الصورة داخل الرشة */}
-                  <div className="w-full h-full" style={{ clipPath: 'url(#paintSplash)' }}>
-                    <Image
-                      src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=700&h=900&fit=crop&auto=format"
-                      alt="فريق عمل مؤسسي"
-                      width={700}
-                      height={900}
-                      className="w-full h-full object-cover"
-                      priority
-                    />
-                    {/* تدرج شفاف يدمج الصورة */}
-                    <div className="absolute inset-0 pointer-events-none" style={{ background: 'linear-gradient(180deg, rgba(0,0,0,0.1) 0%, transparent 25%, transparent 65%, rgba(0,0,0,0.2) 100%)' }} />
+                {/* حاوية الدائرة */}
+                <div className="relative w-[300px] h-[300px] lg:w-[400px] lg:h-[400px]">
+                  {/* الإطار الخارجي — تدرج دائري */}
+                  <div className="absolute -inset-[6px] lg:-inset-[8px] rounded-full bg-gradient-to-br from-[var(--accent)] via-[var(--accent-light)]/50 to-[var(--accent-dark)] shadow-2xl shadow-[var(--accent)]/20" />
+
+                  {/* الإطار الداخلي — خلفية داكنة */}
+                  <div className="absolute -inset-[2px] lg:-inset-[3px] rounded-full bg-[var(--bg-primary)]" />
+
+                  {/* الصورة داخل الدائرة */}
+                  <div className="relative w-full h-full rounded-full overflow-hidden">
+                    <div className="w-full h-full" style={{ clipPath: 'url(#circleFrame)' }}>
+                      <Image
+                        src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=500&h=500&fit=crop&auto=format"
+                        alt="فريق عمل مؤسسي"
+                        width={500}
+                        height={500}
+                        className="w-full h-full object-cover scale-105"
+                        priority
+                      />
+                    </div>
+                    {/* تدرج شفاف على الصورة */}
+                    <div className="absolute inset-0 rounded-full pointer-events-none" style={{ background: 'linear-gradient(180deg, rgba(0,0,0,0.08) 0%, transparent 35%, transparent 65%, rgba(0,0,0,0.12) 100%)' }} />
                   </div>
 
-                  {/* بقع رش زخرفية ملونة حول الصورة */}
-                  <div className="absolute -top-6 -right-4 w-14 h-14 rounded-full bg-gradient-to-br from-[var(--accent)]/25 to-[var(--accent)]/5 blur-[2px] pointer-events-none" />
-                  <div className="absolute -bottom-4 -left-3 w-10 h-10 rounded-full bg-rose-400/20 blur-[2px] pointer-events-none" />
-                  <div className="absolute top-[30%] -left-8 w-6 h-6 rounded-full bg-[var(--accent)]/15 pointer-events-none" />
-                  <div className="absolute bottom-[25%] -right-7 w-5 h-5 rounded-full bg-amber-400/15 pointer-events-none" />
-                  <div className="absolute top-[10%] -left-4 w-3 h-3 rounded-full bg-[var(--accent)]/20 pointer-events-none" />
-
-                  {/* بقع رش إضافية — وكأنها طارت من الرشة */}
-                  <div className="absolute -top-3 right-[20%] w-2 h-2 rounded-full bg-[var(--accent)]/30" />
-                  <div className="absolute top-[5%] -right-3 w-1.5 h-1.5 rounded-full bg-[var(--accent)]/25" />
-                  <div className="absolute bottom-[15%] -left-4 w-2 h-2 rounded-full bg-rose-400/25" />
-                  <div className="absolute -bottom-2 right-[35%] w-1.5 h-1.5 rounded-full bg-[var(--accent)]/20" />
-
-                  {/* قطرة رسم (drip) متدلية */}
-                  <div className="absolute -bottom-6 left-[25%] flex flex-col items-center pointer-events-none">
-                    <div className="w-1.5 h-4 rounded-full bg-gradient-to-b from-[var(--accent)]/30 to-transparent" />
-                    <div className="w-2.5 h-2.5 rounded-full bg-[var(--accent)]/20" />
+                  {/* أيقونات عائمة */}
+                  <div className="absolute -top-2 -right-2 lg:-top-3 lg:-right-3 w-12 h-12 lg:w-14 lg:h-14 rounded-2xl bg-[var(--bg-card)] border border-[var(--accent)]/20 flex items-center justify-center shadow-xl shadow-[var(--accent)]/10 backdrop-blur-sm rotate-12 hover:rotate-0 hover:scale-110 transition-all duration-500 z-10">
+                    <Heart className="h-5 w-5 lg:h-6 lg:w-6 text-rose-400" />
                   </div>
-                  <div className="absolute -bottom-5 right-[20%] flex flex-col items-center pointer-events-none">
-                    <div className="w-1 h-3 rounded-full bg-gradient-to-b from-rose-400/25 to-transparent" />
-                    <div className="w-2 h-2 rounded-full bg-rose-400/15" />
+                  <div className="absolute -bottom-2 -left-2 lg:-bottom-3 lg:-left-3 w-12 h-12 lg:w-14 lg:h-14 rounded-2xl bg-[var(--bg-card)] border border-[var(--border-primary)] flex items-center justify-center shadow-xl backdrop-blur-sm -rotate-12 hover:rotate-0 hover:scale-110 transition-all duration-500 z-10">
+                    <Activity className="h-5 w-5 lg:h-6 lg:w-6 text-[var(--accent)]" />
                   </div>
 
-                  {/* أيقونة — وكأنها جزء من اللوحة */}
-                  <div className="absolute top-[18%] -right-8 w-11 h-11 rounded-2xl bg-[var(--bg-card)]/90 border border-[var(--accent)]/15 flex items-center justify-center shadow-lg backdrop-blur-sm rotate-12 hover:rotate-0 transition-all duration-500">
-                    <Heart className="h-5 w-5 text-[var(--accent)]" />
-                  </div>
-                  <div className="absolute bottom-[18%] -left-8 w-11 h-11 rounded-2xl bg-[var(--bg-card)]/90 border border-[var(--border-primary)] flex items-center justify-center shadow-lg backdrop-blur-sm -rotate-12 hover:rotate-0 transition-all duration-500">
-                    <Activity className="h-5 w-5 text-[var(--accent)]" />
-                  </div>
+                  {/* نقاط زخرفية */}
+                  <div className="absolute -top-1 left-[15%] w-2 h-2 lg:w-2.5 lg:h-2.5 rounded-full bg-[var(--accent)]/30 animate-pulse" />
+                  <div className="absolute bottom-[10%] -right-1 lg:-right-2 w-1.5 h-1.5 lg:w-2 lg:h-2 rounded-full bg-rose-400/25" />
+                  <div className="absolute top-[20%] -left-1 lg:-left-2 w-1.5 h-1.5 rounded-full bg-[var(--accent)]/20" />
                 </div>
-
-                {/* نقاط رش صغيرة متطايرة */}
-                <div className="absolute top-[8%] right-[5%] w-2 h-2 rounded-full bg-[var(--accent)]/25 animate-pulse" />
-                <div className="absolute bottom-[12%] left-[3%] w-1.5 h-1.5 rounded-full bg-amber-400/20" />
-                <div className="absolute top-[45%] right-[1%] w-1 h-1 rounded-full bg-rose-400/30" />
-                <div className="absolute bottom-[40%] left-[1%] w-1 h-1 rounded-full bg-[var(--accent)]/20" />
               </div>
             </div>
           </div>
