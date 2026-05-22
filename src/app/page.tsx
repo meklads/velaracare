@@ -1,14 +1,17 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import { useEffect } from "react";
+import { initScrollAnimations } from "@/lib/scroll-animations";
 import {
   TrendingDown, BarChart3, Users, Building2,
   ArrowLeft, ArrowRight, Activity, TrendingUp,
   DollarSign, PieChart, UserCheck, Target,
   Award, Medal, ClipboardCheck, Brain, Salad,
-  Apple, ChefHat
+  Apple, ChefHat, Sparkles, Zap, Heart
 } from "lucide-react";
 
 // ===== HERO VALUE CARDS =====
@@ -118,45 +121,62 @@ const businessMetrics = [
 ];
 
 export default function Home() {
+  useEffect(() => {
+    const cleanup = initScrollAnimations();
+    return () => cleanup();
+  }, []);
+
   return (
     <>
       <Header />
       <main>
         {/* ════════════════════════════════════════
-           HERO — Enterprise Workforce Health Platform
+           HERO
            ════════════════════════════════════════ */}
         <section className="relative pt-32 pb-24 overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-b from-[var(--accent-soft)] to-transparent opacity-50" />
+          {/* Decorative background */}
+          <div className="absolute inset-0 bg-gradient-to-b from-[var(--accent-soft)] via-transparent to-transparent opacity-60" />
+          <div className="absolute top-[-10%] right-[-5%] w-[600px] h-[600px] rounded-full bg-gradient-to-br from-[var(--accent)]/8 via-[var(--accent)]/3 to-transparent blur-3xl pointer-events-none" />
+          <div className="absolute bottom-[-15%] left-[-10%] w-[500px] h-[500px] rounded-full bg-gradient-to-tr from-[var(--accent)]/5 to-transparent blur-3xl pointer-events-none" />
+          <div className="absolute inset-0 vp-grid-bg opacity-[0.03]" />
+
           <div className="container-shade relative z-10">
             <div className="mx-auto max-w-4xl text-center">
+              <div data-vp-animate="fade-up">
+                <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[var(--accent-soft)] border border-[var(--accent)]/10 text-[var(--accent)] text-xs font-semibold mb-6">
+                  <Heart className="h-3.5 w-3.5" />
+                  Enterprise Workforce Wellness Platform
+                </span>
+              </div>
 
-              <h1 className="text-[clamp(36px,4vw,56px)] font-extrabold leading-[1.1] tracking-[-0.02em] text-[var(--text-primary)]">
+              <h1 className="vp-hero" data-vp-animate="fade-up" data-vp-delay="1">
                 Transform Workforce Health
                 <br />
-                <span className="text-[var(--accent)]">Into Measurable Business Performance</span>
+                <span className="vp-hero-em">Into Measurable Business Performance</span>
               </h1>
 
-              <p className="mt-6 text-lg text-[var(--text-secondary)] leading-relaxed max-w-3xl mx-auto">
-                Velara helps companies improve employee wellbeing, reduce healthcare-related costs,
-                increase productivity, and manage workforce wellness through an integrated
-                health optimization platform.
+              <p className="vp-subtitle max-w-3xl mx-auto mt-6" data-vp-animate="fade-up" data-vp-delay="2">
+                Velara is an integrated workforce health operating system connecting companies,
+                employees, HR teams, nutritionists, and wellness providers inside one measurable ecosystem.
               </p>
 
-              <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
-                <Link href="/demo" className="btn-primary text-base px-10 py-4 !h-auto">
+              <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4" data-vp-animate="fade-up" data-vp-delay="3">
+                <Link href="/demo" className="btn-premium text-base px-10 py-4 !h-auto">
                   Book Enterprise Demo
                   <ArrowLeft className="h-4 w-4" />
                 </Link>
-                <Link href="/product" className="inline-flex items-center gap-2 px-8 py-4 rounded-full border border-[var(--border-primary)] text-[var(--text-secondary)] font-semibold text-sm hover:border-[var(--accent)] hover:text-[var(--accent)] transition-colors">
+                <Link href="/product" className="btn-ghost text-base px-8 py-4 !h-auto">
                   Explore Platform
                 </Link>
               </div>
 
-              {/* Enterprise value cards */}
-              <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mx-auto">
+              {/* Value cards */}
+              <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mx-auto" data-vp-animate="fade-up" data-vp-delay="4">
                 {valueCards.map((card) => (
-                  <div key={card.title} className="bg-[var(--bg-card)] border border-[var(--border-primary)] rounded-xl p-4 text-center hover:border-[var(--accent)]/30 transition-colors">
-                    <card.icon className="h-5 w-5 text-[var(--accent)] mx-auto mb-2" />
+                  <div key={card.title} className="glass-premium rounded-xl p-4 text-center group hover:border-[var(--accent)]/20">
+                    <div className="w-10 h-10 rounded-xl bg-[var(--accent-soft)] flex items-center justify-center mx-auto mb-2 group-hover:scale-110 transition-transform">
+                      <card.icon className="h-5 w-5 text-[var(--accent)]" />
+                    </div>
                     <h3 className="text-sm font-bold text-[var(--text-primary)] mb-1">{card.title}</h3>
                     <p className="text-xs text-[var(--text-secondary)] leading-tight">{card.desc}</p>
                   </div>
@@ -169,35 +189,34 @@ export default function Home() {
         {/* ════════════════════════════════════════
            SECTION 1 — PLATFORM ECOSYSTEM
            ════════════════════════════════════════ */}
-        <section className="py-24 bg-[var(--bg-secondary)]">
-          <div className="container-shade">
-            <div className="max-w-3xl mx-auto text-center mb-16">
-              <span className="inline-block text-xs font-semibold text-[var(--accent)] bg-[var(--accent-soft)] px-3 py-1 rounded-full mb-4">Platform Architecture</span>
-              <h2 className="text-[clamp(28px,3vw,40px)] font-extrabold text-[var(--text-primary)] leading-tight">
-                How The Velara Ecosystem Works
-              </h2>
-              <p className="mt-4 text-lg text-[var(--text-secondary)] leading-relaxed">
+        <section className="py-24 bg-[var(--bg-secondary)] relative overflow-hidden">
+          <div className="absolute inset-0 vp-data-dots pointer-events-none" />
+          <div className="container-shade relative z-10">
+            <div className="max-w-3xl mx-auto text-center mb-16" data-vp-animate="fade-up">
+              <span className="vp-label">Platform Architecture</span>
+              <h2 className="vp-section-title mt-4">How The Velara Ecosystem Works</h2>
+              <p className="vp-subtitle mt-4">
                 Five key stakeholders connected in one measurable workforce wellness operating system.
               </p>
-              <div className="w-16 h-1 rounded-full bg-[var(--accent)] mx-auto mt-4" />
+              <div className="w-16 h-1 rounded-full bg-gradient-to-l from-[var(--accent)] to-[var(--accent-light)] mx-auto mt-4" />
             </div>
 
-            {/* Desktop: horizontal flow */}
-            <div className="hidden lg:flex items-start justify-center max-w-6xl mx-auto">
+            {/* Desktop: horizontal flow with glass cards */}
+            <div className="hidden lg:flex items-start justify-center max-w-6xl mx-auto" data-vp-animate="fade-up" data-vp-delay="2">
               {ecosystemEntities.map((item, i) => (
                 <div key={item.title} className="flex items-start">
-                  <div className="flex flex-col items-center text-center px-3">
-                    <div className="w-16 h-16 rounded-2xl bg-[var(--accent-soft)] flex items-center justify-center mb-3 ring-2 ring-[var(--accent)]/10">
+                  <div className="glass-premium rounded-2xl p-5 flex flex-col items-center text-center w-[190px] hover:border-[var(--accent)]/20 transition-all duration-500">
+                    <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[var(--accent-soft)] to-[var(--accent)]/5 flex items-center justify-center mb-3 ring-2 ring-[var(--accent)]/10">
                       <item.icon className="h-8 w-8 text-[var(--accent)]" />
                     </div>
                     <h3 className="text-base font-bold text-[var(--text-primary)] mb-1">{item.title}</h3>
-                    <p className="text-[11px] text-[var(--text-secondary)] leading-relaxed max-w-[170px] mb-3">{item.desc}</p>
+                    <p className="text-[11px] text-[var(--text-secondary)] leading-relaxed mb-3">{item.desc}</p>
                     <span className="text-[10px] font-semibold text-[var(--accent)] bg-[var(--accent-soft)] px-2.5 py-1 rounded-full whitespace-nowrap">{item.role}</span>
                   </div>
                   {i < ecosystemEntities.length - 1 && (
-                    <div className="flex items-center pt-8 px-1">
-                      <div className="w-8 h-8 rounded-full bg-[var(--bg-card)] border border-[var(--border-primary)] flex items-center justify-center">
-                        <ArrowRight className="h-4 w-4 text-[var(--text-muted)]" />
+                    <div className="flex items-center pt-8 px-2">
+                      <div className="w-8 h-8 rounded-full bg-[var(--bg-card)] border border-[var(--border-primary)] flex items-center justify-center shadow-sm">
+                        <ArrowRight className="h-4 w-4 text-[var(--accent)]" />
                       </div>
                     </div>
                   )}
@@ -206,21 +225,15 @@ export default function Home() {
             </div>
 
             {/* Tablet / Mobile: grid */}
-            <div className="grid sm:grid-cols-2 lg:hidden gap-5 max-w-3xl mx-auto">
-              {ecosystemEntities.map((item, i) => (
-                <div key={item.title} className="bg-[var(--bg-card)] border border-[var(--border-primary)] rounded-2xl p-6 text-center hover:border-[var(--accent)]/30 transition-colors">
-                  <div className="w-14 h-14 rounded-2xl bg-[var(--accent-soft)] flex items-center justify-center mx-auto mb-4 ring-2 ring-[var(--accent)]/10">
+            <div className="grid sm:grid-cols-2 lg:hidden gap-5 max-w-3xl mx-auto" data-vp-animate="fade-up" data-vp-delay="2">
+              {ecosystemEntities.map((item) => (
+                <div key={item.title} className="card-premium p-6 text-center group">
+                  <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[var(--accent-soft)] to-[var(--accent)]/5 flex items-center justify-center mx-auto mb-4 ring-2 ring-[var(--accent)]/10 group-hover:scale-110 transition-transform">
                     <item.icon className="h-7 w-7 text-[var(--accent)]" />
                   </div>
                   <h3 className="text-lg font-bold text-[var(--text-primary)] mb-2">{item.title}</h3>
                   <p className="text-sm text-[var(--text-secondary)] leading-relaxed mb-3">{item.desc}</p>
                   <span className="text-xs font-semibold text-[var(--accent)] bg-[var(--accent-soft)] px-3 py-1 rounded-full">{item.role}</span>
-                  {i < ecosystemEntities.length - 1 && (
-                    <div className="mt-3 pt-3 border-t border-[var(--border-primary)] text-xs text-[var(--text-muted)]">
-                      <ArrowRight className="h-4 w-4 inline-block ml-1" />
-                      Connects to next
-                    </div>
-                  )}
                 </div>
               ))}
             </div>
@@ -230,32 +243,50 @@ export default function Home() {
         {/* ════════════════════════════════════════
            SECTION 2 — HR CONTROL CENTER
            ════════════════════════════════════════ */}
-        <section className="py-24 bg-[var(--bg-primary)]">
-          <div className="container-shade">
-            <div className="max-w-3xl mx-auto text-center mb-16">
-              <span className="inline-block text-xs font-semibold text-[var(--accent)] bg-[var(--accent-soft)] px-3 py-1 rounded-full mb-4">Enterprise Analytics</span>
-              <h2 className="text-[clamp(28px,3vw,40px)] font-extrabold text-[var(--text-primary)] leading-tight">
-                HR Wellness Intelligence Dashboard
-              </h2>
-              <p className="mt-4 text-lg text-[var(--text-secondary)] leading-relaxed">
-                Real-time operational intelligence for managing workforce wellness programs at scale.
-              </p>
-              <div className="w-16 h-1 rounded-full bg-[var(--accent)] mx-auto mt-4" />
-            </div>
+        <section className="py-24 bg-[var(--bg-primary)] relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-[400px] h-[400px] rounded-full bg-gradient-to-bl from-[var(--accent)]/5 to-transparent blur-3xl pointer-events-none" />
+          <div className="container-shade relative z-10">
+            <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+              {/* Content */}
+              <div data-vp-animate="fade-up">
+                <span className="vp-label">Enterprise Analytics</span>
+                <h2 className="vp-section-title mt-4">HR Wellness Intelligence Dashboard</h2>
+                <p className="vp-subtitle mt-4 mb-8">
+                  Real-time operational intelligence for managing workforce wellness programs at scale.
+                  Monitor participation, track outcomes, and generate executive-ready reports.
+                </p>
 
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 max-w-5xl mx-auto">
-              {hrDashboardMetrics.map((metric) => (
-                <div key={metric.label} className="bg-[var(--bg-card)] border border-[var(--border-primary)] rounded-2xl p-6 hover:border-[var(--accent)]/30 transition-colors group">
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="w-10 h-10 rounded-xl bg-[var(--accent-soft)] flex items-center justify-center group-hover:scale-105 transition-transform">
-                      <metric.icon className="h-5 w-5 text-[var(--accent)]" />
+                <div className="grid grid-cols-2 gap-3">
+                  {hrDashboardMetrics.map((metric) => (
+                    <div key={metric.label} className="card-premium !p-4 group">
+                      <div className="flex items-center justify-between mb-2">
+                        <div className="w-8 h-8 rounded-lg bg-[var(--accent-soft)] flex items-center justify-center group-hover:scale-110 transition-transform">
+                          <metric.icon className="h-4 w-4 text-[var(--accent)]" />
+                        </div>
+                        <span className="text-lg font-extrabold text-[var(--accent)]">{metric.value}</span>
+                      </div>
+                      <h3 className="text-xs font-bold text-[var(--text-primary)] mb-0.5">{metric.label}</h3>
+                      <p className="text-[10px] text-[var(--text-secondary)]">{metric.desc}</p>
                     </div>
-                    <span className="text-2xl font-extrabold text-[var(--accent)]">{metric.value}</span>
-                  </div>
-                  <h3 className="text-sm font-bold text-[var(--text-primary)] mb-1">{metric.label}</h3>
-                  <p className="text-xs text-[var(--text-secondary)]">{metric.desc}</p>
+                  ))}
                 </div>
-              ))}
+              </div>
+
+              {/* Image */}
+              <div className="relative" data-vp-animate="scale-in" data-vp-delay="2">
+                <div className="absolute -inset-6 bg-gradient-to-r from-[var(--accent)]/10 via-[var(--accent)]/5 to-transparent rounded-3xl blur-3xl" />
+                <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-[var(--border-primary)]">
+                  <Image
+                    src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=700&h=500&fit=crop&auto=format"
+                    alt="HR Analytics Dashboard"
+                    width={700}
+                    height={500}
+                    className="w-full h-auto object-cover"
+                    priority
+                  />
+                </div>
+                <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-white/10 pointer-events-none" />
+              </div>
             </div>
           </div>
         </section>
@@ -263,86 +294,55 @@ export default function Home() {
         {/* ════════════════════════════════════════
            SECTION 3 — EMPLOYEE EXPERIENCE FLOW
            ════════════════════════════════════════ */}
-        <section className="py-24 bg-[var(--bg-secondary)]">
-          <div className="container-shade">
-            <div className="max-w-3xl mx-auto text-center mb-16">
-              <span className="inline-block text-xs font-semibold text-[var(--accent)] bg-[var(--accent-soft)] px-3 py-1 rounded-full mb-4">Employee Journey</span>
-              <h2 className="text-[clamp(28px,3vw,40px)] font-extrabold text-[var(--text-primary)] leading-tight">
-                Employee Wellness Journey
-              </h2>
-              <p className="mt-4 text-lg text-[var(--text-secondary)] leading-relaxed">
-                From onboarding to measurable improvement — a complete employee wellness experience.
-              </p>
-              <div className="w-16 h-1 rounded-full bg-[var(--accent)] mx-auto mt-4" />
-            </div>
-
-            <div className="max-w-5xl mx-auto">
-              {/* Desktop: numbered flow */}
-              <div className="hidden lg:grid grid-cols-7 gap-3">
-                {employeeJourney.map((item) => (
-                  <div key={item.step} className="bg-[var(--bg-card)] border border-[var(--border-primary)] rounded-2xl p-4 text-center hover:border-[var(--accent)]/30 transition-colors">
-                    <div className="w-8 h-8 rounded-full bg-[var(--accent)] text-white flex items-center justify-center text-xs font-bold mx-auto mb-3">
-                      {item.step}
-                    </div>
-                    <div className="w-10 h-10 rounded-xl bg-[var(--accent-soft)] flex items-center justify-center mx-auto mb-2">
-                      <item.icon className="h-5 w-5 text-[var(--accent)]" />
-                    </div>
-                    <h3 className="text-[11px] font-bold text-[var(--text-primary)] mb-1 leading-tight">{item.title}</h3>
-                    <p className="text-[10px] text-[var(--text-secondary)] leading-relaxed">{item.desc}</p>
-                  </div>
-                ))}
+        <section className="py-24 bg-[var(--bg-secondary)] relative overflow-hidden">
+          <div className="absolute bottom-0 left-0 w-[400px] h-[400px] rounded-full bg-gradient-to-tr from-[var(--accent)]/5 to-transparent blur-3xl pointer-events-none" />
+          <div className="absolute inset-0 vp-grid-bg opacity-[0.02]" />
+          <div className="container-shade relative z-10">
+            <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+              {/* Image */}
+              <div className="relative order-last lg:order-first" data-vp-animate="scale-in">
+                <div className="absolute -inset-6 bg-gradient-to-l from-[var(--accent)]/10 via-[var(--accent)]/5 to-transparent rounded-3xl blur-3xl" />
+                <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-[var(--border-primary)]">
+                  <Image
+                    src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=700&h=500&fit=crop&auto=format"
+                    alt="Employee Wellness Journey"
+                    width={700}
+                    height={500}
+                    className="w-full h-auto object-cover"
+                  />
+                </div>
+                <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-white/10 pointer-events-none" />
               </div>
 
-              {/* Connecting line between desktop cards */}
-              <div className="hidden lg:flex justify-between px-4 mt-2 mb-8 max-w-5xl mx-auto">
-                {employeeJourney.map((_, i) => (
-                  i < employeeJourney.length - 1 && (
-                    <div key={i} className="flex-1 flex items-center justify-center">
-                      <div className="w-full h-0.5 bg-gradient-to-r from-[var(--accent)]/40 to-[var(--accent)]/10" />
-                    </div>
-                  )
-                ))}
-              </div>
+              {/* Content */}
+              <div data-vp-animate="fade-up" data-vp-delay="2">
+                <span className="vp-label">Employee Journey</span>
+                <h2 className="vp-section-title mt-4">Employee Wellness Journey</h2>
+                <p className="vp-subtitle mt-4 mb-8">
+                  From onboarding to measurable improvement — a complete employee wellness experience powered by AI.
+                </p>
 
-              {/* Tablet: 2-2-2-1 grid */}
-              <div className="hidden sm:grid lg:hidden grid-cols-2 gap-4">
-                {employeeJourney.map((item) => (
-                  <div key={item.step} className="bg-[var(--bg-card)] border border-[var(--border-primary)] rounded-2xl p-5 hover:border-[var(--accent)]/30 transition-colors">
-                    <div className="flex items-center gap-3 mb-3">
-                      <div className="w-8 h-8 rounded-full bg-[var(--accent)] text-white flex items-center justify-center text-xs font-bold shrink-0">
-                        {item.step}
+                <div className="space-y-4">
+                  {employeeJourney.map((item, i) => (
+                    <div key={item.step} className="flex items-start gap-4 group">
+                      <div className="flex flex-col items-center">
+                        <div className="w-9 h-9 rounded-full bg-gradient-to-br from-[var(--accent)] to-[var(--accent-dark)] text-white flex items-center justify-center text-xs font-bold shrink-0 shadow-md group-hover:scale-110 transition-transform">
+                          {item.step}
+                        </div>
+                        {i < employeeJourney.length - 1 && (
+                          <div className="w-0.5 flex-1 bg-gradient-to-b from-[var(--accent)]/20 to-transparent mt-1" />
+                        )}
                       </div>
-                      <div className="w-9 h-9 rounded-lg bg-[var(--accent-soft)] flex items-center justify-center shrink-0">
-                        <item.icon className="h-4 w-4 text-[var(--accent)]" />
+                      <div className="bg-[var(--bg-card)] border border-[var(--border-primary)] rounded-xl p-4 flex-1 group-hover:border-[var(--accent)]/20 transition-all">
+                        <div className="flex items-center gap-2 mb-1">
+                          <item.icon className="h-4 w-4 text-[var(--accent)] shrink-0" />
+                          <h3 className="text-sm font-bold text-[var(--text-primary)]">{item.title}</h3>
+                        </div>
+                        <p className="text-xs text-[var(--text-secondary)]">{item.desc}</p>
                       </div>
                     </div>
-                    <h3 className="text-sm font-bold text-[var(--text-primary)] mb-1">{item.title}</h3>
-                    <p className="text-xs text-[var(--text-secondary)]">{item.desc}</p>
-                  </div>
-                ))}
-              </div>
-
-              {/* Mobile: vertical timeline */}
-              <div className="sm:hidden space-y-4">
-                {employeeJourney.map((item, i) => (
-                  <div key={item.step} className="flex gap-4">
-                    <div className="flex flex-col items-center">
-                      <div className="w-8 h-8 rounded-full bg-[var(--accent)] text-white flex items-center justify-center text-xs font-bold shrink-0">
-                        {item.step}
-                      </div>
-                      {i < employeeJourney.length - 1 && (
-                        <div className="w-0.5 flex-1 bg-gradient-to-b from-[var(--accent)]/30 to-transparent mt-1" />
-                      )}
-                    </div>
-                    <div className="bg-[var(--bg-card)] border border-[var(--border-primary)] rounded-xl p-4 flex-1 mb-2">
-                      <div className="flex items-center gap-2 mb-1">
-                        <item.icon className="h-4 w-4 text-[var(--accent)] shrink-0" />
-                        <h3 className="text-sm font-bold text-[var(--text-primary)]">{item.title}</h3>
-                      </div>
-                      <p className="text-xs text-[var(--text-secondary)]">{item.desc}</p>
-                    </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
             </div>
           </div>
@@ -351,29 +351,45 @@ export default function Home() {
         {/* ════════════════════════════════════════
            SECTION 4 — NUTRITIONIST OPERATIONS
            ════════════════════════════════════════ */}
-        <section className="py-24 bg-[var(--bg-primary)]">
-          <div className="container-shade">
-            <div className="max-w-3xl mx-auto text-center mb-16">
-              <span className="inline-block text-xs font-semibold text-[var(--accent)] bg-[var(--accent-soft)] px-3 py-1 rounded-full mb-4">Nutritionist Workspace</span>
-              <h2 className="text-[clamp(28px,3vw,40px)] font-extrabold text-[var(--text-primary)] leading-tight">
-                Connected Nutritionist Workspace
-              </h2>
-              <p className="mt-4 text-lg text-[var(--text-secondary)] leading-relaxed">
-                An intelligent operational workspace where nutritionists manage clients, create plans, and measure outcomes.
-              </p>
-              <div className="w-16 h-1 rounded-full bg-[var(--accent)] mx-auto mt-4" />
-            </div>
+        <section className="py-24 bg-[var(--bg-primary)] relative overflow-hidden">
+          <div className="absolute inset-0 vp-data-dots pointer-events-none" />
+          <div className="container-shade relative z-10">
+            <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+              {/* Content */}
+              <div data-vp-animate="fade-up">
+                <span className="vp-label">Nutritionist Workspace</span>
+                <h2 className="vp-section-title mt-4">Connected Nutritionist Workspace</h2>
+                <p className="vp-subtitle mt-4 mb-8">
+                  An intelligent operational workspace where nutritionists manage clients, create plans, and measure outcomes — all connected to the employee wellness ecosystem.
+                </p>
 
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-4xl mx-auto">
-              {nutritionistCapabilities.map((cap) => (
-                <div key={cap.title} className="bg-[var(--bg-card)] border border-[var(--border-primary)] rounded-2xl p-6 hover:border-[var(--accent)]/30 transition-colors group">
-                  <div className="w-12 h-12 rounded-xl bg-[var(--accent-soft)] flex items-center justify-center mb-4 group-hover:scale-105 transition-transform">
-                    <cap.icon className="h-6 w-6 text-[var(--accent)]" />
-                  </div>
-                  <h3 className="text-base font-bold text-[var(--text-primary)] mb-2">{cap.title}</h3>
-                  <p className="text-sm text-[var(--text-secondary)] leading-relaxed">{cap.desc}</p>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {nutritionistCapabilities.map((cap) => (
+                    <div key={cap.title} className="card-premium !p-4 group">
+                      <div className="w-9 h-9 rounded-lg bg-[var(--accent-soft)] flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+                        <cap.icon className="h-4 w-4 text-[var(--accent)]" />
+                      </div>
+                      <h3 className="text-sm font-bold text-[var(--text-primary)] mb-1">{cap.title}</h3>
+                      <p className="text-xs text-[var(--text-secondary)] leading-relaxed">{cap.desc}</p>
+                    </div>
+                  ))}
                 </div>
-              ))}
+              </div>
+
+              {/* Image */}
+              <div className="relative" data-vp-animate="scale-in" data-vp-delay="2">
+                <div className="absolute -inset-6 bg-gradient-to-l from-[var(--accent)]/10 via-[var(--accent)]/5 to-transparent rounded-3xl blur-3xl" />
+                <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-[var(--border-primary)]">
+                  <Image
+                    src="https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=700&h=500&fit=crop&auto=format"
+                    alt="Healthy Nutrition"
+                    width={700}
+                    height={500}
+                    className="w-full h-auto object-cover"
+                  />
+                </div>
+                <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-white/10 pointer-events-none" />
+              </div>
             </div>
           </div>
         </section>
@@ -381,33 +397,49 @@ export default function Home() {
         {/* ════════════════════════════════════════
            SECTION 5 — RESTAURANT PARTNER SYSTEM
            ════════════════════════════════════════ */}
-        <section className="py-24 bg-[var(--bg-secondary)]">
-          <div className="container-shade">
-            <div className="max-w-3xl mx-auto text-center mb-16">
-              <span className="inline-block text-xs font-semibold text-[var(--accent)] bg-[var(--accent-soft)] px-3 py-1 rounded-full mb-4">Partner Network</span>
-              <h2 className="text-[clamp(28px,3vw,40px)] font-extrabold text-[var(--text-primary)] leading-tight">
-                Restaurant Wellness Network
-              </h2>
-              <p className="mt-4 text-lg text-[var(--text-secondary)] leading-relaxed">
-                An operational logistics ecosystem connecting restaurant partners to workforce wellness outcomes.
-              </p>
-              <div className="w-16 h-1 rounded-full bg-[var(--accent)] mx-auto mt-4" />
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-6 max-w-3xl mx-auto">
-              {restaurantCapabilities.map((cap) => (
-                <div key={cap.title} className="bg-[var(--bg-card)] border border-[var(--border-primary)] rounded-2xl p-6 hover:border-[var(--accent)]/30 transition-colors group">
-                  <div className="flex items-start gap-5">
-                    <div className="w-12 h-12 rounded-xl bg-[var(--accent-soft)] flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
-                      <cap.icon className="h-6 w-6 text-[var(--accent)]" />
-                    </div>
-                    <div>
-                      <h3 className="text-base font-bold text-[var(--text-primary)] mb-2">{cap.title}</h3>
-                      <p className="text-sm text-[var(--text-secondary)] leading-relaxed">{cap.desc}</p>
-                    </div>
-                  </div>
+        <section className="py-24 bg-[var(--bg-secondary)] relative overflow-hidden">
+          <div className="absolute top-0 right-[-10%] w-[500px] h-[500px] rounded-full bg-gradient-to-bl from-[var(--accent)]/5 to-transparent blur-3xl pointer-events-none" />
+          <div className="container-shade relative z-10">
+            <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+              {/* Image */}
+              <div className="relative order-last lg:order-first" data-vp-animate="scale-in">
+                <div className="absolute -inset-6 bg-gradient-to-r from-[var(--accent)]/10 via-[var(--accent)]/5 to-transparent rounded-3xl blur-3xl" />
+                <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-[var(--border-primary)]">
+                  <Image
+                    src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=700&h=500&fit=crop&auto=format"
+                    alt="Restaurant Kitchen"
+                    width={700}
+                    height={500}
+                    className="w-full h-auto object-cover"
+                  />
                 </div>
-              ))}
+                <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-white/10 pointer-events-none" />
+              </div>
+
+              {/* Content */}
+              <div data-vp-animate="fade-up" data-vp-delay="2">
+                <span className="vp-label">Partner Network</span>
+                <h2 className="vp-section-title mt-4">Restaurant Wellness Network</h2>
+                <p className="vp-subtitle mt-4 mb-8">
+                  An operational logistics ecosystem connecting restaurant partners to workforce wellness outcomes through structured ordering and integrated delivery.
+                </p>
+
+                <div className="space-y-4">
+                  {restaurantCapabilities.map((cap) => (
+                    <div key={cap.title} className="card-premium !p-5 group">
+                      <div className="flex items-start gap-4">
+                        <div className="w-10 h-10 rounded-lg bg-[var(--accent-soft)] flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
+                          <cap.icon className="h-5 w-5 text-[var(--accent)]" />
+                        </div>
+                        <div>
+                          <h3 className="text-sm font-bold text-[var(--text-primary)] mb-1">{cap.title}</h3>
+                          <p className="text-xs text-[var(--text-secondary)] leading-relaxed">{cap.desc}</p>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
         </section>
@@ -415,23 +447,23 @@ export default function Home() {
         {/* ════════════════════════════════════════
            SECTION 6 — BUSINESS IMPACT
            ════════════════════════════════════════ */}
-        <section className="py-24 bg-[var(--bg-primary)]">
-          <div className="container-shade">
-            <div className="max-w-3xl mx-auto text-center mb-16">
-              <span className="inline-block text-xs font-semibold text-[var(--accent)] bg-[var(--accent-soft)] px-3 py-1 rounded-full mb-4">ROI Metrics</span>
-              <h2 className="text-[clamp(28px,3vw,40px)] font-extrabold text-[var(--text-primary)] leading-tight">
-                Business Outcomes That Matter
-              </h2>
-              <p className="mt-4 text-lg text-[var(--text-secondary)] leading-relaxed">
+        <section className="py-24 bg-[var(--bg-primary)] relative overflow-hidden">
+          <div className="absolute inset-0 vp-grid-bg opacity-[0.03]" />
+          <div className="absolute bottom-[-20%] left-[20%] w-[600px] h-[600px] rounded-full bg-gradient-to-tr from-[var(--accent)]/5 to-transparent blur-3xl pointer-events-none" />
+          <div className="container-shade relative z-10">
+            <div className="max-w-3xl mx-auto text-center mb-16" data-vp-animate="fade-up">
+              <span className="vp-label">ROI Metrics</span>
+              <h2 className="vp-section-title mt-4">Business Outcomes That Matter</h2>
+              <p className="vp-subtitle mt-4">
                 Measurable enterprise KPIs that prove the return on workforce wellness investment.
               </p>
-              <div className="w-16 h-1 rounded-full bg-[var(--accent)] mx-auto mt-4" />
+              <div className="w-16 h-1 rounded-full bg-gradient-to-l from-[var(--accent)] to-[var(--accent-light)] mx-auto mt-4" />
             </div>
 
-            <div className="grid grid-cols-2 lg:grid-cols-3 gap-5 max-w-4xl mx-auto">
+            <div className="grid grid-cols-2 lg:grid-cols-3 gap-5 max-w-4xl mx-auto" data-vp-animate="fade-up" data-vp-delay="2">
               {businessMetrics.map((metric) => (
-                <div key={metric.label} className="bg-[var(--bg-card)] border border-[var(--border-primary)] rounded-2xl p-6 text-center hover:border-[var(--accent)]/30 transition-colors group">
-                  <div className="w-12 h-12 rounded-xl bg-[var(--accent-soft)] flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
+                <div key={metric.label} className="card-premium !p-6 text-center group hover:shadow-xl">
+                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[var(--accent-soft)] to-[var(--accent)]/5 flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform ring-2 ring-[var(--accent)]/10">
                     <metric.icon className="h-6 w-6 text-[var(--accent)]" />
                   </div>
                   <p className="text-3xl font-extrabold text-[var(--accent)] leading-none mb-2">{metric.value}</p>
@@ -445,22 +477,29 @@ export default function Home() {
         {/* ════════════════════════════════════════
            FINAL CTA
            ════════════════════════════════════════ */}
-        <section className="py-24 bg-[var(--bg-secondary)]">
-          <div className="container-shade">
-            <div className="max-w-3xl mx-auto text-center">
-              <h2 className="text-[clamp(28px,3vw,40px)] font-extrabold text-[var(--text-primary)] leading-tight">
-                Ready to Build Your Workforce Wellness Operating System?
+        <section className="relative py-24 overflow-hidden" style={{ background: 'linear-gradient(135deg, var(--vp-ink) 0%, #0D4F4F 100%)' }}>
+          <div className="absolute inset-0 vp-grid-bg opacity-[0.03]" />
+          <div className="absolute top-1/2 left-1/3 w-72 h-72 rounded-full bg-[var(--accent)]/10 blur-3xl" />
+          <div className="container-shade relative z-10">
+            <div className="max-w-3xl mx-auto text-center" data-vp-animate="slide-up">
+              <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-white/70 text-xs font-semibold mb-6">
+                <Zap className="h-3.5 w-3.5" />
+                Get Started Today
+              </span>
+              <h2 className="vp-hero text-white mb-6">
+                Ready to Build Your Workforce Wellness<br />
+                <span className="vp-hero-em">Operating System?</span>
               </h2>
-              <p className="mt-4 text-lg text-[var(--text-secondary)] leading-relaxed">
+              <p className="vp-subtitle text-white/70 max-w-2xl mx-auto mb-10">
                 Get a personalized enterprise demo — including an initial workforce wellness analysis
                 and program recommendations tailored to your organization.
               </p>
-              <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
-                <Link href="/demo" className="btn-primary text-base px-10 py-4 !h-auto">
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <Link href="/demo" className="btn-premium !bg-white !text-[var(--vp-ink)] hover:!shadow-xl">
                   Book Enterprise Demo
                   <ArrowLeft className="h-4 w-4" />
                 </Link>
-                <Link href="/pricing" className="inline-flex items-center gap-2 px-8 py-4 rounded-full border border-[var(--border-primary)] text-[var(--text-secondary)] font-semibold text-sm hover:border-[var(--accent)] hover:text-[var(--accent)] transition-colors">
+                <Link href="/pricing" className="inline-flex items-center gap-2 px-8 py-4 rounded-xl border border-white/20 text-white/80 font-semibold text-sm hover:bg-white/5 hover:border-white/30 transition-all">
                   View Pricing
                 </Link>
               </div>
