@@ -90,49 +90,102 @@ export default function Home() {
     <>
       <Header />
       <main>
-        {/* ═══ HERO ═══ */}
+        {/* ═══ HERO — بتصميم قطرة الماء ═══ */}
         <section className="relative pt-32 pb-24 overflow-hidden" dir="rtl">
           <div className="absolute inset-0 bg-gradient-to-b from-[var(--accent-soft)] via-transparent to-transparent opacity-60" />
           <div className="absolute top-[-10%] right-[-5%] w-[600px] h-[600px] rounded-full bg-gradient-to-br from-[var(--accent)]/8 via-[var(--accent)]/3 to-transparent blur-3xl pointer-events-none" />
           <div className="absolute bottom-[-15%] left-[-10%] w-[500px] h-[500px] rounded-full bg-gradient-to-tr from-[var(--accent)]/5 to-transparent blur-3xl pointer-events-none" />
           <div className="absolute inset-0 vp-grid-bg opacity-[0.03]" />
 
+          {/* SVG clipPath لشكل قطرة الماء */}
+          <svg width="0" height="0" className="absolute">
+            <defs>
+              <clipPath id="waterDropClip" clipPathUnits="objectBoundingBox">
+                <path d="M0.5,0.02 C0.5,0.02 0.96,0.36 0.96,0.68 C0.96,0.89 0.76,0.98 0.5,0.98 C0.24,0.98 0.04,0.89 0.04,0.68 C0.04,0.36 0.5,0.02 0.5,0.02 Z" />
+              </clipPath>
+            </defs>
+          </svg>
+
           <div className="container-shade relative z-10">
-            <div className="mx-auto max-w-4xl text-center">
+            <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+              {/* ===== النص — الجانب الأيمن ===== */}
               <div data-vp-animate="fade-up">
                 <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[var(--accent-soft)] border border-[var(--accent)]/10 text-[var(--accent)] text-xs font-semibold mb-6">
                   <Heart className="h-3.5 w-3.5" />
                   منصة عافية مؤسسية متكاملة
                 </span>
-              </div>
-              <h1 className="vp-hero" data-vp-animate="fade-up" data-vp-delay="1">
-                حوّل عافية قواك العاملة
-                <br />
-                <span className="vp-hero-em">إلى أداء مؤسسي قابل للقياس</span>
-              </h1>
-              <p className="vp-subtitle max-w-3xl mx-auto mt-6" data-vp-animate="fade-up" data-vp-delay="2">
-                Velara Care هي نظام تشغيل متكامل لبرامج عافية الموظفين — يربط بين الشركات،
-                الموظفين، فرق الموارد البشرية، أخصائيي التغذية، ومزودي الخدمات في منظومة واحدة قابلة للقياس.
-              </p>
-              <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4" data-vp-animate="fade-up" data-vp-delay="3">
-                <Link href="/demo" className="btn-premium text-base px-10 py-4 !h-auto">
-                  اطلب عرضاً تجريبياً للمؤسسات
-                  <ArrowLeft className="h-4 w-4" />
-                </Link>
-                <Link href="/product" className="btn-ghost text-base px-8 py-4 !h-auto">
-                  استكشف المنصة
-                </Link>
-              </div>
-              <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mx-auto" data-vp-animate="fade-up" data-vp-delay="4">
-                {valueCards.map((card) => (
-                  <div key={card.title} className="glass-premium rounded-xl p-4 text-center group hover:border-[var(--accent)]/20">
-                    <div className="w-10 h-10 rounded-xl bg-[var(--accent-soft)] flex items-center justify-center mx-auto mb-2 group-hover:scale-110 transition-transform">
-                      <card.icon className="h-5 w-5 text-[var(--accent)]" />
+                <h1 className="vp-hero mt-4">
+                  حوّل عافية قواك العاملة
+                  <br />
+                  <span className="vp-hero-em">إلى أداء مؤسسي قابل للقياس</span>
+                </h1>
+                <p className="vp-subtitle mt-6 max-w-xl">
+                  Velara Care هي نظام تشغيل متكامل لبرامج عافية الموظفين — يربط بين الشركات،
+                  الموظفين، فرق الموارد البشرية، أخصائيي التغذية، ومزودي الخدمات في منظومة واحدة قابلة للقياس.
+                </p>
+                <div className="mt-8 flex flex-col sm:flex-row items-start gap-4">
+                  <Link href="/demo" className="btn-premium text-base px-10 py-4 !h-auto">
+                    اطلب عرضاً تجريبياً للمؤسسات
+                    <ArrowLeft className="h-4 w-4" />
+                  </Link>
+                  <Link href="/product" className="btn-ghost text-base px-8 py-4 !h-auto">
+                    استكشف المنصة
+                  </Link>
+                </div>
+                <div className="mt-10 grid grid-cols-2 gap-3 max-w-lg">
+                  {valueCards.map((card) => (
+                    <div key={card.title} className="glass-premium rounded-xl p-3.5 text-center group hover:border-[var(--accent)]/20">
+                      <div className="w-9 h-9 rounded-xl bg-[var(--accent-soft)] flex items-center justify-center mx-auto mb-1.5 group-hover:scale-110 transition-transform">
+                        <card.icon className="h-4 w-4 text-[var(--accent)]" />
+                      </div>
+                      <h3 className="text-xs font-bold text-[var(--text-primary)] mb-0.5">{card.title}</h3>
+                      <p className="text-[10px] text-[var(--text-secondary)] leading-tight">{card.desc}</p>
                     </div>
-                    <h3 className="text-sm font-bold text-[var(--text-primary)] mb-1">{card.title}</h3>
-                    <p className="text-xs text-[var(--text-secondary)] leading-tight">{card.desc}</p>
+                  ))}
+                </div>
+              </div>
+
+              {/* ===== قطرة الماء بالصورة — الجانب الأيسر ===== */}
+              <div className="relative flex items-center justify-center lg:justify-start" data-vp-animate="scale-in" data-vp-delay="2">
+                {/* Glow خلف القطرة */}
+                <div className="absolute w-[380px] h-[380px] lg:w-[480px] lg:h-[480px] rounded-full bg-gradient-to-br from-[var(--accent)]/20 via-[var(--accent)]/8 to-transparent blur-[80px] pointer-events-none" />
+
+                {/* حاوية قطرة الماء */}
+                <div className="relative w-[300px] h-[340px] lg:w-[400px] lg:h-[450px]">
+                  {/* الصورة داخل القطرة */}
+                  <div className="w-full h-full" style={{ clipPath: 'url(#waterDropClip)' }}>
+                    <Image
+                      src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=600&h=700&fit=crop&auto=format"
+                      alt="فريق عمل مؤسسي"
+                      width={600}
+                      height={700}
+                      className="w-full h-full object-cover"
+                      priority
+                    />
                   </div>
-                ))}
+
+                  {/* إطار شفاف حول القطرة */}
+                  <div className="absolute inset-0 pointer-events-none" style={{ clipPath: 'url(#waterDropClip)' }}>
+                    <div className="w-full h-full ring-[3px] ring-inset ring-white/10 rounded-full" />
+                  </div>
+
+                  {/* تدرج سفلي شفاف داخل القطرة */}
+                  <div className="absolute bottom-0 left-0 right-0 h-1/3 pointer-events-none" style={{ clipPath: 'url(#waterDropClip)', background: 'linear-gradient(to top, rgba(0,0,0,0.4) 0%, transparent 100%)' }} />
+                </div>
+
+                {/* عناصر زخرفية عائمة */}
+                <div className="absolute -top-3 -right-3 w-4 h-4 rounded-full bg-[var(--accent)]/30 animate-pulse" />
+                <div className="absolute -bottom-2 -left-2 w-3 h-3 rounded-full bg-[var(--accent)]/20" />
+                <div className="absolute top-[25%] -left-7 w-2 h-2 rounded-full bg-[var(--accent)]/40" />
+                <div className="absolute bottom-[30%] -right-7 w-2 h-2 rounded-full bg-[var(--accent)]/25" />
+
+                {/* أيقونة عائمة صغيرة */}
+                <div className="absolute top-[15%] -right-8 w-9 h-9 rounded-xl bg-[var(--bg-card)] border border-[var(--border-primary)] flex items-center justify-center shadow-lg backdrop-blur-sm">
+                  <Heart className="h-4 w-4 text-rose-400" />
+                </div>
+                <div className="absolute bottom-[20%] -left-8 w-9 h-9 rounded-xl bg-[var(--bg-card)] border border-[var(--border-primary)] flex items-center justify-center shadow-lg backdrop-blur-sm">
+                  <Activity className="h-4 w-4 text-[var(--accent)]" />
+                </div>
               </div>
             </div>
           </div>
