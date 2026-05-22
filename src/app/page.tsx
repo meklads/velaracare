@@ -375,26 +375,82 @@ export default function Home() {
           </div>
         </section>
 
-        {/* ═══ CTA الختامي ═══ */}
-        <section className="relative py-24 overflow-hidden" dir="rtl" style={{ background: 'linear-gradient(135deg, var(--vp-ink) 0%, #0D4F4F 100%)' }}>
-          <div className="absolute inset-0 vp-grid-bg opacity-[0.03]" />
-          <div className="absolute top-1/2 left-1/3 w-72 h-72 rounded-full bg-[var(--accent)]/10 blur-3xl" />
+        {/* ═══ CTA الختامي — مُعاد تصميمه ═══ */}
+        <section className="relative py-28 overflow-hidden" dir="rtl" style={{ background: 'linear-gradient(160deg, #071F1F 0%, #0A3A3A 40%, #0D4F4F 70%, #071F1F 100%)' }}>
+          {/* Decorative layers */}
+          <div className="absolute inset-0" style={{ backgroundImage: 'radial-gradient(circle at 25% 40%, rgba(45,212,191,0.10) 0%, transparent 50%), radial-gradient(circle at 75% 60%, rgba(45,212,191,0.06) 0%, transparent 50%)' }} />
+          <div className="absolute inset-0 vp-grid-bg opacity-[0.04]" />
+          <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-l from-transparent via-white/10 to-transparent" />
+          <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-l from-transparent via-[var(--accent)]/20 to-transparent" />
+
+          {/* Floating orbs */}
+          <div className="absolute top-[15%] right-[10%] w-64 h-64 rounded-full bg-[var(--accent)]/8 blur-[100px] pointer-events-none" />
+          <div className="absolute bottom-[10%] left-[5%] w-80 h-80 rounded-full bg-[var(--accent)]/5 blur-[120px] pointer-events-none" />
+
           <div className="container-shade relative z-10">
-            <div className="max-w-3xl mx-auto text-center" data-vp-animate="slide-up">
-              <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-white/70 text-xs font-semibold mb-6">
-                <Zap className="h-3.5 w-3.5" />
-                ابدأ اليوم
-              </span>
-              <h2 className="vp-hero text-white mb-6">هل أنت مستعد لبناء نظام العافية<br /><span className="vp-hero-em">المؤسسي الخاص بك؟</span></h2>
-              <p className="vp-subtitle text-white/70 max-w-2xl mx-auto mb-10">احصل على عرض تجريبي مخصص لمؤسستك — يتضمن تحليلاً أولياً لمستوى العافية وتوصيات مبدئية للبرامج والأنشطة.</p>
-              <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                <Link href="/demo" className="btn-premium !bg-white !text-[var(--vp-ink)] hover:!shadow-xl">
-                  اطلب عرضاً تجريبياً للمؤسسات
-                  <ArrowLeft className="h-4 w-4" />
-                </Link>
-                <Link href="/pricing" className="inline-flex items-center gap-2 px-8 py-4 rounded-xl border border-white/20 text-white/80 font-semibold text-sm hover:bg-white/5 hover:border-white/30 transition-all">
-                  شاهد الأسعار
-                </Link>
+            <div className="max-w-4xl mx-auto" data-vp-animate="slide-up">
+              {/* Glass premium card */}
+              <div className="relative overflow-hidden rounded-3xl border border-white/[0.08] p-10 lg:p-16" style={{ background: 'linear-gradient(180deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.015) 100%)', backdropFilter: 'blur(24px)', WebkitBackdropFilter: 'blur(24px)' }}>
+                {/* Inner glow */}
+                <div className="absolute -top-40 -right-40 w-80 h-80 rounded-full bg-[var(--accent)]/10 blur-[120px] pointer-events-none" />
+                <div className="absolute -bottom-40 -left-40 w-80 h-80 rounded-full bg-white/[0.02] blur-[120px] pointer-events-none" />
+
+                {/* Inner border shine */}
+                <div className="absolute top-0 left-[10%] right-[10%] h-px bg-gradient-to-l from-transparent via-white/20 to-transparent" />
+
+                <div className="relative text-center">
+                  {/* Premium badge */}
+                  <div className="inline-flex items-center gap-2.5 px-5 py-2 rounded-full bg-white/[0.06] border border-white/[0.10] text-white/80 text-xs font-semibold mb-8 backdrop-blur-sm hover:bg-white/[0.08] transition-all">
+                    <span className="relative flex h-2 w-2">
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[var(--accent)] opacity-75" />
+                      <span className="relative inline-flex rounded-full h-2 w-2 bg-[var(--accent)]" />
+                    </span>
+                    منصة العافية المؤسسية رقم 1 في السعودية
+                  </div>
+
+                  {/* Heading with gradient accent */}
+                  <h2 className="text-4xl lg:text-5xl font-extrabold text-white leading-[1.15] mb-6">
+                    هل أنت مستعد لبناء نظام العافية<br />
+                    <span className="text-transparent bg-clip-text bg-gradient-to-l from-[var(--accent)] via-[var(--accent-light)] to-[var(--accent)]">
+                      المؤسسي الخاص بك؟
+                    </span>
+                  </h2>
+
+                  <p className="text-lg text-white/60 max-w-2xl mx-auto mb-10 leading-relaxed">
+                    احصل على عرض تجريبي مخصص لمؤسستك — يتضمن تحليلاً أولياً لمستوى العافية
+                    وتوصيات مبدئية للبرامج والأنشطة المناسبة لطبيعة قواك العاملة.
+                  </p>
+
+                  {/* CTA buttons */}
+                  <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12">
+                    <Link href="/demo" className="group relative inline-flex items-center gap-2.5 px-10 py-4 rounded-2xl bg-white text-[var(--vp-ink)] font-bold text-base shadow-xl shadow-white/10 hover:shadow-2xl hover:shadow-white/20 transition-all duration-300 hover:-translate-y-0.5">
+                      اطلب عرضاً تجريبياً للمؤسسات
+                      <ArrowLeft className="h-4 w-4 group-hover:-translate-x-1 transition-transform" />
+                    </Link>
+                    <Link href="/pricing" className="inline-flex items-center gap-2.5 px-8 py-4 rounded-2xl border border-white/20 text-white/80 font-semibold text-sm hover:bg-white/[0.06] hover:border-white/30 transition-all duration-300">
+                      <div className="w-2 h-2 rounded-full bg-[var(--accent)]" />
+                      شاهد الأسعار
+                    </Link>
+                  </div>
+
+                  {/* Trust indicators */}
+                  <div className="flex flex-wrap items-center justify-center gap-x-10 gap-y-3 pt-8 border-t border-white/[0.06]">
+                    <div className="text-center">
+                      <p className="text-white font-extrabold text-xl">100+</p>
+                      <p className="text-white/40 text-xs">شركة تثق بنا</p>
+                    </div>
+                    <div className="w-px h-10 bg-white/[0.06]" />
+                    <div className="text-center">
+                      <p className="text-white font-extrabold text-xl">5,000+</p>
+                      <p className="text-white/40 text-xs">موظف على المنصة</p>
+                    </div>
+                    <div className="w-px h-10 bg-white/[0.06]" />
+                    <div className="text-center">
+                      <p className="text-white font-extrabold text-xl">3.2x</p>
+                      <p className="text-white/40 text-xs">متوسط العائد على الاستثمار</p>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
