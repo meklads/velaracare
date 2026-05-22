@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import Link from "next/link";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
-import { ArrowLeft, Mail, MessageCircle, FileText, Shield, CreditCard, Users, Apple, BarChart3 } from "lucide-react";
+import { ArrowLeft, Mail, MessageCircle, FileText, Shield, CreditCard, Users, Apple, BarChart3, Sparkles } from "lucide-react";
 import { initScrollAnimations } from "@/lib/scroll-animations";
 
 const faqs = [
@@ -63,25 +63,27 @@ export default function HelpPage() {
     <>
       <Header />
       <main>
-        <section className="relative py-28 overflow-hidden bg-gradient-to-b from-[var(--bg-primary)] via-[var(--bg-secondary)] to-[var(--bg-primary)]" dir="rtl">
-          <div className="absolute inset-0 pointer-events-none" style={{ background: 'var(--vp-gradient-hero)' }} />
-          <div className="absolute inset-0 vp-grid-bg opacity-30" />
+        {/* HERO */}
+        <section className="relative pt-32 pb-24 overflow-hidden bg-gradient-to-b from-[var(--bg-primary)] via-[var(--bg-secondary)] to-[var(--bg-primary)]" dir="rtl">
+          <div className="absolute inset-0 vp-grid-bg opacity-[0.03]" />
+          <div className="absolute top-[-10%] right-[-5%] w-[500px] h-[500px] rounded-full bg-gradient-to-br from-[var(--accent)]/8 to-transparent blur-3xl pointer-events-none" />
           <div className="container-shade relative z-10 text-center">
-            <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-[var(--vp-glow-soft)] border border-[var(--vp-accent)]/10 text-[var(--vp-accent)] text-sm font-medium mb-6" data-vp-animate="fade-up">
-              <span className="vp-breathing-ring inline-block" style={{ width: '6px', height: '6px' }} />
+            <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[var(--accent-soft)] border border-[var(--accent)]/10 text-[var(--accent)] text-xs font-semibold mb-6" data-vp-animate="fade-up">
+              <Sparkles className="h-3.5 w-3.5" />
               المركز المساعد
-            </div>
+            </span>
             <h1 className="vp-hero" data-vp-animate="fade-up" data-vp-delay="1">
               كيف يمكننا <span className="vp-hero-em">مساعدتك؟</span>
             </h1>
-            <p className="vp-subtitle text-[var(--text-secondary)] max-w-xl mx-auto mt-6" data-vp-animate="fade-up" data-vp-delay="2">
+            <p className="vp-subtitle max-w-xl mx-auto mt-6" data-vp-animate="fade-up" data-vp-delay="2">
               إجابات شاملة لجميع أسئلتك حول Velara Care
             </p>
           </div>
         </section>
 
-        <section className="section-padding relative overflow-hidden" dir="rtl">
-          <div className="absolute inset-0 vp-grid-bg opacity-20" />
+        {/* FAQS */}
+        <section className="py-24 bg-[var(--bg-secondary)] relative overflow-hidden" dir="rtl">
+          <div className="absolute inset-0 vp-data-dots pointer-events-none" />
           <div className="container-shade max-w-4xl mx-auto relative z-10">
             <div className="space-y-10">
               {faqs.map((section) => {
@@ -89,14 +91,14 @@ export default function HelpPage() {
                 return (
                   <div key={section.category} data-vp-animate="fade-up">
                     <div className="flex items-center gap-3 mb-5">
-                      <div className="w-10 h-10 rounded-xl bg-[var(--vp-glow-soft)] flex items-center justify-center">
-                        <Icon className="h-5 w-5 text-[var(--vp-accent)]" />
+                      <div className="w-10 h-10 rounded-xl bg-[var(--accent-soft)] flex items-center justify-center">
+                        <Icon className="h-5 w-5 text-[var(--accent)]" />
                       </div>
                       <h2 className="text-xl font-bold text-[var(--text-primary)]">{section.category}</h2>
                     </div>
                     <div className="space-y-3">
                       {section.questions.map((faq, i) => (
-                        <details key={i} className="card-premium p-5 group">
+                        <details key={i} className="card-premium p-5 group hover:shadow-md transition-all">
                           <summary className="cursor-pointer text-sm font-semibold text-[var(--text-primary)] select-none flex items-center justify-between">
                             {faq.q}
                             <ArrowLeft className="h-4 w-4 text-[var(--text-secondary)] group-open:-rotate-90 transition-transform shrink-0" />
@@ -111,7 +113,7 @@ export default function HelpPage() {
             </div>
 
             <div className="card-premium p-8 text-center mt-10" data-vp-animate="fade-up">
-              <MessageCircle className="h-10 w-10 text-[var(--vp-accent)] mx-auto mb-3" />
+              <MessageCircle className="h-10 w-10 text-[var(--accent)] mx-auto mb-3" />
               <h2 className="text-lg font-bold text-[var(--text-primary)] mb-2">لم تجد إجابتك؟</h2>
               <p className="text-sm text-[var(--text-secondary)] mb-5">فريق الدعم الفني جاهز لمساعدتك</p>
               <Link href="/contact" className="btn-premium text-sm">

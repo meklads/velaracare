@@ -5,7 +5,7 @@ import Image from "next/image";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { useEffect } from "react";
-import { initScrollAnimations } from "@/lib/scroll-animations";
+import { initScrollAnimations, initCountUpAnimations } from "@/lib/scroll-animations";
 import {
   TrendingDown, BarChart3, Users, Building2,
   ArrowLeft, ArrowRight, Activity, TrendingUp,
@@ -16,60 +16,19 @@ import {
 
 // ===== HERO VALUE CARDS =====
 const valueCards = [
-  {
-    icon: TrendingDown,
-    title: "Reduce Sick Leave",
-    desc: "Wellness programs that lower absenteeism and keep your workforce healthy and present."
-  },
-  {
-    icon: Users,
-    title: "Improve Employee Wellbeing",
-    desc: "Personalized wellness journeys that improve quality of life and job satisfaction."
-  },
-  {
-    icon: BarChart3,
-    title: "Workforce Wellness Analytics",
-    desc: "Real-time dashboards that track participation, improvement, and business impact."
-  },
-  {
-    icon: Target,
-    title: "Measurable Health Outcomes",
-    desc: "Quantifiable results linking wellness investment to productivity and cost reduction."
-  }
+  { icon: TrendingDown, title: "Reduce Sick Leave", desc: "Wellness programs that lower absenteeism and keep your workforce healthy and present." },
+  { icon: Users, title: "Improve Employee Wellbeing", desc: "Personalized wellness journeys that improve quality of life and job satisfaction." },
+  { icon: BarChart3, title: "Workforce Wellness Analytics", desc: "Real-time dashboards that track participation, improvement, and business impact." },
+  { icon: Target, title: "Measurable Health Outcomes", desc: "Quantifiable results linking wellness investment to productivity and cost reduction." }
 ];
 
 // ===== SECTION 1: ECOSYSTEM =====
 const ecosystemEntities = [
-  {
-    icon: Building2,
-    title: "Company",
-    desc: "Invests in workforce wellness and gains measurable improvements in productivity, retention, and operational costs.",
-    role: "Sets strategy & funds programs"
-  },
-  {
-    icon: Users,
-    title: "HR Team",
-    desc: "Manages wellness programs, monitors engagement, tracks outcomes, and generates executive reports from one dashboard.",
-    role: "Operates & monitors programs"
-  },
-  {
-    icon: UserCheck,
-    title: "Employee",
-    desc: "Completes assessments, receives personalized recommendations, orders healthy meals, and tracks progress over time.",
-    role: "Participates & improves over time"
-  },
-  {
-    icon: Apple,
-    title: "Nutritionist",
-    desc: "Accesses employee wellness insights, creates tailored nutrition plans, and monitors client progress through consultations.",
-    role: "Prescribes nutrition plans"
-  },
-  {
-    icon: ChefHat,
-    title: "Restaurant Partner",
-    desc: "Receives structured wellness orders, prepares meals aligned with health goals, and delivers via integrated logistics.",
-    role: "Fulfills healthy meals"
-  }
+  { icon: Building2, title: "Company", desc: "Invests in workforce wellness and gains measurable improvements in productivity, retention, and operational costs.", role: "Sets strategy & funds programs" },
+  { icon: Users, title: "HR Team", desc: "Manages wellness programs, monitors engagement, tracks outcomes, and generates executive reports from one dashboard.", role: "Operates & monitors programs" },
+  { icon: UserCheck, title: "Employee", desc: "Completes assessments, receives personalized recommendations, orders healthy meals, and tracks progress over time.", role: "Participates & improves over time" },
+  { icon: Apple, title: "Nutritionist", desc: "Accesses employee wellness insights, creates tailored nutrition plans, and monitors client progress through consultations.", role: "Prescribes nutrition plans" },
+  { icon: ChefHat, title: "Restaurant Partner", desc: "Receives structured wellness orders, prepares meals aligned with health goals, and delivers via integrated logistics.", role: "Fulfills healthy meals" }
 ];
 
 // ===== SECTION 2: HR DASHBOARD =====
@@ -122,8 +81,9 @@ const businessMetrics = [
 
 export default function Home() {
   useEffect(() => {
-    const cleanup = initScrollAnimations();
-    return () => cleanup();
+    const c1 = initScrollAnimations();
+    const c2 = initCountUpAnimations();
+    return () => { c1(); c2(); };
   }, []);
 
   return (
@@ -134,7 +94,6 @@ export default function Home() {
            HERO
            ════════════════════════════════════════ */}
         <section className="relative pt-32 pb-24 overflow-hidden">
-          {/* Decorative background */}
           <div className="absolute inset-0 bg-gradient-to-b from-[var(--accent-soft)] via-transparent to-transparent opacity-60" />
           <div className="absolute top-[-10%] right-[-5%] w-[600px] h-[600px] rounded-full bg-gradient-to-br from-[var(--accent)]/8 via-[var(--accent)]/3 to-transparent blur-3xl pointer-events-none" />
           <div className="absolute bottom-[-15%] left-[-10%] w-[500px] h-[500px] rounded-full bg-gradient-to-tr from-[var(--accent)]/5 to-transparent blur-3xl pointer-events-none" />
@@ -148,18 +107,15 @@ export default function Home() {
                   Enterprise Workforce Wellness Platform
                 </span>
               </div>
-
               <h1 className="vp-hero" data-vp-animate="fade-up" data-vp-delay="1">
                 Transform Workforce Health
                 <br />
                 <span className="vp-hero-em">Into Measurable Business Performance</span>
               </h1>
-
               <p className="vp-subtitle max-w-3xl mx-auto mt-6" data-vp-animate="fade-up" data-vp-delay="2">
                 Velara is an integrated workforce health operating system connecting companies,
                 employees, HR teams, nutritionists, and wellness providers inside one measurable ecosystem.
               </p>
-
               <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4" data-vp-animate="fade-up" data-vp-delay="3">
                 <Link href="/demo" className="btn-premium text-base px-10 py-4 !h-auto">
                   Book Enterprise Demo
@@ -169,8 +125,6 @@ export default function Home() {
                   Explore Platform
                 </Link>
               </div>
-
-              {/* Value cards */}
               <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mx-auto" data-vp-animate="fade-up" data-vp-delay="4">
                 {valueCards.map((card) => (
                   <div key={card.title} className="glass-premium rounded-xl p-4 text-center group hover:border-[var(--accent)]/20">
@@ -187,6 +141,28 @@ export default function Home() {
         </section>
 
         {/* ════════════════════════════════════════
+           STATS — Trust & Scale
+           ════════════════════════════════════════ */}
+        <section className="py-16 bg-[var(--bg-primary)] relative overflow-hidden">
+          <div className="absolute inset-0 vp-data-dots pointer-events-none opacity-50" />
+          <div className="container-shade relative z-10">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-3xl mx-auto">
+              {[
+                { num: "5000", suffix: "+", label: "Employees On Platform" },
+                { num: "100", suffix: "+", label: "Enterprise Clients" },
+                { num: "35", suffix: "%", label: "Sick Leave Reduction" },
+                { num: "3.2", suffix: "x", label: "Average ROI" },
+              ].map((s) => (
+                <div key={s.label} className="text-center" data-vp-animate="fade-up">
+                  <p className="vp-stat" data-vp-count-to={s.num} data-vp-count-suffix={s.suffix}>{s.num}{s.suffix}</p>
+                  <p className="text-sm text-[var(--text-secondary)] mt-2">{s.label}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ════════════════════════════════════════
            SECTION 1 — PLATFORM ECOSYSTEM
            ════════════════════════════════════════ */}
         <section className="py-24 bg-[var(--bg-secondary)] relative overflow-hidden">
@@ -195,13 +171,10 @@ export default function Home() {
             <div className="max-w-3xl mx-auto text-center mb-16" data-vp-animate="fade-up">
               <span className="vp-label">Platform Architecture</span>
               <h2 className="vp-section-title mt-4">How The Velara Ecosystem Works</h2>
-              <p className="vp-subtitle mt-4">
-                Five key stakeholders connected in one measurable workforce wellness operating system.
-              </p>
+              <p className="vp-subtitle mt-4">Five key stakeholders connected in one measurable workforce wellness operating system.</p>
               <div className="w-16 h-1 rounded-full bg-gradient-to-l from-[var(--accent)] to-[var(--accent-light)] mx-auto mt-4" />
             </div>
 
-            {/* Desktop: horizontal flow with glass cards */}
             <div className="hidden lg:flex items-start justify-center max-w-6xl mx-auto" data-vp-animate="fade-up" data-vp-delay="2">
               {ecosystemEntities.map((item, i) => (
                 <div key={item.title} className="flex items-start">
@@ -224,7 +197,6 @@ export default function Home() {
               ))}
             </div>
 
-            {/* Tablet / Mobile: grid */}
             <div className="grid sm:grid-cols-2 lg:hidden gap-5 max-w-3xl mx-auto" data-vp-animate="fade-up" data-vp-delay="2">
               {ecosystemEntities.map((item) => (
                 <div key={item.title} className="card-premium p-6 text-center group">
@@ -247,15 +219,10 @@ export default function Home() {
           <div className="absolute top-0 right-0 w-[400px] h-[400px] rounded-full bg-gradient-to-bl from-[var(--accent)]/5 to-transparent blur-3xl pointer-events-none" />
           <div className="container-shade relative z-10">
             <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-              {/* Content */}
               <div data-vp-animate="fade-up">
                 <span className="vp-label">Enterprise Analytics</span>
                 <h2 className="vp-section-title mt-4">HR Wellness Intelligence Dashboard</h2>
-                <p className="vp-subtitle mt-4 mb-8">
-                  Real-time operational intelligence for managing workforce wellness programs at scale.
-                  Monitor participation, track outcomes, and generate executive-ready reports.
-                </p>
-
+                <p className="vp-subtitle mt-4 mb-8">Real-time operational intelligence for managing workforce wellness programs at scale. Monitor participation, track outcomes, and generate executive-ready reports.</p>
                 <div className="grid grid-cols-2 gap-3">
                   {hrDashboardMetrics.map((metric) => (
                     <div key={metric.label} className="card-premium !p-4 group">
@@ -271,19 +238,10 @@ export default function Home() {
                   ))}
                 </div>
               </div>
-
-              {/* Image */}
               <div className="relative" data-vp-animate="scale-in" data-vp-delay="2">
                 <div className="absolute -inset-6 bg-gradient-to-r from-[var(--accent)]/10 via-[var(--accent)]/5 to-transparent rounded-3xl blur-3xl" />
                 <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-[var(--border-primary)]">
-                  <Image
-                    src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=700&h=500&fit=crop&auto=format"
-                    alt="HR Analytics Dashboard"
-                    width={700}
-                    height={500}
-                    className="w-full h-auto object-cover"
-                    priority
-                  />
+                  <Image src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=700&h=500&fit=crop&auto=format" alt="HR Analytics Dashboard" width={700} height={500} className="w-full h-auto object-cover" priority />
                 </div>
                 <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-white/10 pointer-events-none" />
               </div>
@@ -299,29 +257,17 @@ export default function Home() {
           <div className="absolute inset-0 vp-grid-bg opacity-[0.02]" />
           <div className="container-shade relative z-10">
             <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-              {/* Image */}
               <div className="relative order-last lg:order-first" data-vp-animate="scale-in">
                 <div className="absolute -inset-6 bg-gradient-to-l from-[var(--accent)]/10 via-[var(--accent)]/5 to-transparent rounded-3xl blur-3xl" />
                 <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-[var(--border-primary)]">
-                  <Image
-                    src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=700&h=500&fit=crop&auto=format"
-                    alt="Employee Wellness Journey"
-                    width={700}
-                    height={500}
-                    className="w-full h-auto object-cover"
-                  />
+                  <Image src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=700&h=500&fit=crop&auto=format" alt="Employee Wellness Journey" width={700} height={500} className="w-full h-auto object-cover" />
                 </div>
                 <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-white/10 pointer-events-none" />
               </div>
-
-              {/* Content */}
               <div data-vp-animate="fade-up" data-vp-delay="2">
                 <span className="vp-label">Employee Journey</span>
                 <h2 className="vp-section-title mt-4">Employee Wellness Journey</h2>
-                <p className="vp-subtitle mt-4 mb-8">
-                  From onboarding to measurable improvement — a complete employee wellness experience powered by AI.
-                </p>
-
+                <p className="vp-subtitle mt-4 mb-8">From onboarding to measurable improvement — a complete employee wellness experience powered by AI.</p>
                 <div className="space-y-4">
                   {employeeJourney.map((item, i) => (
                     <div key={item.step} className="flex items-start gap-4 group">
@@ -329,9 +275,7 @@ export default function Home() {
                         <div className="w-9 h-9 rounded-full bg-gradient-to-br from-[var(--accent)] to-[var(--accent-dark)] text-white flex items-center justify-center text-xs font-bold shrink-0 shadow-md group-hover:scale-110 transition-transform">
                           {item.step}
                         </div>
-                        {i < employeeJourney.length - 1 && (
-                          <div className="w-0.5 flex-1 bg-gradient-to-b from-[var(--accent)]/20 to-transparent mt-1" />
-                        )}
+                        {i < employeeJourney.length - 1 && (<div className="w-0.5 flex-1 bg-gradient-to-b from-[var(--accent)]/20 to-transparent mt-1" />)}
                       </div>
                       <div className="bg-[var(--bg-card)] border border-[var(--border-primary)] rounded-xl p-4 flex-1 group-hover:border-[var(--accent)]/20 transition-all">
                         <div className="flex items-center gap-2 mb-1">
@@ -355,14 +299,10 @@ export default function Home() {
           <div className="absolute inset-0 vp-data-dots pointer-events-none" />
           <div className="container-shade relative z-10">
             <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-              {/* Content */}
               <div data-vp-animate="fade-up">
                 <span className="vp-label">Nutritionist Workspace</span>
                 <h2 className="vp-section-title mt-4">Connected Nutritionist Workspace</h2>
-                <p className="vp-subtitle mt-4 mb-8">
-                  An intelligent operational workspace where nutritionists manage clients, create plans, and measure outcomes — all connected to the employee wellness ecosystem.
-                </p>
-
+                <p className="vp-subtitle mt-4 mb-8">An intelligent operational workspace where nutritionists manage clients, create plans, and measure outcomes — all connected to the employee wellness ecosystem.</p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {nutritionistCapabilities.map((cap) => (
                     <div key={cap.title} className="card-premium !p-4 group">
@@ -375,18 +315,10 @@ export default function Home() {
                   ))}
                 </div>
               </div>
-
-              {/* Image */}
               <div className="relative" data-vp-animate="scale-in" data-vp-delay="2">
                 <div className="absolute -inset-6 bg-gradient-to-l from-[var(--accent)]/10 via-[var(--accent)]/5 to-transparent rounded-3xl blur-3xl" />
                 <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-[var(--border-primary)]">
-                  <Image
-                    src="https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=700&h=500&fit=crop&auto=format"
-                    alt="Healthy Nutrition"
-                    width={700}
-                    height={500}
-                    className="w-full h-auto object-cover"
-                  />
+                  <Image src="https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=700&h=500&fit=crop&auto=format" alt="Healthy Nutrition" width={700} height={500} className="w-full h-auto object-cover" />
                 </div>
                 <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-white/10 pointer-events-none" />
               </div>
@@ -401,29 +333,17 @@ export default function Home() {
           <div className="absolute top-0 right-[-10%] w-[500px] h-[500px] rounded-full bg-gradient-to-bl from-[var(--accent)]/5 to-transparent blur-3xl pointer-events-none" />
           <div className="container-shade relative z-10">
             <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-              {/* Image */}
               <div className="relative order-last lg:order-first" data-vp-animate="scale-in">
                 <div className="absolute -inset-6 bg-gradient-to-r from-[var(--accent)]/10 via-[var(--accent)]/5 to-transparent rounded-3xl blur-3xl" />
                 <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-[var(--border-primary)]">
-                  <Image
-                    src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=700&h=500&fit=crop&auto=format"
-                    alt="Restaurant Kitchen"
-                    width={700}
-                    height={500}
-                    className="w-full h-auto object-cover"
-                  />
+                  <Image src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=700&h=500&fit=crop&auto=format" alt="Restaurant Kitchen" width={700} height={500} className="w-full h-auto object-cover" />
                 </div>
                 <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-white/10 pointer-events-none" />
               </div>
-
-              {/* Content */}
               <div data-vp-animate="fade-up" data-vp-delay="2">
                 <span className="vp-label">Partner Network</span>
                 <h2 className="vp-section-title mt-4">Restaurant Wellness Network</h2>
-                <p className="vp-subtitle mt-4 mb-8">
-                  An operational logistics ecosystem connecting restaurant partners to workforce wellness outcomes through structured ordering and integrated delivery.
-                </p>
-
+                <p className="vp-subtitle mt-4 mb-8">An operational logistics ecosystem connecting restaurant partners to workforce wellness outcomes through structured ordering and integrated delivery.</p>
                 <div className="space-y-4">
                   {restaurantCapabilities.map((cap) => (
                     <div key={cap.title} className="card-premium !p-5 group">
@@ -454,12 +374,9 @@ export default function Home() {
             <div className="max-w-3xl mx-auto text-center mb-16" data-vp-animate="fade-up">
               <span className="vp-label">ROI Metrics</span>
               <h2 className="vp-section-title mt-4">Business Outcomes That Matter</h2>
-              <p className="vp-subtitle mt-4">
-                Measurable enterprise KPIs that prove the return on workforce wellness investment.
-              </p>
+              <p className="vp-subtitle mt-4">Measurable enterprise KPIs that prove the return on workforce wellness investment.</p>
               <div className="w-16 h-1 rounded-full bg-gradient-to-l from-[var(--accent)] to-[var(--accent-light)] mx-auto mt-4" />
             </div>
-
             <div className="grid grid-cols-2 lg:grid-cols-3 gap-5 max-w-4xl mx-auto" data-vp-animate="fade-up" data-vp-delay="2">
               {businessMetrics.map((metric) => (
                 <div key={metric.label} className="card-premium !p-6 text-center group hover:shadow-xl">
@@ -486,18 +403,11 @@ export default function Home() {
                 <Zap className="h-3.5 w-3.5" />
                 Get Started Today
               </span>
-              <h2 className="vp-hero text-white mb-6">
-                Ready to Build Your Workforce Wellness<br />
-                <span className="vp-hero-em">Operating System?</span>
-              </h2>
-              <p className="vp-subtitle text-white/70 max-w-2xl mx-auto mb-10">
-                Get a personalized enterprise demo — including an initial workforce wellness analysis
-                and program recommendations tailored to your organization.
-              </p>
+              <h2 className="vp-hero text-white mb-6">Ready to Build Your Workforce Wellness<br /><span className="vp-hero-em">Operating System?</span></h2>
+              <p className="vp-subtitle text-white/70 max-w-2xl mx-auto mb-10">Get a personalized enterprise demo — including an initial workforce wellness analysis and program recommendations tailored to your organization.</p>
               <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                 <Link href="/demo" className="btn-premium !bg-white !text-[var(--vp-ink)] hover:!shadow-xl">
-                  Book Enterprise Demo
-                  <ArrowLeft className="h-4 w-4" />
+                  Book Enterprise Demo <ArrowLeft className="h-4 w-4" />
                 </Link>
                 <Link href="/pricing" className="inline-flex items-center gap-2 px-8 py-4 rounded-xl border border-white/20 text-white/80 font-semibold text-sm hover:bg-white/5 hover:border-white/30 transition-all">
                   View Pricing
