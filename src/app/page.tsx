@@ -10,73 +10,82 @@ import {
   TrendingDown, BarChart3, Users, Building2,
   ArrowLeft, ArrowRight, Activity, TrendingUp,
   DollarSign, PieChart, UserCheck, Target,
-  Award, Medal, ClipboardCheck, Brain, Salad,
-  Apple, ChefHat, Sparkles, Zap, Heart
+  Award, Medal, ClipboardCheck, Brain,
+  Sparkles, Zap, Workflow, LineChart,
+  RefreshCw, Lightbulb, Layers, Network,
+  Eye, Shield, Database, GanttChartSquare
 } from "lucide-react";
 
-// ===== بطاقات القيمة =====
-const valueCards = [
-  { icon: TrendingDown, title: "خفض أيام الغياب", desc: "برامج عافية تقلل التغيب وتحافظ على قوة عاملة صحية ومنتجة." },
-  { icon: Users, title: "تحسين عافية الموظفين", desc: "رحلات عافية مخصصة تحسن جودة الحياة والرضا الوظيفي." },
-  { icon: BarChart3, title: "تحليلات العافية", desc: "لوحات حية تتابع المشاركة والتحسن وأثر العافية على الأعمال." },
-  { icon: Target, title: "نتائج قابلة للقياس", desc: "أرقام ملموسة تربط استثمار العافية بالإنتاجية وخفض التكاليف." }
+// ─── HERO KPI CARDS ───
+const kpiCards = [
+  { icon: TrendingDown, value: "-35%", label: "Reduce Sick Leave", desc: "Measurable reduction in absenteeism through preventive workforce health programs." },
+  { icon: Users, value: "+28%", label: "Improve Wellbeing", desc: "Quantifiable improvement in workforce wellness scores across all departments." },
+  { icon: DollarSign, value: "-22%", label: "Lower Healthcare Costs", desc: "Direct reduction in employer healthcare expenditure year over year." },
+  { icon: TrendingUp, value: "+18%", label: "Increase Productivity", desc: "Correlated productivity gains from optimised workforce health operations." }
 ];
 
-// ===== القسم 1: المنظومة =====
+// ─── SECTION 2: PLATFORM ECOSYSTEM ───
 const ecosystemEntities = [
-  { icon: Building2, title: "الشركة", desc: "تستثمر في عافية القوى العاملة وتحصل على تحسن measurable في الإنتاجية والاحتفاظ والتكاليف.", role: "تضع الاستراتيجية" },
-  { icon: Users, title: "الموارد البشرية", desc: "تدير برامج العافية، تراقب المشاركة، تقيس النتائج، وتصدر تقارير تنفيذية من لوحة واحدة.", role: "تدير البرامج" },
-  { icon: UserCheck, title: "الموظف", desc: "يكمل مسح نمط الحياة، يستلم توصيات مخصصة، يطلب وجبات صحية، وي追踪 تحسنه.", role: "يشارك ويتحسن" },
-  { icon: Apple, title: "أخصائي التغذية", desc: "يطلع على بيانات العافية للموظفين، يضع خطط تغذية مخصصة، ويتابع التقدم عبر الاستشارات.", role: "يضع الخطط الغذائية" },
-  { icon: ChefHat, title: "المطعم الشريك", desc: "يستلم طلبات منظمة حسب أهداف العافية، يحضر وجبات صحية، ويوصل عبر لوجستيات متكاملة.", role: "ينفذ الوجبات الصحية" }
+  { icon: Building2, title: "Enterprise", desc: "Sets workforce health strategy, funds programs, and measures ROI through unified operational dashboards.", role: "Strategy & Investment" },
+  { icon: Users, title: "HR Operations", desc: "Manages programs, monitors engagement, generates executive reports from a single command center.", role: "Program Management" },
+  { icon: UserCheck, title: "Employees", desc: "Complete health assessments, receive personalised recommendations, track progress over time.", role: "Participation & Growth" },
+  { icon: Brain, title: "Nutritionists", desc: "Access workforce health data, design nutrition protocols, consult employees through integrated workspace.", role: "Clinical Operations" },
+  { icon: Network, title: "Restaurant Partners", desc: "Receive structured meal orders aligned with health protocols, fulfil through integrated logistics.", role: "Service Delivery" }
 ];
 
-// ===== القسم 2: لوحة HR =====
-const hrDashboardMetrics = [
-  { icon: Activity, value: "87%", label: "مؤشر العافية العام", desc: "مؤشر الصحة العام للقوى العاملة" },
-  { icon: TrendingUp, value: "72%", label: "مشاركة الموظفين", desc: "نسبة المشاركة النشطة في البرامج" },
-  { icon: Apple, value: "64%", label: "مشاركة التغذية", desc: "موظفون يستخدمون خطط الوجبات" },
-  { icon: PieChart, value: "3 مستويات", label: "توزيع المخاطر", desc: "منخفض / متوسط / مرتفع" },
-  { icon: TrendingDown, value: "-35%", label: "خفض الغياب", desc: "انخفاض التغيب سنة بعد سنة" },
-  { icon: ClipboardCheck, value: "81%", label: "اعتماد البرامج", desc: "نسبة الموظفين المسجلين" }
+// ─── SECTION 3: HR INTELLIGENCE DASHBOARD ───
+const hrMetrics = [
+  { icon: Activity, value: "87%", label: "Workforce Health Score", desc: "Aggregate health index across all employees" },
+  { icon: TrendingUp, value: "72%", label: "Program Engagement", desc: "Active participation in workforce health programs" },
+  { icon: PieChart, value: "3 Levels", label: "Risk Distribution", desc: "Low / Medium / High health risk segmentation" },
+  { icon: TrendingDown, value: "-35%", label: "Absenteeism Rate", desc: "Year-over-year sick leave reduction" },
+  { icon: ClipboardCheck, value: "81%", label: "Program Adoption", desc: "Employees enrolled in active health programs" },
+  { icon: LineChart, value: "2.4x", label: "Productivity Correlation", desc: "Health score vs. performance benchmark" }
 ];
 
-// ===== القسم 3: رحلة الموظف =====
+// ─── SECTION 4: EMPLOYEE JOURNEY ───
 const employeeJourney = [
-  { step: "1", icon: Building2, title: "انضمام الموظف", desc: "يتم تسجيله تلقائياً في المنصة عبر نظام HR." },
-  { step: "2", icon: ClipboardCheck, title: "يكمل مسح نمط الحياة", desc: "مسح سريع 5 دقائق عن التغذية، النوم، النشاط، والإجهاد." },
-  { step: "3", icon: Brain, title: "الذكاء الاصطناعي يحلل", desc: "ينتج Wellness Score شخصي مع تحليل المخاطر." },
-  { step: "4", icon: Target, title: "توصيات تغذية مخصصة", desc: "اقتراحات وجبات مبنية على أهدافه الصحية." },
-  { step: "5", icon: Salad, title: "يطلب وجبات صحية", desc: "يختار من قوائم المطاعم الشريكة عبر المنصة." },
-  { step: "6", icon: Apple, title: "يستشير أخصائي تغذية", desc: "جلسات فردية مع أخصائيي التغذية." },
-  { step: "7", icon: TrendingUp, title: "يتتبع تحسنه", desc: "Wellness Score يتحسن مع الوقت والنتائج تقاس." }
+  { step: "01", icon: Building2, title: "Onboarding & Enrollment", desc: "Employee is automatically provisioned via HR system integration — zero manual setup." },
+  { step: "02", icon: ClipboardCheck, title: "Health Assessment (HRA)", desc: "5-minute lifestyle assessment covering nutrition, sleep, activity, and stress levels." },
+  { step: "03", icon: Brain, title: "AI Health Analysis", desc: "Proprietary algorithms generate a Workforce Health Score with personalised risk breakdown." },
+  { step: "04", icon: Target, title: "Personalised Recommendations", desc: "Actionable health protocols and nutrition plans delivered through the platform." },
+  { step: "05", icon: RefreshCw, title: "Progress Tracking", desc: "Continuous monitoring with real-time Health Score updates and trend analysis." },
+  { step: "06", icon: TrendingUp, title: "Outcome Measurement", desc: "Enterprise reporting on health improvement, engagement, and business impact." }
 ];
 
-// ===== القسم 4: أخصائي التغذية =====
+// ─── SECTION 5: NUTRITIONIST OPERATIONS ───
 const nutritionistCapabilities = [
-  { icon: Brain, title: "بيانات العافية", desc: "اطلاع على ملفات العافية للموظفين المعينين." },
-  { icon: Target, title: "خطط تغذية متصلة", desc: "إعداد خطط وجبات مرتبطة بأنظمة طلب المطاعم." },
-  { icon: UserCheck, title: "إدارة الاستشارات", desc: "جدولة ومتابعة جميع الاستشارات داخل المنصة." },
-  { icon: TrendingUp, title: "متابعة التقدم", desc: "تتبع مؤشرات الموظفين وتعديل التوصيات." },
-  { icon: BarChart3, title: "تحليل النتائج", desc: "قياس أثر التدخلات الغذائية على Wellness Score." }
+  { icon: Eye, title: "Health Data Access", desc: "View assigned workforce health profiles and assessment results." },
+  { icon: Target, title: "Protocol Design", desc: "Create nutrition protocols linked directly to restaurant ordering systems." },
+  { icon: UserCheck, title: "Consultation Management", desc: "Schedule and manage all employee consultations within the platform." },
+  { icon: TrendingUp, title: "Progress Monitoring", desc: "Track employee health metrics and adjust protocols dynamically." },
+  { icon: BarChart3, title: "Outcome Analytics", desc: "Measure the impact of nutrition interventions on Workforce Health Scores." }
 ];
 
-// ===== القسم 5: المطعم =====
+// ─── SECTION 6: RESTAURANT OPERATIONS ───
 const restaurantCapabilities = [
-  { icon: ClipboardCheck, title: "طلبات منظمة", desc: "استلام طلبات مصنفة حسب أهداف العافية والاحتياجات الغذائية." },
-  { icon: Salad, title: "قوائم متوافقة مع العافية", desc: "تنظيم الوجبات حسب الفئات الصحية — متوازن، بروتين، منخفض السعرات." },
-  { icon: Activity, title: "لوجستيات متكاملة", desc: "توصيل عبر المنصة مع تتبع آني للطلبات." },
-  { icon: PieChart, title: "تحليلات الأداء", desc: "متابعة حجم الطلبات، الوجبات الأكثر طلباً، واتجاهات المشاركة." }
+  { icon: GanttChartSquare, title: "Structured Ordering", desc: "Receive classified orders based on health protocols and dietary requirements." },
+  { icon: Database, title: "Wellness Menu Management", desc: "Organise meals by health categories — balanced, protein, low-calorie, custom." },
+  { icon: Activity, title: "Integrated Logistics", desc: "Platform-connected delivery with real-time order tracking for enterprise scale." },
+  { icon: PieChart, title: "Performance Analytics", desc: "Track order volumes, popular meals, and participation trends across all client companies." }
 ];
 
-// ===== القسم 6: نتائج الأعمال =====
+// ─── SECTION 7: AI & PREDICTIVE ENGINE ───
+const aiCapabilities = [
+  { icon: Brain, title: "Predictive Risk Modelling", desc: "ML models identify at-risk employees before health issues manifest, enabling proactive intervention." },
+  { icon: LineChart, title: "Trend Forecasting", desc: "Enterprise-wide health trend analysis with 6-month forward-looking projections." },
+  { icon: Lightbulb, title: "Smart Recommendations", desc: "AI-powered personalised health protocols that adapt based on employee progress and feedback." },
+  { icon: Shield, title: "Privacy-Preserving Analytics", desc: "Federated learning ensures individual data never leaves the device — only aggregate insights reach HR." }
+];
+
+// ─── SECTION 8: BUSINESS IMPACT ───
 const businessMetrics = [
-  { icon: TrendingDown, value: "-35%", label: "خفض أيام الغياب" },
-  { icon: TrendingUp, value: "+25%", label: "تحسين الإنتاجية" },
-  { icon: Users, value: "85%", label: "مشاركة في العافية" },
-  { icon: DollarSign, value: "-28%", label: "خفض التكاليف الصحية" },
-  { icon: Award, value: "3.2x", label: "العائد على الاستثمار" },
-  { icon: Medal, value: "+40%", label: "قوة العلامة التجارية" }
+  { icon: TrendingDown, value: "-35%", label: "Absenteeism Reduction", desc: "Average reduction in sick leave within 6 months" },
+  { icon: TrendingUp, value: "+25%", label: "Productivity Improvement", desc: "Measurable performance gains across teams" },
+  { icon: Users, value: "85%", label: "Program Participation", desc: "Employee enrollment in health programs" },
+  { icon: DollarSign, value: "-28%", label: "Healthcare Cost Reduction", desc: "Direct employer cost savings annually" },
+  { icon: Award, value: "3.2x", label: "Average ROI", desc: "Return on workforce health investment" },
+  { icon: Medal, value: "+40%", label: "Retention Improvement", desc: "Improved employee retention through wellness" }
 ];
 
 export default function Home() {
@@ -90,14 +99,16 @@ export default function Home() {
     <>
       <Header />
       <main>
-        {/* ═══ HERO — مُعاد التنسيق ═══ */}
-        <section className="relative pt-32 pb-20 overflow-hidden" dir="rtl">
+        {/* ═══════════════════════════════════════════════════════════════════
+           SECTION 1 — HERO
+           "Transform Workforce Health Into Measurable Business Performance"
+           ═══════════════════════════════════════════════════════════════════ */}
+        <section className="relative pt-32 pb-20 overflow-hidden" dir="ltr">
           <div className="absolute inset-0 bg-gradient-to-b from-[var(--accent-soft)] via-transparent to-transparent opacity-60" />
           <div className="absolute top-[-10%] right-[-5%] w-[600px] h-[600px] rounded-full bg-gradient-to-br from-[var(--accent)]/8 via-[var(--accent)]/3 to-transparent blur-3xl pointer-events-none" />
           <div className="absolute bottom-[-15%] left-[-10%] w-[500px] h-[500px] rounded-full bg-gradient-to-tr from-[var(--accent)]/5 to-transparent blur-3xl pointer-events-none" />
           <div className="absolute inset-0 vp-grid-bg opacity-[0.03]" />
 
-          {/* SVG clipPath — دائرة */}
           <svg width="0" height="0" className="absolute">
             <defs>
               <clipPath id="circleFrame" clipPathUnits="objectBoundingBox">
@@ -107,43 +118,39 @@ export default function Home() {
           </svg>
 
           <div className="container-shade relative z-10">
-            {/* ===== الجزء العلوي: عنوان (يمين) + صورة (يسار) ===== */}
+            {/* Top row: text (left) + image (right) */}
             <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
-              {/* --- النص: الجانب الأيمن --- */}
-              <div data-vp-animate="fade-up" className="lg:pl-8">
+              {/* Text — LHS */}
+              <div data-vp-animate="fade-up" className="lg:pr-8">
                 <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[var(--accent-soft)] border border-[var(--accent)]/10 text-[var(--accent)] text-xs font-semibold mb-5">
-                  <Heart className="h-3.5 w-3.5" />
-                  منصة عافية مؤسسية متكاملة
+                  <Zap className="h-3.5 w-3.5" />
+                  Enterprise Workforce Health OS
                 </span>
                 <h1 className="vp-hero mt-5">
-                  عافية فريقك يمكن قياسها
+                  Transform Workforce Health Into
                   <br />
-                  <span className="vp-hero-em">وقراراتك تستحق الدقة</span>
+                  <span className="vp-hero-em">Measurable Business Performance</span>
                 </h1>
                 <p className="text-sm lg:text-base text-[var(--text-secondary)] mt-6 leading-relaxed max-w-lg">
-                  Velara Care هي نظام تشغيل متكامل لبرامج عافية الموظفين — يربط بين الشركات،
-                  الموظفين، فرق الموارد البشرية، أخصائيي التغذية، ومزودي الخدمات في منظومة واحدة قابلة للقياس.
+                  Velara is the unified operating system that connects enterprises, HR teams,
+                  employees, nutritionists, and restaurant partners into one measurable workforce
+                  health ecosystem — turning wellness investment into operational intelligence.
                 </p>
               </div>
 
-              {/* --- الصورة: الجانب الأيسر --- */}
+              {/* Image — RHS */}
               <div className="relative flex items-center justify-center" data-vp-animate="scale-in" data-vp-delay="2">
-                {/* Glow خلف الدائرة */}
                 <div className="absolute w-[320px] h-[320px] lg:w-[420px] lg:h-[420px] rounded-full bg-gradient-to-br from-[var(--accent)]/12 via-[var(--accent)]/3 to-transparent blur-[80px] pointer-events-none" />
                 <div className="absolute w-[240px] h-[240px] lg:w-[320px] lg:h-[320px] rounded-full bg-gradient-to-tr from-[var(--accent)]/8 to-transparent blur-[60px] pointer-events-none translate-y-6" />
 
-                {/* حاوية الدائرة */}
                 <div className="relative w-[240px] h-[240px] lg:w-[340px] lg:h-[340px]">
-                  {/* الإطار الخارجي — تدرج */}
                   <div className="absolute -inset-[5px] lg:-inset-[7px] rounded-full bg-gradient-to-br from-[var(--accent)] via-[var(--accent-light)]/50 to-[var(--accent-dark)] shadow-2xl shadow-[var(--accent)]/20" />
-                  {/* الإطار الداخلي */}
                   <div className="absolute -inset-[1.5px] lg:-inset-[2.5px] rounded-full bg-[var(--bg-primary)]" />
-                  {/* الصورة */}
                   <div className="relative w-full h-full rounded-full overflow-hidden">
                     <div className="w-full h-full" style={{ clipPath: 'url(#circleFrame)' }}>
                       <Image
                         src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=500&h=500&fit=crop&auto=format"
-                        alt="فريق عمل مؤسسي"
+                        alt="Enterprise team collaborating"
                         width={500}
                         height={500}
                         className="w-full h-full object-cover scale-105"
@@ -153,38 +160,35 @@ export default function Home() {
                     <div className="absolute inset-0 rounded-full pointer-events-none" style={{ background: 'linear-gradient(180deg, rgba(0,0,0,0.08) 0%, transparent 35%, transparent 65%, rgba(0,0,0,0.12) 100%)' }} />
                   </div>
 
-                  {/* أيقونات عائمة */}
                   <div className="absolute -top-2 -right-1 lg:-top-3 lg:-right-2 w-10 h-10 lg:w-12 lg:h-12 rounded-xl bg-[var(--bg-card)] border border-[var(--accent)]/20 flex items-center justify-center shadow-lg shadow-[var(--accent)]/10 backdrop-blur-sm rotate-12 hover:rotate-0 hover:scale-110 transition-all duration-500 z-10">
-                    <Heart className="h-4 w-4 lg:h-5 lg:w-5 text-rose-400" />
+                    <BarChart3 className="h-4 w-4 lg:h-5 lg:w-5 text-[var(--accent)]" />
                   </div>
                   <div className="absolute -bottom-2 -left-1 lg:-bottom-3 lg:-left-2 w-10 h-10 lg:w-12 lg:h-12 rounded-xl bg-[var(--bg-card)] border border-[var(--border-primary)] flex items-center justify-center shadow-lg backdrop-blur-sm -rotate-12 hover:rotate-0 hover:scale-110 transition-all duration-500 z-10">
-                    <Activity className="h-4 w-4 lg:h-5 lg:w-5 text-[var(--accent)]" />
+                    <Activity className="h-4 w-4 lg:h-5 lg:w-5 text-cyan-400" />
                   </div>
                 </div>
               </div>
             </div>
 
-            {/* ===== الجزء السفلي: زر + ٤ بطاقات ===== */}
-            <div className="mt-10 lg:mt-14 max-w-4xl" data-vp-animate="fade-up" data-vp-delay="3">
-              {/* زر CTA */}
+            {/* Bottom row: CTA + 4 KPI cards */}
+            <div className="mt-10 lg:mt-14 max-w-5xl" data-vp-animate="fade-up" data-vp-delay="3">
               <div className="flex flex-col sm:flex-row items-start gap-4 mb-8">
                 <Link href="/demo" className="btn-premium text-base px-10 py-4 !h-auto shadow-lg shadow-[var(--accent)]/15">
-                  اطلب عرضاً تجريبياً لشركتك
+                  Book Enterprise Demo
                   <ArrowLeft className="h-4 w-4" />
                 </Link>
                 <Link href="/product" className="btn-ghost text-base px-8 py-4 !h-auto">
-                  استكشف المنصة
+                  Explore Platform
                 </Link>
               </div>
 
-              {/* ٤ مميزات في صف واحد */}
               <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-4">
-                {valueCards.map((card) => (
-                  <div key={card.title} className="glass-premium rounded-xl p-4 text-center group hover:border-[var(--accent)]/20 hover:shadow-lg transition-all duration-300">
+                {kpiCards.map((card) => (
+                  <div key={card.label} className="glass-premium rounded-xl p-4 text-center group hover:border-[var(--accent)]/20 hover:shadow-lg transition-all duration-300">
                     <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[var(--accent-soft)] to-[var(--accent)]/5 flex items-center justify-center mx-auto mb-2 group-hover:scale-110 transition-transform ring-1 ring-[var(--accent)]/10">
                       <card.icon className="h-4 w-4 text-[var(--accent)]" />
                     </div>
-                    <h3 className="text-xs font-bold text-[var(--text-primary)] mb-1">{card.title}</h3>
+                    <h3 className="text-xs font-bold text-[var(--text-primary)] mb-1">{card.label}</h3>
                     <p className="text-[10px] text-[var(--text-secondary)] leading-snug">{card.desc}</p>
                   </div>
                 ))}
@@ -193,16 +197,18 @@ export default function Home() {
           </div>
         </section>
 
-        {/* ═══ الإحصائيات ═══ */}
-        <section className="py-16 bg-[var(--bg-primary)] relative overflow-hidden" dir="rtl">
+        {/* ═══════════════════════════════════════════════════════════════════
+           STATISTICS BANNER
+           ═══════════════════════════════════════════════════════════════════ */}
+        <section className="py-16 bg-[var(--bg-primary)] relative overflow-hidden" dir="ltr">
           <div className="absolute inset-0 vp-data-dots pointer-events-none opacity-50" />
           <div className="container-shade relative z-10">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-3xl mx-auto">
               {[
-                { num: "5000", suffix: "+", label: "موظف على المنصة" },
-                { num: "100", suffix: "+", label: "شركة تثق بنا" },
-                { num: "35", suffix: "%", label: "خفض أيام الغياب" },
-                { num: "3.2", suffix: "x", label: "متوسط العائد" },
+                { num: "100", suffix: "+", label: "Enterprise Clients" },
+                { num: "5000", suffix: "+", label: "Employees on Platform" },
+                { num: "35", suffix: "%", label: "Avg. Sick Leave Reduction" },
+                { num: "3.2", suffix: "x", label: "Average ROI" },
               ].map((s) => (
                 <div key={s.label} className="text-center" data-vp-animate="fade-up">
                   <p className="vp-stat" data-vp-count-to={s.num} data-vp-count-suffix={s.suffix}>{s.num}{s.suffix}</p>
@@ -213,15 +219,18 @@ export default function Home() {
           </div>
         </section>
 
-        {/* ═══ القسم 1: المنظومة ═══ */}
-        <section className="py-24 bg-[var(--bg-secondary)] relative overflow-hidden" dir="rtl">
+        {/* ═══════════════════════════════════════════════════════════════════
+           SECTION 2 — PLATFORM ECOSYSTEM
+           "The Workforce Wellness Ecosystem"
+           ═══════════════════════════════════════════════════════════════════ */}
+        <section className="py-24 bg-[var(--bg-secondary)] relative overflow-hidden" dir="ltr">
           <div className="absolute inset-0 vp-data-dots pointer-events-none" />
           <div className="container-shade relative z-10">
             <div className="max-w-3xl mx-auto text-center mb-16" data-vp-animate="fade-up">
-              <span className="vp-label">هيكل المنصة</span>
-              <h2 className="vp-section-title mt-4">كيف تعمل منظومة Velara Care</h2>
-              <p className="vp-subtitle mt-4">خمسة أطراف مترابطة في نظام تشغيل واحد measurable لبرامج العافية المؤسسية.</p>
-              <div className="w-16 h-1 rounded-full bg-gradient-to-l from-[var(--accent)] to-[var(--accent-light)] mx-auto mt-4" />
+              <span className="vp-label">Platform Architecture</span>
+              <h2 className="vp-section-title mt-4">The Workforce Health Ecosystem</h2>
+              <p className="vp-subtitle mt-4">Five interconnected stakeholders operating in one unified, measurable platform — connecting strategy to execution.</p>
+              <div className="w-16 h-1 rounded-full bg-gradient-to-r from-[var(--accent)] to-[var(--accent-light)] mx-auto mt-4" />
             </div>
 
             <div className="hidden lg:flex items-start justify-center max-w-6xl mx-auto" data-vp-animate="fade-up" data-vp-delay="2">
@@ -238,7 +247,7 @@ export default function Home() {
                   {i < ecosystemEntities.length - 1 && (
                     <div className="flex items-center pt-8 px-2">
                       <div className="w-8 h-8 rounded-full bg-[var(--bg-card)] border border-[var(--border-primary)] flex items-center justify-center shadow-sm">
-                        <ArrowLeft className="h-4 w-4 text-[var(--accent)]" />
+                        <ArrowRight className="h-4 w-4 text-[var(--accent)]" />
                       </div>
                     </div>
                   )}
@@ -261,17 +270,20 @@ export default function Home() {
           </div>
         </section>
 
-        {/* ═══ القسم 2: لوحة HR ═══ */}
-        <section className="py-24 bg-[var(--bg-primary)] relative overflow-hidden" dir="rtl">
-          <div className="absolute top-0 right-0 w-[400px] h-[400px] rounded-full bg-gradient-to-bl from-[var(--accent)]/5 to-transparent blur-3xl pointer-events-none" />
+        {/* ═══════════════════════════════════════════════════════════════════
+           SECTION 3 — HR INTELLIGENCE DASHBOARD
+           "HR Wellness Intelligence Center"
+           ═══════════════════════════════════════════════════════════════════ */}
+        <section className="py-24 bg-[var(--bg-primary)] relative overflow-hidden" dir="ltr">
+          <div className="absolute top-0 left-0 w-[400px] h-[400px] rounded-full bg-gradient-to-br from-[var(--accent)]/5 to-transparent blur-3xl pointer-events-none" />
           <div className="container-shade relative z-10">
             <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
               <div data-vp-animate="fade-up">
-                <span className="vp-label">تحليلات المؤسسة</span>
-                <h2 className="vp-section-title mt-4">لوحة قيادة العافية لـ HR</h2>
-                <p className="vp-subtitle mt-4 mb-8">ذكاء تشغيلي فوري لإدارة برامج العافية على نطاق واسع. تابع المشاركة، قس النتائج، واصدر تقارير تنفيذية جاهزة.</p>
+                <span className="vp-label">Command Center</span>
+                <h2 className="vp-section-title mt-4">HR Wellness Intelligence Center</h2>
+                <p className="vp-subtitle mt-4 mb-8">Real-time operational intelligence for managing workforce health programs at scale. Monitor engagement, measure outcomes, and generate board-ready reports.</p>
                 <div className="grid grid-cols-2 gap-3">
-                  {hrDashboardMetrics.map((metric) => (
+                  {hrMetrics.map((metric) => (
                     <div key={metric.label} className="card-premium !p-4 group">
                       <div className="flex items-center justify-between mb-2">
                         <div className="w-8 h-8 rounded-lg bg-[var(--accent-soft)] flex items-center justify-center group-hover:scale-110 transition-transform">
@@ -286,9 +298,9 @@ export default function Home() {
                 </div>
               </div>
               <div className="relative" data-vp-animate="scale-in" data-vp-delay="2">
-                <div className="absolute -inset-6 bg-gradient-to-r from-[var(--accent)]/10 via-[var(--accent)]/5 to-transparent rounded-3xl blur-3xl" />
+                <div className="absolute -inset-6 bg-gradient-to-l from-[var(--accent)]/10 via-[var(--accent)]/5 to-transparent rounded-3xl blur-3xl" />
                 <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-[var(--border-primary)]">
-                  <Image src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=700&h=500&fit=crop&auto=format" alt="لوحة قيادة HR" width={700} height={500} className="w-full h-auto object-cover" priority />
+                  <Image src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=700&h=500&fit=crop&auto=format" alt="HR Analytics Dashboard" width={700} height={500} className="w-full h-auto object-cover" priority />
                 </div>
                 <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-white/10 pointer-events-none" />
               </div>
@@ -296,23 +308,26 @@ export default function Home() {
           </div>
         </section>
 
-        {/* ═══ القسم 3: رحلة الموظف ═══ */}
-        <section className="py-24 bg-[var(--bg-secondary)] relative overflow-hidden" dir="rtl">
-          <div className="absolute bottom-0 left-0 w-[400px] h-[400px] rounded-full bg-gradient-to-tr from-[var(--accent)]/5 to-transparent blur-3xl pointer-events-none" />
+        {/* ═══════════════════════════════════════════════════════════════════
+           SECTION 4 — EMPLOYEE JOURNEY
+           "The Employee Wellness Journey"
+           ═══════════════════════════════════════════════════════════════════ */}
+        <section className="py-24 bg-[var(--bg-secondary)] relative overflow-hidden" dir="ltr">
+          <div className="absolute bottom-0 right-0 w-[400px] h-[400px] rounded-full bg-gradient-to-tl from-[var(--accent)]/5 to-transparent blur-3xl pointer-events-none" />
           <div className="absolute inset-0 vp-grid-bg opacity-[0.02]" />
           <div className="container-shade relative z-10">
             <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
               <div className="relative order-last lg:order-first" data-vp-animate="scale-in">
-                <div className="absolute -inset-6 bg-gradient-to-l from-[var(--accent)]/10 via-[var(--accent)]/5 to-transparent rounded-3xl blur-3xl" />
+                <div className="absolute -inset-6 bg-gradient-to-r from-[var(--accent)]/10 via-[var(--accent)]/5 to-transparent rounded-3xl blur-3xl" />
                 <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-[var(--border-primary)]">
-                  <Image src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=700&h=500&fit=crop&auto=format" alt="رحلة الموظف" width={700} height={500} className="w-full h-auto object-cover" />
+                  <Image src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=700&h=500&fit=crop&auto=format" alt="Employee journey" width={700} height={500} className="w-full h-auto object-cover" />
                 </div>
                 <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-white/10 pointer-events-none" />
               </div>
               <div data-vp-animate="fade-up" data-vp-delay="2">
-                <span className="vp-label">رحلة الموظف</span>
-                <h2 className="vp-section-title mt-4">رحلة الموظف في العافية</h2>
-                <p className="vp-subtitle mt-4 mb-8">من الانضمام إلى تحسن ملموس — تجربة عافية متكاملة مدعومة بالذكاء الاصطناعي.</p>
+                <span className="vp-label">Workflow</span>
+                <h2 className="vp-section-title mt-4">The Employee Wellness Journey</h2>
+                <p className="vp-subtitle mt-4 mb-8">From onboarding to measurable improvement — a complete workforce health journey powered by AI-driven insights and connected care.</p>
                 <div className="space-y-4">
                   {employeeJourney.map((item, i) => (
                     <div key={item.step} className="flex items-start gap-4 group">
@@ -337,15 +352,18 @@ export default function Home() {
           </div>
         </section>
 
-        {/* ═══ القسم 4: أخصائي التغذية ═══ */}
-        <section className="py-24 bg-[var(--bg-primary)] relative overflow-hidden" dir="rtl">
+        {/* ═══════════════════════════════════════════════════════════════════
+           SECTION 5 — NUTRITIONIST OPERATIONS
+           "Connected Nutritionist Workspace"
+           ═══════════════════════════════════════════════════════════════════ */}
+        <section className="py-24 bg-[var(--bg-primary)] relative overflow-hidden" dir="ltr">
           <div className="absolute inset-0 vp-data-dots pointer-events-none" />
           <div className="container-shade relative z-10">
             <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
               <div data-vp-animate="fade-up">
-                <span className="vp-label">فضاء أخصائي التغذية</span>
-                <h2 className="vp-section-title mt-4">فضاء أخصائي التغذية المتصل</h2>
-                <p className="vp-subtitle mt-4 mb-8">مساحة عمل ذكية حيث يدير أخصائيو التغذية عملائهم، يضعون الخطط، ويقيسون النتائج — كل ذلك متصل بمنظومة العافية.</p>
+                <span className="vp-label">Clinical Workspace</span>
+                <h2 className="vp-section-title mt-4">Connected Nutritionist Workspace</h2>
+                <p className="vp-subtitle mt-4 mb-8">An intelligent clinical workspace where nutritionists manage their caseload, design protocols, and measure outcomes — all connected to the enterprise health ecosystem.</p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {nutritionistCapabilities.map((cap) => (
                     <div key={cap.title} className="card-premium !p-4 group">
@@ -361,7 +379,7 @@ export default function Home() {
               <div className="relative" data-vp-animate="scale-in" data-vp-delay="2">
                 <div className="absolute -inset-6 bg-gradient-to-l from-[var(--accent)]/10 via-[var(--accent)]/5 to-transparent rounded-3xl blur-3xl" />
                 <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-[var(--border-primary)]">
-                  <Image src="https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=700&h=500&fit=crop&auto=format" alt="تغذية صحية" width={700} height={500} className="w-full h-auto object-cover" />
+                  <Image src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=700&h=500&fit=crop&auto=format" alt="Nutritionist workspace" width={700} height={500} className="w-full h-auto object-cover" />
                 </div>
                 <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-white/10 pointer-events-none" />
               </div>
@@ -369,22 +387,25 @@ export default function Home() {
           </div>
         </section>
 
-        {/* ═══ القسم 5: المطعم الشريك ═══ */}
-        <section className="py-24 bg-[var(--bg-secondary)] relative overflow-hidden" dir="rtl">
-          <div className="absolute top-0 right-[-10%] w-[500px] h-[500px] rounded-full bg-gradient-to-bl from-[var(--accent)]/5 to-transparent blur-3xl pointer-events-none" />
+        {/* ═══════════════════════════════════════════════════════════════════
+           SECTION 6 — RESTAURANT OPERATIONS
+           "Restaurant Wellness Network"
+           ═══════════════════════════════════════════════════════════════════ */}
+        <section className="py-24 bg-[var(--bg-secondary)] relative overflow-hidden" dir="ltr">
+          <div className="absolute top-0 left-[-10%] w-[500px] h-[500px] rounded-full bg-gradient-to-br from-[var(--accent)]/5 to-transparent blur-3xl pointer-events-none" />
           <div className="container-shade relative z-10">
             <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
               <div className="relative order-last lg:order-first" data-vp-animate="scale-in">
                 <div className="absolute -inset-6 bg-gradient-to-r from-[var(--accent)]/10 via-[var(--accent)]/5 to-transparent rounded-3xl blur-3xl" />
                 <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-[var(--border-primary)]">
-                  <Image src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=700&h=500&fit=crop&auto=format" alt="مطعم شريك" width={700} height={500} className="w-full h-auto object-cover" />
+                  <Image src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=700&h=500&fit=crop&auto=format" alt="Restaurant operations" width={700} height={500} className="w-full h-auto object-cover" />
                 </div>
                 <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-white/10 pointer-events-none" />
               </div>
               <div data-vp-animate="fade-up" data-vp-delay="2">
-                <span className="vp-label">شبكة المطاعم</span>
-                <h2 className="vp-section-title mt-4">شبكة المطاعم للعافية</h2>
-                <p className="vp-subtitle mt-4 mb-8">منظومة لوجستية تشغيلية تربط المطاعم الشريكة بأهداف العافية للقوى العاملة — من الطلبات المنظمة إلى التوصيل المتكامل.</p>
+                <span className="vp-label">Logistics Network</span>
+                <h2 className="vp-section-title mt-4">Restaurant Wellness Network</h2>
+                <p className="vp-subtitle mt-4 mb-8">An operational logistics ecosystem connecting restaurant partners to enterprise health goals — from structured order management to integrated delivery tracking.</p>
                 <div className="space-y-4">
                   {restaurantCapabilities.map((cap) => (
                     <div key={cap.title} className="card-premium !p-5 group">
@@ -405,16 +426,47 @@ export default function Home() {
           </div>
         </section>
 
-        {/* ═══ القسم 6: نتائج الأعمال ═══ */}
-        <section className="py-24 bg-[var(--bg-primary)] relative overflow-hidden" dir="rtl">
-          <div className="absolute inset-0 vp-grid-bg opacity-[0.03]" />
-          <div className="absolute bottom-[-20%] left-[20%] w-[600px] h-[600px] rounded-full bg-gradient-to-tr from-[var(--accent)]/5 to-transparent blur-3xl pointer-events-none" />
+        {/* ═══════════════════════════════════════════════════════════════════
+           SECTION 7 — AI & PREDICTIVE ENGINE
+           "Predictive Workforce Health Intelligence"
+           ═══════════════════════════════════════════════════════════════════ */}
+        <section className="py-24 bg-[var(--bg-primary)] relative overflow-hidden" dir="ltr">
+          <div className="absolute top-[-10%] right-[-10%] w-[500px] h-[500px] rounded-full bg-gradient-to-bl from-[var(--accent)]/8 to-transparent blur-3xl pointer-events-none" />
+          <div className="absolute bottom-[-15%] left-[-5%] w-[400px] h-[400px] rounded-full bg-gradient-to-tr from-[var(--accent)]/5 to-transparent blur-3xl pointer-events-none" />
           <div className="container-shade relative z-10">
             <div className="max-w-3xl mx-auto text-center mb-16" data-vp-animate="fade-up">
-              <span className="vp-label">مؤشرات العائد</span>
-              <h2 className="vp-section-title mt-4">نتائج مؤسسية تستحق القياس</h2>
-              <p className="vp-subtitle mt-4">مؤشرات أداء رئيسية تثبت العائد على استثمار برامج العافية.</p>
-              <div className="w-16 h-1 rounded-full bg-gradient-to-l from-[var(--accent)] to-[var(--accent-light)] mx-auto mt-4" />
+              <span className="vp-label">Intelligence Engine</span>
+              <h2 className="vp-section-title mt-4">Predictive Workforce Health Intelligence</h2>
+              <p className="vp-subtitle mt-4">Machine learning models that predict health risks, forecast trends, and deliver personalised recommendations at enterprise scale — while preserving individual privacy.</p>
+              <div className="w-16 h-1 rounded-full bg-gradient-to-r from-[var(--accent)] to-[var(--accent-light)] mx-auto mt-4" />
+            </div>
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6" data-vp-animate="fade-up" data-vp-delay="2">
+              {aiCapabilities.map((cap) => (
+                <div key={cap.title} className="card-premium p-6 sm:p-8 group hover:shadow-xl" data-vp-animate="fade-up">
+                  <div className="w-14 h-14 rounded-2xl bg-[var(--accent-soft)] flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
+                    <cap.icon className="h-7 w-7 text-[var(--accent)]" />
+                  </div>
+                  <h3 className="text-lg font-bold text-[var(--text-primary)]">{cap.title}</h3>
+                  <p className="mt-3 text-sm text-[var(--text-secondary)] leading-relaxed">{cap.desc}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ═══════════════════════════════════════════════════════════════════
+           SECTION 8 — BUSINESS IMPACT
+           "Business Outcomes That Matter"
+           ═══════════════════════════════════════════════════════════════════ */}
+        <section className="py-24 bg-[var(--bg-secondary)] relative overflow-hidden" dir="ltr">
+          <div className="absolute inset-0 vp-grid-bg opacity-[0.03]" />
+          <div className="absolute bottom-[-20%] right-[20%] w-[600px] h-[600px] rounded-full bg-gradient-to-tl from-[var(--accent)]/5 to-transparent blur-3xl pointer-events-none" />
+          <div className="container-shade relative z-10">
+            <div className="max-w-3xl mx-auto text-center mb-16" data-vp-animate="fade-up">
+              <span className="vp-label">Enterprise Outcomes</span>
+              <h2 className="vp-section-title mt-4">Business Outcomes That Matter</h2>
+              <p className="vp-subtitle mt-4">Key performance indicators that demonstrate the measurable ROI of investing in workforce health operations.</p>
+              <div className="w-16 h-1 rounded-full bg-gradient-to-r from-[var(--accent)] to-[var(--accent-light)] mx-auto mt-4" />
             </div>
             <div className="grid grid-cols-2 lg:grid-cols-3 gap-5 max-w-4xl mx-auto" data-vp-animate="fade-up" data-vp-delay="2">
               {businessMetrics.map((metric) => (
@@ -424,85 +476,78 @@ export default function Home() {
                   </div>
                   <p className="text-3xl font-extrabold text-[var(--accent)] leading-none mb-2">{metric.value}</p>
                   <p className="text-sm font-semibold text-[var(--text-primary)]">{metric.label}</p>
+                  <p className="text-xs text-[var(--text-secondary)] mt-1">{metric.desc}</p>
                 </div>
               ))}
             </div>
           </div>
         </section>
 
-        {/* ═══ CTA الختامي — مُعاد تصميمه ═══ */}
-        <section className="relative py-28 overflow-hidden" dir="rtl" style={{ background: 'linear-gradient(160deg, #071F1F 0%, #0A3A3A 40%, #0D4F4F 70%, #071F1F 100%)' }}>
-          {/* Decorative layers */}
+        {/* ═══════════════════════════════════════════════════════════════════
+           CTA — Glass Premium Card
+           ═══════════════════════════════════════════════════════════════════ */}
+        <section className="relative py-28 overflow-hidden" dir="ltr" style={{ background: 'linear-gradient(160deg, #071F1F 0%, #0A3A3A 40%, #0D4F4F 70%, #071F1F 100%)' }}>
           <div className="absolute inset-0" style={{ backgroundImage: 'radial-gradient(circle at 25% 40%, rgba(45,212,191,0.10) 0%, transparent 50%), radial-gradient(circle at 75% 60%, rgba(45,212,191,0.06) 0%, transparent 50%)' }} />
           <div className="absolute inset-0 vp-grid-bg opacity-[0.04]" />
-          <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-l from-transparent via-white/10 to-transparent" />
-          <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-l from-transparent via-[var(--accent)]/20 to-transparent" />
+          <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+          <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[var(--accent)]/20 to-transparent" />
 
-          {/* Floating orbs */}
-          <div className="absolute top-[15%] right-[10%] w-64 h-64 rounded-full bg-[var(--accent)]/8 blur-[100px] pointer-events-none" />
-          <div className="absolute bottom-[10%] left-[5%] w-80 h-80 rounded-full bg-[var(--accent)]/5 blur-[120px] pointer-events-none" />
+          <div className="absolute top-[15%] left-[10%] w-64 h-64 rounded-full bg-[var(--accent)]/8 blur-[100px] pointer-events-none" />
+          <div className="absolute bottom-[10%] right-[5%] w-80 h-80 rounded-full bg-[var(--accent)]/5 blur-[120px] pointer-events-none" />
 
           <div className="container-shade relative z-10">
             <div className="max-w-4xl mx-auto" data-vp-animate="slide-up">
-              {/* Glass premium card */}
               <div className="relative overflow-hidden rounded-3xl border border-white/[0.08] p-10 lg:p-16" style={{ background: 'linear-gradient(180deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.015) 100%)', backdropFilter: 'blur(24px)', WebkitBackdropFilter: 'blur(24px)' }}>
-                {/* Inner glow */}
                 <div className="absolute -top-40 -right-40 w-80 h-80 rounded-full bg-[var(--accent)]/10 blur-[120px] pointer-events-none" />
                 <div className="absolute -bottom-40 -left-40 w-80 h-80 rounded-full bg-white/[0.02] blur-[120px] pointer-events-none" />
-
-                {/* Inner border shine */}
-                <div className="absolute top-0 left-[10%] right-[10%] h-px bg-gradient-to-l from-transparent via-white/20 to-transparent" />
+                <div className="absolute top-0 left-[10%] right-[10%] h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
 
                 <div className="relative text-center">
-                  {/* Premium badge */}
                   <div className="inline-flex items-center gap-2.5 px-5 py-2 rounded-full bg-white/[0.06] border border-white/[0.10] text-white/80 text-xs font-semibold mb-8 backdrop-blur-sm hover:bg-white/[0.08] transition-all">
                     <span className="relative flex h-2 w-2">
                       <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[var(--accent)] opacity-75" />
                       <span className="relative inline-flex rounded-full h-2 w-2 bg-[var(--accent)]" />
                     </span>
-                    منصة العافية المؤسسية رقم 1 في السعودية
+                    Enterprise Workforce Health OS
                   </div>
 
-                  {/* Heading with gradient accent */}
                   <h2 className="text-4xl lg:text-5xl font-extrabold text-white leading-[1.15] mb-6">
-                    هل أنت مستعد لبناء نظام العافية<br />
-                    <span className="text-transparent bg-clip-text bg-gradient-to-l from-[var(--accent)] via-[var(--accent-light)] to-[var(--accent)]">
-                      المؤسسي الخاص بك؟
+                    Ready to Transform Your<br />
+                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-[var(--accent)] via-[var(--accent-light)] to-[var(--accent)]">
+                      Workforce Health Operations?
                     </span>
                   </h2>
 
                   <p className="text-lg text-white/60 max-w-2xl mx-auto mb-10 leading-relaxed">
-                    احصل على عرض تجريبي مخصص لمؤسستك — يتضمن تحليلاً أولياً لمستوى العافية
-                    وتوصيات مبدئية للبرامج والأنشطة المناسبة لطبيعة قواك العاملة.
+                    Book a personalised enterprise demo — includes a free preliminary workforce health
+                    assessment and recommended program structure tailored to your organisation's size and needs.
                   </p>
 
-                  {/* CTA buttons */}
                   <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12">
                     <Link href="/demo" className="group relative inline-flex items-center gap-2.5 px-10 py-4 rounded-2xl bg-white text-[var(--vp-ink)] font-bold text-base shadow-xl shadow-white/10 hover:shadow-2xl hover:shadow-white/20 transition-all duration-300 hover:-translate-y-0.5">
-                      اطلب عرضاً تجريبياً للمؤسسات
+                      Book Enterprise Demo
                       <ArrowLeft className="h-4 w-4 group-hover:-translate-x-1 transition-transform" />
                     </Link>
                     <Link href="/pricing" className="inline-flex items-center gap-2.5 px-8 py-4 rounded-2xl border border-white/20 text-white/80 font-semibold text-sm hover:bg-white/[0.06] hover:border-white/30 transition-all duration-300">
                       <div className="w-2 h-2 rounded-full bg-[var(--accent)]" />
-                      شاهد الأسعار
+                      View Pricing
                     </Link>
                   </div>
 
-                  {/* Trust indicators */}
                   <div className="flex flex-wrap items-center justify-center gap-x-10 gap-y-3 pt-8 border-t border-white/[0.06]">
                     <div className="text-center">
                       <p className="text-white font-extrabold text-xl">100+</p>
-                      <p className="text-white/40 text-xs">شركة تثق بنا</p>
+                      <p className="text-white/40 text-xs">Enterprise Clients</p>
                     </div>
                     <div className="w-px h-10 bg-white/[0.06]" />
                     <div className="text-center">
                       <p className="text-white font-extrabold text-xl">5,000+</p>
-                      <p className="text-white/40 text-xs">موظف على المنصة</p>
+                      <p className="text-white/40 text-xs">Employees on Platform</p>
                     </div>
                     <div className="w-px h-10 bg-white/[0.06]" />
                     <div className="text-center">
                       <p className="text-white font-extrabold text-xl">3.2x</p>
-                      <p className="text-white/40 text-xs">متوسط العائد على الاستثمار</p>
+                      <p className="text-white/40 text-xs">Average ROI</p>
                     </div>
                   </div>
                 </div>
