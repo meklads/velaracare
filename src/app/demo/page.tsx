@@ -94,7 +94,7 @@ export default function DemoPage() {
                     <div className="absolute -inset-[1.5px] lg:-inset-[2.5px] rounded-full bg-[var(--bg-primary)]" />
                     <div className="relative w-full h-full rounded-full overflow-hidden">
                       <div className="w-full h-full" style={{ clipPath: 'url(#circleFrame)' }}>
-                        <Image src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=500&h=500&fit=crop&auto=format" alt="Demo" width={500} height={500} className="w-full h-full object-cover scale-105" priority />
+                        <Image src="https://images.unsplash.com/photo-1553877522-43269d4ea984?w=500&h=500&fit=crop&auto=format" alt="Enterprise Demo" width={500} height={500} className="w-full h-full object-cover scale-105" priority />
                       </div>
                       <div className="absolute inset-0 rounded-full pointer-events-none" style={{ background: 'linear-gradient(180deg, rgba(0,0,0,0.08) 0%, transparent 35%, transparent 65%, rgba(0,0,0,0.12) 100%)' }} />
                     </div>
