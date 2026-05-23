@@ -9,12 +9,12 @@ import { Shield, Lock, Server, Eye, UserCheck, FileText, ArrowLeft, Sparkles } f
 import { initScrollAnimations } from "@/lib/scroll-animations";
 
 const standards = [
-  { icon: Shield, title: "توافق مع الأنظمة السعودية (SDAIA)", desc: "نبني المنصة وفق متطلبات نظام حماية البيانات الشخصية الصادر عن الهيئة السعودية للبيانات والذكاء الاصطناعي." },
-  { icon: Lock, title: "تشفير البيانات", desc: "جميع البيانات مشفرة أثناء النقل (TLS 1.3) وعند التخزين (AES-256). كلمات المرور مشفرة باستخدام scrypt." },
-  { icon: Server, title: "الاستضافة في السعودية", desc: "البيانات مستضافة في مراكز بيانات داخل المملكة العربية السعودية لضمان الامتثال المحلي." },
-  { icon: Eye, title: "الخصوصية بالفطرة (Privacy by Design)", desc: "النظام مبني على مبدأ الخصوصية بالفطرة. الإدارة ترى فقط إحصائيات مجمعة بدون تفاصيل فردية." },
-  { icon: UserCheck, title: "التحكم في الوصول (RBAC)", desc: "نظام صلاحيات متكامل يضمن أن كل مستخدم يرى فقط البيانات المصرح له بها حسب دوره." },
-  { icon: FileText, title: "سجلات التدقيق (Audit Logs)", desc: "جميع العمليات الحساسة يتم تسجيلها لضمان الشفافية وإمكانية المراجعة." },
+  { icon: Shield, title: "Saudi Regulatory Compliance (SDAIA)", desc: "Built in accordance with Saudi Personal Data Protection Law requirements from the Saudi Authority for Data and Artificial Intelligence." },
+  { icon: Lock, title: "Data Encryption", desc: "All data encrypted in transit (TLS 1.3) and at rest (AES-256). Passwords hashed using scrypt with industry-leading parameters." },
+  { icon: Server, title: "Local Saudi Hosting", desc: "Data hosted in data centres within the Kingdom of Saudi Arabia to ensure full local compliance and data sovereignty." },
+  { icon: Eye, title: "Privacy by Design", desc: "System architected on privacy-by-design principles. Management sees only aggregated statistics with no individual-level detail." },
+  { icon: UserCheck, title: "Role-Based Access Control (RBAC)", desc: "Comprehensive permission system ensuring each user only sees data authorised for their specific role." },
+  { icon: FileText, title: "Audit Logs", desc: "All sensitive operations are logged with complete timestamps to ensure full transparency and regulatory review capability." },
 ];
 
 export default function CompliancePage() {
@@ -35,14 +35,15 @@ export default function CompliancePage() {
             <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
               <div data-vp-animate="fade-up" className="lg:pl-8">
                 <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[var(--accent-soft)] border border-[var(--accent)]/10 text-[var(--accent)] text-xs font-semibold mb-5">
-                  <Sparkles className="h-3.5 w-3.5" />
-                  الامتثال والخصوصية
+                  <Shield className="h-3.5 w-3.5" />
+                  Compliance & Privacy
                 </span>
                 <h1 className="vp-hero mt-5">
-                  بياناتك الصحية <span className="vp-hero-em">في أيدٍ أمينة</span>
+                  Your Workforce Health Data <span className="vp-hero-em">Is In Safe Hands</span>
                 </h1>
                 <p className="text-sm lg:text-base text-[var(--text-secondary)] mt-6 leading-relaxed max-w-lg">
-                  Velara Care ملتزمة بأعلى معايير الأمان والخصوصية المحلية والعالمية لحماية بيانات الموظفين الصحية.
+                  Velara Care is committed to the highest local and international security and privacy standards
+                  to protect workforce health data across the enterprise platform.
                 </p>
               </div>
               <div className="relative flex items-center justify-center" data-vp-animate="scale-in" data-vp-delay="2">
@@ -53,7 +54,7 @@ export default function CompliancePage() {
                   <div className="absolute -inset-[1.5px] lg:-inset-[2.5px] rounded-full bg-[var(--bg-primary)]" />
                   <div className="relative w-full h-full rounded-full overflow-hidden">
                     <div className="w-full h-full" style={{ clipPath: 'url(#circleFrame)' }}>
-                      <Image src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=500&h=500&fit=crop&auto=format" alt="الامتثال" width={500} height={500} className="w-full h-full object-cover scale-105" priority />
+                      <Image src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=500&h=500&fit=crop&auto=format" alt="Compliance documents" width={500} height={500} className="w-full h-full object-cover scale-105" priority />
                     </div>
                     <div className="absolute inset-0 rounded-full pointer-events-none" style={{ background: 'linear-gradient(180deg, rgba(0,0,0,0.08) 0%, transparent 35%, transparent 65%, rgba(0,0,0,0.12) 100%)' }} />
                   </div>
@@ -105,17 +106,17 @@ export default function CompliancePage() {
           <div className="absolute inset-0 vp-grid-bg opacity-[0.03]" />
           <div className="container-shade max-w-4xl mx-auto relative z-10">
             <div className="text-center mb-14" data-vp-animate="fade-up">
-              <span className="vp-label">سياسة الخصوصية</span>
-              <h2 className="vp-section-title mt-4">سياسة الخصوصية</h2>
-              <div className="w-16 h-1 rounded-full bg-gradient-to-l from-[var(--accent)] to-[var(--accent-light)] mx-auto mt-4" />
+              <span className="vp-label">Data Privacy</span>
+              <h2 className="vp-section-title mt-4">Privacy Policy Overview</h2>
+              <div className="w-16 h-1 rounded-full bg-gradient-to-r from-[var(--accent)] to-[var(--accent-light)] mx-auto mt-4" />
             </div>
             <div className="space-y-5" data-vp-animate="fade-up" data-vp-delay="2">
               {[
-                { title: "البيانات التي نجمعها", content: "نجمع فقط البيانات الصحية التي يقدمها الموظف طواعية من خلال التقييم الصحي (HRA)، بالإضافة إلى البيانات الأساسية مثل الاسم والبريد الإلكتروني والقسم." },
-                { title: "كيف نستخدم البيانات", content: "تُستخدم البيانات لتوليد درجة العافية، التوصيات الصحية المخصصة، والتقارير المجمعة للإدارة. لا تُستخدم البيانات لأي غرض آخر دون موافقة صريحة." },
-                { title: "مشاركة البيانات", content: "لا تتم مشاركة البيانات الفردية مع أطراف ثالثة. الإدارة ترى فقط إحصائيات مجمعة. يمكن مشاركة بيانات مجمعة غير قابلة للتعريف مع باحثين معتمدين." },
-                { title: "الاحتفاظ بالبيانات", content: "تُحتفظ بالبيانات طوال فترة اشتراك الشركة. بعد انتهاء الاشتراك، تُحذف جميع البيانات خلال 90 يوماً." },
-                { title: "حقوق الموظفين", content: "للموظف الحق في الوصول إلى بياناته، تصحيحها، أو طلب حذفها في أي وقت. يمكن التواصل مع فريق الخصوصية لطلب ذلك." },
+                { title: "Data We Collect", content: "We only collect workforce health data voluntarily provided by employees through the Health Assessment (HRA), along with basic information such as name, work email, and department." },
+                { title: "How We Use Data", content: "Data is used to generate Workforce Health Scores, personalised health recommendations, and aggregated management reports. Data is never used for any other purpose without explicit consent." },
+                { title: "Data Sharing", content: "Individual data is never shared with third parties. Management sees only aggregated statistics. De-identified aggregate data may be shared with approved researchers." },
+                { title: "Data Retention", content: "Data is retained for the duration of the company's subscription. After subscription ends, all data is deleted within 90 days." },
+                { title: "Employee Rights", content: "Employees have the right to access their data, correct it, or request deletion at any time. Contact the privacy team to exercise these rights." },
               ].map((section, i) => (
                 <div key={i} className="card-premium p-6 group hover:shadow-md">
                   <h3 className="font-bold text-[var(--text-primary)] text-lg mb-2">{section.title}</h3>
@@ -140,27 +141,27 @@ export default function CompliancePage() {
                 <div className="relative text-center">
                   <div className="inline-flex items-center gap-2.5 px-5 py-2 rounded-full bg-white/[0.06] border border-white/[0.10] text-white/80 text-xs font-semibold mb-8 backdrop-blur-sm">
                     <span className="relative flex h-2 w-2"><span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[var(--accent)] opacity-75" /><span className="relative inline-flex rounded-full h-2 w-2 bg-[var(--accent)]" /></span>
-                    حماية بياناتك
+                    Enterprise Workforce Health OS
                   </div>
                   <Shield className="h-12 w-12 text-[var(--accent)] mx-auto mb-4" />
-                  <h2 className="text-4xl lg:text-5xl font-extrabold text-white leading-[1.15] mb-6">الأمان مسؤوليتنا الأولى</h2>
-                  <p className="text-lg text-white/60 max-w-2xl mx-auto mb-10 leading-relaxed">نواصل تطوير معايير الأمان والخصوصية لضمان أن بياناتك دائماً في المكان الآمن.</p>
+                  <h2 className="text-4xl lg:text-5xl font-extrabold text-white leading-[1.15] mb-6">Security Is Our First Priority</h2>
+                  <p className="text-lg text-white/60 max-w-2xl mx-auto mb-10 leading-relaxed">We continuously develop our security and privacy standards to ensure your data remains protected.</p>
                   <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12">
                     <Link href="/contact" className="group relative inline-flex items-center gap-2.5 px-10 py-4 rounded-2xl bg-white text-[var(--vp-ink)] font-bold text-base shadow-xl shadow-white/10 hover:shadow-2xl transition-all duration-300 hover:-translate-y-0.5">
-                      تواصل مع فريق الخصوصية
+                      Contact Privacy Team
                       <ArrowLeft className="h-4 w-4 group-hover:-translate-x-1 transition-transform" />
                     </Link>
                     <Link href="/privacy" className="inline-flex items-center gap-2.5 px-8 py-4 rounded-2xl border border-white/20 text-white/80 font-semibold text-sm hover:bg-white/[0.06] hover:border-white/30 transition-all duration-300">
                       <div className="w-2 h-2 rounded-full bg-[var(--accent)]" />
-                      سياسة الخصوصية الكاملة
+                      Full Privacy Policy
                     </Link>
                   </div>
                   <div className="flex flex-wrap items-center justify-center gap-x-10 gap-y-3 pt-8 border-t border-white/[0.06]">
-                    <div className="text-center"><p className="text-white font-extrabold text-xl">100+</p><p className="text-white/40 text-xs">شركة تثق بنا</p></div>
+                    <div className="text-center"><p className="text-white font-extrabold text-xl">100+</p><p className="text-white/40 text-xs">Enterprise Clients</p></div>
                     <div className="w-px h-10 bg-white/[0.06]" />
-                    <div className="text-center"><p className="text-white font-extrabold text-xl">5,000+</p><p className="text-white/40 text-xs">موظف على المنصة</p></div>
+                    <div className="text-center"><p className="text-white font-extrabold text-xl">5,000+</p><p className="text-white/40 text-xs">Employees on Platform</p></div>
                     <div className="w-px h-10 bg-white/[0.06]" />
-                    <div className="text-center"><p className="text-white font-extrabold text-xl">3.2x</p><p className="text-white/40 text-xs">متوسط العائد على الاستثمار</p></div>
+                    <div className="text-center"><p className="text-white font-extrabold text-xl">3.2x</p><p className="text-white/40 text-xs">Average ROI</p></div>
                   </div>
                 </div>
               </div>

@@ -11,7 +11,7 @@ export default function DemoPage() {
   const [submitted, setSubmitted] = useState(false);
   const [sending, setSending] = useState(false);
   const [formData, setFormData] = useState({
-    name: "", company: "", email: "", phone: "", employeeCount: "51-200 موظف", role: "",
+    name: "", company: "", email: "", phone: "", employeeCount: "51-200 employees", role: "",
   });
 
   async function handleSubmit(e: React.FormEvent) {
@@ -28,15 +28,15 @@ export default function DemoPage() {
     return (
       <>
         <Header />
-        <main className="min-h-screen bg-[var(--bg-primary)] flex items-center justify-center p-4" dir="rtl">
+        <main className="min-h-screen bg-[var(--bg-primary)] flex items-center justify-center p-4" dir="ltr">
           <div className="card-premium max-w-lg w-full p-10 text-center" data-vp-animate="scale-in">
             <div className="w-16 h-16 rounded-full bg-[var(--accent-soft)] flex items-center justify-center mx-auto mb-6">
               <CheckCircle2 className="h-8 w-8 text-[var(--accent)]" />
             </div>
-            <h2 className="text-2xl font-bold text-[var(--text-primary)] mb-3">تم استلام طلبك!</h2>
-            <p className="text-[var(--text-secondary)] mb-2">شكراً لاهتمامك بـ <strong>Velara Care</strong>.</p>
-            <p className="text-sm text-[var(--text-secondary)] mb-8">سيتواصل معك فريق المبيعات خلال 24 ساعة لتحديد موعد العرض التجريبي المخصص لمؤسستك.</p>
-            <Link href="/" className="btn-premium">العودة للرئيسية <ArrowLeft className="h-4 w-4" /></Link>
+            <h2 className="text-2xl font-bold text-[var(--text-primary)] mb-3">Request Received!</h2>
+            <p className="text-[var(--text-secondary)] mb-2">Thank you for your interest in <strong>Velara Care</strong>.</p>
+            <p className="text-sm text-[var(--text-secondary)] mb-8">Our sales team will contact you within 24 hours to schedule your personalised enterprise demo.</p>
+            <Link href="/" className="btn-premium">Back to Home <ArrowLeft className="h-4 w-4" /></Link>
           </div>
         </main>
         <Footer />
@@ -48,7 +48,7 @@ export default function DemoPage() {
     <>
       <Header />
       <main>
-        <section className="relative pt-32 pb-20 overflow-hidden" dir="rtl">
+        <section className="relative pt-32 pb-20 overflow-hidden" dir="ltr">
           <div className="absolute inset-0 bg-gradient-to-b from-[var(--accent-soft)] via-transparent to-transparent opacity-60" />
           <div className="absolute inset-0 vp-grid-bg opacity-[0.03]" />
           <div className="absolute top-[-10%] right-[-5%] w-[600px] h-[600px] rounded-full bg-gradient-to-br from-[var(--accent)]/8 via-[var(--accent)]/3 to-transparent blur-3xl pointer-events-none" />
@@ -57,19 +57,19 @@ export default function DemoPage() {
           <div className="container-shade relative z-10">
             <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
               {/* Content */}
-              <div data-vp-animate="fade-up" className="lg:pl-8">
+              <div data-vp-animate="fade-up" className="lg:pr-8">
                 <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[var(--accent-soft)] border border-[var(--accent)]/10 text-[var(--accent)] text-xs font-semibold mb-5">
                   <Building2 className="h-3.5 w-3.5" />
-                  عرض تجريبي للمؤسسات
+                  Enterprise Demo
                 </span>
-                <h1 className="vp-hero mt-5">احصل على عرض تجريبي مخصص <span className="vp-hero-em">لمؤسستك</span></h1>
-                <p className="text-sm lg:text-base text-[var(--text-secondary)] mt-6 leading-relaxed max-w-lg">في هذا العرض التجريبي، سنريك كيف تستطيع Velara Care مساعدة شركتك على بناء برنامج عافية متكامل، رفع مشاركة الموظفين، وقياس أثر العافية على الإنتاجية والاحتفاظ.</p>
+                <h1 className="vp-hero mt-5">Get a Personalised Enterprise Demo <span className="vp-hero-em">For Your Organisation</span></h1>
+                <p className="text-sm lg:text-base text-[var(--text-secondary)] mt-6 leading-relaxed max-w-lg">In this demo, we'll show you how Velara Care helps your company build a complete workforce health program, boost employee engagement, and measure the impact of health on productivity and retention.</p>
                 <div className="mt-8 space-y-3">
                   {[
-                    { icon: BarChart3, text: "عرض حي للوحة قيادة العافية ومؤشرات المشاركة" },
-                    { icon: TrendingDown, text: "تحليل أولي مجاني لمستوى عافية القوى العاملة" },
-                    { icon: Users, text: "محاكاة لتجربة الموظف — مسح، توصيات، برامج" },
-                    { icon: Gift, text: "خطة نشر مخصصة حسب حجم مؤسستك واحتياجاتها" },
+                    { icon: BarChart3, text: "Live walkthrough of the workforce health dashboard and engagement metrics" },
+                    { icon: TrendingDown, text: "Free preliminary analysis of your workforce health status" },
+                    { icon: Users, text: "Employee journey simulation — assessment, recommendations, programs" },
+                    { icon: Gift, text: "Custom deployment plan based on your organisation size and needs" },
                   ].map((item) => (
                     <div key={item.text} className="flex items-center gap-3 group">
                       <div className="w-9 h-9 rounded-lg bg-[var(--accent-soft)] flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
@@ -80,7 +80,7 @@ export default function DemoPage() {
                   ))}
                 </div>
                 <div className="mt-5 p-4 rounded-xl bg-[var(--accent-soft)] border border-[var(--accent)]/10">
-                  <p className="text-xs text-[var(--text-muted)]">العرض التجريبي مجاني وبدون التزام. لا حاجة لبطاقة ائتمان. مدة العرض 30 دقيقة.</p>
+                  <p className="text-xs text-[var(--text-muted)]">The demo is completely free with no obligation. No credit card required. Duration: 30 minutes.</p>
                 </div>
               </div>
 
@@ -107,44 +107,44 @@ export default function DemoPage() {
                   </div>
                 </div>
                 <div className="card-premium p-8">
-                  <h3 className="text-xl font-bold text-[var(--text-primary)] mb-1">طلب عرض تجريبي</h3>
-                  <p className="text-sm text-[var(--text-secondary)] mb-6">املأ النموذج وسنعود إليك خلال 24 ساعة</p>
+                  <h3 className="text-xl font-bold text-[var(--text-primary)] mb-1">Request a Demo</h3>
+                  <p className="text-sm text-[var(--text-secondary)] mb-6">Fill out the form and we'll get back to you within 24 hours</p>
                   <form className="space-y-4" onSubmit={handleSubmit}>
                     <div className="grid grid-cols-2 gap-4">
                       <div>
-                        <label className="text-sm font-medium text-[var(--text-primary)]">الاسم الكامل</label>
-                        <input type="text" value={formData.name} onChange={(e) => setFormData(p => ({...p, name: e.target.value}))} placeholder="محمد العلي" required className="shade-input mt-1" />
+                        <label className="text-sm font-medium text-[var(--text-primary)]">Full Name</label>
+                        <input type="text" value={formData.name} onChange={(e) => setFormData(p => ({...p, name: e.target.value}))} placeholder="Your name" required className="shade-input mt-1" />
                       </div>
                       <div>
-                        <label className="text-sm font-medium text-[var(--text-primary)]">المسمى الوظيفي</label>
-                        <input type="text" value={formData.role} onChange={(e) => setFormData(p => ({...p, role: e.target.value}))} placeholder="مدير الموارد البشرية" className="shade-input mt-1" />
+                        <label className="text-sm font-medium text-[var(--text-primary)]">Job Title</label>
+                        <input type="text" value={formData.role} onChange={(e) => setFormData(p => ({...p, role: e.target.value}))} placeholder="HR Director" className="shade-input mt-1" />
                       </div>
                     </div>
                     <div>
-                      <label className="text-sm font-medium text-[var(--text-primary)]">اسم الشركة</label>
-                      <input type="text" value={formData.company} onChange={(e) => setFormData(p => ({...p, company: e.target.value}))} placeholder="اسم شركتك" required className="shade-input mt-1" />
+                      <label className="text-sm font-medium text-[var(--text-primary)]">Company Name</label>
+                      <input type="text" value={formData.company} onChange={(e) => setFormData(p => ({...p, company: e.target.value}))} placeholder="Your company" required className="shade-input mt-1" />
                     </div>
                     <div>
-                      <label className="text-sm font-medium text-[var(--text-primary)]">البريد الإلكتروني للشركة</label>
+                      <label className="text-sm font-medium text-[var(--text-primary)]">Work Email</label>
                       <input type="email" value={formData.email} onChange={(e) => setFormData(p => ({...p, email: e.target.value}))} placeholder="hr@company.com" dir="ltr" required className="shade-input mt-1 text-left" />
                     </div>
                     <div>
-                      <label className="text-sm font-medium text-[var(--text-primary)]">رقم الجوال</label>
+                      <label className="text-sm font-medium text-[var(--text-primary)]">Phone Number</label>
                       <input type="tel" value={formData.phone} onChange={(e) => setFormData(p => ({...p, phone: e.target.value}))} placeholder="+966 5x xxx xxxx" dir="ltr" className="shade-input mt-1 text-left" />
                     </div>
                     <div>
-                      <label className="text-sm font-medium text-[var(--text-primary)]">حجم القوى العاملة</label>
+                      <label className="text-sm font-medium text-[var(--text-primary)]">Workforce Size</label>
                       <select value={formData.employeeCount} onChange={(e) => setFormData(p => ({...p, employeeCount: e.target.value}))} className="shade-input mt-1">
-                        <option>أقل من 50 موظف</option>
-                        <option>51-200 موظف</option>
-                        <option>201-500 موظف</option>
-                        <option>501-1000 موظف</option>
-                        <option>أكثر من 1000 موظف</option>
+                        <option>Less than 50 employees</option>
+                        <option>51-200 employees</option>
+                        <option>201-500 employees</option>
+                        <option>501-1000 employees</option>
+                        <option>More than 1000 employees</option>
                       </select>
                     </div>
                     <button type="submit" disabled={sending} className="btn-premium w-full justify-center">
                       {sending ? <Loader2 className="ml-2 h-4 w-4 animate-spin" /> : <CalendarDays className="ml-2 h-4 w-4" />}
-                      {sending ? "جاري الإرسال..." : "احجز العرض التجريبي"}
+                      {sending ? "Sending..." : "Book Enterprise Demo"}
                     </button>
                   </form>
                 </div>

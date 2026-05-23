@@ -4,12 +4,37 @@
 This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` before writing any code. Heed deprecation notices.
 <!-- END:nextjs-agent-rules -->
 
-# CRITICAL: Velara Care is a Workforce Wellness Platform, NOT a healthcare company
+# CRITICAL: Velara Care is an Enterprise Workforce Health Operating System
 
-- Velara Care is an enterprise SaaS platform for employee wellness programs
-- NOT a medical device company, respiratory care provider, or healthcare service
-- Do NOT use language about: oxygen, CPAP, respiratory therapy, medical equipment, clinics, patients
-- Do use language about: workforce wellness, employee wellbeing, HR tech, wellness programs, lifestyle, nutrition, engagement, productivity
-- Target audience is HR departments and companies, NOT patients or medical professionals
-- The platform manages wellness programs, tracks participation, and measures business impact
-- No medical claims, no diagnostic claims, no treatment claims
+## Core Identity
+Velara Care is a centralized enterprise platform that connects companies, HR teams, employees, nutritionists, and restaurant partners inside one measurable operational ecosystem. It is NOT a wellness app, healthcare clinic, medical equipment provider, nutrition consultation website, or food delivery service.
+
+## Platform Purpose
+The platform helps enterprise companies:
+- Reduce healthcare-related costs
+- Improve workforce performance
+- Reduce sick leave
+- Improve employee wellbeing
+- Increase productivity
+- Measure workforce wellness
+- Optimize preventive health operations
+
+## Positioning
+This is enterprise operational infrastructure for workforce health. The website must feel like:
+- Enterprise SaaS platform
+- Operational intelligence system
+- HR technology infrastructure
+- Workforce analytics platform
+- NOT healthcare marketing, medical landing page, clinic presentation, or generic wellness platform
+
+## Visual Guidelines
+- Use enterprise dashboards, analytics visuals, workforce UI concepts, operational SaaS aesthetics
+- NO medical imagery, oxygen references, respiratory therapy, clinic aesthetics, or healthcare service layouts
+- NO medical claims, diagnostic claims, or treatment claims
+
+## Target Audience
+CEO, HR Directors, CFOs — enterprise decision-makers who need to optimize workforce health operations and reduce long-term organizational costs.
+
+## Language Rules
+- Use: workforce health, enterprise performance, operational efficiency, workforce intelligence, preventive health operations, healthcare cost reduction, productivity optimization
+- NEVER use: patients, clinic, medical treatment, oxygen, CPAP, respiratory therapy, medical equipment
