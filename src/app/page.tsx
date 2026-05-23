@@ -107,13 +107,30 @@ export default function Home() {
           </svg>
 
           <div className="container-shade relative z-10">
-            {/* ===== الجزء العلوي: صورة + عنوان جنباً إلى جنب ===== */}
-            <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-start">
-              {/* --- الصورة في دائرة --- */}
-              <div className="relative flex items-center justify-center order-last lg:order-first" data-vp-animate="scale-in">
+            {/* ===== الجزء العلوي: عنوان (يمين) + صورة (يسار) ===== */}
+            <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+              {/* --- النص: الجانب الأيمن --- */}
+              <div data-vp-animate="fade-up" className="lg:pl-8">
+                <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[var(--accent-soft)] border border-[var(--accent)]/10 text-[var(--accent)] text-xs font-semibold mb-5">
+                  <Heart className="h-3.5 w-3.5" />
+                  منصة عافية مؤسسية متكاملة
+                </span>
+                <h1 className="vp-hero mt-5">
+                  عافية فريقك يمكن قياسها
+                  <br />
+                  <span className="vp-hero-em">وقراراتك تستحق الدقة</span>
+                </h1>
+                <p className="text-sm lg:text-base text-[var(--text-secondary)] mt-6 leading-relaxed max-w-lg">
+                  Velara Care هي نظام تشغيل متكامل لبرامج عافية الموظفين — يربط بين الشركات،
+                  الموظفين، فرق الموارد البشرية، أخصائيي التغذية، ومزودي الخدمات في منظومة واحدة قابلة للقياس.
+                </p>
+              </div>
+
+              {/* --- الصورة: الجانب الأيسر --- */}
+              <div className="relative flex items-center justify-center" data-vp-animate="scale-in" data-vp-delay="2">
                 {/* Glow خلف الدائرة */}
-                <div className="absolute w-[340px] h-[340px] lg:w-[440px] lg:h-[440px] rounded-full bg-gradient-to-br from-[var(--accent)]/10 via-[var(--accent)]/3 to-transparent blur-[80px] pointer-events-none" />
-                <div className="absolute w-[260px] h-[260px] lg:w-[340px] lg:h-[340px] rounded-full bg-gradient-to-tr from-[var(--accent)]/8 to-transparent blur-[60px] pointer-events-none translate-y-6" />
+                <div className="absolute w-[320px] h-[320px] lg:w-[420px] lg:h-[420px] rounded-full bg-gradient-to-br from-[var(--accent)]/12 via-[var(--accent)]/3 to-transparent blur-[80px] pointer-events-none" />
+                <div className="absolute w-[240px] h-[240px] lg:w-[320px] lg:h-[320px] rounded-full bg-gradient-to-tr from-[var(--accent)]/8 to-transparent blur-[60px] pointer-events-none translate-y-6" />
 
                 {/* حاوية الدائرة */}
                 <div className="relative w-[240px] h-[240px] lg:w-[340px] lg:h-[340px]">
@@ -145,30 +162,13 @@ export default function Home() {
                   </div>
                 </div>
               </div>
-
-              {/* --- النص: عنوان + وصف قصير --- */}
-              <div data-vp-animate="fade-up">
-                <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[var(--accent-soft)] border border-[var(--accent)]/10 text-[var(--accent)] text-xs font-semibold mb-5">
-                  <Heart className="h-3.5 w-3.5" />
-                  منصة عافية مؤسسية متكاملة
-                </span>
-                <h1 className="vp-hero">
-                  حوّل عافية قواك العاملة
-                  <br />
-                  <span className="vp-hero-em">إلى أداء مؤسسي قابل للقياس</span>
-                </h1>
-                <p className="text-sm lg:text-base text-[var(--text-secondary)] mt-5 leading-relaxed max-w-lg">
-                  Velara Care هي نظام تشغيل متكامل لبرامج عافية الموظفين — يربط بين الشركات،
-                  الموظفين، فرق الموارد البشرية، أخصائيي التغذية، ومزودي الخدمات في منظومة واحدة قابلة للقياس.
-                </p>
-              </div>
             </div>
 
-            {/* ===== الجزء السفلي: زر + ٤ بطاقات (صف واحد) ممتدة تحت الصورة ===== */}
-            <div className="mt-10 lg:mt-12 max-w-4xl" data-vp-animate="fade-up" data-vp-delay="3">
+            {/* ===== الجزء السفلي: زر + ٤ بطاقات ===== */}
+            <div className="mt-10 lg:mt-14 max-w-4xl" data-vp-animate="fade-up" data-vp-delay="3">
               {/* زر CTA */}
               <div className="flex flex-col sm:flex-row items-start gap-4 mb-8">
-                <Link href="/demo" className="btn-premium text-base px-10 py-4 !h-auto">
+                <Link href="/demo" className="btn-premium text-base px-10 py-4 !h-auto shadow-lg shadow-[var(--accent)]/15">
                   اطلب عرضاً تجريبياً لشركتك
                   <ArrowLeft className="h-4 w-4" />
                 </Link>
@@ -178,14 +178,14 @@ export default function Home() {
               </div>
 
               {/* ٤ مميزات في صف واحد */}
-              <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+              <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-4">
                 {valueCards.map((card) => (
-                  <div key={card.title} className="glass-premium rounded-xl p-3.5 text-center group hover:border-[var(--accent)]/20 hover:shadow-md transition-all">
-                    <div className="w-9 h-9 rounded-xl bg-[var(--accent-soft)] flex items-center justify-center mx-auto mb-1.5 group-hover:scale-110 transition-transform">
+                  <div key={card.title} className="glass-premium rounded-xl p-4 text-center group hover:border-[var(--accent)]/20 hover:shadow-lg transition-all duration-300">
+                    <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[var(--accent-soft)] to-[var(--accent)]/5 flex items-center justify-center mx-auto mb-2 group-hover:scale-110 transition-transform ring-1 ring-[var(--accent)]/10">
                       <card.icon className="h-4 w-4 text-[var(--accent)]" />
                     </div>
-                    <h3 className="text-xs font-bold text-[var(--text-primary)] mb-0.5">{card.title}</h3>
-                    <p className="text-[10px] text-[var(--text-secondary)] leading-tight">{card.desc}</p>
+                    <h3 className="text-xs font-bold text-[var(--text-primary)] mb-1">{card.title}</h3>
+                    <p className="text-[10px] text-[var(--text-secondary)] leading-snug">{card.desc}</p>
                   </div>
                 ))}
               </div>
