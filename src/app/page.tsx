@@ -90,14 +90,14 @@ export default function Home() {
     <>
       <Header />
       <main>
-        {/* ═══ HERO — بتصميم قطرة الماء ═══ */}
-        <section className="relative pt-32 pb-24 overflow-hidden" dir="rtl">
+        {/* ═══ HERO — مُعاد التنسيق ═══ */}
+        <section className="relative pt-32 pb-20 overflow-hidden" dir="rtl">
           <div className="absolute inset-0 bg-gradient-to-b from-[var(--accent-soft)] via-transparent to-transparent opacity-60" />
           <div className="absolute top-[-10%] right-[-5%] w-[600px] h-[600px] rounded-full bg-gradient-to-br from-[var(--accent)]/8 via-[var(--accent)]/3 to-transparent blur-3xl pointer-events-none" />
           <div className="absolute bottom-[-15%] left-[-10%] w-[500px] h-[500px] rounded-full bg-gradient-to-tr from-[var(--accent)]/5 to-transparent blur-3xl pointer-events-none" />
           <div className="absolute inset-0 vp-grid-bg opacity-[0.03]" />
 
-          {/* SVG clipPath — دائرة نظيفة */}
+          {/* SVG clipPath — دائرة */}
           <svg width="0" height="0" className="absolute">
             <defs>
               <clipPath id="circleFrame" clipPathUnits="objectBoundingBox">
@@ -107,59 +107,21 @@ export default function Home() {
           </svg>
 
           <div className="container-shade relative z-10">
-            <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
-              {/* ===== النص — الجانب الأيمن ===== */}
-              <div data-vp-animate="fade-up">
-                <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[var(--accent-soft)] border border-[var(--accent)]/10 text-[var(--accent)] text-xs font-semibold mb-6">
-                  <Heart className="h-3.5 w-3.5" />
-                  منصة عافية مؤسسية متكاملة
-                </span>
-                <h1 className="vp-hero mt-4">
-                  حوّل عافية قواك العاملة
-                  <br />
-                  <span className="vp-hero-em">إلى أداء مؤسسي قابل للقياس</span>
-                </h1>
-                <p className="vp-subtitle mt-6 max-w-xl">
-                  Velara Care هي نظام تشغيل متكامل لبرامج عافية الموظفين — يربط بين الشركات،
-                  الموظفين، فرق الموارد البشرية، أخصائيي التغذية، ومزودي الخدمات في منظومة واحدة قابلة للقياس.
-                </p>
-                <div className="mt-8 flex flex-col sm:flex-row items-start gap-4">
-                  <Link href="/demo" className="btn-premium text-base px-10 py-4 !h-auto">
-                    اطلب عرضاً تجريبياً للمؤسسات
-                    <ArrowLeft className="h-4 w-4" />
-                  </Link>
-                  <Link href="/product" className="btn-ghost text-base px-8 py-4 !h-auto">
-                    استكشف المنصة
-                  </Link>
-                </div>
-                <div className="mt-10 grid grid-cols-2 gap-3 max-w-lg">
-                  {valueCards.map((card) => (
-                    <div key={card.title} className="glass-premium rounded-xl p-3.5 text-center group hover:border-[var(--accent)]/20">
-                      <div className="w-9 h-9 rounded-xl bg-[var(--accent-soft)] flex items-center justify-center mx-auto mb-1.5 group-hover:scale-110 transition-transform">
-                        <card.icon className="h-4 w-4 text-[var(--accent)]" />
-                      </div>
-                      <h3 className="text-xs font-bold text-[var(--text-primary)] mb-0.5">{card.title}</h3>
-                      <p className="text-[10px] text-[var(--text-secondary)] leading-tight">{card.desc}</p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* ===== الصورة في دائرة بإطار أنيق — الجانب الأيسر ===== */}
-              <div className="relative flex items-center justify-center min-h-[400px] lg:min-h-[520px]" data-vp-animate="scale-in" data-vp-delay="2">
-                {/* طبقات glow خلف الدائرة */}
-                <div className="absolute w-[400px] h-[400px] lg:w-[500px] lg:h-[500px] rounded-full bg-gradient-to-br from-[var(--accent)]/10 via-[var(--accent)]/3 to-transparent blur-[80px] pointer-events-none" />
-                <div className="absolute w-[320px] h-[320px] lg:w-[400px] lg:h-[400px] rounded-full bg-gradient-to-tr from-[var(--accent)]/8 to-transparent blur-[60px] pointer-events-none translate-y-8" />
+            {/* ===== الجزء العلوي: صورة + عنوان جنباً إلى جنب ===== */}
+            <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-start">
+              {/* --- الصورة في دائرة --- */}
+              <div className="relative flex items-center justify-center order-last lg:order-first" data-vp-animate="scale-in">
+                {/* Glow خلف الدائرة */}
+                <div className="absolute w-[340px] h-[340px] lg:w-[440px] lg:h-[440px] rounded-full bg-gradient-to-br from-[var(--accent)]/10 via-[var(--accent)]/3 to-transparent blur-[80px] pointer-events-none" />
+                <div className="absolute w-[260px] h-[260px] lg:w-[340px] lg:h-[340px] rounded-full bg-gradient-to-tr from-[var(--accent)]/8 to-transparent blur-[60px] pointer-events-none translate-y-6" />
 
                 {/* حاوية الدائرة */}
-                <div className="relative w-[300px] h-[300px] lg:w-[400px] lg:h-[400px]">
-                  {/* الإطار الخارجي — تدرج دائري */}
-                  <div className="absolute -inset-[6px] lg:-inset-[8px] rounded-full bg-gradient-to-br from-[var(--accent)] via-[var(--accent-light)]/50 to-[var(--accent-dark)] shadow-2xl shadow-[var(--accent)]/20" />
-
-                  {/* الإطار الداخلي — خلفية داكنة */}
-                  <div className="absolute -inset-[2px] lg:-inset-[3px] rounded-full bg-[var(--bg-primary)]" />
-
-                  {/* الصورة داخل الدائرة */}
+                <div className="relative w-[240px] h-[240px] lg:w-[340px] lg:h-[340px]">
+                  {/* الإطار الخارجي — تدرج */}
+                  <div className="absolute -inset-[5px] lg:-inset-[7px] rounded-full bg-gradient-to-br from-[var(--accent)] via-[var(--accent-light)]/50 to-[var(--accent-dark)] shadow-2xl shadow-[var(--accent)]/20" />
+                  {/* الإطار الداخلي */}
+                  <div className="absolute -inset-[1.5px] lg:-inset-[2.5px] rounded-full bg-[var(--bg-primary)]" />
+                  {/* الصورة */}
                   <div className="relative w-full h-full rounded-full overflow-hidden">
                     <div className="w-full h-full" style={{ clipPath: 'url(#circleFrame)' }}>
                       <Image
@@ -171,23 +133,61 @@ export default function Home() {
                         priority
                       />
                     </div>
-                    {/* تدرج شفاف على الصورة */}
                     <div className="absolute inset-0 rounded-full pointer-events-none" style={{ background: 'linear-gradient(180deg, rgba(0,0,0,0.08) 0%, transparent 35%, transparent 65%, rgba(0,0,0,0.12) 100%)' }} />
                   </div>
 
                   {/* أيقونات عائمة */}
-                  <div className="absolute -top-2 -right-2 lg:-top-3 lg:-right-3 w-12 h-12 lg:w-14 lg:h-14 rounded-2xl bg-[var(--bg-card)] border border-[var(--accent)]/20 flex items-center justify-center shadow-xl shadow-[var(--accent)]/10 backdrop-blur-sm rotate-12 hover:rotate-0 hover:scale-110 transition-all duration-500 z-10">
-                    <Heart className="h-5 w-5 lg:h-6 lg:w-6 text-rose-400" />
+                  <div className="absolute -top-2 -right-1 lg:-top-3 lg:-right-2 w-10 h-10 lg:w-12 lg:h-12 rounded-xl bg-[var(--bg-card)] border border-[var(--accent)]/20 flex items-center justify-center shadow-lg shadow-[var(--accent)]/10 backdrop-blur-sm rotate-12 hover:rotate-0 hover:scale-110 transition-all duration-500 z-10">
+                    <Heart className="h-4 w-4 lg:h-5 lg:w-5 text-rose-400" />
                   </div>
-                  <div className="absolute -bottom-2 -left-2 lg:-bottom-3 lg:-left-3 w-12 h-12 lg:w-14 lg:h-14 rounded-2xl bg-[var(--bg-card)] border border-[var(--border-primary)] flex items-center justify-center shadow-xl backdrop-blur-sm -rotate-12 hover:rotate-0 hover:scale-110 transition-all duration-500 z-10">
-                    <Activity className="h-5 w-5 lg:h-6 lg:w-6 text-[var(--accent)]" />
+                  <div className="absolute -bottom-2 -left-1 lg:-bottom-3 lg:-left-2 w-10 h-10 lg:w-12 lg:h-12 rounded-xl bg-[var(--bg-card)] border border-[var(--border-primary)] flex items-center justify-center shadow-lg backdrop-blur-sm -rotate-12 hover:rotate-0 hover:scale-110 transition-all duration-500 z-10">
+                    <Activity className="h-4 w-4 lg:h-5 lg:w-5 text-[var(--accent)]" />
                   </div>
-
-                  {/* نقاط زخرفية */}
-                  <div className="absolute -top-1 left-[15%] w-2 h-2 lg:w-2.5 lg:h-2.5 rounded-full bg-[var(--accent)]/30 animate-pulse" />
-                  <div className="absolute bottom-[10%] -right-1 lg:-right-2 w-1.5 h-1.5 lg:w-2 lg:h-2 rounded-full bg-rose-400/25" />
-                  <div className="absolute top-[20%] -left-1 lg:-left-2 w-1.5 h-1.5 rounded-full bg-[var(--accent)]/20" />
                 </div>
+              </div>
+
+              {/* --- النص: عنوان + وصف قصير --- */}
+              <div data-vp-animate="fade-up">
+                <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[var(--accent-soft)] border border-[var(--accent)]/10 text-[var(--accent)] text-xs font-semibold mb-5">
+                  <Heart className="h-3.5 w-3.5" />
+                  منصة عافية مؤسسية متكاملة
+                </span>
+                <h1 className="vp-hero">
+                  حوّل عافية قواك العاملة
+                  <br />
+                  <span className="vp-hero-em">إلى أداء مؤسسي قابل للقياس</span>
+                </h1>
+                <p className="text-sm lg:text-base text-[var(--text-secondary)] mt-5 leading-relaxed max-w-lg">
+                  Velara Care هي نظام تشغيل متكامل لبرامج عافية الموظفين — يربط بين الشركات،
+                  الموظفين، فرق الموارد البشرية، أخصائيي التغذية، ومزودي الخدمات في منظومة واحدة قابلة للقياس.
+                </p>
+              </div>
+            </div>
+
+            {/* ===== الجزء السفلي: زر + ٤ بطاقات (صف واحد) ممتدة تحت الصورة ===== */}
+            <div className="mt-10 lg:mt-12 max-w-4xl" data-vp-animate="fade-up" data-vp-delay="3">
+              {/* زر CTA */}
+              <div className="flex flex-col sm:flex-row items-start gap-4 mb-8">
+                <Link href="/demo" className="btn-premium text-base px-10 py-4 !h-auto">
+                  اطلب عرضاً تجريبياً لشركتك
+                  <ArrowLeft className="h-4 w-4" />
+                </Link>
+                <Link href="/product" className="btn-ghost text-base px-8 py-4 !h-auto">
+                  استكشف المنصة
+                </Link>
+              </div>
+
+              {/* ٤ مميزات في صف واحد */}
+              <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+                {valueCards.map((card) => (
+                  <div key={card.title} className="glass-premium rounded-xl p-3.5 text-center group hover:border-[var(--accent)]/20 hover:shadow-md transition-all">
+                    <div className="w-9 h-9 rounded-xl bg-[var(--accent-soft)] flex items-center justify-center mx-auto mb-1.5 group-hover:scale-110 transition-transform">
+                      <card.icon className="h-4 w-4 text-[var(--accent)]" />
+                    </div>
+                    <h3 className="text-xs font-bold text-[var(--text-primary)] mb-0.5">{card.title}</h3>
+                    <p className="text-[10px] text-[var(--text-secondary)] leading-tight">{card.desc}</p>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
