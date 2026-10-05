@@ -2,19 +2,56 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { getEdgeSession } from "@/lib/edge-auth";
 import { getDashboardPath, isAuthorizedForRoute } from "@/lib/auth-utils";
+import { SITE_GATE_COOKIE, safeEqual, safeNextPath, siteAccessToken } from "@/lib/site-gate";
+
+function isSiteGateExempt(pathname: string): boolean {
+  return (
+    pathname === "/access" ||
+    pathname.startsWith("/access/") ||
+    pathname === "/api/site-gate" ||
+    // SessionProvider on the gate page reads this before the cookie exists.
+    pathname === "/api/auth/session"
+  );
+}
 
 /**
  * Proxy (formerly Middleware) — Next.js 16
- * Runs before each matching request to protect dashboard routes.
+ * Requires the site password before any page, then protects dashboard routes.
  * Wrapped in try/catch so that any auth failure returns redirect→login
  * instead of a 500 error page.
  */
 export async function proxy(request: NextRequest) {
-  try {
-    const { pathname } = request.nextUrl;
+  const { pathname } = request.nextUrl;
 
-    // Public paths — always allow (proxy matcher already limits to /dashboard,
-    // but keep this as a safety net for future route expansion)
+  try {
+    const token = await siteAccessToken();
+    const unlocked = safeEqual(request.cookies.get(SITE_GATE_COOKIE)?.value ?? "", token);
+
+    if (isSiteGateExempt(pathname)) {
+      if (unlocked && (pathname === "/access" || pathname.startsWith("/access/"))) {
+        const next = safeNextPath(request.nextUrl.searchParams.get("next"));
+        return NextResponse.redirect(new URL(next, request.url));
+      }
+      return NextResponse.next();
+    }
+
+    if (!unlocked) {
+      const accessUrl = new URL("/access", request.url);
+      const dest = pathname + request.nextUrl.search;
+      if (dest !== "/") accessUrl.searchParams.set("next", dest);
+      return NextResponse.redirect(accessUrl);
+    }
+  } catch (error) {
+    console.error("[Site gate]", error);
+    if (!isSiteGateExempt(pathname)) {
+      return NextResponse.redirect(new URL("/access", request.url));
+    }
+    return NextResponse.next();
+  }
+
+  try {
+
+    // Public paths — no dashboard session required. The site password still applies.
     const publicPaths = ["/login", "/register", "/features", "/pricing", "/about", "/demo"];
     const isPublic = publicPaths.some((p) => pathname === p || pathname.startsWith("/api"));
     if (isPublic) return NextResponse.next();
@@ -55,5 +92,7 @@ export async function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/dashboard/:path*"],
+  matcher: [
+    "/((?!_next/static|_next/image|favicon.ico|icons/|manifest.json|sw.js|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico|woff2)$).*)",
+  ],
 };
